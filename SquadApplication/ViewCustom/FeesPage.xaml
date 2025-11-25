@@ -5,8 +5,17 @@
              Title="FeesPage">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            Text="Next Game"
+            FontSize="30"
+            HorizontalOptions="Center"
+            />
+        <Label
+            Text="Info"
+            FontSize="18"
+            />
+        <Button Text="I Ok" Background="Gray"></Button>
+        <Button Text="I don`t Ok" Background="Gray"></Button>
+
+
     </VerticalStackLayout>
 </ContentPage>

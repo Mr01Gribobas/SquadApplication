@@ -2,29 +2,40 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.MainPage"
-             Title="MainPage">
+             xmlns:local ="clr-namespace:SquadApplication.ViewCustom" 
+             Title="MainPage"
+             BackgroundImageSource="hkauthorize.jpg"
+             
+             >
     
-    <VerticalStackLayout
-        
-        >
-        
-        <HorizontalStackLayout
-            WidthRequest="450"
-            HeightRequest="40"
-            Background="Gray"            
+    <VerticalStackLayout Padding="10" BackgroundColor="Transparent">    
+        <CollectionView
+            x:Name="ListItems"
+            Margin="10"            
+            SelectionMode="Single"
+            SelectionChanged="CollectionView_SelectionChanged"   
+            BackgroundColor="Transparent"
+            
             >
-            <BoxView WidthRequest="87" HeightRequest="40" Background="Aqua"></BoxView>
-            <BoxView WidthRequest="87" HeightRequest="40" Background="Beige"></BoxView>
-            <BoxView WidthRequest="87" HeightRequest="40" Background="DarkCyan"></BoxView>
-            <BoxView WidthRequest="87" HeightRequest="40" Background="White"></BoxView>
-            <BoxView WidthRequest="87" HeightRequest="40" Background="Red" />
-
-
-        </HorizontalStackLayout>
-        <Label 
-            Text="Main"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        
+            <CollectionView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Главная</x:String>
+                    <x:String>Сборы</x:String>
+                    <x:String>Полигоны</x:String>
+                    <x:String>Участники</x:String>
+                    <x:String>Прокаты</x:String>
+                    <x:String>Профиль</x:String>
+                </x:Array>
+            </CollectionView.ItemsSource>
+            <CollectionView.ItemTemplate >
+                <DataTemplate>
+                    <Border  >
+                    <Label   Text="{Binding}" FontSize="20" BackgroundColor="Transparent" TextColor="DarkOliveGreen"  Margin="15" WidthRequest="200" HeightRequest="100" HorizontalOptions="Center" ></Label>
+                        
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>   
+     
     </VerticalStackLayout>
 </ContentPage>
