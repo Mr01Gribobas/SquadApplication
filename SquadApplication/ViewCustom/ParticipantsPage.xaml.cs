@@ -7,10 +7,13 @@ namespace SquadApplication.ViewCustom;
 
 public partial class ParticipantsPage : ContentPage
 {
+    private ParticipantsViewModel _parricipantsModel;
+
     public ParticipantsPage()
     {
         InitializeComponent();
-        BindingContext = new ParticipantsViewModel();   
+        _parricipantsModel = new ParticipantsViewModel(this);
+        BindingContext = _parricipantsModel;   
         
     }
 }

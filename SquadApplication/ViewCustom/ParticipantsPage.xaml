@@ -2,14 +2,36 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.ParticipantsPage"
-             Title="ParticipantsPage">
-    <StackLayout Padding="10">
-        <Label Text="Участники" FontSize="24" HorizontalOptions="Center"/>
+             Title="ParticipantsPage"
+             BackgroundColor="Gray"
+             >
+    <StackLayout Padding="5" HorizontalOptions="Center" VerticalOptions="Start">
+        <Label Text="Участники" FontSize="24" HorizontalOptions="Center" VerticalOptions="Start"/>
+        <ScrollView>            
         <CollectionView x:Name="ParticipantsLisyViewItem"  
                         Background="Transparent"
-                        ItemsSource="{Binding Strings}"
+                        ItemsSource="{Binding Users}"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Center"
                         >
-            
+            <CollectionView.ItemTemplate>
+                <DataTemplate>                    
+                    <Border
+                        Stroke="Black"
+                        >
+                        <StackLayout
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            >                            
+                          <Label Text="Name}" TextColor="White"/>
+                                <Label Text="Sing" TextColor="White"/>
+                                <Label Text="Sing" TextColor="White"/>                                
+                        </StackLayout>
+                    </Border>                    
+                </DataTemplate>
+            </CollectionView.ItemTemplate> 
         </CollectionView>
+        </ScrollView>
+        <Button Text="GoBack"></Button>
     </StackLayout>
 </ContentPage>

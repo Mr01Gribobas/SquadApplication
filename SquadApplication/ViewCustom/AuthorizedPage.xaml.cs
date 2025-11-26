@@ -1,14 +1,15 @@
+using SquadApplication.ViewModels;
+
 namespace SquadApplication.ViewCustom;
 
 public partial class AuthorizedPage : ContentPage
 {
-	public AuthorizedPage()
-	{
-		InitializeComponent();
-	}
-
-    private void Button_Login(object sender, EventArgs e)
+    private AuthorizeViewModel _authorizeView;
+    public AuthorizedPage()
     {
-		Shell.Current.GoToAsync($"/{nameof(MainPage)}");
-    }
+        InitializeComponent();
+        _authorizeView = new AuthorizeViewModel(this);
+        BindingContext = _authorizeView;
+
+    }    
 }

@@ -5,8 +5,150 @@
              Title="AuthorizedPage"            
              BackgroundImageSource="hkauthorize.jpg"
              >
-        <VerticalStackLayout>
-        <Button Clicked="Button_Login" HeightRequest="50" WidthRequest="50" Text="Login"/>
-        <Button ></Button>
-    </VerticalStackLayout>
+    <ScrollView>
+        <Grid RowDefinitions="Auto,*,Auto"
+              RowSpacing="0"
+              Padding="20">
+
+            <!-- Заголовок -->
+            <Border Grid.Row="0"
+                   BackgroundColor="Transparent"
+                   Stroke="CadetBlue"                   
+                   Padding="20"
+                   Margin="0,20,0,30"
+                   HorizontalOptions="Fill">
+
+                <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label Text="⚔️" 
+                           FontSize="40"
+                           HorizontalOptions="Center"/>
+                    <Label Text="КОМАНДНЫЙ ЦЕНТР"
+                           TextColor="DarkGoldenrod"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Aвторизация"
+                           TextColor="Wheat"
+                           FontSize="14"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Основной контент -->
+            <Border Grid.Row="1"
+                   BackgroundColor="Transparent"
+                   Stroke="CadetBlue"
+                   StrokeShape="15"
+                   Padding="25"
+                  >
+                
+                <VerticalStackLayout Spacing="20">  
+
+                    <!-- Форма входа -->
+                    <StackLayout  Spacing="15">
+                        <Border 
+                            Stroke="DarkCyan"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 10"
+                                BackgroundColor="Transparent">
+
+                            <Entry x:Name="LoginAccessCode"
+                                   Placeholder="Введите код доступа"
+                                   PlaceholderColor="Gray"
+                                   TextColor="White"
+                                   Text="{Binding AccesCode}"
+                                   BackgroundColor="Transparent"
+                                   FontSize="16"/>
+                                   
+                        </Border>
+                        <Border
+                            Stroke="White"
+                             StrokeThickness="1"
+                             StrokeShape="RoundRectangle 10"
+                             BackgroundColor="Transparent">
+                        <Button Text="ВОЙТИ В СИСТЕМУ"
+                                Command="{Binding LoginCommand}"
+                                BackgroundColor="Transparent"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                BorderColor="Black"
+                                CornerRadius="10"
+                                HeightRequest="50"
+                                FontSize="16"/>
+                        </Border>
+                            
+                    </StackLayout>
+
+                    <!-- Форма регистрации -->
+                    <StackLayout     Spacing="15">
+
+                        <Border 
+                            Stroke="DarkCyan"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 10"
+                                BackgroundColor="Transparent">
+                            <Entry
+                                Placeholder="Имя"
+                                PlaceholderColor="Gray"
+                                Text="{Binding Name}"
+                                TextColor="White"
+                                BackgroundColor="Transparent"
+                                   />
+                        </Border>
+
+                        <Border Stroke="DarkCyan"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 10"
+                                BackgroundColor="Transparent">
+                            <Entry Placeholder="Позывной"
+                                   Text="{Binding CallSing}"
+                                   PlaceholderColor="Gray"
+                                   TextColor="White"
+                                   BackgroundColor="Transparent"/>
+                        </Border>
+                        <Border 
+                          Stroke="DarkCyan"
+                          StrokeThickness="1"
+                          StrokeShape="RoundRectangle 10"
+                          BackgroundColor="Transparent">
+                            <Entry Placeholder="Телефон"
+                                   PlaceholderColor="Gray"
+                                   Text="{Binding PhuneNumber}"
+                                   TextColor="White"
+                                   BackgroundColor="Transparent"/>
+                        </Border>
+                         <Border 
+                            Stroke="DarkCyan"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 10"
+                            BackgroundColor="Transparent">
+                                     <Entry Placeholder="Команда"
+                                            PlaceholderColor="Gray"
+                                            Text="{Binding Team}"
+                                            TextColor="White"
+                                            BackgroundColor="Transparent"/>
+                         </Border>
+
+
+                        <Border Stroke="DarkCyan"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 10"
+                                BackgroundColor="Transparent">                        
+
+                            <Button Text="СОЗДАТЬ АККАУНТ"
+                                Command="{Binding RegistrationCommand}"
+                                    
+                                BackgroundColor="Transparent"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="10"
+                                HeightRequest="50"
+                                FontSize="16"/>
+                        </Border>
+                    </StackLayout>
+
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </ScrollView>
 </ContentPage>

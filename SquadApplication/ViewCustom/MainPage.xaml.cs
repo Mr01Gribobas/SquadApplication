@@ -1,5 +1,4 @@
 using SquadApplication.ViewModels;
-
 namespace SquadApplication.ViewCustom;
 
 public partial class MainPage : ContentPage
@@ -8,13 +7,23 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
         BindingContext = new MainViewModel();
-        
+
     }
 
     private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        string result = e.CurrentSelection[0]?.ToString() ?? string.Empty;
-        switch(result)
+        var result = e?.CurrentSelection.FirstOrDefault();
+        if(result != null)
+        {
+            await GoNextPage(result);
+            ListItems.SelectedItem = null;
+        }
+    }
+
+
+    private static async Task GoNextPage(object? result)
+    {
+        switch(result.ToString())
         {
             case "Главная":
                 await Shell.Current.GoToAsync($"/{nameof(YourEquipPage)}");
@@ -34,9 +43,11 @@ public partial class MainPage : ContentPage
             case "Профиль":
                 await Shell.Current.GoToAsync($"/{nameof(ProfilePage)}");
                 break;
-                default: break;
+            case "Заказы":
+                await Shell.Current.GoToAsync($"/{nameof(ProfilePage)}");
+                break;
+            default:
+                break;
         }
-        
-
     }
 }

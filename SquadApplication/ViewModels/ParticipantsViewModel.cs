@@ -6,9 +6,14 @@ namespace SquadApplication.ViewModels;
 
 public partial class ParticipantsViewModel : ObservableObject
 {
-    public ParticipantsViewModel()
+    [ObservableProperty]
+    private ObservableCollection<UserModel> users ;
+    private ParticipantsPage participantsPage;
+    public ParticipantsViewModel(ParticipantsPage participantsPage)
     {
-        
+        var list = UserModel.GetRandomData();
+        users = new ObservableCollection<UserModel>(list);
+        this.participantsPage = participantsPage;
     }
 
     [ObservableProperty]
