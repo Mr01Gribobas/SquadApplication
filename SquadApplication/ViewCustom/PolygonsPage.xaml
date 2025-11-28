@@ -8,12 +8,21 @@
             Text="Polugons"
             FontSize="24" 
             HorizontalOptions="Center" />
-        <CollectionView>
+        <ScrollView>
+            <StackLayout>
+                <Label></Label>
+            <CollectionView>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Label Text="Polygon 1"/>
+                    <StackLayout>
+                       <Label></Label>
+                       <Label></Label>
+                    </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+            </StackLayout>
+        </ScrollView>
+                        
     </VerticalStackLayout>
 </ContentPage>

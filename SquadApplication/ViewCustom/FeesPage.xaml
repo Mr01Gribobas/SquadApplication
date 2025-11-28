@@ -2,20 +2,227 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.FeesPage"
-             Title="FeesPage">
+             Title="FeesPage"
+             BackgroundImageSource="hkauthorize.jpg"
+             >
     <VerticalStackLayout>
-        <Label 
-            Text="Next Game"
-            FontSize="30"
-            HorizontalOptions="Center"
-            />
-        <Label
-            Text="Info"
-            FontSize="18"
-            />
-        <Button Text="I Ok" Background="Gray"></Button>
-        <Button Text="I don`t Ok" Background="Gray"></Button>
+        
+    
+    <Grid RowDefinitions="Auto,*,Auto"
+          Padding="15">
 
+        <!-- Заголовок -->
+        <Border Grid.Row="0"
+               BackgroundColor="Transparent"
+               StrokeShape="23"
+               Padding="15"
+               Margin="0,0,0,10">
 
+            <Grid>
+                <Label Text="ПРЕДСТОЯЩИЕ СБОРЫ"
+                       TextColor="White"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>                
+            </Grid>
+        </Border>
+
+        <!-- Список событий -->
+        <StackLayout Grid.Row="1">
+            
+                    <StackLayout HorizontalOptions="Center"
+                                 VerticalOptions="Center"
+                                 >
+                        <Label Text="🎯"
+                               FontSize="40"
+                               HorizontalOptions="Center"/>
+                        <Label Text="События "
+                               TextColor="White"
+                               FontSize="16"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Командир может создать первое событие"
+                               TextColor="White"
+                               FontSize="12"
+                               HorizontalOptions="Center"/>
+                    </StackLayout>
+                
+
+                
+                        <Border BackgroundColor="Transparent"
+                               Stroke="Blue"
+                               StrokeShape="2"
+                               Padding="0"
+                               Margin="0,0,0,10"
+                               >
+                            <Grid Padding="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                        
+
+                                <!-- Название и статус -->
+
+                                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Text=" ⚔ Игра против => "
+                                       TextColor="White"
+                                       FontSize="12"                              
+                                       Margin="0,0,0,5"/>
+                                       
+                                <!-- Статус участия пользователя -->
+                                        
+                                        
+                                <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
+                                        StrokeThickness="0"
+                                        >
+                                    <Label Text="Team"
+                                           TextColor="Red" 
+                                           FontSize="10"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"/>
+                                </Border>
+
+                                <!-- Полигон -->
+                                <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                             Orientation="Horizontal"
+                                             Spacing="5">
+                                <Label Text="📍 Название полигона =>"
+                                           FontSize="12"
+                                           TextColor="White"/>
+                        <Label
+                            Text="NamePolygon"
+                            TextColor="Red"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            
+                            />
+                    </StackLayout>
+                                   
+
+                                <!-- Координаты -->
+                                <StackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                             Orientation="Horizontal"
+                                             Spacing="5">
+                                           <Label Text="🌐 Координаты полигона => "
+                                           FontSize="12"
+                                           TextColor="White"/>
+                        <Label
+                            Text="210304012.42141"
+                            TextColor="Red"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            />
+                    </StackLayout>
+                                <!-- Дата и время -->
+                                <StackLayout Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                                             Orientation="Horizontal"
+                                             Spacing="5">
+                                              <Label 
+                                           Text="📅 Дата сбора => "
+                                           FontSize="12"
+                                           TextColor="White"/>
+                        <Label
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            Text="Date"
+                            TextColor="Red"
+                            />
+                    </StackLayout>
+                                    
+                    <StackLayout Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                              Orientation="Horizontal"
+                              Spacing="5">
+                        <Label
+                            Text="👥 Колличество сокомандников => "
+                             FontSize="12"
+                             TextColor="White"/>
+                        <Label
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            TextColor="Red"
+                            Text="CountPlayers"/>
+
+                    </StackLayout>
+
+                    <!-- Участники -->
+                               
+                      </Grid>
+                    </Border>
+                <Button Margin="10" Text="Create"></Button>
+        </StackLayout>
+                
+        <Grid Grid.Row="2"
+              ColumnDefinitions="*,*"
+              ColumnSpacing="10"
+              IsVisible="True">
+
+            <Button Grid.Column="0"
+                    Text="🎯 БУДУ НА ИГРЕ"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    />
+
+            <Button Grid.Column="1"
+                    Text="💢 НЕ СМОГУ"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    />
+        </Grid>
+    </Grid>
+    <StackLayout>
+                
+          <Border 
+              Stroke="White"
+              StrokeThickness="2"
+              >
+              
+            <Grid
+                BackgroundColor="Transparent"
+                WidthRequest="300"
+                HeightRequest="200"
+                >
+                <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                    <Label Text="Ok" TextColor="White" Grid.Column="0" Grid.Row="0" HorizontalOptions="Center"/>
+                    <Label Text="??" TextColor="White" Grid.Column="1" Grid.Row="0" HorizontalOptions="Center"/>
+                    <Label Text="No Ok" TextColor="White" Grid.Column="2"  Grid.Row="0" HorizontalOptions="Center"/>
+                    <CollectionView Grid.Column="0" Grid.Row="1" Background="Aqua">
+                        
+                    </CollectionView>
+                    <CollectionView Grid.Column="1" Grid.Row="1">
+                        
+                    </CollectionView>
+                    <CollectionView Grid.Column="2" Grid.Row="1">
+                        
+                    </CollectionView>
+                </Grid>
+                
+
+          </Border>
+    </StackLayout>
     </VerticalStackLayout>
+    
 </ContentPage>

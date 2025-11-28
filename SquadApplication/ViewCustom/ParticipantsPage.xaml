@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.ParticipantsPage"
              Title="ParticipantsPage"
-             BackgroundColor="Gray"
+             BackgroundImageSource="hkauthorize.jpg"
              >
     <StackLayout Padding="5" HorizontalOptions="Center" VerticalOptions="Start">
         <Label Text="Участники" FontSize="24" HorizontalOptions="Center" VerticalOptions="Start"/>
@@ -13,19 +13,24 @@
                         ItemsSource="{Binding Users}"
                         VerticalOptions="Start"
                         HorizontalOptions="Center"
+                        
                         >
             <CollectionView.ItemTemplate>
                 <DataTemplate>                    
                     <Border
-                        Stroke="Black"
+                        Stroke="DarkKhaki"
+                        StrokeShape="1"
+                        
                         >
                         <StackLayout
                             VerticalOptions="Center"
                             HorizontalOptions="Center"
-                            >                            
-                          <Label Text="Name}" TextColor="White"/>
-                                <Label Text="Sing" TextColor="White"/>
-                                <Label Text="Sing" TextColor="White"/>                                
+                            
+                            
+                            >
+                                <Label Text="{Binding Path=_userName}" TextColor="White"/>
+                                <Label Text="{Binding Path=Id}" TextColor="White"/>
+                                <Label Text="{Binding Path=_isStaffed}" TextColor="White"/>                                
                         </StackLayout>
                     </Border>                    
                 </DataTemplate>
