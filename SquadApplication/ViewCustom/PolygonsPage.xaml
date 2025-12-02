@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.PolygonsPage"
+             BackgroundImageSource="hkauthorize.jpg"
              Title="PolygonsPage">
     <VerticalStackLayout Padding="10">
         <Label 
@@ -10,17 +11,41 @@
             HorizontalOptions="Center" />
         <ScrollView>
             <StackLayout>
-                <Label></Label>
-            <CollectionView>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout>
-                       <Label></Label>
-                       <Label></Label>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                <Label Text="Pol" TextColor="Red"/>
+                <CollectionView x:Name="PolygonsListViewItem"  
+                Background="Transparent"
+                ItemsSource="{Binding Polygons}"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                >
+                    <CollectionView.EmptyView>
+                        <Label 
+                Text="Список пока пуст !!"
+                TextColor="Gray"
+                BackgroundColor="Transparent"
+                FontSize="14"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"/>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                           Stroke="DarkKhaki"
+                           StrokeShape="1"
+                                     >
+                
+                                <StackLayout
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center">
+                                    <Label Text="{Binding Path=Id}" TextColor="White"/>
+                                    <Label Text="{Binding Path=Name}" TextColor="White"/>
+                                    <Label Text="{Binding Path=Coordinates}" TextColor="White"/>
+                                </StackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </StackLayout>
         </ScrollView>
                         

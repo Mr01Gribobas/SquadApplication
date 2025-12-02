@@ -8,6 +8,8 @@ public partial class ParticipantsViewModel : ObservableObject
 {
     [ObservableProperty]
     private ObservableCollection<UserModel> users ;
+    public Int32 _countUsers => Users.Count;
+
     private ParticipantsPage participantsPage;
     public ParticipantsViewModel(ParticipantsPage participantsPage)
     {

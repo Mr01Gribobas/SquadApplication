@@ -4,10 +4,12 @@ namespace SquadApplication.ViewCustom;
 
 public partial class PolygonsPage : ContentPage
 {
+	public PolygonsViewModel _polygonsViewModel;
 	public PolygonsPage()
 	{
 		InitializeComponent();
-        BindingContext = new PolygonsViewModel();
+        _polygonsViewModel = new PolygonsViewModel();
+		BindingContext = _polygonsViewModel;
 
     }
 }

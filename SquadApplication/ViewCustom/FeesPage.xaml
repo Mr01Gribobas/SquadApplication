@@ -41,7 +41,7 @@
                                TextColor="White"
                                FontSize="16"
                                HorizontalOptions="Center"/>
-                        <Label Text="Командир может создать первое событие"
+                        <Label Text="Командир может создать  событие"
                                TextColor="White"
                                FontSize="12"
                                HorizontalOptions="Center"/>
@@ -157,7 +157,7 @@
                                
                       </Grid>
                     </Border>
-                <Button Margin="10" Text="Create"></Button>
+                <Button Margin="10" Text="Create" Command="{Binding CreateEventCommand}"></Button>
         </StackLayout>
                 
         <Grid Grid.Row="2"
@@ -194,31 +194,73 @@
             <Grid
                 BackgroundColor="Transparent"
                 WidthRequest="300"
-                HeightRequest="200"
+                HeightRequest="250"
                 >
                 <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="100"/>
                     </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition  Width="100" />
+                        <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                     <Label Text="Ok" TextColor="White" Grid.Column="0" Grid.Row="0" HorizontalOptions="Center"/>
                     <Label Text="??" TextColor="White" Grid.Column="1" Grid.Row="0" HorizontalOptions="Center"/>
                     <Label Text="No Ok" TextColor="White" Grid.Column="2"  Grid.Row="0" HorizontalOptions="Center"/>
-                    <CollectionView Grid.Column="0" Grid.Row="1" Background="Aqua">
-                        
+                
+                    <CollectionView 
+                        x:Name="ParticipantsLisyViewItem1"  
+                        Background="Transparent"
+                        ItemsSource="{Binding Users}"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Center"
+                        Margin="5"
+                        Grid.RowSpan="3"
+                        Grid.Column="0" Grid.Row="1" 
+                                    >
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Label Margin="5" HorizontalOptions="Center"  BackgroundColor="Transparent" TextColor="White" Text="{Binding _userName}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
                     </CollectionView>
-                    <CollectionView Grid.Column="1" Grid.Row="1">
                         
+                    <CollectionView
+                        x:Name="ParticipantsLisyViewItem"  
+                        Background="Transparent"
+                        ItemsSource="{Binding Users}"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Center"
+                        Margin="5"                       
+                        Grid.RowSpan="3"
+                        Grid.Column="1" Grid.Row="1">
+                        
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Label Margin="5" HorizontalOptions="Center"  BackgroundColor="Transparent" TextColor="White" Text="{Binding _userName}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
                     </CollectionView>
-                    <CollectionView Grid.Column="2" Grid.Row="1">
                         
+                        
+                    <CollectionView
+                        x:Name="ParticipantsLisyViewItem3"  
+                        Background="Transparent"
+                        ItemsSource="{Binding Users}"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Center"
+                        Margin="5"
+                        Grid.RowSpan="3"
+                        Grid.Column="2" Grid.Row="1">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Label Margin="5" HorizontalOptions="Center"  BackgroundColor="Transparent" TextColor="White" Text="{Binding _userName}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
                     </CollectionView>
                 </Grid>
+
                 
 
           </Border>

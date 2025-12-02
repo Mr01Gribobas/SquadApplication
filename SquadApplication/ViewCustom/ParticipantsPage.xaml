@@ -7,14 +7,25 @@
              >
     <StackLayout Padding="5" HorizontalOptions="Center" VerticalOptions="Start">
         <Label Text="Участники" FontSize="24" HorizontalOptions="Center" VerticalOptions="Start"/>
-        <ScrollView>            
+        <ScrollView>     
+            
         <CollectionView x:Name="ParticipantsLisyViewItem"  
                         Background="Transparent"
                         ItemsSource="{Binding Users}"
                         VerticalOptions="Start"
                         HorizontalOptions="Center"
-                        
                         >
+                <CollectionView.EmptyView>
+                    <Label 
+                        Text="Список пока пуст !!"
+                        TextColor="Gray"
+                        BackgroundColor="Transparent"
+                        FontSize="14"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"/>
+                </CollectionView.EmptyView>
+                        
+                        
             <CollectionView.ItemTemplate>
                 <DataTemplate>                    
                     <Border
@@ -24,9 +35,7 @@
                         >
                         <StackLayout
                             VerticalOptions="Center"
-                            HorizontalOptions="Center"
-                            
-                            
+                            HorizontalOptions="Center"                      
                             >
                                 <Label Text="{Binding Path=_userName}" TextColor="White"/>
                                 <Label Text="{Binding Path=Id}" TextColor="White"/>

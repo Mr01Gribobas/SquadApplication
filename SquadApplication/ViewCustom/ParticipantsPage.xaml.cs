@@ -1,4 +1,5 @@
 using SquadApplication.ViewModels;
+using Microsoft.Maui.Graphics;
 namespace SquadApplication.ViewCustom;
 
 
@@ -10,11 +11,12 @@ public partial class ParticipantsPage : ContentPage
     {
         InitializeComponent();
         _parricipantsModel = new ParticipantsViewModel(this);
-        BindingContext = _parricipantsModel;   
-        
+        BindingContext = _parricipantsModel;
     }
+    
+    
 }
 
-        
 
-    
+
+

@@ -4,10 +4,12 @@ namespace SquadApplication.ViewCustom;
 
 public partial class FeesPage : ContentPage
 {
-	public FeesPage()
+	private FeesViewModel _feesViewModel;
+    public FeesPage()
 	{
 		InitializeComponent();
-		BindingContext = new FeesViewModel();
+		_feesViewModel = new FeesViewModel();
+		BindingContext = _feesViewModel;
 
     }
 }

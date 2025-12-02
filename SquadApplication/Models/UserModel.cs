@@ -8,6 +8,8 @@ public class UserModel
     public string? _userName { get; private set; }//имя
     public int? _age { get; private set; }//возраст
     public bool? _isStaffed { get; private set; }//укомплектованность
+    public bool? _goingToTheGame { get; set; }//явка на игру 
+
 
     public int? EquipmentId { get; set; }
     private Equipment _equipment;//снаряжение

@@ -8,9 +8,8 @@ public partial class MainViewModel : ObservableObject
 {
     public MainViewModel()
     {
-        List<UserModel> list = UserModel.GetRandomData();
-        Users = new ObservableCollection<UserModel>(list);
+        
     }
-    public ObservableCollection<UserModel> Users { get; set; } 
+    
 
 }

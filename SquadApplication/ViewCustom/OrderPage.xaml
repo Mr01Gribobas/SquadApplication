@@ -2,11 +2,40 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.OrderPage"
+             BackgroundImageSource="hkauthorize.jpg"
              Title="OrderPage">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to .NET MAUI!"
+            Text="Order"
+            TextColor="Aquamarine"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+        <StackLayout>
+            <Label Text="Введи название ,колл-во и цену за еденицу товара" TextColor="Aquamarine" HorizontalOptions="Center"/>
+                
+            <Border>
+            <HorizontalStackLayout Margin="5">
+                <Entry x:Name="nameProduct" WidthRequest="100"  Placeholder="Name" PlaceholderColor="Gray" />
+                <Entry x:Name="priceProduct" WidthRequest="100" Placeholder="Price" PlaceholderColor="Gray" />
+                <Entry x:Name="countProduct" WidthRequest="100" Placeholder="Count" PlaceholderColor="Gray" />
+                    <Button Command="{Binding AddProductCommand}"  Margin="4" Text="+1" />
+                    <Button Command="{Binding ReduceProductCommand}" Margin="4"  Text="-1"/>
+            </HorizontalStackLayout>
+            </Border>
+            <Button Text="AddProduct" Command="{Binding AddInOrderCommand}"/>
+        </StackLayout>
+            
+        <Border
+            Opacity="0.4"
+            Margin="50"
+            HeightRequest="400"
+            WidthRequest="350"
+            HorizontalOptions="Center"
+            VerticalOptions="End"
+            >
+            <ScrollView> 
+                
+            </ScrollView>
+        </Border>
     </VerticalStackLayout>
 </ContentPage>

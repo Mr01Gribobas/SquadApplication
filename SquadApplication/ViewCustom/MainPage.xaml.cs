@@ -44,7 +44,7 @@ public partial class MainPage : ContentPage
                 await Shell.Current.GoToAsync($"/{nameof(ProfilePage)}");
                 break;
             case "Заказы":
-                await Shell.Current.GoToAsync($"/{nameof(ProfilePage)}");
+                await Shell.Current.GoToAsync($"/{nameof(OrderPage)}");
                 break;
             default:
                 break;
