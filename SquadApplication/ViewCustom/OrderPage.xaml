@@ -15,9 +15,9 @@
                 
             <Border>
             <HorizontalStackLayout Margin="5">
-                <Entry x:Name="nameProduct" WidthRequest="100"  Placeholder="Name" PlaceholderColor="Gray" />
-                <Entry x:Name="priceProduct" WidthRequest="100" Placeholder="Price" PlaceholderColor="Gray" />
-                <Entry x:Name="countProduct" WidthRequest="100" Placeholder="Count" PlaceholderColor="Gray" />
+                <Entry x:Name="nameProduct" WidthRequest="100"  Placeholder="Name" PlaceholderColor="Gray" Text="{Binding Name}" TextColor="White"/>
+                    <Entry x:Name="priceProduct" WidthRequest="100" Placeholder="Price" PlaceholderColor="Gray" Text="{Binding Price}" TextColor="White" />
+                    <Entry x:Name="countProduct" WidthRequest="100" Placeholder="Count" PlaceholderColor="Gray" Text="{Binding Count}" TextColor="White"/>
                     <Button Command="{Binding AddProductCommand}"  Margin="4" Text="+1" />
                     <Button Command="{Binding ReduceProductCommand}" Margin="4"  Text="-1"/>
             </HorizontalStackLayout>
@@ -25,7 +25,11 @@
             <Button Text="AddProduct" Command="{Binding AddInOrderCommand}"/>
         </StackLayout>
             
+            
+            
+
         <Border
+            BackgroundColor="DarkSlateGrey"
             Opacity="0.4"
             Margin="50"
             HeightRequest="400"
@@ -33,9 +37,36 @@
             HorizontalOptions="Center"
             VerticalOptions="End"
             >
-            <ScrollView> 
+            <StackLayout>
+            <HorizontalStackLayout
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Margin="5">
+                <Label Margin="10" FontSize="15" Text="Название" TextColor="White"/>
+                <Label Margin="10" FontSize="15" Text="Колл-во" TextColor="White"/>
+                <Label Margin="10" FontSize="15" Text="Цена" TextColor="White"/>
+                <Label Margin="10" FontSize="14" Text="Сумма" TextColor="White"/>
+            </HorizontalStackLayout>
                 
-            </ScrollView>
+                <CollectionView                    
+                    HorizontalOptions="Center"
+                    Margin="1"
+                    ItemsSource="{Binding Orders}"
+                    >
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <HorizontalStackLayout Margin="1" Padding="1">
+                                <Label Margin="20" FontSize="18" TextColor="White" Text="{Binding Path= _nameProduct}" HeightRequest="20"/>
+                                <Label Margin="20" FontSize="18" TextColor="White" Text="{Binding Path= _countProduct}" HeightRequest="20"/>
+                                <Label Margin="20" FontSize="18" TextColor="White" Text="{Binding Path= _priceProduct}" HeightRequest="20"/>
+                                <Label Margin="20" FontSize="18" TextColor="White" Text="{Binding Path= _totalSum}"  HeightRequest="20"/>
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Label Text="{Binding TotalSum}" TextColor="GreenYellow" WidthRequest="250" FontSize="20" Margin="5" HorizontalOptions="Start" HeightRequest="30" />
+            </StackLayout>
         </Border>
+     <Button Text="Reset" Command="{Binding ResetListCommand}"/>
     </VerticalStackLayout>
 </ContentPage>

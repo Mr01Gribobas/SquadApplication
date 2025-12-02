@@ -25,6 +25,9 @@ public partial class OrderViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Order> orders;
 
+    [ObservableProperty]
+    private string totalSum; 
+
     [RelayCommand]
     public void AddProduct()
     {
@@ -62,6 +65,7 @@ public partial class OrderViewModel : ObservableObject
         {
             Order newOrder = new Order(Name, int.Parse(Price), int.Parse(Count));
             Orders.Add(newOrder);
+            UpdateTotalSum();
 
         }
         catch(Exception)
@@ -70,6 +74,20 @@ public partial class OrderViewModel : ObservableObject
             _orderPage.DisplayAlertAsync("info", "errorFormat", "Ok");
 
         }
+    }
+
+    private void UpdateTotalSum()
+    {
+        var sum = Orders.Select(p => p._totalSum).Sum();
+        TotalSum = $"Общая сумма : {sum}";
+    }
+
+    [RelayCommand]
+    public void ResetList()
+    {
+        UpdateTotalSum();
+        Orders.Clear();
+
     }
 
 
