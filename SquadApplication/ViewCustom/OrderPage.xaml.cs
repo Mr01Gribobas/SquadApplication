@@ -4,10 +4,12 @@ namespace SquadApplication.ViewCustom;
 
 public partial class OrderPage : ContentPage
 {
-	public OrderPage()
+	private OrderViewModel _orderViewModel;
+    public OrderPage()
 	{
 		InitializeComponent();
-		BindingContext = new OrderViewModel(this);
+        _orderViewModel= new OrderViewModel(this);
+        BindingContext = _orderViewModel;
 		
     }
 }

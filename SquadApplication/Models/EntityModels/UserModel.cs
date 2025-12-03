@@ -1,10 +1,14 @@
-﻿namespace SquadApplication.Models;
+﻿using SquadApplication.Repositories;
+
+namespace SquadApplication.Models.EntityModels;
 
 public class UserModel
 {
     public int Id { get; set; }
-    private Role _role;//роль
+    private Role? _role;//роль
     public string _callSing { get; private set; } = null!;  //позывной
+    public string _teamName { get; private set; } = null!;//team
+    public string _phoneNumber { get; private set; } = null!;// number
     public string? _userName { get; private set; }//имя
     public int? _age { get; private set; }//возраст
     public bool? _isStaffed { get; private set; }//укомплектованность
@@ -12,7 +16,37 @@ public class UserModel
 
 
     public int? EquipmentId { get; set; }
-    private Equipment _equipment;//снаряжение
+    public Equipment _equipment;//снаряжение
+
+
+
+
+    public static bool CreateUserEntity(string _teamName,string _name, string _callSing, string _phone, Role? _role, int? _age)
+    {
+        UserModel newUser = new UserModel()
+        {
+            _teamName = _teamName,
+            _userName = _name,
+            _role = _role,
+            _callSing = _callSing,
+            _phoneNumber = _phone,
+            _age = _age,
+        };
+
+        DataBaseManager baseManager = new DataBaseManager();
+        baseManager.SendDataForEnter(DataFor.Registration,newUser);
+        return true;
+    }
+
+
+
+
+
+
+
+
+
+
 
     public static List<UserModel> GetRandomData()
     {
@@ -33,7 +67,7 @@ public class UserModel
         userMode4.Id = 4;
         userMode4._isStaffed = true;
         var list = new List<UserModel>();
-        list.AddRange(userModel, userMode2,userMode3,userMode4);
+        list.AddRange(userModel, userMode2, userMode3, userMode4);
         return list;
     }
 

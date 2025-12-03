@@ -1,4 +1,4 @@
-﻿using SquadApplication.Models;
+﻿using SquadApplication.Models.EntityModels;
 using System.Collections.ObjectModel;
 
 namespace SquadApplication.ViewModels;

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using SquadApplication.Models.EntityModels;
 using SquadApplication.ViewCustom;
 
 namespace SquadApplication.ViewModels;
@@ -38,7 +39,14 @@ public partial class AuthorizeViewModel  :ObservableObject
     [RelayCommand]
     private void Registration()
     {
-
+        UserModel.CreateUserEntity(
+            _teamName: Team,
+            _name: Name,
+            _callSing: CallSing,
+            _phone: PhuneNumber,
+            _age:null,
+            _role:null
+            );
     }
 
 }
