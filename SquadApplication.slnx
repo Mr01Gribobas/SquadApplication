@@ -2,4 +2,5 @@
   <Project Path="SquadApplication/SquadApplication.csproj">
     <Deploy />
   </Project>
+  <Project Path="SquadServer/SquadServer.csproj" Id="7de6fea6-2cc6-4047-82c4-6c6d19ae6b8b" />
 </Solution>
