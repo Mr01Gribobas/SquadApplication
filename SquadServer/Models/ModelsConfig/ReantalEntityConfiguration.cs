@@ -5,5 +5,10 @@ public class ReantalEntityConfiguration : IEntityTypeConfiguration<ReantalEntity
     public void Configure(EntityTypeBuilder<ReantalEntity> builder)
     {
         builder.HasKey(x => x.Id);
+
+        builder.
+            HasOne(r => r.TeamEntity).
+            WithMany(t => t.Reantals).
+            HasForeignKey(k => k.TeamId);
     }
 }

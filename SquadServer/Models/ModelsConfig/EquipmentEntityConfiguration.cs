@@ -6,6 +6,8 @@ public class EquipmentEntityConfiguration : IEntityTypeConfiguration<EquipmentEn
     {
         builder.HasKey(x => x.Id);
 
+        // Устанавливаем уникальный индекс, чтобы у одного пользователя
+        // не могло быть несколько инвентарей
         builder.HasIndex(x => x.OwnerEquipmentId).IsUnique();
 
         builder.Property(x => x.NameMainWeapon).HasMaxLength(50);

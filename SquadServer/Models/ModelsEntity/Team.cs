@@ -7,8 +7,11 @@ public class TeamEntity
     public int CountMembers { get; set; }
 
     public ICollection<UserModelEntity> Members { get; set; } = new List<UserModelEntity>();
+    public ICollection<ReantalEntity> Reantals { get; set; } = new List<ReantalEntity>();
 
 
+    public int? ReantalId { get; set; }
+    public virtual ReantalEntity? ReantalEntity  { get; set; }
 
 
 }

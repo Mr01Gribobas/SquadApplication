@@ -12,5 +12,11 @@ public class TeamEntityConfiguration : IEntityTypeConfiguration<TeamEntity>
             .WithOne(u=>u.Team)
             .HasForeignKey(u => u.TeamId)
             .OnDelete(DeleteBehavior.SetNull);
+
+        builder
+            .HasMany(r => r.Reantals)
+            .WithOne(r => r.TeamEntity).
+            HasForeignKey(u => u.TeamId).
+            OnDelete(DeleteBehavior.Cascade);
     }
 }

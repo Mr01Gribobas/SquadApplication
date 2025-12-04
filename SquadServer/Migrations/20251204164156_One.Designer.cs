@@ -12,7 +12,7 @@ using SquadServer.Models.DbContextDir;
 namespace SquadServer.Migrations
 {
     [DbContext(typeof(SquadDbContext))]
-    [Migration("20251204134528_One")]
+    [Migration("20251204164156_One")]
     partial class One
     {
         /// <inheritdoc />
@@ -123,6 +123,26 @@ namespace SquadServer.Migrations
                     b.ToTable("HistoryEvents");
                 });
 
+            modelBuilder.Entity("SquadServer.Models.ModelsEntity.TeamEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CountMembers")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Teams");
+                });
+
             modelBuilder.Entity("SquadServer.Models.PolygonEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -192,6 +212,9 @@ namespace SquadServer.Migrations
                     b.Property<int?>("EquipmentId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("_age")
                         .HasColumnType("int");
 
@@ -221,6 +244,8 @@ namespace SquadServer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TeamId");
+
                     b.ToTable("Players");
                 });
 
@@ -233,6 +258,21 @@ namespace SquadServer.Migrations
                         .IsRequired();
 
                     b.Navigation("OwnerEquipment");
+                });
+
+            modelBuilder.Entity("SquadServer.Models.UserModelEntity", b =>
+                {
+                    b.HasOne("SquadServer.Models.ModelsEntity.TeamEntity", "Team")
+                        .WithMany("Members")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("SquadServer.Models.ModelsEntity.TeamEntity", b =>
+                {
+                    b.Navigation("Members");
                 });
 
             modelBuilder.Entity("SquadServer.Models.UserModelEntity", b =>

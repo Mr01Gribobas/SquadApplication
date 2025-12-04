@@ -25,7 +25,7 @@ public class UserModelEntity
 
     public static UserModelEntity CreateUserEntity(string _teamName, string _name, string _callSing, string _phone, Role _role, int? _age)
     {
-      
+
         UserModelEntity newUser = new UserModelEntity()
         {
             _teamName = _teamName,
@@ -34,6 +34,7 @@ public class UserModelEntity
             _callSing = _callSing,
             _phoneNumber = _phone,
             _age = _age,
+            TeamId = 1
         };
         
         return newUser;
