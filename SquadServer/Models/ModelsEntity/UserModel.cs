@@ -1,4 +1,6 @@
-﻿namespace SquadServer.Models;
+﻿using System.Data;
+
+namespace SquadServer.Models;
 
 public class UserModelEntity
 {
@@ -14,7 +16,29 @@ public class UserModelEntity
 
 
     public int? EquipmentId { get; set; }
-    public EquipmentEntity? Equipment;//снаряжение
+    public virtual EquipmentEntity? Equipment { get; set; }//снаряжение
+
+    public int? TeamId { get; set; }
+    public virtual TeamEntity? Team { get; set; }
+
+
+
+    public static UserModelEntity CreateUserEntity(string _teamName, string _name, string _callSing, string _phone, Role _role, int? _age)
+    {
+      
+        UserModelEntity newUser = new UserModelEntity()
+        {
+            _teamName = _teamName,
+            _userName = _name,
+            _role = _role,
+            _callSing = _callSing,
+            _phoneNumber = _phone,
+            _age = _age,
+        };
+        
+        return newUser;
+    }
+
 
 }
 

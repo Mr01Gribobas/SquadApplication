@@ -20,7 +20,8 @@ public class UserModelEntity
     public EquipmentEntity _equipment;//снаряжение
 
 
-
+    public int? TeamId { get; set; }
+    public virtual TeamEntity? Team { get; set; }
 
 
 
@@ -34,7 +35,7 @@ public class UserModelEntity
         {
             _teamName = _teamName,
             _userName = _name,
-            _role = _role,
+            _role = _role, 
             _callSing = _callSing,
             _phoneNumber = _phone,
             _age = _age,

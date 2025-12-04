@@ -9,6 +9,9 @@ public class SquadDbContext: DbContext
     public DbSet<ReantalEntity> Reantils { get; set; }
     public DbSet<EventModelEntity> Events { get; set; }
     public DbSet<HisoryEventsModelEntity> HistoryEvents { get; set; }
+    public DbSet<TeamEntity> Teams { get; set; }
+
+    public SquadDbContext(){ }
     public SquadDbContext(DbContextOptions<SquadDbContext> options) : base (options)
     {
         Database.EnsureDeleted();
@@ -22,6 +25,7 @@ public class SquadDbContext: DbContext
         modelBuilder.ApplyConfiguration(new ReantalEntityConfiguration());
         modelBuilder.ApplyConfiguration(new EquipmentEntityConfiguration());
         modelBuilder.ApplyConfiguration(new HisoryEventsModelEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new TeamEntityConfiguration());
         base.OnModelCreating(modelBuilder);
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

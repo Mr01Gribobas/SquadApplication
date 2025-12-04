@@ -15,7 +15,7 @@ public  class EquipmentEntity
     public bool UnloudingEquipment { get; set; }//Разгрузка
 
     public int OwnerEquipmentId { get; set; }
-    public UserModelEntity OwnerEquipment { get; set; } = null!;
+    public virtual UserModelEntity OwnerEquipment { get; set; } = null!; 
 
 
 }
