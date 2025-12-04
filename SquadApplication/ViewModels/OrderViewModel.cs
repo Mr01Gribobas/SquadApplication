@@ -1,9 +1,4 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using SquadApplication.Models;
-using SquadApplication.ViewCustom;
-using System.Collections.ObjectModel;
-
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 
 public partial class OrderViewModel : ObservableObject
 {

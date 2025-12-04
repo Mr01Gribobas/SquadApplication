@@ -1,4 +1,3 @@
-using SquadApplication.ViewModels;
 
 namespace SquadApplication.ViewCustom;
 

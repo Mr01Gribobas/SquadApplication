@@ -1,11 +1,12 @@
 ﻿using SquadApplication.Repositories;
+using System.Data;
 
 namespace SquadApplication.Models.EntityModels;
 
-public class UserModel
+public class UserModelEntity
 {
     public int Id { get; set; }
-    private Role? _role;//роль
+    public Role _role { get; private set; }
     public string _callSing { get; private set; } = null!;  //позывной
     public string _teamName { get; private set; } = null!;//team
     public string _phoneNumber { get; private set; } = null!;// number
@@ -16,14 +17,20 @@ public class UserModel
 
 
     public int? EquipmentId { get; set; }
-    public Equipment _equipment;//снаряжение
+    public EquipmentEntity _equipment;//снаряжение
 
 
 
 
-    public static bool CreateUserEntity(string _teamName,string _name, string _callSing, string _phone, Role? _role, int? _age)
+
+
+    public static bool CreateUserEntity(string _teamName,string _name, string _callSing, string _phone, Role _role, int? _age)
     {
-        UserModel newUser = new UserModel()
+        if(_role<=0)
+        {
+            return false;
+        }
+        UserModelEntity newUser = new UserModelEntity()
         {
             _teamName = _teamName,
             _userName = _name,
@@ -32,41 +39,29 @@ public class UserModel
             _phoneNumber = _phone,
             _age = _age,
         };
-
         DataBaseManager baseManager = new DataBaseManager();
         baseManager.SendDataForEnter(DataFor.Registration,newUser);
         return true;
     }
-
-
-
-
-
-
-
-
-
-
-
-    public static List<UserModel> GetRandomData()
+    public static List<UserModelEntity> GetRandomData()
     {
-        UserModel userModel = new UserModel();
+        UserModelEntity userModel = new UserModelEntity();
         userModel._userName = "Maks";
         userModel.Id = 1;
         userModel._isStaffed = false;
-        UserModel userMode2 = new UserModel();
+        UserModelEntity userMode2 = new UserModelEntity();
         userMode2._userName = "Roma";
         userMode2.Id = 2;
         userMode2._isStaffed = true;
-        UserModel userMode3 = new UserModel();
+        UserModelEntity userMode3 = new UserModelEntity();
         userMode3._userName = "Sasha";
         userMode3.Id = 3;
         userMode3._isStaffed = false;
-        UserModel userMode4 = new UserModel();
+        UserModelEntity userMode4 = new UserModelEntity();
         userMode4._userName = "Fama";
         userMode4.Id = 4;
         userMode4._isStaffed = true;
-        var list = new List<UserModel>();
+        var list = new List<UserModelEntity>();
         list.AddRange(userModel, userMode2, userMode3, userMode4);
         return list;
     }

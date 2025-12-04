@@ -1,5 +1,4 @@
-﻿using SquadApplication.Models.EntityModels;
-
+﻿
 namespace SquadApplication.Repositories;
 
 public class DataBaseManager
@@ -14,7 +13,7 @@ public class DataBaseManager
     {
         if(dataFor==DataFor.Registration)
         {
-            UserModel user = (UserModel)data;
+            UserModelEntity user = (UserModelEntity)data;
         }
         else
         {

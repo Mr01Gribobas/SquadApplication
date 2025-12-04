@@ -1,21 +1,17 @@
-﻿using SquadApplication.Models;
-using SquadApplication.Models.EntityModels;
-using SquadApplication.ViewCustom;
-using System.Collections.ObjectModel;
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 
 
 public partial class ParticipantsViewModel : ObservableObject
 {
     [ObservableProperty]
-    private ObservableCollection<UserModel> users ;
+    private ObservableCollection<UserModelEntity> users ;
     public Int32 _countUsers => Users.Count;
 
     private ParticipantsPage participantsPage;
     public ParticipantsViewModel(ParticipantsPage participantsPage)
     {
-        var list = UserModel.GetRandomData();
-        users = new ObservableCollection<UserModel>(list);
+        var list = UserModelEntity.GetRandomData();
+        users = new ObservableCollection<UserModelEntity>(list);
         this.participantsPage = participantsPage;
     }
 

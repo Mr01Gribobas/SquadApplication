@@ -1,5 +1,13 @@
 using SquadApplication.ViewModels;
 using Microsoft.Maui.Graphics;
+using SquadApplication.ViewModels;
+using SquadApplication.ViewModels;
+using SquadApplication.ViewModels;
+using CommunityToolkit.Mvvm.Input;
+using SquadApplication.Models;
+using SquadApplication.Models.EntityModels;
+using SquadApplication.ViewCustom;
+using CommunityToolkit.Mvvm.Input;
 namespace SquadApplication.ViewCustom;
 
 

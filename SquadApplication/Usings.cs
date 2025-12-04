@@ -1,0 +1,9 @@
+﻿global using Microsoft.Extensions.Logging;
+global using SquadApplication.ViewCustom;
+global using SquadApplication.Models.EntityModels;
+global using System.Collections.ObjectModel;
+global using SquadApplication.Models;
+global using CommunityToolkit.Mvvm.Input;
+global  using CommunityToolkit.Mvvm.ComponentModel;
+global using SquadApplication.ViewModels;
+namespace SquadApplication ;

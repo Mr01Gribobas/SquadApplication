@@ -1,8 +1,4 @@
-﻿using SquadApplication.ViewCustom;
-namespace SquadApplication;
-
-
-
+﻿namespace SquadApplication;
 public partial class AppShell : Shell
 {
     public AppShell()

@@ -1,5 +1,3 @@
-using SquadApplication.ViewModels;
-
 namespace SquadApplication.ViewCustom;
 
 public partial class ProfilePage : ContentPage

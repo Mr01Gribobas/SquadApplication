@@ -1,20 +1,16 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using SquadApplication.Models.EntityModels;
-using SquadApplication.ViewCustom;
-using System.Collections.ObjectModel;
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 
 
 public partial class FeesViewModel : ObservableObject
 {
     public FeesViewModel()
     {
-        List<UserModel> list = UserModel.GetRandomData();
-        Users = new ObservableCollection<UserModel>(list);
+        List<UserModelEntity> list = UserModelEntity.GetRandomData();
+        Users = new ObservableCollection<UserModelEntity>(list);
     }
 
     [ObservableProperty]
-    private ObservableCollection<UserModel> users;
+    private ObservableCollection<UserModelEntity> users;
 
 
     [RelayCommand]

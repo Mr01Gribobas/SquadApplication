@@ -1,7 +1,4 @@
-﻿using SquadApplication.Models.EntityModels;
-using System.Collections.ObjectModel;
-
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 
 public partial class PolygonsViewModel : ObservableObject
 {

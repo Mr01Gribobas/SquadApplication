@@ -3,7 +3,7 @@
 public class UserModelEntity
 {
     public int Id { get; set; }
-    private Role? _role;//роль
+    public Role _role { get; private set; } //роль
     public string _callSing { get; private set; } = null!;  //позывной
     public string _teamName { get; private set; } = null!;//team
     public string _phoneNumber { get; private set; } = null!;// number
