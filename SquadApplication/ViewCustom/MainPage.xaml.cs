@@ -1,8 +1,11 @@
 
+using SquadApplication.AnimationCustom;
+
 namespace SquadApplication.ViewCustom;
 
 public partial class MainPage : ContentPage
 {
+    private CustomsAnimation customsAnimation = new CustomsAnimation();
     public MainPage()
     {
         InitializeComponent();
@@ -19,6 +22,12 @@ public partial class MainPage : ContentPage
             ListItems.SelectedItem = null;
         }
     }
+
+    private async Task AnimateTest()
+    {
+        await ListItems.RotateToAsync(360, 1000);
+    }
+
 
 
     private static async Task GoNextPage(object? result)
