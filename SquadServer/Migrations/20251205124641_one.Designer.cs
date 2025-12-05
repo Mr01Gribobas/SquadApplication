@@ -12,8 +12,8 @@ using SquadServer.Models.DbContextDir;
 namespace SquadServer.Migrations
 {
     [DbContext(typeof(SquadDbContext))]
-    [Migration("20251204164156_One")]
-    partial class One
+    [Migration("20251205124641_one")]
+    partial class one
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -193,10 +193,15 @@ namespace SquadServer.Migrations
                     b.Property<bool>("SVMP")
                         .HasColumnType("bit");
 
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Weapon")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Reantils");
                 });
@@ -221,6 +226,9 @@ namespace SquadServer.Migrations
                     b.Property<string>("_callSing")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("_enterCode")
+                        .HasColumnType("bigint");
 
                     b.Property<bool?>("_goingToTheGame")
                         .HasColumnType("bit");
@@ -260,6 +268,17 @@ namespace SquadServer.Migrations
                     b.Navigation("OwnerEquipment");
                 });
 
+            modelBuilder.Entity("SquadServer.Models.ReantalEntity", b =>
+                {
+                    b.HasOne("SquadServer.Models.ModelsEntity.TeamEntity", "TeamEntity")
+                        .WithMany("Reantals")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TeamEntity");
+                });
+
             modelBuilder.Entity("SquadServer.Models.UserModelEntity", b =>
                 {
                     b.HasOne("SquadServer.Models.ModelsEntity.TeamEntity", "Team")
@@ -273,6 +292,8 @@ namespace SquadServer.Migrations
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.TeamEntity", b =>
                 {
                     b.Navigation("Members");
+
+                    b.Navigation("Reantals");
                 });
 
             modelBuilder.Entity("SquadServer.Models.UserModelEntity", b =>

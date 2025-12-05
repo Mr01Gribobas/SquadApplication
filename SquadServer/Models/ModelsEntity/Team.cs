@@ -1,4 +1,5 @@
-﻿namespace SquadServer.Models.ModelsEntity;
+﻿
+namespace SquadServer.Models.ModelsEntity;
 
 public class TeamEntity
 {
@@ -9,9 +10,17 @@ public class TeamEntity
     public ICollection<UserModelEntity> Members { get; set; } = new List<UserModelEntity>();
     public ICollection<ReantalEntity> Reantals { get; set; } = new List<ReantalEntity>();
 
+    public static TeamEntity CreateTeam(UserModelEntity userModel)
+    {
+        if(userModel is null)
+            return null;
 
-    public int? ReantalId { get; set; }
-    public virtual ReantalEntity? ReantalEntity  { get; set; }
+        TeamEntity team = new TeamEntity()
+        {
+            Name = userModel._teamName,
+            CountMembers = 0,
+        };
+        return team;
 
-
+    }
 }

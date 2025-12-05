@@ -23,7 +23,9 @@ app.UseHttpsRedirection();
 app.UseRouting();
 //TestBlock
 
-Test.TestMethodTeam(2);
+Test.TestMethodCreateCommanderAndTeam();
+    
+    
 
 
 

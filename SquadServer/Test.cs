@@ -1,25 +1,38 @@
 ﻿using SquadServer.Models;
+using SquadServer.Repositoryes;
 
 namespace SquadServer;
 
 public static class Test
 {
-    public static void TestMethodPolygon()
+    private static DataBaseRepository _dataBaseRepository;
+    static Test()
     {
+        SquadDbContext db = new SquadDbContext();
+        _dataBaseRepository = new DataBaseRepository(db);
+    }
+    public static void TestMethodCreateCommanderAndTeam()
+    {
+        var user = UserModelEntity.CreateUserEntity("Falanga", "Roma", "Bezumie", "897383", Role.Private, 24,null);
+
+        UserModelEntity? newUser = _dataBaseRepository.CreateNewUser(user);
+
 
     }
     public static void TestMethodUser()
     {
         using(SquadDbContext db = new SquadDbContext())
         {
-            db.Players.Add(UserModelEntity.CreateUserEntity("Falanga", "Maks", "Bezumie", "897383", Role.LordOfTheApplication, 24));
+            db.Players.Add(UserModelEntity.CreateUserEntity("Falanga", "Maks", "Bezumie", "897383", Role.LordOfTheApplication, 24, 1));
             var team = db.Teams.FirstOrDefault();
-            team.Members.Add(UserModelEntity.CreateUserEntity("Falanga", "Maks", "Bezumie", "897383", Role.LordOfTheApplication, 24));
+            team.Members.Add(UserModelEntity.CreateUserEntity("Falanga", "Maks", "Bezumie", "897383", Role.LordOfTheApplication, 24, 1));
             db.SaveChanges();
 
 
         }
     }
+
+
     public static void TestMethodEquip()
     {
         using(SquadDbContext db = new SquadDbContext())

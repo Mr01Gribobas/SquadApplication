@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SquadServer.Migrations
 {
     /// <inheritdoc />
-    public partial class One : Migration
+    public partial class one : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -59,26 +59,6 @@ namespace SquadServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reantils",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Weapon = table.Column<bool>(type: "bit", nullable: false),
-                    Mask = table.Column<bool>(type: "bit", nullable: false),
-                    Helmet = table.Column<bool>(type: "bit", nullable: false),
-                    Balaclava = table.Column<bool>(type: "bit", nullable: false),
-                    SVMP = table.Column<bool>(type: "bit", nullable: false),
-                    Outterwear = table.Column<bool>(type: "bit", nullable: false),
-                    Gloves = table.Column<bool>(type: "bit", nullable: false),
-                    BulletproofVestOrUnloadingVest = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reantils", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Teams",
                 columns: table => new
                 {
@@ -105,6 +85,7 @@ namespace SquadServer.Migrations
                     _userName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     _age = table.Column<int>(type: "int", nullable: true),
                     _isStaffed = table.Column<bool>(type: "bit", nullable: true),
+                    _enterCode = table.Column<long>(type: "bigint", nullable: false),
                     _goingToTheGame = table.Column<bool>(type: "bit", nullable: true),
                     EquipmentId = table.Column<int>(type: "int", nullable: true),
                     TeamId = table.Column<int>(type: "int", nullable: true)
@@ -118,6 +99,33 @@ namespace SquadServer.Migrations
                         principalTable: "Teams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reantils",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Weapon = table.Column<bool>(type: "bit", nullable: false),
+                    Mask = table.Column<bool>(type: "bit", nullable: false),
+                    Helmet = table.Column<bool>(type: "bit", nullable: false),
+                    Balaclava = table.Column<bool>(type: "bit", nullable: false),
+                    SVMP = table.Column<bool>(type: "bit", nullable: false),
+                    Outterwear = table.Column<bool>(type: "bit", nullable: false),
+                    Gloves = table.Column<bool>(type: "bit", nullable: false),
+                    BulletproofVestOrUnloadingVest = table.Column<bool>(type: "bit", nullable: false),
+                    TeamId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reantils", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reantils_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -155,6 +163,11 @@ namespace SquadServer.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Players_TeamId",
                 table: "Players",
+                column: "TeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reantils_TeamId",
+                table: "Reantils",
                 column: "TeamId");
         }
 

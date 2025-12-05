@@ -1,6 +1,4 @@
-﻿using System.Data;
-
-namespace SquadServer.Models;
+﻿namespace SquadServer.Models;
 
 public class UserModelEntity
 {
@@ -12,6 +10,7 @@ public class UserModelEntity
     public string? _userName { get; private set; }//имя
     public int? _age { get; private set; }//возраст
     public bool? _isStaffed { get; private set; }//укомплектованность
+    public Int64 _enterCode { get; set; }
     public bool? _goingToTheGame { get; set; }//явка на игру 
 
 
@@ -23,7 +22,7 @@ public class UserModelEntity
 
 
 
-    public static UserModelEntity CreateUserEntity(string _teamName, string _name, string _callSing, string _phone, Role _role, int? _age)
+    public static UserModelEntity CreateUserEntity(string _teamName, string _name, string _callSing, string _phone, Role _role, int? _age, int? _teamId)
     {
 
         UserModelEntity newUser = new UserModelEntity()
@@ -34,12 +33,28 @@ public class UserModelEntity
             _callSing = _callSing,
             _phoneNumber = _phone,
             _age = _age,
-            TeamId = 1
+            _enterCode = GenerationCode(_phone),
+            TeamId = _teamId
         };
-        
+
+
         return newUser;
     }
 
+
+    private static Int64 GenerationCode(string phuneNumber)
+    {
+        if(phuneNumber is null)
+            throw new ArgumentNullException();
+
+        char[] skipsNumbers =  phuneNumber.Skip(5).ToArray();
+        string newString = new string(skipsNumbers);
+
+        if(!int.TryParse(newString, out int code))
+            throw new FormatException();
+
+        return code;
+    }
 
 }
 
