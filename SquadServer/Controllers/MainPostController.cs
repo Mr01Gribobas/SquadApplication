@@ -10,7 +10,7 @@ public class MainPostController:Controller
     }
 
     [HttpPost]
-    public IActionResult? CreateEvent()
+    public IActionResult? CreateEvent(int commanderId)
     {
         return null;
     }
@@ -22,25 +22,25 @@ public class MainPostController:Controller
     }
 
     [HttpPost]
-    public IActionResult? CreateEquip()
+    public IActionResult? CreateEquip(int userId)
     {
         return null;
     }
 
     [HttpPost]
-    public IActionResult? AddReantils()
+    public IActionResult? AddReantils(int commanderId)
     {
         return null;
     }
 
     [HttpPost]
-    public IActionResult? UpdateReantilsById(int reantilId)
+    public IActionResult? UpdateReantilsById(int reantilId, int userId)
     {
         return null;
     }
 
     [HttpPost]
-    public IActionResult? AddPolygon()
+    public IActionResult? AddPolygon(int userId)
     {
         return null;
     }

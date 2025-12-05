@@ -74,4 +74,44 @@ public class DataBaseRepository
                                Where(t => t.Name == userFromApp._teamName).
                                ToList();
     }
+
+    internal List<UserModelEntity>? GetAllMembers(int teamId)
+    {
+        var list = _squadDbContext.Players.
+                          Where(u => u.TeamId == teamId).
+                          OrderBy(u => u._role).
+                          ToList();
+        return list;
+    }
+
+    internal List<ReantalEntity>? GetAllReantil(int teamId)
+    {
+        var list = _squadDbContext.Reantils.
+                           Where(r => r.TeamId == teamId).
+                           ToList();
+        return list;
+    }
+
+    internal List<PolygonEntity> GetAllPolygons()
+    {
+        var list = _squadDbContext.Polygons.ToList();
+        return list;
+    }
+
+    internal List<HisoryEventsModelEntity> GetEventHistory()
+    {
+        var list = _squadDbContext.HistoryEvents.ToList();
+        return list;
+    }
+
+    internal EventModelEntity? GeuEvent()
+    {
+        return _squadDbContext.Events.FirstOrDefault();
+    }
+
+    internal EquipmentEntity? GetEquipById(int id)
+    {
+        var eqip = _squadDbContext.Equipments.FirstOrDefault(e => e.OwnerEquipmentId == id);
+        return eqip;
+    }
 }

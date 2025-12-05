@@ -1,41 +1,56 @@
-﻿namespace SquadServer.Controllers;
+﻿using SquadServer.Repositoryes;
+
+namespace SquadServer.Controllers;
 
 public class MainGetController : Controller
 {
     private readonly SquadDbContext _squadDbContext;
+    private readonly DataBaseRepository _dataBaseRepository;
 
     public MainGetController(SquadDbContext squadDb)
     {
         _squadDbContext = squadDb;
+        _dataBaseRepository = new DataBaseRepository(_squadDbContext);
     }
     [HttpGet]
-    public IActionResult? GetAllTeamMembers()
+    public IActionResult? GetAllTeamMembers(int teamId)
     {
-        return null;
+        var listMembers = _dataBaseRepository.GetAllMembers(teamId);
+        return Json(listMembers);
     }
 
     [HttpGet]
-    public IActionResult? GetAllReantil()
+    public IActionResult? GetAllReantil(int teamId)
     {
-        return null;
+        var list = _dataBaseRepository.GetAllReantil(teamId);
+        return Json(list);
     }
 
     [HttpGet]
     public IActionResult? GetAllPolygons()
     {
-        return null;
+        var list = _dataBaseRepository.GetAllPolygons();
+        return Json(list);
     }
 
     [HttpGet]
-    public IActionResult? GetAllEventById()
+    public IActionResult? GetAllEventsHistory()
     {
-        return null;
+        var list = _dataBaseRepository.GetEventHistory();
+        return Json(list);
+    }
+
+    [HttpGet]
+    public IActionResult? GetEvent()
+    {
+          return Json(_dataBaseRepository.GeuEvent());
     }
 
 
     [HttpGet]
     public IActionResult? GetEquipById(int id)
     {
-        return null;
+        var equip = _dataBaseRepository.GetEquipById(id);
+        return Json(equip);
     }
 }

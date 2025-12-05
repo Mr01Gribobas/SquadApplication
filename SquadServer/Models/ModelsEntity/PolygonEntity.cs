@@ -7,7 +7,7 @@ public class PolygonEntity
     public string Name { get; set; }
     public string Coordinates { get; set; }
 
+}
 
     
     
-}
