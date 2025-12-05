@@ -14,7 +14,7 @@ public class UserModelEntity
     public int? _age { get; private set; }//возраст
     public bool? _isStaffed { get; private set; }//укомплектованность
     public bool? _goingToTheGame { get; set; }//явка на игру 
-
+    public Int64 _enterCode { get; set; }
 
     public int? EquipmentId { get; set; }
     public EquipmentEntity _equipment;//снаряжение
@@ -25,24 +25,23 @@ public class UserModelEntity
 
 
 
-    public static bool CreateUserEntity(string _teamName,string _name, string _callSing, string _phone, Role _role, int? _age)
+    public static UserModelEntity CreateUserEntity(string _teamName, string _name, string _callSing, string _phone, Role _role, int? _age, int? _teamId)
     {
-        if(_role<=0)
-        {
-            return false;
-        }
+
         UserModelEntity newUser = new UserModelEntity()
         {
             _teamName = _teamName,
             _userName = _name,
-            _role = _role, 
+            _role = _role,
             _callSing = _callSing,
             _phoneNumber = _phone,
             _age = _age,
+            _enterCode = 0,
+            TeamId = _teamId
         };
-        DataBaseManager baseManager = new DataBaseManager();
-        baseManager.SendDataForEnter(DataFor.Registration,newUser);
-        return true;
+
+
+        return newUser;
     }
     public static List<UserModelEntity> GetRandomData()
     {

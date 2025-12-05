@@ -11,4 +11,8 @@ public class EventModelEntity
 
     public int CountMembers { get; set; } = 0;
 
+
+    public int TeamId { get; set; }
+    public virtual TeamEntity Team { get; set; } = null!;
+
 }

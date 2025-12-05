@@ -1,6 +1,6 @@
 ﻿namespace SquadApplication.Models.EntityModels;
 
-public class Reantal
+public class ReantalEntity
 {
     public int Id { get; set; }
     public bool Weapon { get; set; }// оружие
@@ -11,5 +11,8 @@ public class Reantal
     public bool Outterwear { get; set; }//верхняя одежда
     public bool Gloves { get; set; }//перчатки двойные
     public bool BulletproofVestOrUnloadingVest { get; set; }//плитник\разгруз
+
+    public int TeamId { get; set; }
+    public virtual TeamEntity TeamEntity { get; set; } = null!;
 }
 
