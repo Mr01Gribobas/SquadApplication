@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SquadServer.Migrations
 {
     /// <inheritdoc />
-    public partial class one : Migration
+    public partial class ONE : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,7 +22,8 @@ namespace SquadServer.Migrations
                     Coordinates = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Date = table.Column<DateOnly>(type: "date", nullable: false),
                     Time = table.Column<TimeOnly>(type: "time", nullable: false),
-                    CountMembers = table.Column<int>(type: "int", nullable: false)
+                    CountMembers = table.Column<int>(type: "int", nullable: false),
+                    TeamId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,11 +66,18 @@ namespace SquadServer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CountMembers = table.Column<int>(type: "int", nullable: false)
+                    CountMembers = table.Column<int>(type: "int", nullable: false),
+                    EventId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Teams", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Teams_Events_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Events",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -169,6 +177,13 @@ namespace SquadServer.Migrations
                 name: "IX_Reantils_TeamId",
                 table: "Reantils",
                 column: "TeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Teams_EventId",
+                table: "Teams",
+                column: "EventId",
+                unique: true,
+                filter: "[EventId] IS NOT NULL");
         }
 
         /// <inheritdoc />
@@ -176,9 +191,6 @@ namespace SquadServer.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Equipments");
-
-            migrationBuilder.DropTable(
-                name: "Events");
 
             migrationBuilder.DropTable(
                 name: "HistoryEvents");
@@ -194,6 +206,9 @@ namespace SquadServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "Teams");
+
+            migrationBuilder.DropTable(
+                name: "Events");
         }
     }
 }

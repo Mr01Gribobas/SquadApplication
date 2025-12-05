@@ -41,7 +41,9 @@ public partial class AuthorizeViewModel  :ObservableObject
             _callSing: CallSing,
             _phone: PhuneNumber,
             _age:null,
-            _role:Role.Commander
+            _role:Role.Commander,
+            _teamId:null
+
             );
     }
 

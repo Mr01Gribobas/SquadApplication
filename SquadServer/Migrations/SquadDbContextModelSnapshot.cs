@@ -88,6 +88,9 @@ namespace SquadServer.Migrations
                     b.Property<string>("NameTeamEnemy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
                     b.Property<TimeOnly>("Time")
                         .HasColumnType("time");
 
@@ -131,11 +134,18 @@ namespace SquadServer.Migrations
                     b.Property<int>("CountMembers")
                         .HasColumnType("int");
 
+                    b.Property<int?>("EventId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EventId")
+                        .IsUnique()
+                        .HasFilter("[EventId] IS NOT NULL");
 
                     b.ToTable("Teams");
                 });
@@ -265,6 +275,16 @@ namespace SquadServer.Migrations
                     b.Navigation("OwnerEquipment");
                 });
 
+            modelBuilder.Entity("SquadServer.Models.ModelsEntity.TeamEntity", b =>
+                {
+                    b.HasOne("SquadServer.Models.ModelsEntity.EventModelEntity", "Event")
+                        .WithOne("Team")
+                        .HasForeignKey("SquadServer.Models.ModelsEntity.TeamEntity", "EventId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Event");
+                });
+
             modelBuilder.Entity("SquadServer.Models.ReantalEntity", b =>
                 {
                     b.HasOne("SquadServer.Models.ModelsEntity.TeamEntity", "TeamEntity")
@@ -284,6 +304,12 @@ namespace SquadServer.Migrations
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("SquadServer.Models.ModelsEntity.EventModelEntity", b =>
+                {
+                    b.Navigation("Team")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.TeamEntity", b =>
