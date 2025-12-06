@@ -21,7 +21,7 @@ public class DataBaseManager : IRequestManager
         JsonContent content = JsonContent.Create(user);
        using HttpResponseMessage reasponce = await _httpClient.PostAsync(_urlNameForSend+ "Registration", content);
 
-        return null;
+        return null; 
     }
 
     public async Task<UserModelEntity> SendDataForEnter(string codeEnter)

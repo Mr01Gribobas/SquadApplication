@@ -1,12 +1,17 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using SquadApplication.Repositories;
+using SquadApplication.Repositories.Interfaces;
+
+namespace SquadApplication.ViewModels;
 
 
 public partial class AuthorizeViewModel  :ObservableObject
 {
     private AuthorizedPage _authorizedPage;
+    private IRequestManager _requestManager;
     public AuthorizeViewModel(AuthorizedPage authorizedPage)
     {
         _authorizedPage = authorizedPage;
+        _requestManager = new DataBaseManager();
     }
 
     [ObservableProperty]
@@ -28,6 +33,12 @@ public partial class AuthorizeViewModel  :ObservableObject
     [RelayCommand]
     private void Login()
     {
+        if(AccesCode.Length <= 0  )
+        {
+            return;
+        }
+       _requestManager =  (DataBaseManager)_requestManager;
+       _requestManager.SendDataForEnter(AccesCode);
         Shell.Current.GoToAsync($"/{nameof(MainPage)}");
     }
 

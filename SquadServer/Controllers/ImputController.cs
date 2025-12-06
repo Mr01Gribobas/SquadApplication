@@ -1,22 +1,27 @@
 using SquadServer.Models;
 using SquadServer.Repositoryes;
-
 namespace SquadServer.Controllers;
 
 
+[Controller]
 public class ImputController : Controller
 {
     private readonly SquadDbContext _squadDbContext;
     private readonly DataBaseRepository _dataBaseRepository;
-
-    public ImputController(SquadDbContext squadDb)
+    private readonly ILogger<ImputController> _logger;
+    public ImputController(SquadDbContext squadDb, ILogger<ImputController> logger)
     {
         _squadDbContext = squadDb;
         _dataBaseRepository = new DataBaseRepository(squadDb);
+        _logger = logger;
     }
 
-    [HttpGet]
-    public IActionResult? Login(int loginCode)
+
+   
+
+
+     [HttpGet]
+    public IActionResult Login(int loginCode)
     {
         if(loginCode < 0)
         {
