@@ -1,5 +1,6 @@
 using SquadServer;
 using SquadServer.Models;
+using System.Net.NetworkInformation;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
@@ -23,9 +24,6 @@ app.UseHttpsRedirection();
 app.UseRouting();
 //TestBlock
 
-Test.TestMethodCreateCommanderAndTeam();
-    
-    
 
 
 

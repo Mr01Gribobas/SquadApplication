@@ -15,7 +15,7 @@ public class ImputController : Controller
         _dataBaseRepository = new DataBaseRepository(squadDb);
     }
 
-    [HttpPost]
+    [HttpGet]
     public IActionResult? Login(int loginCode)
     {
         if(loginCode < 0)
