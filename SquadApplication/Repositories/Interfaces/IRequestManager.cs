@@ -1,7 +1,6 @@
 ﻿namespace SquadApplication.Repositories.Interfaces;
 
-public interface IRequestManager
+public interface IRequestManager<T>
 {
-    Task<UserModelEntity> SendDataForRegistration(UserModelEntity user);
-    Task<UserModelEntity> SendDataForEnter(string codeEnter);
+    Task<List<T>> GetData();
 }

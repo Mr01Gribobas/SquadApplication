@@ -113,7 +113,7 @@
                           BackgroundColor="Transparent">
                             <Entry Placeholder="Телефон"
                                    PlaceholderColor="Gray"
-                                   Text="{Binding PhuneNumber}"
+                                   Text="{Binding PhoneNumber}"
                                    TextColor="White"
                                    BackgroundColor="Transparent"/>
                         </Border>

@@ -1,10 +1,9 @@
-﻿
-using SquadApplication.Repositories.Interfaces;
+﻿using SquadApplication.Repositories.Interfaces;
+using System.ComponentModel.Design;
 using System.Net.Http.Json;
-
 namespace SquadApplication.Repositories;
 
-public class DataBaseManager : IRequestManager
+public class DataBaseManager : IRequestManagerForEnter
 {
     public DataBaseManager()
     {
@@ -12,6 +11,8 @@ public class DataBaseManager : IRequestManager
     }
     private HttpClient _httpClient;
     private string _urlNameForSend = "https://localhost:7176/";
+    public int _currentStatusCode { get; private set; }
+    public int GetStatusCode()=> _currentStatusCode;
 
     public async Task<UserModelEntity> SendDataForRegistration(UserModelEntity user)
     {
@@ -19,7 +20,21 @@ public class DataBaseManager : IRequestManager
             throw new ArgumentNullException();
 
         JsonContent content = JsonContent.Create(user);
-       using HttpResponseMessage reasponce = await _httpClient.PostAsync(_urlNameForSend+ "Registration", content);
+        using HttpResponseMessage responce = await _httpClient.PostAsync(_urlNameForSend+ "Registration", content);
+        _currentStatusCode = (int)responce.StatusCode;
+        if(_currentStatusCode == 200)
+        {
+            UserModelEntity? createdUser =  await responce.Content.ReadFromJsonAsync<UserModelEntity>();
+            return createdUser;
+        }
+        else if(_currentStatusCode == 201)
+        {
+            //команды нету
+        }
+        else if(_currentStatusCode == 401)
+        {
+            //не прошел валидацию на сервере
+        }
 
         return null; 
     }
@@ -28,12 +43,21 @@ public class DataBaseManager : IRequestManager
     {
         int codePars = int.Parse((string)codeEnter);
         JsonContent content = JsonContent.Create(codePars);
-        using HttpResponseMessage reasponce = await _httpClient.GetAsync(_urlNameForSend + $"Login?loginCode={codePars}");
+        using HttpResponseMessage responce = await _httpClient.GetAsync(_urlNameForSend + $"Login?loginCode={codePars}");
+
+        _currentStatusCode = (int)responce.StatusCode;
 
 
-        //_httpClient.post
+        if(_currentStatusCode == 200)
+        {
+            UserModelEntity? userFromServer = await responce.Content.ReadFromJsonAsync<UserModelEntity>();
+            return userFromServer;
+        }
+        else if(_currentStatusCode == 401)
+        {
+            //Либо код не верный либо пользователя с таким кодом нету
+        }
         return null;
-
     }
 }
 

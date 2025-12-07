@@ -37,7 +37,7 @@ public class ImputController : Controller
             return null;
         }
 
-        HttpContext.Response.StatusCode = 201;
+        HttpContext.Response.StatusCode = 200;
         return Json(Player);
     }
 
@@ -49,6 +49,8 @@ public class ImputController : Controller
 
         if(!Validate(userFromApp))
         {
+
+            HttpContext.Response.StatusCode = 401;
             return null;
         }
         UserModelEntity? newUser = _dataBaseRepository.CreateNewUser(userFromApp);
