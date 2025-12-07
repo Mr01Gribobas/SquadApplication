@@ -7,7 +7,7 @@ namespace SquadApplication.ViewModels;
 public partial class AuthorizeViewModel  : ObservableObject
 {
     private AuthorizedPage _authorizedPage;
-    private IRequestManager _requestManager;
+    private IRequestManagerForEnter _requestManager;
     public AuthorizeViewModel(AuthorizedPage authorizedPage)
     {
         _authorizedPage = authorizedPage;
@@ -68,13 +68,14 @@ public partial class AuthorizeViewModel  : ObservableObject
         {
             if(requestManager.GetStatusCode()== 201)
             {
-                
+                //no team
             }
+            // invalide data
             return ;
         }
         Shell.Current.GoToAsync($"/{nameof(MainPage)}");
-
     }
+
 
     private bool ValidateData()
     {

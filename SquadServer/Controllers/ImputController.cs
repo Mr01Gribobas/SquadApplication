@@ -34,7 +34,7 @@ public class ImputController : Controller
         if(Player is null)
         {
             HttpContext.Response.StatusCode = 401;
-            return null;
+            return Json(Player);
         }
 
         HttpContext.Response.StatusCode = 200;
@@ -44,6 +44,8 @@ public class ImputController : Controller
     [HttpPost]
     public async Task<IActionResult>? Registration()
     {
+
+        HttpContext.Request.ContentType = "application/json";
         UserModelEntity? userFromApp = await HttpContext.Request.
                                       ReadFromJsonAsync<UserModelEntity>();
 
@@ -76,7 +78,7 @@ public class ImputController : Controller
 
         if(
             userFromApp._phoneNumber is null |
-            userFromApp.Team is null |
+            userFromApp._teamName is null |
             userFromApp._userName is null |
             userFromApp._callSing is null
             )

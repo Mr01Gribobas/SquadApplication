@@ -1,3 +1,7 @@
+using Microsoft.Extensions.Options;
+using SquadServer.Models;
+using System.Text.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddCors(build =>
@@ -9,6 +13,11 @@ builder.Services.AddCors(build =>
         option.AllowAnyOrigin();
         //option.AllowCredentials();
     });
+});
+builder.Services.AddControllers().AddJsonOptions(option =>
+{
+    option.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    option.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
 });
 builder.Services.AddDbContext<SquadDbContext>(option =>
 {
@@ -35,10 +44,12 @@ app.Use( async (context,next) =>
     Console.WriteLine();
     await next.Invoke(context);
 });
-app.MapGet("/Login", () =>
+app.MapPost("RegistrationW",  (UserModelEntity user) =>
 {
-    Console.WriteLine();
+    Console.WriteLine(user);
+   
 });
+
 
 
 app.MapStaticAssets();
@@ -48,6 +59,6 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 
-app.Run();
+app.Run("http://0.0.0.0:5213");
 
 

@@ -10,7 +10,7 @@ public class DataBaseManager : IRequestManagerForEnter
         _httpClient = new HttpClient();
     }
     private HttpClient _httpClient;
-    private string _urlNameForSend = "https://localhost:7176/";
+    private string _urlNameForSend = "http://10.0.2.2:5213/Imput/";
     public int _currentStatusCode { get; private set; }
     public int GetStatusCode()=> _currentStatusCode;
 
@@ -19,7 +19,10 @@ public class DataBaseManager : IRequestManagerForEnter
         if(user is null)
             throw new ArgumentNullException();
 
+       
+
         JsonContent content = JsonContent.Create(user);
+
         using HttpResponseMessage responce = await _httpClient.PostAsync(_urlNameForSend+ "Registration", content);
         _currentStatusCode = (int)responce.StatusCode;
         if(_currentStatusCode == 200)
@@ -60,4 +63,3 @@ public class DataBaseManager : IRequestManagerForEnter
         return null;
     }
 }
-
