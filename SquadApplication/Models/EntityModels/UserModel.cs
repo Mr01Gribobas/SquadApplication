@@ -1,18 +1,27 @@
-﻿using SquadApplication.Repositories;
-using System.Data;
+﻿using System.Text.Json.Serialization;
 
 namespace SquadApplication.Models.EntityModels;
 
 public class UserModelEntity
 {
     public int Id { get; set; }
+    [JsonInclude]
     public Role _role { get; private set; }
+    [JsonInclude]
     public string _callSing { get; private set; } = null!;  //позывной
+    [JsonInclude]
     public string _teamName { get; private set; } = null!;//team
+    [JsonInclude]
     public string _phoneNumber { get; private set; } = null!;// number
+    [JsonInclude]
     public string? _userName { get; private set; }//имя
+    [JsonInclude]
     public int? _age { get; private set; }//возраст
+    [JsonInclude]
     public bool? _isStaffed { get; private set; }//укомплектованность
+
+
+
     public bool? _goingToTheGame { get; set; }//явка на игру 
     public Int64 _enterCode { get; set; }
 
