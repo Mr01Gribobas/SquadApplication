@@ -1,5 +1,6 @@
 ﻿using SquadApplication.Repositories.Enums;
 using SquadApplication.Repositories.Interfaces;
+using System.Net.Http.Json;
 
 namespace SquadApplication.Repositories.ManagerRequest;
 
@@ -25,8 +26,26 @@ public class ManagerPostRequests<T> : IRequestManager<T>
         throw new NotImplementedException();
     }
 
-    public Task<List<T>> PostRequests(PostsRequests postRequests)
+    public Task<bool> PostRequests(T objectValue,PostsRequests postRequests)
     {
-        throw new NotImplementedException();
+        switch(postRequests)
+        {
+            case PostsRequests.CreateEvent:
+                //JsonContent jsonContent = JsonContent.Create();
+                break;
+            case PostsRequests.UpdateProfile:
+                break;
+            case PostsRequests.CreateEquip:
+                break;
+            case PostsRequests.AddReantils:
+                break;
+            case PostsRequests.UpdateReantilsById:
+                break;
+            case PostsRequests.AddPolygon:
+                break;
+            default:
+                break;
+        }
+        return Task.FromResult(true);
     }
 }

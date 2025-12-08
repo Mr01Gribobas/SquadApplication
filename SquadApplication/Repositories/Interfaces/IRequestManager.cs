@@ -5,6 +5,6 @@ namespace SquadApplication.Repositories.Interfaces;
 public interface IRequestManager<T>
 {
     Task<List<T>> GetData(GetRequests getType);
-    Task<List<T>> PostRequests(PostsRequests postRequests);
+    Task<bool> PostRequests(T objectValue, PostsRequests postRequests);
     public void SetUrl(string controllAction);
 }

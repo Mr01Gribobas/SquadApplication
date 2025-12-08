@@ -87,7 +87,7 @@ public class ManagerGetRequests<T> : IRequestManager<T>
         return (flowControl: true, value: null);
     }
 
-    public Task<List<T>> PostRequests(PostsRequests postRequests)
+    public Task<bool> PostRequests(T objectValue,PostsRequests postRequests)
     {
         throw new NotImplementedException();
     }
