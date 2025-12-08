@@ -10,9 +10,10 @@ public partial class ParticipantsViewModel : ObservableObject
     private ParticipantsPage participantsPage;
     public ParticipantsViewModel(ParticipantsPage participantsPage)
     {
-        var list = UserModelEntity.GetRandomData();
-        users = new ObservableCollection<UserModelEntity>(list);
+        //var list = UserModelEntity.GetRandomData();
+        users = new ObservableCollection<UserModelEntity>();
         this.participantsPage = participantsPage;
+        //
     }
 
     [ObservableProperty]
