@@ -1,4 +1,4 @@
-﻿namespace SquadApplication.Repositories;
+﻿namespace SquadApplication.Repositories.Enums;
 
 public enum DataFor : byte
 {

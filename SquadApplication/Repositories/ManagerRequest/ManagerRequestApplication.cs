@@ -2,9 +2,10 @@
 using SquadApplication.Repositories.Interfaces;
 using System.Net.Http.Json;
 
-namespace SquadApplication.Repositories;
+namespace SquadApplication.Repositories.ManagerRequest;
 
 public class ManagerGetRequests<T> : IRequestManager<T>
+    where T : class
 {
     public ManagerGetRequests()
     {
