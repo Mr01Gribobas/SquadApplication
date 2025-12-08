@@ -1,6 +1,9 @@
-﻿namespace SquadApplication.Repositories.Interfaces;
+﻿using SquadApplication.Repositories.Enums;
+
+namespace SquadApplication.Repositories.Interfaces;
 
 public interface IRequestManager<T>
 {
-    Task<List<T>> GetData();
+    Task<List<T>> GetData(GetRequests getType);
+    Task<List<T>> PostRequests(PostsRequests postRequests);
 }
