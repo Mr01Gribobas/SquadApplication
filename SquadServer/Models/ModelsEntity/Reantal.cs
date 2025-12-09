@@ -1,4 +1,6 @@
-﻿namespace SquadServer.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace SquadServer.Models;
 
 
 public class ReantalEntity
@@ -15,6 +17,7 @@ public class ReantalEntity
 
 
     public int TeamId { get; set; }
+    [JsonIgnore]
     public virtual TeamEntity TeamEntity { get; set; } = null!;
 
 }

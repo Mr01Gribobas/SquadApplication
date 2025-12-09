@@ -18,7 +18,7 @@ public class MainGetController : Controller
     public IActionResult? GetUserById(int Id)
     {
         var user = _dataBaseRepository.GetUserById(Id);
-        if(user is null )
+        if(user is null)
         {
             HttpContext.Response.StatusCode = 401;
             return Json(null);
@@ -29,10 +29,18 @@ public class MainGetController : Controller
 
 
     [HttpGet]
-    public IActionResult? GetAllTeamMembers(int teamId)
+    public IActionResult? GetAllTeamMembers(int userId)
     {
-        var listMembers = _dataBaseRepository.GetAllMembers(teamId);
-        return Json(listMembers);
+        try
+        {
+            var listMembers = _dataBaseRepository.GetAllMembers(userId);
+            return Ok(listMembers);
+        }
+        catch(Exception ex)
+        {
+
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpGet]
@@ -59,7 +67,7 @@ public class MainGetController : Controller
     [HttpGet]
     public IActionResult? GetEvent()
     {
-          return Json(_dataBaseRepository.GeuEvent());
+        return Json(_dataBaseRepository.GeuEvent());
     }
 
 

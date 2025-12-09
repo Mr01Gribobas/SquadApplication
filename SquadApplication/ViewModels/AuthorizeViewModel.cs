@@ -39,12 +39,12 @@ public partial class AuthorizeViewModel : ObservableObject
             return;
         }
         DataBaseManager requestManager = (DataBaseManager)_requestManager;
-        UserModelEntity? responce = await requestManager.SendDataForEnter(AccesCode);
-        if(responce is null)
+        UserModelEntity? userFromResponce = await requestManager.SendDataForEnter(AccesCode);
+        if(userFromResponce is null | userFromResponce?.Id <=0 )
         {
             //Error
         }
-        Shell.Current.GoToAsync($"/{nameof(MainPage)}");//  ?UserId=responce.Id
+        Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId={userFromResponce.Id}");
     }
 
 
@@ -66,8 +66,8 @@ public partial class AuthorizeViewModel : ObservableObject
             );
     SendUserData:
         DataBaseManager requestManager = (DataBaseManager)_requestManager;
-        UserModelEntity? responce = await requestManager.SendDataForRegistration(newUser);
-        if(responce is null)
+        UserModelEntity? userFromResponce = await requestManager.SendDataForRegistration(newUser);
+        if(userFromResponce is null | userFromResponce?.Id <=0)
         {
             if(requestManager.GetStatusCode() == 201)
             {
@@ -93,7 +93,7 @@ public partial class AuthorizeViewModel : ObservableObject
             // invalide data
             return;
         }
-        Shell.Current.GoToAsync($"/{nameof(MainPage)}"); // ?UserId = responce.Id
+        Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId = {userFromResponce.Id}"); 
     }
 
 

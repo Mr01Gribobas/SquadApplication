@@ -30,7 +30,14 @@ public class ManagerGetRequests<T> : IRequestManager<T>
         {
             return null;
         }
-        return await responce.Content.ReadFromJsonAsync<UserModelEntity>();
+        try
+        {
+            return await responce.Content.ReadFromJsonAsync<UserModelEntity>();
+        }
+        catch(Exception ex)
+        {
+            return null;
+        }
     }
 
 

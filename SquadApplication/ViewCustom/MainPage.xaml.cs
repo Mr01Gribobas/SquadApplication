@@ -1,4 +1,3 @@
-using SquadApplication.AnimationCustom;
 using SquadApplication.Repositories.ManagerRequest;
 using System.Threading.Tasks;
 
@@ -11,25 +10,29 @@ public partial class MainPage : ContentPage
     private UserModelEntity User { get; set; }
     public int UserId
     {
-        get => UserId;
+        get => User.Id;
         set
         {
-            User = GetUser(value).Result;
+            GetAndSetUserAsync(value);
         }
+    }
+    private async Task GetAndSetUserAsync(int value)
+    {
+        var user = await ManagerGetRequests<UserModelEntity>.GetUserById(value);
+        if(user == null)
+        {
+            await Shell.Current.GoToAsync($"..");
+
+        }
+        User = user;
     }
 
-    private async Task<UserModelEntity> GetUser(int value)
-    {
-        var user =  await ManagerGetRequests<UserModelEntity>.GetUserById(value);
-        if (user == null)
-        {
-            //error
-        }
-        return user;
-    }
+
+   
 
     public MainPage()
     {
+        
         InitializeComponent();
         BindingContext = new MainViewModel();
 
@@ -53,7 +56,7 @@ public partial class MainPage : ContentPage
 
 
 
-    private static async Task GoNextPage(object? result)
+    private  async Task GoNextPage(object? result)
     {
         switch(result.ToString())
         {
@@ -64,7 +67,7 @@ public partial class MainPage : ContentPage
                 await Shell.Current.GoToAsync($"/{nameof(FeesPage)}");// ?UserId={UserId}
                 break;
             case "Участники":
-                await Shell.Current.GoToAsync($"/{nameof(ParticipantsPage)}");// ?UserId={UserId}
+                await Shell.Current.GoToAsync($"/{nameof(ParticipantsPage)}?UserId={UserId}");
                 break;
             case "Прокаты":
                 await Shell.Current.GoToAsync($"/{nameof(RentalsPage)}");// ?UserId={UserId}

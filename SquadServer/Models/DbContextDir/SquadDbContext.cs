@@ -14,7 +14,7 @@ public class SquadDbContext: DbContext
     public SquadDbContext(){ }
     public SquadDbContext(DbContextOptions<SquadDbContext> options) : base (options)
     {
-        Database.EnsureDeleted();
+        //Database.EnsureDeleted();
         Database.EnsureCreated();
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,4 +1,6 @@
-﻿namespace SquadApplication.Models.EntityModels;
+﻿using System.Text.Json.Serialization;
+
+namespace SquadApplication.Models.EntityModels;
 
 public class TeamEntity
 {
@@ -9,6 +11,8 @@ public class TeamEntity
     
 
     public int? EventId { get; set; }
+
+    [JsonIgnore]
     public virtual EventModelEntity? Event { get; set; }
 
     public ICollection<UserModelEntity> Members { get; set; } = new List<UserModelEntity>();

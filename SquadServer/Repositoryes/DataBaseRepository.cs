@@ -81,16 +81,25 @@ public class DataBaseRepository
                                ToList();
     }
 
-    internal List<UserModelEntity>? GetAllMembers(int teamId)
+    public List<UserModelEntity>? GetAllMembers(int userId)
     {
-        var list = _squadDbContext.Players.
-                          Where(u => u.TeamId == teamId).
-                          OrderBy(u => u._role).
-                          ToList();
+        try
+        {
+            UserModelEntity userById = _squadDbContext.Players.First(u => u.Id == userId);
+            var list = _squadDbContext.Players.
+                              Where(u => u.TeamId == userById.TeamId).
+                              OrderBy(u => u._role).
+                              ToList();
         return list;
+        }
+        catch(Exception ex)
+        {
+
+            throw new ArgumentNullException(ex.Message);
+        }
     }
 
-    internal List<ReantalEntity>? GetAllReantil(int teamId)
+    public List<ReantalEntity>? GetAllReantil(int teamId)
     {
         var list = _squadDbContext.Reantils.
                            Where(r => r.TeamId == teamId).
@@ -98,24 +107,24 @@ public class DataBaseRepository
         return list;
     }
 
-    internal List<PolygonEntity> GetAllPolygons()
+    public List<PolygonEntity> GetAllPolygons()
     {
         var list = _squadDbContext.Polygons.ToList();
         return list;
     }
 
-    internal List<HisoryEventsModelEntity> GetEventHistory()
+    public List<HisoryEventsModelEntity> GetEventHistory()
     {
         var list = _squadDbContext.HistoryEvents.ToList();
         return list;
     }
 
-    internal EventModelEntity? GeuEvent()
+    public EventModelEntity? GeuEvent()
     {
         return _squadDbContext.Events.FirstOrDefault();
     }
 
-    internal EquipmentEntity? GetEquipById(int id)
+    public EquipmentEntity? GetEquipById(int id)
     {
         var eqip = _squadDbContext.Equipments.FirstOrDefault(e => e.OwnerEquipmentId == id);
         return eqip;

@@ -32,10 +32,14 @@ public class UserModelEntity
     public bool? _goingToTheGame { get; set; }//явка на игру 
 
     
-    public int? EquipmentId { get; set; }       
+    public int? EquipmentId { get; set; }
+
+    [JsonIgnore]
     public virtual EquipmentEntity? Equipment { get; set; }//снаряжение
      
     public int? TeamId { get; set; }
+
+    [JsonIgnore]
     public virtual TeamEntity? Team { get; set; }
 
 

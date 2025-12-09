@@ -9,7 +9,7 @@ public partial class ParticipantsPage : ContentPage
     public ParticipantsPage()
     {
         InitializeComponent();
-        _parricipantsModel = new ParticipantsViewModel(this);
+        _parricipantsModel = new ParticipantsViewModel(this,UserId);
         BindingContext = _parricipantsModel;
     }
 

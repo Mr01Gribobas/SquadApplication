@@ -1,5 +1,4 @@
 ﻿using SquadApplication.Repositories.Interfaces;
-using System.ComponentModel.Design;
 using System.Net.Http.Json;
 namespace SquadApplication.Repositories;
 
@@ -12,23 +11,32 @@ public class DataBaseManager : IRequestManagerForEnter
     private HttpClient _httpClient;
     private string _urlNameForSend = "http://10.0.2.2:5213/Imput/";
     public int _currentStatusCode { get; private set; }
-    public int GetStatusCode()=> _currentStatusCode;
+    public int GetStatusCode() => _currentStatusCode;
 
     public async Task<UserModelEntity> SendDataForRegistration(UserModelEntity user)
     {
         if(user is null)
             throw new ArgumentNullException();
 
-       
+
 
         JsonContent content = JsonContent.Create(user);
 
-        HttpResponseMessage responce = await _httpClient.PostAsync(_urlNameForSend+ "Registration", content);
+        HttpResponseMessage responce = await _httpClient.PostAsync(_urlNameForSend + "Registration", content);
         _currentStatusCode = (int)responce.StatusCode;
         if(_currentStatusCode == 200)
         {
-            UserModelEntity? createdUser =  await responce.Content.ReadFromJsonAsync<UserModelEntity>();
-            return createdUser;
+            try
+            {
+                UserModelEntity? createdUser = await responce.Content.ReadFromJsonAsync<UserModelEntity>();
+                return createdUser;
+
+            }
+            catch(Exception ex)
+            {
+
+                throw;
+            }
         }
         else if(_currentStatusCode == 201)
         {
@@ -36,10 +44,10 @@ public class DataBaseManager : IRequestManagerForEnter
         }
         else if(_currentStatusCode == 401)
         {
-            return null; 
+            return null;
         }
 
-        return null; 
+        return null;
     }
 
     public async Task<UserModelEntity> SendDataForEnter(string codeEnter)
