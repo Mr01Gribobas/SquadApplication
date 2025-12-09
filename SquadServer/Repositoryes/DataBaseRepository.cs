@@ -18,6 +18,12 @@ public class DataBaseRepository
                   AsNoTracking().
                   FirstOrDefault(u => u._enterCode == loginCode);
     }
+    public UserModelEntity? GetUserById(int id)
+    {
+        return _squadDbContext.Players.
+                  AsNoTracking().
+                  FirstOrDefault(u => u.Id == id);
+    }
 
     public UserModelEntity? CreateNewUser(UserModelEntity userFromApp)
     {

@@ -1,5 +1,6 @@
 ﻿using SquadApplication.Repositories;
 using SquadApplication.Repositories.Interfaces;
+using System.Threading.Tasks;
 
 namespace SquadApplication.ViewModels;
 
@@ -40,16 +41,17 @@ public partial class AuthorizeViewModel  : ObservableObject
         DataBaseManager requestManager = (DataBaseManager)_requestManager;
         UserModelEntity? responce = requestManager.SendDataForEnter(AccesCode).Result ;
         if(responce is null)
-        {
+        {            
             //Error
         }
-        Shell.Current.GoToAsync($"/{nameof(MainPage)}");
+        Shell.Current.GoToAsync($"/{nameof(MainPage)}");//  ?UserId=responce.Id
     }
 
 
     [RelayCommand]
-    private void Registration()
+    private async Task Registration()
     {
+      bool resilt = await  _authorizedPage.DisplayAlertAsync("Команда которую вы выбрали не существует !","Желаете её создать и стать её командиром ?","Yes","No");
         if(!ValidateData())
             return;
 
@@ -62,6 +64,7 @@ public partial class AuthorizeViewModel  : ObservableObject
             _role: Role.Private,
             _teamId: null
             );
+    SendUserData:
         DataBaseManager requestManager = (DataBaseManager)_requestManager;
         UserModelEntity responce = requestManager.SendDataForRegistration(newUser).Result;
         if(responce is null)
@@ -69,11 +72,12 @@ public partial class AuthorizeViewModel  : ObservableObject
             if(requestManager.GetStatusCode()== 201)
             {
                 //no team
+                goto SendUserData;
             }
             // invalide data
             return ;
         }
-        Shell.Current.GoToAsync($"/{nameof(MainPage)}");
+        Shell.Current.GoToAsync($"/{nameof(MainPage)}"); // ?UserId = responce.Id
     }
 
 

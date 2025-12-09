@@ -12,6 +12,22 @@ public class MainGetController : Controller
         _squadDbContext = squadDb;
         _dataBaseRepository = new DataBaseRepository(_squadDbContext);
     }
+
+
+    [HttpGet]
+    public IActionResult? GetUserById(int Id)
+    {
+        var user = _dataBaseRepository.GetUserById(Id);
+        if(user is null )
+        {
+            HttpContext.Response.StatusCode = 401;
+            return Json(null);
+
+        }
+        return Json(user);
+    }
+
+
     [HttpGet]
     public IActionResult? GetAllTeamMembers(int teamId)
     {

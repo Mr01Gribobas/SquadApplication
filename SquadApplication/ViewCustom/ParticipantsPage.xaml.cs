@@ -1,18 +1,9 @@
-using SquadApplication.ViewModels;
-using Microsoft.Maui.Graphics;
-using SquadApplication.ViewModels;
-using SquadApplication.ViewModels;
-using SquadApplication.ViewModels;
-using CommunityToolkit.Mvvm.Input;
-using SquadApplication.Models;
-using SquadApplication.Models.EntityModels;
-using SquadApplication.ViewCustom;
-using CommunityToolkit.Mvvm.Input;
 namespace SquadApplication.ViewCustom;
 
-
+[QueryProperty(nameof(UserId), "UserId")]
 public partial class ParticipantsPage : ContentPage
 {
+    public int UserId { get; set; }
     private ParticipantsViewModel _parricipantsModel;
 
     public ParticipantsPage()
@@ -21,8 +12,8 @@ public partial class ParticipantsPage : ContentPage
         _parricipantsModel = new ParticipantsViewModel(this);
         BindingContext = _parricipantsModel;
     }
-    
-    
+
+
 }
 
 

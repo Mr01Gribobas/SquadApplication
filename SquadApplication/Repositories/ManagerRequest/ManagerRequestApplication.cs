@@ -12,7 +12,7 @@ public class ManagerGetRequests<T> : IRequestManager<T>
         _httpClient = new HttpClient();
     }
     private HttpClient _httpClient;
-    public string _urlNameForSend { get; private set; }= "http://localhost:7176/";
+    public string _urlNameForSend { get; private set; } = "http://10.0.2.2:5213/MainGet/";
     public int _currentStatusCode { get; private set; }
 
 
@@ -21,6 +21,21 @@ public class ManagerGetRequests<T> : IRequestManager<T>
     {
         _urlNameForSend += controllAction;
     }
+    public static async Task<UserModelEntity?> GetUserById(int id)
+    {
+        var client = new HttpClient();
+        client.BaseAddress = new Uri("http://10.0.2.2:5213");
+        var responce = await client.GetAsync($"/MainGet/GetUserById?Id={id}");
+        if((int)responce.StatusCode == 401)
+        {
+            return null;
+        }
+        return await responce.Content.ReadFromJsonAsync<UserModelEntity>();
+    }
+
+
+
+
 
     public async Task<List<T>?> GetData(GetRequests getRequessts)
     {
@@ -87,7 +102,7 @@ public class ManagerGetRequests<T> : IRequestManager<T>
         return (flowControl: true, value: null);
     }
 
-    public Task<bool> PostRequests(T objectValue,PostsRequests postRequests)
+    public Task<bool> PostRequests(T objectValue, PostsRequests postRequests)
     {
         throw new NotImplementedException();
     }
