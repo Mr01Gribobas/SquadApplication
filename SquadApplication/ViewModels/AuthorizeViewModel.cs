@@ -1,5 +1,6 @@
 ﻿using SquadApplication.Repositories;
 using SquadApplication.Repositories.Interfaces;
+using SquadApplication.Serices.ApiServices;
 using System.Threading.Tasks;
 
 namespace SquadApplication.ViewModels;
@@ -9,10 +10,10 @@ public partial class AuthorizeViewModel : ObservableObject
 {
     private AuthorizedPage _authorizedPage;
     private IRequestManagerForEnter _requestManager;
-    public AuthorizeViewModel(AuthorizedPage authorizedPage)
+    public AuthorizeViewModel(AuthorizedPage authorizedPage,IUserSession userSession)
     {
         _authorizedPage = authorizedPage;
-        _requestManager = new DataBaseManager();
+        _requestManager = new DataBaseManager(userSession);
     }
 
     [ObservableProperty]

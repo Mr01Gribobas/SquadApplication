@@ -1,24 +1,26 @@
 ﻿using SquadApplication.Repositories.Interfaces;
+using SquadApplication.Serices.ApiServices;
 using System.Net.Http.Json;
 namespace SquadApplication.Repositories;
 
 public class DataBaseManager : IRequestManagerForEnter
 {
-    public DataBaseManager()
+    public DataBaseManager(IUserSession userSession)
     {
         _httpClient = new HttpClient();
+        _userSession = userSession; 
     }
-    private HttpClient _httpClient;
+    private readonly IUserSession _userSession;
+    private readonly HttpClient _httpClient;
     private string _urlNameForSend = "http://10.0.2.2:5213/Imput/";
     public int _currentStatusCode { get; private set; }
     public int GetStatusCode() => _currentStatusCode;
+
 
     public async Task<UserModelEntity> SendDataForRegistration(UserModelEntity user)
     {
         if(user is null)
             throw new ArgumentNullException();
-
-
 
         JsonContent content = JsonContent.Create(user);
 
@@ -29,6 +31,7 @@ public class DataBaseManager : IRequestManagerForEnter
             try
             {
                 UserModelEntity? createdUser = await responce.Content.ReadFromJsonAsync<UserModelEntity>();
+                _userSession.CurrentUser = createdUser;
                 return createdUser;
 
             }
@@ -46,7 +49,6 @@ public class DataBaseManager : IRequestManagerForEnter
         {
             return null;
         }
-
         return null;
     }
 
@@ -55,14 +57,16 @@ public class DataBaseManager : IRequestManagerForEnter
         int codePars = int.Parse((string)codeEnter);
         JsonContent content = JsonContent.Create(codePars);
 
-
         HttpResponseMessage responce = await _httpClient.GetAsync(_urlNameForSend + $"Login?loginCode={codePars}");
         _currentStatusCode = (int)responce.StatusCode;
-
 
         if(_currentStatusCode == 200)
         {
             UserModelEntity? userFromServer = await responce.Content.ReadFromJsonAsync<UserModelEntity>();
+            if(userFromServer is not null )
+            {
+                _userSession.CurrentUser = userFromServer;
+            }
             return userFromServer;
         }
         else if(_currentStatusCode == 401)

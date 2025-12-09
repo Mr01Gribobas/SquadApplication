@@ -1,5 +1,5 @@
 using SquadApplication.Repositories.ManagerRequest;
-using System.Threading.Tasks;
+using SquadApplication.Serices.ApiServices;
 
 namespace SquadApplication.ViewCustom;
 
@@ -7,6 +7,16 @@ namespace SquadApplication.ViewCustom;
 [QueryProperty(nameof(UserId), "UserId")]
 public partial class MainPage : ContentPage
 {
+    private IUserSession _userSession1;
+    public MainPage(IUserSession userSession)
+    {
+        InitializeComponent();
+        BindingContext = new MainViewModel();
+        _userSession1 = userSession;
+    }
+
+
+
     private UserModelEntity User { get; set; }
     public int UserId
     {
@@ -18,25 +28,19 @@ public partial class MainPage : ContentPage
     }
     private async Task GetAndSetUserAsync(int value)
     {
-        var user = await ManagerGetRequests<UserModelEntity>.GetUserById(value);
+        UserModelEntity? user = await ManagerGetRequests<UserModelEntity>.GetUserById(value);
         if(user == null)
         {
             await Shell.Current.GoToAsync($"..");
 
         }
+        _userSession1.CurrentUser = user;
         User = user;
     }
 
 
-   
 
-    public MainPage()
-    {
-        
-        InitializeComponent();
-        BindingContext = new MainViewModel();
 
-    }
 
     private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -56,7 +60,7 @@ public partial class MainPage : ContentPage
 
 
 
-    private  async Task GoNextPage(object? result)
+    private async Task GoNextPage(object? result)
     {
         switch(result.ToString())
         {
