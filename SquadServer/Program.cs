@@ -39,16 +39,12 @@ if(!app.Environment.IsDevelopment())
 app.UseCors("CorsCustom");
 app.UseAuthorization();
 
-app.Use( async (context,next) =>
-{
-    Console.WriteLine();
-    await next.Invoke(context);
-});
-app.MapPost("RegistrationW",  (UserModelEntity user) =>
-{
-    Console.WriteLine(user);
-   
-});
+//app.Use( async (context,next) =>
+//{
+//    Console.WriteLine();
+//    await next.Invoke(context);
+//});
+
 
 
 

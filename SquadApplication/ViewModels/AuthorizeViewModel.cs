@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace SquadApplication.ViewModels;
 
 
-public partial class AuthorizeViewModel  : ObservableObject
+public partial class AuthorizeViewModel : ObservableObject
 {
     private AuthorizedPage _authorizedPage;
     private IRequestManagerForEnter _requestManager;
@@ -26,22 +26,22 @@ public partial class AuthorizeViewModel  : ObservableObject
     private string callSing;
 
     [ObservableProperty]
-    private string team; 
+    private string team;
 
     [ObservableProperty]
-    private string phoneNumber ;
+    private string phoneNumber;
 
     [RelayCommand]
-    private void Login()
+    private async Task Login()
     {
-        if(AccesCode.Length <= 0  )
+        if(AccesCode.Length <= 0)
         {
             return;
         }
         DataBaseManager requestManager = (DataBaseManager)_requestManager;
-        UserModelEntity? responce = requestManager.SendDataForEnter(AccesCode).Result ;
+        UserModelEntity? responce = await requestManager.SendDataForEnter(AccesCode);
         if(responce is null)
-        {            
+        {
             //Error
         }
         Shell.Current.GoToAsync($"/{nameof(MainPage)}");//  ?UserId=responce.Id
@@ -51,7 +51,7 @@ public partial class AuthorizeViewModel  : ObservableObject
     [RelayCommand]
     private async Task Registration()
     {
-      bool resilt = await  _authorizedPage.DisplayAlertAsync("Команда которую вы выбрали не существует !","Желаете её создать и стать её командиром ?","Yes","No");
+
         if(!ValidateData())
             return;
 
@@ -66,16 +66,32 @@ public partial class AuthorizeViewModel  : ObservableObject
             );
     SendUserData:
         DataBaseManager requestManager = (DataBaseManager)_requestManager;
-        UserModelEntity responce = requestManager.SendDataForRegistration(newUser).Result;
+        UserModelEntity? responce = await requestManager.SendDataForRegistration(newUser);
         if(responce is null)
         {
-            if(requestManager.GetStatusCode()== 201)
+            if(requestManager.GetStatusCode() == 201)
             {
-                //no team
+                bool result = await _authorizedPage.DisplayAlertAsync("Команда которую вы выбрали не существует !", "Желаете её создать и стать её командиром ?", "Yes", "No");
+                if(result)
+                {
+                    newUser = UserModelEntity.CreateUserEntity(
+                  _teamName: Team,
+                  _name: Name,
+                  _callSing: CallSing,
+                  _phone: PhoneNumber,
+                  _age: null,
+                  _role: Role.Commander,
+                  _teamId: null
+                  );
+                }
+                else
+                {
+                   await Shell.Current.GoToAsync($".."); 
+                }
                 goto SendUserData;
             }
             // invalide data
-            return ;
+            return;
         }
         Shell.Current.GoToAsync($"/{nameof(MainPage)}"); // ?UserId = responce.Id
     }
@@ -83,16 +99,18 @@ public partial class AuthorizeViewModel  : ObservableObject
 
     private bool ValidateData()
     {
-        if(PhoneNumber[0] =='+')
+        
+        
+        if(PhoneNumber[0] == '+')
         {
             string? skipPlus = PhoneNumber.Skip(1).ToString();
-            if(!int.TryParse(PhoneNumber,out int number))
+            if(!Int64.TryParse(skipPlus, out Int64 number))
             {
                 //
                 return false;
             }
         }
-        else if(!int.TryParse(PhoneNumber, out int number))
+        else if(!Int64.TryParse(PhoneNumber, out Int64 number))
         {
             return false;
         }

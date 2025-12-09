@@ -1,5 +1,6 @@
 using SquadServer.Models;
 using SquadServer.Repositoryes;
+using System.Text.Json;
 namespace SquadServer.Controllers;
 
 
@@ -17,10 +18,10 @@ public class ImputController : Controller
     }
 
 
-   
 
 
-     [HttpGet]
+
+    [HttpGet]
     public IActionResult Login(int loginCode)
     {
         if(loginCode < 0)
@@ -33,37 +34,34 @@ public class ImputController : Controller
 
         if(Player is null)
         {
-            HttpContext.Response.StatusCode = 401;
-            return Json(Player);
+            return Unauthorized();
         }
 
-        HttpContext.Response.StatusCode = 200;
-        return Json(Player);
+        return Ok(Player);
     }
 
     [HttpPost]
     public async Task<IActionResult>? Registration()
     {
 
-        HttpContext.Request.ContentType = "application/json";
+        //HttpContext.Request.ContentType = "application/json";
         UserModelEntity? userFromApp = await HttpContext.Request.
                                       ReadFromJsonAsync<UserModelEntity>();
 
         if(!Validate(userFromApp))
         {
-
-            HttpContext.Response.StatusCode = 401;
-            return null;
+            return Unauthorized();//401
         }
-        UserModelEntity? newUser = _dataBaseRepository.CreateNewUser(userFromApp);
-        if(newUser is null)
-        {
-            HttpContext.Response.StatusCode = 201;
-            return null;
-        }
+        
 
-        HttpContext.Response.StatusCode = 200;
-        return Json(newUser);
+            UserModelEntity? newUser = _dataBaseRepository.CreateNewUser(userFromApp);
+            if(newUser is null)
+            {
+                return StatusCode(201);
+            }
+
+            return Ok(newUser);
+              
     }
 
 
@@ -86,7 +84,16 @@ public class ImputController : Controller
             HttpContext.Response.StatusCode = 401;//nul propp
             return false;
         }
-        if(!int.TryParse(userFromApp._phoneNumber, out int code))//error number
+
+        if(userFromApp._phoneNumber[0] == '+')
+        {
+            string? skipPlus = userFromApp._phoneNumber.Skip(1).ToString();
+            if(!Int64.TryParse(skipPlus, out Int64 number))
+            {
+                return false;
+            }
+        }
+        else if(!Int64.TryParse(userFromApp._phoneNumber, out Int64 code))//error number)
         {
             HttpContext.Response.StatusCode = 402;//nul propp
 

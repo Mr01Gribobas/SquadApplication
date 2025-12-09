@@ -23,7 +23,7 @@ public class DataBaseManager : IRequestManagerForEnter
 
         JsonContent content = JsonContent.Create(user);
 
-        using HttpResponseMessage responce = await _httpClient.PostAsync(_urlNameForSend+ "Registration", content);
+        HttpResponseMessage responce = await _httpClient.PostAsync(_urlNameForSend+ "Registration", content);
         _currentStatusCode = (int)responce.StatusCode;
         if(_currentStatusCode == 200)
         {
@@ -32,11 +32,11 @@ public class DataBaseManager : IRequestManagerForEnter
         }
         else if(_currentStatusCode == 201)
         {
-            //команды нету
+            return null;
         }
         else if(_currentStatusCode == 401)
         {
-            //не прошел валидацию на сервере
+            return null; 
         }
 
         return null; 
@@ -46,8 +46,9 @@ public class DataBaseManager : IRequestManagerForEnter
     {
         int codePars = int.Parse((string)codeEnter);
         JsonContent content = JsonContent.Create(codePars);
-        using HttpResponseMessage responce = await _httpClient.GetAsync(_urlNameForSend + $"Login?loginCode={codePars}");
 
+
+        HttpResponseMessage responce = await _httpClient.GetAsync(_urlNameForSend + $"Login?loginCode={codePars}");
         _currentStatusCode = (int)responce.StatusCode;
 
 
