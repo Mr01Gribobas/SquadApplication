@@ -1,4 +1,4 @@
-﻿namespace SquadApplication.Serices;
+﻿namespace SquadApplication.Serices.ApiServices;
 
 public interface IUserSession
 {
