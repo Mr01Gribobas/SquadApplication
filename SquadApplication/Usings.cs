@@ -1,4 +1,9 @@
 ﻿global using Microsoft.Extensions.Logging;
+global using SquadApplication.Repositories.Interfaces;
+global using SquadApplication.Serices.ApiServices;
+global using System.Net.Http.Json;
+global using SquadApplication.Repositories.Enums;
+global using SquadApplication.Repositories.ManagerRequest;
 global using SquadApplication.ViewCustom;
 global using SquadApplication.Models.EntityModels;
 global using System.Collections.ObjectModel;

@@ -1,7 +1,4 @@
-﻿using SquadApplication.Repositories.Enums;
-using SquadApplication.Repositories.Interfaces;
-using SquadApplication.Repositories.ManagerRequest;
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 
 
 public partial class ParticipantsViewModel : ObservableObject

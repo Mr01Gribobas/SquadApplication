@@ -1,10 +1,5 @@
 ﻿using SquadApplication.Repositories;
-using SquadApplication.Repositories.Interfaces;
-using SquadApplication.Serices.ApiServices;
-using System.Threading.Tasks;
-
 namespace SquadApplication.ViewModels;
-
 
 public partial class AuthorizeViewModel : ObservableObject
 {

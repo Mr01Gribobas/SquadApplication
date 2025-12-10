@@ -1,7 +1,4 @@
-﻿using SquadApplication.Repositories.Interfaces;
-using SquadApplication.Serices.ApiServices;
-using System.Net.Http.Json;
-namespace SquadApplication.Repositories;
+﻿namespace SquadApplication.Repositories;
 
 public class DataBaseManager : IRequestManagerForEnter
 {

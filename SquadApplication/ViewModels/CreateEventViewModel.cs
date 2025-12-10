@@ -1,5 +1,4 @@
 ﻿namespace SquadApplication.ViewModels;
-
 public partial class CreateEventViewModel : ObservableObject
 {
     [ObservableProperty]
