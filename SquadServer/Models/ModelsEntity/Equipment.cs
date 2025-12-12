@@ -1,4 +1,6 @@
-﻿namespace SquadServer.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace SquadServer.Models;
 
 public  class EquipmentEntity
 {
@@ -15,6 +17,8 @@ public  class EquipmentEntity
     public bool UnloudingEquipment { get; set; }//Разгрузка
 
     public int OwnerEquipmentId { get; set; }
+
+    [JsonIgnore]
     public virtual UserModelEntity OwnerEquipment { get; set; } = null!; 
 
 

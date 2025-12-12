@@ -1,6 +1,5 @@
 using SquadServer.Models;
 using SquadServer.Repositoryes;
-using System.Text.Json;
 namespace SquadServer.Controllers;
 
 
@@ -52,16 +51,16 @@ public class ImputController : Controller
         {
             return Unauthorized();//401
         }
-        
 
-            UserModelEntity? newUser = _dataBaseRepository.CreateNewUser(userFromApp);
-            if(newUser is null)
-            {
-                return StatusCode(201);
-            }
 
-            return Ok(newUser);
-              
+        UserModelEntity? newUser = _dataBaseRepository.CreateNewUser(userFromApp);
+        if(newUser is null)
+        {
+            return StatusCode(201);
+        }
+
+        return Ok(newUser);
+
     }
 
 
@@ -87,18 +86,20 @@ public class ImputController : Controller
 
         if(userFromApp._phoneNumber[0] == '+')
         {
-            string? skipPlus = userFromApp._phoneNumber.Skip(1).ToString();
-            if(!Int64.TryParse(skipPlus, out Int64 number))
+            string skipPlus = new String(userFromApp._phoneNumber?.Skip(1).ToArray());
+            if(userFromApp._phoneNumber is null | !Int64.TryParse(skipPlus, out Int64 number))
             {
+
                 return false;
             }
         }
-        else if(!Int64.TryParse(userFromApp._phoneNumber, out Int64 code))//error number)
+        else if(userFromApp._phoneNumber is null | !Int64.TryParse(userFromApp._phoneNumber, out Int64 code))//error number)
         {
             HttpContext.Response.StatusCode = 402;//nul propp
 
             return false;
         }
+
         return true;
     }
 }

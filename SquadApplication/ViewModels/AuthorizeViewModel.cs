@@ -30,7 +30,7 @@ public partial class AuthorizeViewModel : ObservableObject
     [RelayCommand]
     private async Task Login()
     {
-        if(AccesCode.Length <= 0)
+        if(AccesCode is null || AccesCode.Length <= 0)
         {
             return;
         }
@@ -38,7 +38,7 @@ public partial class AuthorizeViewModel : ObservableObject
         UserModelEntity? userFromResponce = await requestManager.SendDataForEnter(AccesCode);
         if(userFromResponce is null | userFromResponce?.Id <=0 )
         {
-            //Error
+            return ;
         }
         Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId={userFromResponce.Id}");
     }
@@ -95,18 +95,17 @@ public partial class AuthorizeViewModel : ObservableObject
 
     private bool ValidateData()
     {
-        
-        
+                
         if(PhoneNumber[0] == '+')
         {
-            string? skipPlus = PhoneNumber.Skip(1).ToString();
-            if(!Int64.TryParse(skipPlus, out Int64 number))
+            string skipPlus = new String(PhoneNumber?.Skip(1).ToArray());
+            if(PhoneNumber is null | !Int64.TryParse(skipPlus, out Int64 number))
             {
                 //
                 return false;
             }
         }
-        else if(!Int64.TryParse(PhoneNumber, out Int64 number))
+        else if(PhoneNumber is null | !Int64.TryParse(PhoneNumber, out Int64 number))
         {
             return false;
         }

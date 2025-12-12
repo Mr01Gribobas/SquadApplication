@@ -31,7 +31,7 @@ public class DataBaseManager : IRequestManagerForEnter
                 _userSession.CurrentUser = createdUser;
                 return createdUser;
 
-            }
+            } 
             catch(Exception ex)
             {
 

@@ -1,6 +1,3 @@
-using SquadApplication.Repositories.ManagerRequest;
-using SquadApplication.Serices.ApiServices;
-
 namespace SquadApplication.ViewCustom;
 
 

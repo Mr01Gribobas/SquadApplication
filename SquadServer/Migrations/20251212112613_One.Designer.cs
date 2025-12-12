@@ -12,8 +12,8 @@ using SquadServer.Models.DbContextDir;
 namespace SquadServer.Migrations
 {
     [DbContext(typeof(SquadDbContext))]
-    [Migration("20251205142018_ONE")]
-    partial class ONE
+    [Migration("20251212112613_One")]
+    partial class One
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

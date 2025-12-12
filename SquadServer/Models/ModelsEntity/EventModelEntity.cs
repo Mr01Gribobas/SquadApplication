@@ -1,4 +1,6 @@
-﻿namespace SquadServer.Models.ModelsEntity;
+﻿using System.Text.Json.Serialization;
+
+namespace SquadServer.Models.ModelsEntity;
 
 public class EventModelEntity
 {
@@ -12,7 +14,9 @@ public class EventModelEntity
     public int CountMembers { get; set; } = 0;
 
 
-    public int TeamId { get; set; } 
+    public int TeamId { get; set; }
+
+    [JsonIgnore]
     public virtual TeamEntity Team { get; set; } = null!;
 }
 
