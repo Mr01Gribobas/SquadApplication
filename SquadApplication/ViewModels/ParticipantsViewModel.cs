@@ -3,13 +3,14 @@
 
 public partial class ParticipantsViewModel : ObservableObject
 {
-
-    public ParticipantsViewModel(ParticipantsPage participantsPage, int userId)
+    private UserModelEntity _userModelEntity;
+    public ParticipantsViewModel(ParticipantsPage participantsPage, UserModelEntity userModel)
     {
         users = new ObservableCollection<UserModelEntity>();
         this._participantsPage = participantsPage;
         _requestsInServer = new ManagerGetRequests<UserModelEntity>();
-        GetMembersTeam(userId);
+        _userModelEntity = userModel;
+        GetMembersTeam(_userModelEntity.Id);
     }
 
 
@@ -26,24 +27,21 @@ public partial class ParticipantsViewModel : ObservableObject
     [ObservableProperty]
     private Role role;
 
-    private void GetMembersTeam(int userId)
+    private async void GetMembersTeam(int userId)
     {
-        Thread thread = new Thread(new ThreadStart(async () =>
+        if(_userModelEntity is null)
         {
-            var request = (ManagerGetRequests<UserModelEntity>)_requestsInServer;
-            request.SetUrl($"GetAllTeamMembers?userId={userId}");
-            var responce = await request.GetData(GetRequests.GetAllTeamMembers);
-            if (responce != null)
+            return;
+        }
+        var request = (ManagerGetRequests<UserModelEntity>)_requestsInServer;
+        request.SetUrl($"GetAllTeamMembers?userId={userId}");
+        var responce = await request.GetDataAsync(GetRequests.GetAllTeamMembers);
+        if(responce != null)
+        {
+            foreach(var member in responce)
             {
-                foreach (var member in responce)
-                {
-                    Users.Add(member);
-                }
+                Users.Add(member);
             }
-        }));
-        thread.Start();
-        Users.Clear();
-
-
+        }
     }
 }

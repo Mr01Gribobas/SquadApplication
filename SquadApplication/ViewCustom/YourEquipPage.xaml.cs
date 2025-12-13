@@ -2,7 +2,7 @@ namespace SquadApplication.ViewCustom;
 
 public partial class YourEquipPage : ContentPage
 {
-	public YourEquipPage()
+	public YourEquipPage(IUserSession userSession)
 	{
 		InitializeComponent();
 	}

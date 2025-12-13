@@ -90,7 +90,7 @@ public class DataBaseRepository
                               Where(u => u.TeamId == userById.TeamId).
                               OrderBy(u => u._role).
                               ToList();
-        return list;
+            return list;
         }
         catch(Exception ex)
         {

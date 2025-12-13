@@ -44,7 +44,7 @@ public class ManagerGetRequests<T> : IRequestManager<T>
 
 
 
-    public async Task<List<T>?> GetData(GetRequests getRequessts)
+    public async Task<List<T>?> GetDataAsync(GetRequests getRequessts)
     {
         switch(getRequessts)
         {

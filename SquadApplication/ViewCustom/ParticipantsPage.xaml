@@ -38,9 +38,10 @@
                             HorizontalOptions="Center"                      
                             >
                                 <Label Text="{Binding Path=_userName}" TextColor="White"/>
-                                <Label Text="{Binding Path=Id}" TextColor="White"/>
-                                <Label Text="{Binding Path=_isStaffed}" TextColor="White"/>                                
-                        </StackLayout>
+                                <Label Text="{Binding Path=__callSing}" TextColor="White"/>
+                                <Label Text="{Binding Path=_isStaffed}" TextColor="White"/>
+                                <Label Text="{Binding Path=_role}" TextColor="White"/> 
+                            </StackLayout>
                     </Border>                    
                 </DataTemplate>
             </CollectionView.ItemTemplate> 

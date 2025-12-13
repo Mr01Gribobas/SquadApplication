@@ -21,7 +21,7 @@ public class ManagerPostRequests<T> : IRequestManager<T>
     {
         _urlNameForSend += controllAction;
     }
-    public Task<List<T>> GetData(GetRequests getType)
+    public Task<List<T>> GetDataAsync(GetRequests getType)
     {
         throw new NotImplementedException();
     }
