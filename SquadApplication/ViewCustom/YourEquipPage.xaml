@@ -6,14 +6,14 @@
              Title="YourEquipPage!"
              BackgroundImageSource="hkauthorize.jpg"
              >
-    <VerticalStackLayout >
+    <VerticalStackLayout Margin="3">
         <Label 
             TextColor="White"
             Text="Welcome to .NET MAUI!"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Border                      
-            BackgroundColor="Transparent"            
+            BackgroundColor="#50808080"
             Stroke="CadetBlue"   
             StrokeShape="10"
             StrokeThickness="2"
@@ -21,49 +21,49 @@
             Margin="0,20,0,30"
             HorizontalOptions="Fill"
             >
-
-
             <StackLayout
-                CascadeInputTransparent="False"
-                InputTransparent="True"
-                BackgroundColor="#50808080"
+                Padding="5"
+                
                 >
+                <Label Text="Информация о вас" TextColor="AliceBlue" HorizontalOptions="Center"/>
                 <HorizontalStackLayout InputTransparent="False">
                     <Label Text="Имя : " TextColor="White"  HorizontalOptions="Start"/>
-                    <Label Text=" Maks" TextColor="White" HorizontalOptions="End"/>
+                    <Label Text="{Binding Path=Name}" TextColor="White" HorizontalOptions="End"/>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Label Text="Позывной : " TextColor="White" HorizontalOptions="Start"/>
-                    <Label Text="isProperty" TextColor="White" HorizontalOptions="End"/>
+                    <Label Text="{Binding Path=CallSing}" TextColor="White" HorizontalOptions="End"/>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Label Text="Роль : " TextColor="White" HorizontalOptions="Start"/>
-                    <Label Text="isProperty" TextColor="White" HorizontalOptions="End"/>
+                    <Label Text="{Binding Path=Role}" TextColor="White" HorizontalOptions="End"/>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Label Text="Номер : " TextColor="White" HorizontalOptions="Start"/>
-                    <Label Text="isProperty" TextColor="White" HorizontalOptions="End"/>
+                    <Label Text="{Binding Path=PhoneNumber}" TextColor="White" HorizontalOptions="End"/>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Label Text="Возраст : " TextColor="White" HorizontalOptions="Start"/>
-                    <Label Text="isProperty" TextColor="White" HorizontalOptions="End"/>
+                    <Label Text="{Binding Path=Age}" TextColor="White" HorizontalOptions="End"/>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Label Text="Укомплектованность  : " TextColor="White" HorizontalOptions="Start"/>
-                    <Label Text="isProperty" TextColor="White" HorizontalOptions="End"/>
+                    <Label Text="{Binding Path=IsStaffed}" TextColor="White" HorizontalOptions="End"/>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Label Text="Команда : " TextColor="White" HorizontalOptions="Start"/>
-                    <Label Text="isProperty" TextColor="White" HorizontalOptions="End"/>
+                    <Label Text="{Binding Path=TeamName}" TextColor="White" HorizontalOptions="End"/>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
-                    <Label Text="Экиперовка : " TextColor="White" HorizontalOptions="Start"/>
-                    <Label Text="isProperty" TextColor="White" HorizontalOptions="End"/>
+                    <Label Text="Экиперовка id : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="{Binding Path=EquipmentId}" TextColor="White" HorizontalOptions="End"/>
                 </HorizontalStackLayout>
             </StackLayout>
         </Border>
+        <Button Margin="0,-25,0,0"></Button>
+
         <Border                      
-                    BackgroundColor="Transparent"            
+                    BackgroundColor="#50808080"            
                     Stroke="CadetBlue"   
                     StrokeShape="10"
                     StrokeThickness="2"
@@ -72,14 +72,60 @@
                     HorizontalOptions="Fill"
                        >
             <StackLayout
-                     CascadeInputTransparent="False"
-                     InputTransparent="True"
-                     BackgroundColor="#50808080"
-                                    />
+                     
+                                    >
+                <Label Text="Информация об екипе" TextColor="AliceBlue" HorizontalOptions="Center"/>
+                <HorizontalStackLayout>
+                    <Label Text="Основное оружие  : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="{Binding Path=MainWeapon}" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Вторичное оружие : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="{Binding Path=SecondaryWeapon}" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Защита головы : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="{Binding Path=HeadEquipment}" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Защита тела : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="{Binding Path=BodyEquipment}" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Разгрузка/Плитник : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="{Binding Path=UnloudingWeapon}" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+            </StackLayout>
             </Border>
+        <Button Margin="0,-25,0,0"></Button>
 
-
-
+        <Border                      
+            BackgroundColor="#50808080"
+            Stroke="CadetBlue"   
+            StrokeShape="10"
+            StrokeThickness="2"
+            Padding="10"
+            Margin="0,20,0,30"
+            HorizontalOptions="Fill"
+               >
+            <StackLayout
+             
+                            >
+                <Label Text="Команда" TextColor="White" HorizontalOptions="Center"/>
+                <HorizontalStackLayout>
+                    <Label Text="Название команды  : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="{Binding Path=NameTeam}" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Колл-во участников : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="{Binding Path=CountMembers}" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Ближайшее собития  : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="{Binding Path=IsEvent}" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+            </StackLayout>
+        </Border>
 
 
     </VerticalStackLayout>

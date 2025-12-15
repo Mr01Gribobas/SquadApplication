@@ -1,30 +1,41 @@
 ﻿
+
 namespace SquadApplication.ViewModels;
 
-public partial class YourEquipViewModel:ObservableObject
+public partial class YourEquipViewModel : ObservableObject
 {
     private UserModelEntity _user;
-    public YourEquipViewModel(YourEquipPage page , UserModelEntity user)
+    public YourEquipViewModel(YourEquipPage page, UserModelEntity user)
     {
         _user = user;
-        if(_user is not null )
+        if(_user is not null)
         {
-            InitialProperty();
+            InitialPropertyUser();
+            if(_user.EquipmentId is not null | _user.EquipmentId > 0)
+            {
+                InitialPropertyEquip();
+            }
         }
     }
 
-    private void InitialProperty()
+    private void InitialPropertyEquip()
+    {
+        //throw new NotImplementedException();
+    }
+
+    private void InitialPropertyUser()
     {
         Name = _user._userName;
         CallSing = _user._callSing;
         Role = _user._role.ToString();
         PhoneNumber = _user._phoneNumber;
-        Age = _user._age?.ToString();
-        IsStaffed = _user._isStaffed.ToString();
         TeamName = _user._teamName;
-        EquipmentId = _user.EquipmentId?.ToString();
+        Age = _user._age == null | _user._age <= 0 ? "Не установоено" : _user._age.ToString();
+        IsStaffed = _user._isStaffed == null | _user._isStaffed is false ? " Не укомплектован " : " Укомплектован";
+        EquipmentId = _user.EquipmentId is null | _user.EquipmentId <= 0 ? "Нету зарегистрированных екипов" : _user.EquipmentId.ToString();
     }
 
+    //==============================
     [ObservableProperty]
     private string name;
 
@@ -48,4 +59,28 @@ public partial class YourEquipViewModel:ObservableObject
 
     [ObservableProperty]
     private string equipmentId;
+    //==============================
+    [ObservableProperty]
+    private string mainWeapon;
+
+    [ObservableProperty]
+    private string secondaryWeapon;
+
+    [ObservableProperty]
+    private string headEquipment;
+
+    [ObservableProperty]
+    private string bodyEquipment;
+
+    [ObservableProperty]
+    private string unloudingWeapon;
+    //==============================
+    [ObservableProperty]
+    private string nameTeam;
+
+    [ObservableProperty]
+    private string countMembers;
+
+    [ObservableProperty]
+    private string isEvent;
 }
