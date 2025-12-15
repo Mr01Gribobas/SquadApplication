@@ -26,7 +26,11 @@ public class MainPostController:Controller
     {
         return null;
     }
-
+    [HttpPost]
+    public IActionResult? UpdateEquip(int equipId)
+    {
+        return null;
+    }
     [HttpPost]
     public IActionResult? AddReantils(int commanderId)
     {

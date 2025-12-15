@@ -8,4 +8,5 @@ public enum PostsRequests
     AddReantils,
     UpdateReantilsById,
     AddPolygon,
+    UpdateEquip,
 }

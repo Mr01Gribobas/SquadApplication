@@ -1,10 +1,10 @@
-﻿
-
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 
 public partial class YourEquipViewModel : ObservableObject
 {
     private UserModelEntity _user;
+    private IRequestManager<EquipmentEntity> _requestManager;
+    private EquipmentEntity _equipment;
     public YourEquipViewModel(YourEquipPage page, UserModelEntity user)
     {
         _user = user;
@@ -13,12 +13,12 @@ public partial class YourEquipViewModel : ObservableObject
             InitialPropertyUser();
             if(_user.EquipmentId is not null | _user.EquipmentId > 0)
             {
-                InitialPropertyEquip();
+                InitialPropertyEquipById(_user.Id);
             }
         }
     }
 
-    private void InitialPropertyEquip()
+    private void InitialPropertyEquipById(int userId)
     {
         //throw new NotImplementedException();
     }
@@ -74,6 +74,28 @@ public partial class YourEquipViewModel : ObservableObject
 
     [ObservableProperty]
     private string unloudingWeapon;
+
+    [RelayCommand]
+    private void UpdateEquipment()
+    {
+        var requestManager = (ManagerPostRequests<EquipmentEntity>)_requestManager;
+        if(requestManager is null)
+        {
+            throw new NullReferenceException();
+        }
+        if(_user.EquipmentId is null || _user.EquipmentId <= 0)
+        {
+            requestManager.SetUrl($"CreateEquip?userId={_user.Id}");
+            requestManager?.PostRequests(objectValue: new EquipmentEntity(), PostsRequests.CreateEquip);
+        }
+        else if(_user.EquipmentId is not null && _equipment is not null)
+        {
+            requestManager.SetUrl($"UpdateEquip?equipId={_equipment.Id}");
+            requestManager?.PostRequests(objectValue: new EquipmentEntity(), PostsRequests.UpdateEquip);
+        }
+
+
+    }
     //==============================
     [ObservableProperty]
     private string nameTeam;

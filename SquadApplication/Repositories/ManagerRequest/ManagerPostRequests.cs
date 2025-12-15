@@ -12,7 +12,7 @@ public class ManagerPostRequests<T> : IRequestManager<T>
         _httpClient = new HttpClient();
     }
     private HttpClient _httpClient;
-    public string _urlNameForSend { get; private set; } = "http://localhost:7176/";
+    public string _urlNameForSend { get; private set; } = "http://10.0.2.2:5213/MainPost/";
     public int _currentStatusCode { get; private set; }
 
 
@@ -64,6 +64,9 @@ public class ManagerPostRequests<T> : IRequestManager<T>
 
             case PostsRequests.AddPolygon:
                 return await PostRequest(objectValue, "AddPolygon");
+                break;
+            case PostsRequests.UpdateEquip:
+                return await PostRequest(objectValue, "UpdateEquip");
                 break;
 
             default:
