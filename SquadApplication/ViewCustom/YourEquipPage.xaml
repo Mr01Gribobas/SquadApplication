@@ -1,12 +1,86 @@
 <?xml version="1.0" encoding="utf-8" ?>
+    
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.YourEquipPage"
-             Title="YourEquipPage">
-    <VerticalStackLayout>
+             Title="YourEquipPage!"
+             BackgroundImageSource="hkauthorize.jpg"
+             >
+    <VerticalStackLayout >
         <Label 
+            TextColor="White"
             Text="Welcome to .NET MAUI!"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+        <Border                      
+            BackgroundColor="Transparent"            
+            Stroke="CadetBlue"   
+            StrokeShape="10"
+            StrokeThickness="2"
+            Padding="10"
+            Margin="0,20,0,30"
+            HorizontalOptions="Fill"
+            >
+
+
+            <StackLayout
+                CascadeInputTransparent="False"
+                InputTransparent="True"
+                BackgroundColor="#50808080"
+                >
+                <HorizontalStackLayout InputTransparent="False">
+                    <Label Text="Имя : " TextColor="White"  HorizontalOptions="Start"/>
+                    <Label Text=" Maks" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Позывной : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="isProperty" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Роль : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="isProperty" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Номер : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="isProperty" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Возраст : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="isProperty" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Укомплектованность  : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="isProperty" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Команда : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="isProperty" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="Экиперовка : " TextColor="White" HorizontalOptions="Start"/>
+                    <Label Text="isProperty" TextColor="White" HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+            </StackLayout>
+        </Border>
+        <Border                      
+                    BackgroundColor="Transparent"            
+                    Stroke="CadetBlue"   
+                    StrokeShape="10"
+                    StrokeThickness="2"
+                    Padding="10"
+                    Margin="0,20,0,30"
+                    HorizontalOptions="Fill"
+                       >
+            <StackLayout
+                     CascadeInputTransparent="False"
+                     InputTransparent="True"
+                     BackgroundColor="#50808080"
+                                    />
+            </Border>
+
+
+
+
+
     </VerticalStackLayout>
 </ContentPage>

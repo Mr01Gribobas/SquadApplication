@@ -25,8 +25,7 @@ public class ImputController : Controller
     {
         if(loginCode < 0)
         {
-            HttpContext.Response.StatusCode = 401;
-            return null;
+            return Unauthorized();
         }
         UserModelEntity? Player = _dataBaseRepository?.
                                               GetUserFromDb(loginCode) ?? null;

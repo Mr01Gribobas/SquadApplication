@@ -20,27 +20,24 @@
                         Text="Список пока пуст !!"
                         TextColor="Gray"
                         BackgroundColor="Transparent"
-                        FontSize="14"
+                        FontSize="24"
                         HorizontalTextAlignment="Center"
                         VerticalTextAlignment="Center"/>
-                </CollectionView.EmptyView>
-                        
-                        
+                </CollectionView.EmptyView>                       
             <CollectionView.ItemTemplate>
                 <DataTemplate>                    
                     <Border
                         Stroke="DarkKhaki"
-                        StrokeShape="1"
-                        
+                        StrokeShape="1"                        
                         >
                         <StackLayout
                             VerticalOptions="Center"
                             HorizontalOptions="Center"                      
                             >
                                 <Label Text="{Binding Path=_userName}" TextColor="White"/>
-                                <Label Text="{Binding Path=__callSing}" TextColor="White"/>
-                                <Label Text="{Binding Path=_isStaffed}" TextColor="White"/>
-                                <Label Text="{Binding Path=_role}" TextColor="White"/> 
+                                <Label Text="{Binding Path=_callSing}" TextColor="White"/>
+                                <Label Text="{Binding Path=_role}" TextColor="White"/>
+                                <Label x:Name="isStaffed" Text="{Binding Path=_isStaffed}" TextColor="White"/>
                             </StackLayout>
                     </Border>                    
                 </DataTemplate>

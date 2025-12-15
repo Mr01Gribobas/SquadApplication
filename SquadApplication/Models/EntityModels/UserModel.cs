@@ -26,6 +26,7 @@ public class UserModelEntity
     public Int64 _enterCode { get; set; }
 
     public int? EquipmentId { get; set; }
+
     [JsonIgnore]
     public EquipmentEntity _equipment;//снаряжение
 
