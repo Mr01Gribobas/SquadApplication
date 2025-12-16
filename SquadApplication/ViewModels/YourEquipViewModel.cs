@@ -1,4 +1,5 @@
-﻿namespace SquadApplication.ViewModels;
+﻿
+namespace SquadApplication.ViewModels;
 
 public partial class YourEquipViewModel : ObservableObject
 {
@@ -13,15 +14,39 @@ public partial class YourEquipViewModel : ObservableObject
             InitialPropertyUser();
             if(_user.EquipmentId is not null | _user.EquipmentId > 0)
             {
-                InitialPropertyEquipById(_user.Id);
+                GetEquipById(_user.Id);
             }
         }
     }
 
-    private void InitialPropertyEquipById(int userId)
+    private async void GetEquipById(int userId)
     {
-        //throw new NotImplementedException();
+        var getRequest = (ManagerGetRequests<EquipmentEntity>)_requestManager;
+        getRequest.SetUrl($"GetEquipByUserId?userId={userId}");
+        var responce =  await getRequest.GetDataAsync(GetRequests.GetEquipById);
+        if(responce != null &&responce.Count > 0 )
+        {
+            InitialPropertyEquipmen(responce.FirstOrDefault());
+        }
+        getRequest.ResetUrl();
     }
+
+    private void InitialPropertyEquipmen(EquipmentEntity equipment)
+    {
+        if(equipment is null)
+        {
+            return;
+        }
+        else
+        {
+            MainWeapon = equipment.NameMainWeapon;
+            SecondaryWeapon = equipment.NameSecondaryWeapon??"Не зарегано";
+            HeadEquipment = equipment.HeadEquipment == null ? "Не зарегано " :"Полная защита";
+            BodyEquipment = equipment.BodyEquipment == null ? "Не зарегано " : "Полная защита";
+            UnloudingWeapon = equipment.UnloudingEquipment == null ? "Не зарегано " : "Полная защита";
+        }
+    }
+
 
     private void InitialPropertyUser()
     {
@@ -75,27 +100,6 @@ public partial class YourEquipViewModel : ObservableObject
     [ObservableProperty]
     private string unloudingWeapon;
 
-    [RelayCommand]
-    private void UpdateEquipment()
-    {
-        var requestManager = (ManagerPostRequests<EquipmentEntity>)_requestManager;
-        if(requestManager is null)
-        {
-            throw new NullReferenceException();
-        }
-        if(_user.EquipmentId is null || _user.EquipmentId <= 0)
-        {
-            requestManager.SetUrl($"CreateEquip?userId={_user.Id}");
-            requestManager?.PostRequests(objectValue: new EquipmentEntity(), PostsRequests.CreateEquip);
-        }
-        else if(_user.EquipmentId is not null && _equipment is not null)
-        {
-            requestManager.SetUrl($"UpdateEquip?equipId={_equipment.Id}");
-            requestManager?.PostRequests(objectValue: new EquipmentEntity(), PostsRequests.UpdateEquip);
-        }
-
-
-    }
     //==============================
     [ObservableProperty]
     private string nameTeam;
@@ -105,4 +109,16 @@ public partial class YourEquipViewModel : ObservableObject
 
     [ObservableProperty]
     private string isEvent;
+
+    [RelayCommand]
+    private void UpdateEquipment()
+    {
+        //Shell.Current.GoToAsync($"/{nameof(EditEquipmentPage)}");        
+    }
+
+    [RelayCommand]
+    private void UpdateProfile()
+    {
+        //Shell.Current.GoToAsync($"/{nameof(EditProfilePage)}");        
+    }
 }

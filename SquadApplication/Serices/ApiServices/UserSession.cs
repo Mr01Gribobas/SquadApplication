@@ -25,9 +25,9 @@ public class UserSession : IUserSession
     }
         
     private const string UserStorageKey = "current_user_data";
-
     public int? UserId => _currentUser.Id;
     public Role? UserRole =>_currentUser._role;
+
 
 
     public async Task LoadUserAsync()

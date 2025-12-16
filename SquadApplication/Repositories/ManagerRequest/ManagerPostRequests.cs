@@ -16,7 +16,7 @@ public class ManagerPostRequests<T> : IRequestManager<T>
     public int _currentStatusCode { get; private set; }
 
 
-
+    public void ResetUrl() => _urlNameForSend = "http://10.0.2.2:5213/MainPost/";
     public void SetUrl(string controllAction)
     {
         _urlNameForSend += controllAction;

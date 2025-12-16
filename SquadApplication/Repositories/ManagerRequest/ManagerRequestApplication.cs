@@ -15,7 +15,7 @@ public class ManagerGetRequests<T> : IRequestManager<T>
     public string _urlNameForSend { get; private set; } = "http://10.0.2.2:5213/MainGet/";
     public int _currentStatusCode { get; private set; }
 
-
+    public void ResetUrl() => _urlNameForSend = "http://10.0.2.2:5213/MainGet/";
 
     public void SetUrl(string controllAction)
     {

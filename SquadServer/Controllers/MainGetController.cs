@@ -72,9 +72,9 @@ public class MainGetController : Controller
 
 
     [HttpGet]
-    public IActionResult? GetEquipById(int id)
+    public IActionResult? GetEquipByUserId(int userId)
     {
-        var equip = _dataBaseRepository.GetEquipById(id);
+        var equip = _dataBaseRepository.GetEquipByUserId(userId);
         return Json(equip);
     }
 }

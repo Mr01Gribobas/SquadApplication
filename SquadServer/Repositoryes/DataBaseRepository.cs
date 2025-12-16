@@ -126,7 +126,12 @@ public class DataBaseRepository
 
     public EquipmentEntity? GetEquipById(int id)
     {
-        var eqip = _squadDbContext.Equipments.FirstOrDefault(e => e.OwnerEquipmentId == id);
+        var eqip = _squadDbContext.Equipments.FirstOrDefault(e => e.Id == id);
+        return eqip;
+    }
+    public EquipmentEntity? GetEquipByUserId(int userId)
+    {
+        var eqip = _squadDbContext.Equipments.FirstOrDefault(e => e.OwnerEquipmentId == userId);
         return eqip;
     }
 }
