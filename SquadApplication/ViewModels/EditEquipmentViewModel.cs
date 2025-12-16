@@ -2,6 +2,30 @@
 
 public partial class EditEquipmentViewModel : ObservableObject
 {
+    public EditEquipmentViewModel(EditEquipmentPage page, UserModelEntity user)
+    {
+        _user = user;
+        _requestManager = new ManagerPostRequests<EquipmentEntity>();
+        GetEquipById(user.Id);
+    }
+
+
+    private async void GetEquipById(int userId)
+    {
+        var getRequest = (ManagerGetRequests<EquipmentEntity>)_requestManager;
+        getRequest.SetUrl($"GetEquipByUserId?userId={userId}");
+        var responce = await getRequest.GetDataAsync(GetRequests.GetEquipById);
+        var equip = responce.FirstOrDefault();
+        if(equip is not null)
+        {
+            MainWeapon = equip.NameMainWeapon;
+            SecondaryWeapon = equip.NameSecondaryWeapon ?? "Не зарегано";
+            HeadEquipment = equip.HeadEquipment == null ? "Не зарегано " : "Полная защита";
+            BodyEquipment = equip.BodyEquipment == null ? "Не зарегано " : "Полная защита";
+            UnloudingWeapon = equip.UnloudingEquipment == null ? "Не зарегано " : "Полная защита";
+        }
+        getRequest.ResetUrl();
+    }
     private IRequestManager<EquipmentEntity> _requestManager;
     private EquipmentEntity _equipment;
     private UserModelEntity _user;
@@ -28,19 +52,31 @@ public partial class EditEquipmentViewModel : ObservableObject
     private void UpdateEquipment()
     {
         var requestManager = (ManagerPostRequests<EquipmentEntity>)_requestManager;
+        var createdEquip = EquipmentEntity.CreateEquipment
+            (
+            mainWeapon:false,
+            secondaryWeapon:false,
+            headEq:false,
+            bodyEq:false,
+            unloudingEq:false,
+            nameMainWeapon:"",
+            secondaryNameWeapon:"",
+            owner:_user 
+            );
         if(requestManager is null)
         {
             throw new NullReferenceException();
         }
         if(_user.EquipmentId is null || _user.EquipmentId <= 0)
         {
+
             requestManager.SetUrl($"CreateEquip?userId={_user.Id}");
-            requestManager?.PostRequests(objectValue: new EquipmentEntity(), PostsRequests.CreateEquip);
+            requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.CreateEquip);
         }
         else if(_user.EquipmentId is not null && _equipment is not null)
         {
             requestManager.SetUrl($"UpdateEquip?equipId={_equipment.Id}");
-            requestManager?.PostRequests(objectValue: new EquipmentEntity(), PostsRequests.UpdateEquip);
+            requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
         }
         requestManager.ResetUrl();
     }

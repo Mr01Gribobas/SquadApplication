@@ -32,7 +32,7 @@ public partial class EditYourProfileViewModel:ObservableObject
 
 
     [RelayCommand]
-    private void UpdateProfile()
+    private async void UpdateProfile()
     {
         //
         //var newUser = UserModel.CreateUser(params);
@@ -49,4 +49,6 @@ public partial class EditYourProfileViewModel:ObservableObject
         }        
         requestManager.ResetUrl();
     }
+          
+    
 }

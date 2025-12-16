@@ -1,5 +1,5 @@
-﻿
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
+
 
 public partial class YourEquipViewModel : ObservableObject
 {
@@ -113,12 +113,12 @@ public partial class YourEquipViewModel : ObservableObject
     [RelayCommand]
     private void UpdateEquipment()
     {
-        //Shell.Current.GoToAsync($"/{nameof(EditEquipmentPage)}");        
+        Shell.Current.GoToAsync($"/{nameof(EditEquipmentPage)}");        
     }
 
     [RelayCommand]
     private void UpdateProfile()
     {
-        //Shell.Current.GoToAsync($"/{nameof(EditProfilePage)}");        
+        Shell.Current.GoToAsync($"/{nameof(EditUserProfilePage)}");        
     }
 }
