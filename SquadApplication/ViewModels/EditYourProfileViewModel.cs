@@ -37,15 +37,15 @@ public partial class EditYourProfileViewModel:ObservableObject
         //
         //var newUser = UserModel.CreateUser(params);
         //
-        var requestManager = (ManagerPostRequests<EquipmentEntity>)_requestManager;
+        var requestManager = (ManagerPostRequests<UserModelEntity>)_requestManager;
         if(requestManager is null)
         {
             throw new NullReferenceException();
         }
-        if(_user is null)
+        if(_user is not null)
         {
             requestManager.SetUrl($"CreateEquip?userId={_user.Id}");
-            requestManager?.PostRequests(objectValue: new EquipmentEntity(), PostsRequests.UpdateProfile);
+            requestManager?.PostRequests(objectValue: new UserModelEntity(), PostsRequests.UpdateProfile);
         }        
         requestManager.ResetUrl();
     }
