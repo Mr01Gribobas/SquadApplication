@@ -4,9 +4,35 @@
              x:Class="SquadApplication.ViewCustom.EditUserProfilePage"
              Title="EditUserProfilePage">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Border>
+            <HorizontalStackLayout Padding="10" Margin="10">
+                <Label Text="Имя" TextColor="AliceBlue" FontSize="20"/>
+            </HorizontalStackLayout>
+        </Border>
+        <Border>
+            <HorizontalStackLayout Padding="10" Margin="10">
+                <Label Text="Позывной" TextColor="AliceBlue" FontSize="20"/>
+            </HorizontalStackLayout>
+        </Border>
+        <Border>
+            <HorizontalStackLayout Padding="10" Margin="10">
+                <Label Text="Роль" TextColor="AliceBlue" FontSize="20"/>
+            </HorizontalStackLayout>
+        </Border>
+        <Border>
+            <HorizontalStackLayout Padding="10" Margin="10">
+                <Label Text="Номер" TextColor="AliceBlue" FontSize="20"/>
+            </HorizontalStackLayout>
+        </Border>
+        <Border>
+            <HorizontalStackLayout Padding="10" Margin="10">
+                <Label Text="Возраст" TextColor="AliceBlue" FontSize="20"/>
+            </HorizontalStackLayout>
+        </Border>        
+        <Border>
+            <HorizontalStackLayout Padding="10" Margin="10">
+                <Label Text="Команда" TextColor="AliceBlue" FontSize="20"/>
+            </HorizontalStackLayout>
+        </Border>
     </VerticalStackLayout>
 </ContentPage>
