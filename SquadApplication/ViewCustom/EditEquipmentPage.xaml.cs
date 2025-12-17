@@ -12,4 +12,6 @@ public partial class EditEquipmentPage : ContentPage
 		InitializeComponent();
 		BindingContext = _viewModel;
 	}
+
+   
 }
