@@ -60,7 +60,11 @@
                 </HorizontalStackLayout>
             </StackLayout>
         </Border>
-        <Button Margin="0,-25,0,0"></Button>
+        <Button
+            Command="{Binding UpdateProfileCommand}"
+            Margin="0,-25,0,0"
+            Text="Update profile"
+            ></Button>
 
         <Border                      
                     BackgroundColor="#50808080"            
@@ -97,7 +101,13 @@
                 </HorizontalStackLayout>
             </StackLayout>
             </Border>
-        <Button Margin="0,-25,0,0"></Button>
+        <Button 
+            Margin="0,-25,0,0"
+            Command="{Binding UpdateEquipmentCommand}"
+            Text="Update equip"
+                >
+            
+        </Button>
 
         <Border                      
             BackgroundColor="#50808080"

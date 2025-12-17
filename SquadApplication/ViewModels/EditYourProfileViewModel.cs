@@ -1,8 +1,16 @@
 ﻿namespace SquadApplication.ViewModels;
 
-public partial class EditYourProfileViewModel:ObservableObject
+public partial class EditYourProfileViewModel : ObservableObject
 {
+
+    public EditYourProfileViewModel(EditUserProfilePage profilePage, UserModelEntity user)
+    {
+        _user = user;
+        _editProfilePage= profilePage;
+    }
+
     private IRequestManager<EquipmentEntity> _requestManager;
+    public EditUserProfilePage _editProfilePage;
     private UserModelEntity _user;
 
 
@@ -44,11 +52,11 @@ public partial class EditYourProfileViewModel:ObservableObject
         }
         if(_user is not null)
         {
-            requestManager.SetUrl($"CreateEquip?userId={_user.Id}");
+            requestManager.SetUrl($"UpdateProfile?userId={_user.Id}");
             requestManager?.PostRequests(objectValue: new UserModelEntity(), PostsRequests.UpdateProfile);
-        }        
+        }
         requestManager.ResetUrl();
     }
-          
-    
+
+
 }

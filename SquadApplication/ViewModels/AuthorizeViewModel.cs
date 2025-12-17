@@ -38,9 +38,10 @@ public partial class AuthorizeViewModel : ObservableObject
         UserModelEntity? userFromResponce = await requestManager.SendDataForEnter(AccesCode);
         if(userFromResponce is null | userFromResponce?.Id <=0 )
         {
-            return ;
+            await _authorizedPage.DisplayAlertAsync("Error","Пользователя с таким кодом нету!","Ok");
+            return;
         }
-        Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId={userFromResponce.Id}");
+       await Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId={userFromResponce.Id}");
     }
 
 

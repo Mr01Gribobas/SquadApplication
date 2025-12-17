@@ -6,31 +6,13 @@ public partial class EditEquipmentViewModel : ObservableObject
     {
         _user = user;
         _requestManager = new ManagerPostRequests<EquipmentEntity>();
-        GetEquipById(user.Id);
+        GetEquipById(_user.Id);
     }
 
 
-    private async void GetEquipById(int userId)
-    {
-        var getRequest = (ManagerGetRequests<EquipmentEntity>)_requestManager;
-        getRequest.SetUrl($"GetEquipByUserId?userId={userId}");
-        var responce = await getRequest.GetDataAsync(GetRequests.GetEquipById);
-        var equip = responce.FirstOrDefault();
-        if(equip is not null)
-        {
-            MainWeapon = equip.NameMainWeapon;
-            SecondaryWeapon = equip.NameSecondaryWeapon ?? "Не зарегано";
-            HeadEquipment = equip.HeadEquipment == null ? "Не зарегано " : "Полная защита";
-            BodyEquipment = equip.BodyEquipment == null ? "Не зарегано " : "Полная защита";
-            UnloudingWeapon = equip.UnloudingEquipment == null ? "Не зарегано " : "Полная защита";
-        }
-        getRequest.ResetUrl();
-    }
     private IRequestManager<EquipmentEntity> _requestManager;
     private EquipmentEntity _equipment;
     private UserModelEntity _user;
-
-
 
     [ObservableProperty]
     private string mainWeapon;
@@ -54,14 +36,14 @@ public partial class EditEquipmentViewModel : ObservableObject
         var requestManager = (ManagerPostRequests<EquipmentEntity>)_requestManager;
         var createdEquip = EquipmentEntity.CreateEquipment
             (
-            mainWeapon:false,
-            secondaryWeapon:false,
-            headEq:false,
-            bodyEq:false,
-            unloudingEq:false,
-            nameMainWeapon:"",
-            secondaryNameWeapon:"",
-            owner:_user 
+            mainWeapon: false,
+            secondaryWeapon: false,
+            headEq: false,
+            bodyEq: false,
+            unloudingEq: false,
+            nameMainWeapon: "",
+            secondaryNameWeapon: "",
+            owner: _user
             );
         if(requestManager is null)
         {
@@ -80,4 +62,30 @@ public partial class EditEquipmentViewModel : ObservableObject
         }
         requestManager.ResetUrl();
     }
+
+
+    private async void GetEquipById(int userId)
+    {
+        if(_user is null | userId <= 0 || _user.EquipmentId is null)
+        {
+            return;
+        }
+        var getRequest = (ManagerGetRequests<EquipmentEntity>)_requestManager;
+        getRequest.SetUrl($"GetEquipByUserId?userId={userId}");
+        var responce = await getRequest.GetDataAsync(GetRequests.GetEquipById);
+        var equip = responce.FirstOrDefault();
+        if(equip is not null)
+        {
+            _equipment = equip;
+            MainWeapon = equip.NameMainWeapon;
+            SecondaryWeapon = equip.NameSecondaryWeapon ?? "Не зарегано";
+            HeadEquipment = equip.HeadEquipment == null ? "Не зарегано " : "Полная защита";
+            BodyEquipment = equip.BodyEquipment == null ? "Не зарегано " : "Полная защита";
+            UnloudingWeapon = equip.UnloudingEquipment == null ? "Не зарегано " : "Полная защита";
+        }
+        getRequest.ResetUrl();
+    }
+
+
+
 }
