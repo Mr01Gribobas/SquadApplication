@@ -43,13 +43,13 @@ public partial class EditEquipmentViewModel : ObservableObject
         var requestManager = (ManagerPostRequests<EquipmentEntity>)_requestManager;
         var createdEquip = EquipmentEntity.CreateEquipment
             (
-            mainWeapon: false,
-            secondaryWeapon: false,
-            headEq: false,
-            bodyEq: false,
-            unloudingEq: false,
-            nameMainWeapon: "",
-            secondaryNameWeapon: "",
+            mainWeapon: InStokeMainWeapon,
+            secondaryWeapon: InStokesecondaryWeapon,
+            headEq: HeadEquipment,
+            bodyEq: BodyEquipment,
+            unloudingEq: UnloudingWeapon,
+            nameMainWeapon: MainWeapon,
+            secondaryNameWeapon: SecondaryWeapon,
             owner: _user
             );
         if(requestManager is null)
@@ -86,9 +86,9 @@ public partial class EditEquipmentViewModel : ObservableObject
             _equipment = equip;
             MainWeapon = equip.NameMainWeapon;
             SecondaryWeapon = equip.NameSecondaryWeapon ?? "Не зарегано";
-            HeadEquipment = equip.HeadEquipment == null ? "Не зарегано " : "Полная защита";
-            BodyEquipment = equip.BodyEquipment == null ? "Не зарегано " : "Полная защита";
-            UnloudingWeapon = equip.UnloudingEquipment == null ? "Не зарегано " : "Полная защита";
+            HeadEquipment = equip.HeadEquipment;
+            BodyEquipment = equip.BodyEquipment;
+            UnloudingWeapon = equip.UnloudingEquipment;
         }
         getRequest.ResetUrl();
     }
