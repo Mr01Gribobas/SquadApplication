@@ -1,4 +1,7 @@
-﻿namespace SquadServer.Controllers;
+﻿using SquadServer.Models;
+using System.Threading.Tasks;
+
+namespace SquadServer.Controllers;
 
 public class MainPostController:Controller
 {
@@ -16,21 +19,69 @@ public class MainPostController:Controller
     }
 
     [HttpPost]
-    public IActionResult? UpdateProfile(int userId)
+    public async Task<IActionResult?> UpdateProfile(int userId)
     {
-        return null;
+        UserModelEntity userFromApp = await HttpContext.Request.ReadFromJsonAsync<UserModelEntity>();
+
+        if(userFromApp == null)
+        {
+            return Unauthorized();
+        }
+        else
+        {
+            UserModelEntity? userEntity = _squadDbContext.Players.FirstOrDefault(eq => eq.Id == userId);
+            if(userEntity == null)
+            {
+                return Unauthorized();
+            }
+
+            UserModelEntity.UpdateProfile(userFromApp, userEntity);
+            _squadDbContext.SaveChanges();
+            return Ok(userEntity);
+        }
     }
 
     [HttpPost]
-    public IActionResult? CreateEquip(int userId)
+    public async Task<IActionResult?> CreateEquip(int userId)
     {
-        return null;
+        EquipmentEntity requipFromApp = await  HttpContext.Request.ReadFromJsonAsync<EquipmentEntity>();
+        if(requipFromApp == null)
+        {
+            return Unauthorized();
+        }
+        else
+        {
+            _squadDbContext.Equipments.Add(requipFromApp);
+            _squadDbContext.SaveChanges();
+            return Ok(requipFromApp);
+        }
+        
+
     }
     [HttpPost]
-    public IActionResult? UpdateEquip(int equipId)
+    public async Task<IActionResult?> UpdateEquip(int equipId)
     {
-        return null;
+        EquipmentEntity equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentEntity>();
+        if(equipFromApp == null)
+        {
+            return Unauthorized();
+        }
+        else
+        {
+            EquipmentEntity? equipEntity = _squadDbContext.Equipments.FirstOrDefault(eq => eq.Id == equipId);
+            if(equipEntity == null)
+            {
+                return Unauthorized();
+            }
+
+            EquipmentEntity.UpdateEquip(equipFromApp, equipEntity);
+            _squadDbContext.SaveChanges();            
+            return Ok(equipEntity);
+        }
     }
+
+    
+
     [HttpPost]
     public IActionResult? AddReantils(int commanderId)
     {

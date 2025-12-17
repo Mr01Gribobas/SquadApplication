@@ -19,7 +19,18 @@ public  class EquipmentEntity
     public int OwnerEquipmentId { get; set; }
 
     [JsonIgnore]
-    public virtual UserModelEntity OwnerEquipment { get; set; } = null!; 
+    public virtual UserModelEntity OwnerEquipment { get; set; } = null!;
 
 
+
+    public static void UpdateEquip(EquipmentEntity equipFromApp, EquipmentEntity equipEntity)
+    {
+        equipEntity.OwnerEquipment = equipFromApp.OwnerEquipment;
+        equipEntity.OwnerEquipmentId = equipFromApp.OwnerEquipmentId;
+        equipEntity.UnloudingEquipment = equipFromApp.UnloudingEquipment;
+        equipEntity.HeadEquipment = equipFromApp.HeadEquipment;
+        equipEntity.BodyEquipment = equipFromApp.BodyEquipment;
+        equipEntity.MainWeapon = equipFromApp.MainWeapon;
+        equipEntity.SecondaryWeapon = equipFromApp.SecondaryWeapon;
+    }
 }

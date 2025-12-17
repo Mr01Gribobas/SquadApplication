@@ -63,6 +63,17 @@ public class UserModelEntity
         return newUser;
     }
 
+    public static void UpdateProfile(UserModelEntity userFromApp, UserModelEntity userEntity)
+    {
+        userEntity._userName = userFromApp._userName;
+        userEntity._callSing = userFromApp._callSing;
+        userEntity._role = userFromApp._role;
+       userEntity._phoneNumber = userFromApp._phoneNumber;
+        userEntity._teamName = userFromApp._teamName;
+        userEntity._age = userFromApp._age;
+        userEntity.TeamId = userFromApp.TeamId;
+
+    }
 
     private static Int64 GenerationCode(string phuneNumber)
     {

@@ -61,6 +61,7 @@ public partial class EditYourProfileViewModel : ObservableObject
         }
         if(_user is not null)
         {
+            
             requestManager.SetUrl($"UpdateProfile?userId={_user.Id}");
             requestManager?.PostRequests(objectValue: newUser, PostsRequests.UpdateProfile);
         }
