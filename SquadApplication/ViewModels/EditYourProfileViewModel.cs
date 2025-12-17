@@ -28,16 +28,12 @@ public partial class EditYourProfileViewModel : ObservableObject
 
     [ObservableProperty]
     private string age;
-
-    [ObservableProperty]
-    private string isStaffed;
+   
 
     [ObservableProperty]
     private string teamName;
 
-    [ObservableProperty]
-    private string equipmentId;
-
+    
 
     [RelayCommand]
     private async void UpdateProfile()

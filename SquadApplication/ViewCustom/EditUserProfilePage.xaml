@@ -2,36 +2,56 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.EditUserProfilePage"
+             BackgroundImageSource="hkauthorize.jpg"
              Title="EditUserProfilePage">
     <VerticalStackLayout>
         <Border>
             <HorizontalStackLayout Padding="10" Margin="10">
                 <Label Text="Имя" TextColor="AliceBlue" FontSize="20"/>
+                <Entry PlaceholderColor="Gray" Placeholder="YourName" FontSize="20"/>
             </HorizontalStackLayout>
         </Border>
         <Border>
             <HorizontalStackLayout Padding="10" Margin="10">
                 <Label Text="Позывной" TextColor="AliceBlue" FontSize="20"/>
+                <Entry PlaceholderColor="Gray" Placeholder="YourName" FontSize="20"/>
             </HorizontalStackLayout>
         </Border>
         <Border>
             <HorizontalStackLayout Padding="10" Margin="10">
                 <Label Text="Роль" TextColor="AliceBlue" FontSize="20"/>
+                <Picker  
+                    TextColor="White"
+                    TitleColor="AliceBlue"
+                    Title="Role"
+                    x:Name="selectRole"
+                    >
+                    <Picker.Items>
+                        <x:String>Командир</x:String>
+                        <x:String>Помощник командира</x:String>
+                        <x:String>Рядовой</x:String>
+                        <x:String>Механик</x:String>
+                    </Picker.Items>
+                    
+                </Picker>
             </HorizontalStackLayout>
         </Border>
         <Border>
             <HorizontalStackLayout Padding="10" Margin="10">
                 <Label Text="Номер" TextColor="AliceBlue" FontSize="20"/>
+                <Entry PlaceholderColor="Gray" Placeholder="YourName" FontSize="20"/>
             </HorizontalStackLayout>
         </Border>
         <Border>
             <HorizontalStackLayout Padding="10" Margin="10">
                 <Label Text="Возраст" TextColor="AliceBlue" FontSize="20"/>
+                <Entry PlaceholderColor="Gray" Placeholder="YourName" FontSize="20"/>
             </HorizontalStackLayout>
         </Border>        
         <Border>
             <HorizontalStackLayout Padding="10" Margin="10">
                 <Label Text="Команда" TextColor="AliceBlue" FontSize="20"/>
+                <Entry PlaceholderColor="Gray" Placeholder="YourName" FontSize="20"/>
             </HorizontalStackLayout>
         </Border>
     </VerticalStackLayout>

@@ -14,20 +14,27 @@ public partial class EditEquipmentViewModel : ObservableObject
     private EquipmentEntity _equipment;
     private UserModelEntity _user;
 
+
+
+    [ObservableProperty]
+    private bool inStokeMainWeapon;
     [ObservableProperty]
     private string mainWeapon;
 
+
+    [ObservableProperty]
+    private bool inStokesecondaryWeapon;
     [ObservableProperty]
     private string secondaryWeapon;
 
     [ObservableProperty]
-    private string headEquipment;
+    private bool headEquipment;
 
     [ObservableProperty]
-    private string bodyEquipment;
+    private bool bodyEquipment;
 
     [ObservableProperty]
-    private string unloudingWeapon;
+    private bool unloudingWeapon;
 
 
     [RelayCommand]
