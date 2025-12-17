@@ -30,7 +30,17 @@ public partial class YourEquipViewModel : ObservableObject
         }
         getRequest.ResetUrl();
     }
-
+    private async void TestGetAllProfileById(int userId)
+    {
+        var getRequest = (ManagerGetRequests<EquipmentEntity>)_requestManager;
+        getRequest.SetUrl($"GetEquipByUserId?userId={userId}");
+        var responce = await getRequest.GetDataAsync(GetRequests.GetEquipById);
+        if(responce != null && responce.Count > 0)
+        {
+            InitialPropertyEquipmen(responce.FirstOrDefault());
+        }
+        getRequest.ResetUrl();
+    }
     private void InitialPropertyEquipmen(EquipmentEntity equipment)
     {
         if(equipment is null)

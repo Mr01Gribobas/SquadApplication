@@ -1,4 +1,5 @@
-﻿using SquadServer.Repositoryes;
+﻿using SquadServer.Models;
+using SquadServer.Repositoryes;
 
 namespace SquadServer.Controllers;
 
@@ -76,5 +77,13 @@ public class MainGetController : Controller
     {
         var equip = _dataBaseRepository.GetEquipByUserId(userId);
         return Json(equip);
+    }
+    public IActionResult? GetAllInfoForProfile(int userId)
+    {
+        RequestTuplesManager requestTuples = new RequestTuplesManager(_dataBaseRepository);
+           (UserModelEntity objectUser,
+            TeamEntity objectTeam, 
+            EquipmentEntity? objectEquipment) infoForProfile = requestTuples.GetInfoForProfileById(userId);
+        return Ok(infoForProfile);
     }
 }

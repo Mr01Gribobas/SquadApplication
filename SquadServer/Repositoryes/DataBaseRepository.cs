@@ -134,4 +134,11 @@ public class DataBaseRepository
         var eqip = _squadDbContext.Equipments.FirstOrDefault(e => e.OwnerEquipmentId == userId);
         return eqip;
     }
+
+    internal TeamEntity GetTeamByUserId(UserModelEntity userFromDb)
+    {
+        TeamEntity? resultSearch =  _squadDbContext.Teams.FirstOrDefault(t=>t.Id==userFromDb.TeamId);
+
+        return resultSearch;
+    }
 }
