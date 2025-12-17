@@ -1,24 +1,25 @@
 ﻿namespace SquadApplication.Repositories.ManagerRequest;
 
-internal class RequestTuplee<T, T2, T3>
+internal class RequestTuple
 {
-    public RequestTuplee(IUserSession userSession)
+    public RequestTuple(UserModelEntity userSession)
     {
         _httpClient = new HttpClient();
         _userSession = userSession;
     }
-    private readonly IUserSession _userSession;
+    private readonly UserModelEntity _userSession;
     private readonly HttpClient _httpClient;
     private string _urlNameForSend = "http://10.0.2.2:5213/MainGet/";
     public int _currentStatusCode { get; private set; }
     public int GetStatusCode() => _currentStatusCode;
+    public void ResetUrl() => _urlNameForSend = "http://10.0.2.2:5213/MainGet/";
     public void UpdateUrl(string url)
     {
         _urlNameForSend += url;
     }
-    public async Task<(T?, T2?, T3?)> GetAllInfoForUser(T object1, T2 object2, T3 object3)
+    public async Task<(UserModelEntity, TeamEntity, EquipmentEntity?)> GetAllInfoForUser(UserModelEntity userModel)
     {
-        if(object1 is null | object2 is null | object3 is null)
+        if(userModel is null)
         {
             throw new ArgumentNullException();
         }
@@ -28,19 +29,19 @@ internal class RequestTuplee<T, T2, T3>
         {
             try
             {
-                (T, T2, T3) result = await responce.Content.ReadFromJsonAsync<(T, T2, T3)>();
-                
+                (UserModelEntity, TeamEntity, EquipmentEntity?) result = await responce.Content.ReadFromJsonAsync<(UserModelEntity, TeamEntity, EquipmentEntity?)>();
+                ResetUrl();
                 return result;
 
             }
             catch(Exception)
             {
+                ResetUrl();
                 return (default, default, default);
             }
-        }else
-        {
-            return (default, default, default); 
         }
+        ResetUrl();
+        return (default, default, default);
     }
 
 

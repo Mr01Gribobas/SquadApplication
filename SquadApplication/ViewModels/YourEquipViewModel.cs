@@ -11,36 +11,35 @@ public partial class YourEquipViewModel : ObservableObject
         _user = user;
         if(_user is not null)
         {
-            InitialPropertyUser();
-            if(_user.EquipmentId is not null | _user.EquipmentId > 0)
-            {
-                GetEquipById(_user.Id);
-            }
+                GetAllProfileById(_user.Id);
         }
+    }
+    private async void GetAllProfileById(int userId)
+    {
+        var tupleMahager = new RequestTuple(_user);
+        (UserModelEntity objectUser,
+         TeamEntity objectTeam,
+         EquipmentEntity? objectEquipment) tuple = await tupleMahager.GetAllInfoForUser(_user);
+        if(tuple.objectUser is null && tuple.objectTeam is null)
+        {
+            throw new NullReferenceException();
+        }
+        InitialPropertyUser(tuple.objectUser);
+        InitialPropertyTeamInfo(tuple.objectTeam);
+        if(tuple.objectEquipment is not null)
+        {
+            InitialPropertyEquipmen(tuple.objectEquipment);
+        }
+
     }
 
-    private async void GetEquipById(int userId)
+    private void InitialPropertyTeamInfo(TeamEntity objectTeam)
     {
-        var getRequest = (ManagerGetRequests<EquipmentEntity>)_requestManager;
-        getRequest.SetUrl($"GetEquipByUserId?userId={userId}");
-        var responce =  await getRequest.GetDataAsync(GetRequests.GetEquipById);
-        if(responce != null &&responce.Count > 0 )
-        {
-            InitialPropertyEquipmen(responce.FirstOrDefault());
-        }
-        getRequest.ResetUrl();
+        NameTeam = objectTeam.Name;
+        CountMembers = objectTeam.CountMembers.ToString();
+        IsEvent = objectTeam.EventId is null || objectTeam.EventId == 0 ? "Нету события" : "Не пропусти событие!";
     }
-    private async void TestGetAllProfileById(int userId)
-    {
-        var getRequest = (ManagerGetRequests<EquipmentEntity>)_requestManager;
-        getRequest.SetUrl($"GetEquipByUserId?userId={userId}");
-        var responce = await getRequest.GetDataAsync(GetRequests.GetEquipById);
-        if(responce != null && responce.Count > 0)
-        {
-            InitialPropertyEquipmen(responce.FirstOrDefault());
-        }
-        getRequest.ResetUrl();
-    }
+
     private void InitialPropertyEquipmen(EquipmentEntity equipment)
     {
         if(equipment is null)
@@ -50,24 +49,24 @@ public partial class YourEquipViewModel : ObservableObject
         else
         {
             MainWeapon = equipment.NameMainWeapon;
-            SecondaryWeapon = equipment.NameSecondaryWeapon??"Не зарегано";
-            HeadEquipment = equipment.HeadEquipment == null ? "Не зарегано " :"Полная защита";
+            SecondaryWeapon = equipment.NameSecondaryWeapon ?? "Не зарегано";
+            HeadEquipment = equipment.HeadEquipment == null ? "Не зарегано " : "Полная защита";
             BodyEquipment = equipment.BodyEquipment == null ? "Не зарегано " : "Полная защита";
             UnloudingWeapon = equipment.UnloudingEquipment == null ? "Не зарегано " : "Полная защита";
         }
     }
 
 
-    private void InitialPropertyUser()
+    private void InitialPropertyUser(UserModelEntity modelEntity)
     {
-        Name = _user._userName;
-        CallSing = _user._callSing;
-        Role = _user._role.ToString();
-        PhoneNumber = _user._phoneNumber;
-        TeamName = _user._teamName;
-        Age = _user._age == null | _user._age <= 0 ? "Не установоено" : _user._age.ToString();
-        IsStaffed = _user._isStaffed == null | _user._isStaffed is false ? " Не укомплектован " : " Укомплектован";
-        EquipmentId = _user.EquipmentId is null | _user.EquipmentId <= 0 ? "Нету зарегистрированных екипов" : _user.EquipmentId.ToString();
+        Name = modelEntity._userName;
+        CallSing = modelEntity._callSing;
+        Role = modelEntity._role.ToString();
+        PhoneNumber = modelEntity._phoneNumber;
+        TeamName = modelEntity._teamName;
+        Age = modelEntity._age == null | modelEntity._age <= 0 ? "Не установоено" : modelEntity._age.ToString();
+        IsStaffed = modelEntity._isStaffed == null | modelEntity._isStaffed is false ? " Не укомплектован " : " Укомплектован";
+        EquipmentId = modelEntity.EquipmentId is null | modelEntity.EquipmentId <= 0 ? "Нету зарегистрированных екипов" : modelEntity.EquipmentId.ToString();
     }
 
     //==============================
@@ -123,12 +122,12 @@ public partial class YourEquipViewModel : ObservableObject
     [RelayCommand]
     private void UpdateEquipment()
     {
-        Shell.Current.GoToAsync($"/{nameof(EditEquipmentPage)}");        
+        Shell.Current.GoToAsync($"/{nameof(EditEquipmentPage)}");
     }
 
     [RelayCommand]
     private void UpdateProfile()
     {
-        Shell.Current.GoToAsync($"/{nameof(EditUserProfilePage)}");        
+        Shell.Current.GoToAsync($"/{nameof(EditUserProfilePage)}");
     }
 }
