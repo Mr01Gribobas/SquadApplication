@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using SquadApplication.DTO_Classes;
+using System.Text.Json;
 
 namespace SquadApplication.Repositories.ManagerRequest;
 
@@ -31,10 +32,10 @@ internal class RequestTuple
         {
             try
             {
-                (UserModelEntity i1, TeamEntity i2) resultJson = await responce.Content.ReadFromJsonAsync<(UserModelEntity, TeamEntity)>();
-                string? result = await responce.Content.ReadAsStringAsync();
+                TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentEntity> resultJson = await responce.Content.ReadFromJsonAsync<TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentEntity>>();
+                (UserModelEntity, TeamEntity, EquipmentEntity) typle = (resultJson._itemOne,resultJson._itemTwo,resultJson._itemThree);
                 ResetUrl();
-                return default;
+                return typle;
 
             }
             catch(Exception ex)
