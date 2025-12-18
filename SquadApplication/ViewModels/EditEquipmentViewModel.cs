@@ -38,7 +38,7 @@ public partial class EditEquipmentViewModel : ObservableObject
 
 
     [RelayCommand]
-    private void UpdateEquipment()
+    private async Task UpdateEquipment()
     {
         var requestManager = (ManagerPostRequests<EquipmentEntity>)_requestManager;
         if(!ValidateData())
@@ -72,6 +72,7 @@ public partial class EditEquipmentViewModel : ObservableObject
             requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
         }
         requestManager.ResetUrl();
+        await Shell.Current.GoToAsync($"/{nameof(YourEquipPage)}");
     }
 
     private bool ValidateData()

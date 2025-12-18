@@ -8,13 +8,25 @@
         <Border>
             <HorizontalStackLayout Padding="10" Margin="10">
                 <Label Text="Имя" TextColor="AliceBlue" FontSize="20"/>
-                <Entry PlaceholderColor="Gray" Placeholder="YourName" FontSize="20"/>
+                <Entry 
+                    PlaceholderColor="Gray"
+                    Placeholder="{Binding Name}"
+                    FontSize="20"
+                    Text="{Binding Name}"
+                    TextColor="AliceBlue"
+                    />
             </HorizontalStackLayout>
         </Border>
         <Border>
             <HorizontalStackLayout Padding="10" Margin="10">
                 <Label Text="Позывной" TextColor="AliceBlue" FontSize="20"/>
-                <Entry PlaceholderColor="Gray" Placeholder="YourName" FontSize="20"/>
+                <Entry
+                    Text="{Binding CallSing}"
+                    TextColor="AliceBlue"
+                    PlaceholderColor="Gray"
+                    Placeholder="{Binding CallSing}"
+                    FontSize="20"
+                    />
             </HorizontalStackLayout>
         </Border>
         <Border>
@@ -25,6 +37,7 @@
                     TitleColor="AliceBlue"
                     Title="Role"
                     x:Name="selectRole"
+                    SelectedItem="{Binding Role}"
                     >
                     <Picker.Items>
                         <x:String>Командир</x:String>
@@ -39,19 +52,34 @@
         <Border>
             <HorizontalStackLayout Padding="10" Margin="10">
                 <Label Text="Номер" TextColor="AliceBlue" FontSize="20"/>
-                <Entry PlaceholderColor="Gray" Placeholder="YourName" FontSize="20"/>
+                <Entry
+                    TextColor="White"
+                    Text="{Binding PhoneNumber}"
+                    PlaceholderColor="Gray"
+                    Placeholder="{Binding PhoneNumber}"
+                    FontSize="20"/>
             </HorizontalStackLayout>
         </Border>
         <Border>
             <HorizontalStackLayout Padding="10" Margin="10">
                 <Label Text="Возраст" TextColor="AliceBlue" FontSize="20"/>
-                <Entry PlaceholderColor="Gray" Placeholder="YourName" FontSize="20"/>
+                <Entry
+                    TextColor="White"
+                    Text="{Binding Age}"
+                    PlaceholderColor="Gray" 
+                    Placeholder="{Binding Age}"
+                    FontSize="20"/>
             </HorizontalStackLayout>
         </Border>        
         <Border>
             <HorizontalStackLayout Padding="10" Margin="10">
                 <Label Text="Команда" TextColor="AliceBlue" FontSize="20"/>
-                <Entry PlaceholderColor="Gray" Placeholder="YourName" FontSize="20"/>
+                <Entry 
+                    TextColor="White"
+                    Text="{Binding TeamName}"
+                    PlaceholderColor="Gray" 
+                    Placeholder="{Binding TeamName}"
+                    FontSize="20"/>
             </HorizontalStackLayout>
         </Border>
         <Button Text="UpdateProfile" Command="{Binding UpdateProfileCommand}"/>
