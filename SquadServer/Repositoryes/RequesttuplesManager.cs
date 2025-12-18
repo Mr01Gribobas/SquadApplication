@@ -1,4 +1,5 @@
 ﻿using SquadServer.Models;
+using System.Text.Json;
 
 namespace SquadServer.Repositoryes;
 
@@ -23,6 +24,11 @@ public class RequestTuplesManager
             throw new NullReferenceException();
 
         EquipmentEntity? equipmentFromDb = _dataBaseRepository.GetEquipByUserId(userFromDb.Id);
+
+        //var userJson = JsonSerializer.Serialize(userFromDb);
+        //var teamJson = JsonSerializer.Serialize(teamFromDb);
+        //var eqJson = JsonSerializer.Serialize(equipmentFromDb);
+
         _typleObjectsForProfile = (userFromDb, teamFromDb, equipmentFromDb);
         return _typleObjectsForProfile;
     }

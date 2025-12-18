@@ -1,4 +1,5 @@
-﻿using SquadServer.Models;
+﻿using SquadServer.DTO_Classes;
+using SquadServer.Models;
 using SquadServer.Repositoryes;
 using System.Text.Json;
 
@@ -87,8 +88,16 @@ public class MainGetController : Controller
             (UserModelEntity objectUser,
              TeamEntity objectTeam,
              EquipmentEntity? objectEquipment) infoForProfile = requestTuples.GetInfoForProfileById(userId);
-            var jsonData = JsonSerializer.Serialize<(UserModelEntity, TeamEntity)>((infoForProfile.objectUser,infoForProfile.objectTeam));
-            return Ok((infoForProfile.objectUser, infoForProfile.objectTeam));
+
+            var container = new TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentEntity>()
+            {
+                _itemOne = infoForProfile.objectUser,
+                _itemTwo = infoForProfile.objectTeam,
+                _itemThree = infoForProfile.objectEquipment
+            };
+            
+            var jsonData3 = JsonSerializer.Serialize(container);
+            return Ok(jsonData3);
 
         }
         catch(Exception ex)

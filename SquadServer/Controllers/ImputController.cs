@@ -1,5 +1,6 @@
 using SquadServer.Models;
 using SquadServer.Repositoryes;
+using System.Text.Json;
 namespace SquadServer.Controllers;
 
 
@@ -34,7 +35,6 @@ public class ImputController : Controller
         {
             return Unauthorized();
         }
-
         return Ok(Player);
     }
 
