@@ -1,9 +1,8 @@
 ﻿using SquadServer.Models;
-using System.Threading.Tasks;
 
 namespace SquadServer.Controllers;
 
-public class MainPostController:Controller
+public class MainPostController : Controller
 {
 
     private readonly SquadDbContext _squadDbContext;
@@ -13,10 +12,24 @@ public class MainPostController:Controller
     }
 
     [HttpPost]
-    public IActionResult? CreateEvent(int commanderId)
+    public async Task<IActionResult?> CreateEvent(int commanderId)
     {
-        return null;
+        EventModelEntity newEvent = await HttpContext.Request.ReadFromJsonAsync<EventModelEntity>();
+        if(newEvent is null)
+        {
+            return Unauthorized();
+        }
+        var user = _squadDbContext.Players.FirstOrDefault(u => u.Id == commanderId);
+        if(user is not null && user._role != Role.Commander | user._role != Role.AssistantCommander)
+        {
+            _squadDbContext.Events.Add(newEvent);
+            _squadDbContext.SaveChanges();
+            return Ok();
+        }
+        return Unauthorized();
     }
+
+
 
     [HttpPost]
     public async Task<IActionResult?> UpdateProfile(int userId)
@@ -44,7 +57,7 @@ public class MainPostController:Controller
     [HttpPost]
     public async Task<IActionResult?> CreateEquip(int userId)
     {
-        EquipmentEntity requipFromApp = await  HttpContext.Request.ReadFromJsonAsync<EquipmentEntity>();
+        EquipmentEntity requipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentEntity>();
         if(requipFromApp == null)
         {
             return Unauthorized();
@@ -55,7 +68,7 @@ public class MainPostController:Controller
             _squadDbContext.SaveChanges();
             return Ok(requipFromApp);
         }
-        
+
 
     }
     [HttpPost]
@@ -75,12 +88,12 @@ public class MainPostController:Controller
             }
 
             EquipmentEntity.UpdateEquip(equipFromApp, equipEntity);
-            _squadDbContext.SaveChanges();            
+            _squadDbContext.SaveChanges();
             return Ok(equipEntity);
         }
     }
 
-    
+
 
     [HttpPost]
     public IActionResult? AddReantils(int commanderId)

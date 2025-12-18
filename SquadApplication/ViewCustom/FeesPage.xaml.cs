@@ -1,13 +1,17 @@
 
+
 namespace SquadApplication.ViewCustom;
 
 public partial class FeesPage : ContentPage
 {
-	private FeesViewModel _feesViewModel;
+    private readonly UserModelEntity _user;
+    private FeesViewModel _feesViewModel;
     public FeesPage(IUserSession userSession)
 	{
-		InitializeComponent();
-		_feesViewModel = new FeesViewModel();
+
+		_user = userSession.CurrentUser;
+        InitializeComponent();
+		_feesViewModel = new FeesViewModel(this,_user);
 		BindingContext = _feesViewModel;
 
     }

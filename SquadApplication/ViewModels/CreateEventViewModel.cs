@@ -1,14 +1,18 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using System.Threading.Tasks;
+
+namespace SquadApplication.ViewModels;
+
 public partial class CreateEventViewModel : ObservableObject
 {
-    public CreateEventViewModel(CreateEventPage eventPage,UserModelEntity user)
+    public CreateEventViewModel(CreateEventPage eventPage, UserModelEntity user)
     {
         _user = user;
         _eventPage = eventPage;
+        _requestManager = new ManagerPostRequests<EventModelEntity>();
     }
-         
 
 
+    private IRequestManager<EventModelEntity> _requestManager;
     private readonly UserModelEntity _user;
     private readonly CreateEventPage _eventPage;
 
@@ -28,17 +32,42 @@ public partial class CreateEventViewModel : ObservableObject
     private string? namePolygon;
 
     [RelayCommand]
-    public void CreateEvent()
+    public async Task CreateEvent()
     {
-        Examination();
+        if(!Examination() ||
+            _user is null ||
+            _user._role != Role.Commander ||
+            _user._role != Role.AssistantCommander)
+        {
+            return;//error
+        }
+
+        var newEvent = EventModelEntity.CreateEventModel(
+            nameTeamEnemy: NameTeamEnemy,
+            namePolygon:NamePolygon,
+            coordinates:CoordinatesPolygon,
+            time: TimeOnly.Parse(Time),
+            date: DateOnly.Parse(Date),
+            user:_user
+            );
+
+        var requestPost = (ManagerPostRequests<EventModelEntity>)_requestManager;
+        requestPost.SetUrl($"CreateEvent?commanderId={_user.Id}");
+        var resultCreated = await requestPost.PostRequests(newEvent, PostsRequests.CreateEvent);
+        if(!resultCreated)
+        {
+            //error
+        }
     }
-    private void Examination()
+
+    private bool Examination()
     {
         var dateOnly = DateOnly.Parse(Date); //"20.12.2025"
         var timeOnly = TimeOnly.Parse(Time);//10:10:10
         var coordinates = CoordinatesPolygon;
         var namePolygon = NamePolygon;
-        var enemy = NameTeamEnemy; 
+        var enemy = NameTeamEnemy;
+        return true;
     }
 
 

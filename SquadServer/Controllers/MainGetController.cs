@@ -1,5 +1,6 @@
 ﻿using SquadServer.Models;
 using SquadServer.Repositoryes;
+using System.Text.Json;
 
 namespace SquadServer.Controllers;
 
@@ -80,10 +81,19 @@ public class MainGetController : Controller
     }
     public IActionResult? GetAllInfoForProfile(int userId)
     {
-        RequestTuplesManager requestTuples = new RequestTuplesManager(_dataBaseRepository);
-           (UserModelEntity objectUser,
-            TeamEntity objectTeam, 
-            EquipmentEntity? objectEquipment) infoForProfile = requestTuples.GetInfoForProfileById(userId);
-        return Ok(infoForProfile);
+        try
+        {
+            RequestTuplesManager requestTuples = new RequestTuplesManager(_dataBaseRepository);
+            (UserModelEntity objectUser,
+             TeamEntity objectTeam,
+             EquipmentEntity? objectEquipment) infoForProfile = requestTuples.GetInfoForProfileById(userId);
+            var jsonData = JsonSerializer.Serialize<(UserModelEntity, TeamEntity)>((infoForProfile.objectUser,infoForProfile.objectTeam));
+            return Ok((infoForProfile.objectUser, infoForProfile.objectTeam));
+
+        }
+        catch(Exception ex)
+        {
+            return Unauthorized();
+        }
     }
 }

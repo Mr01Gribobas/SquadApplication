@@ -1,4 +1,6 @@
-﻿namespace SquadApplication.Repositories.ManagerRequest;
+﻿using System.Text.Json;
+
+namespace SquadApplication.Repositories.ManagerRequest;
 
 internal class RequestTuple
 {
@@ -23,18 +25,19 @@ internal class RequestTuple
         {
             throw new ArgumentNullException();
         }
-        UpdateUrl("GetAllInfoForProfile");
+        UpdateUrl($"GetAllInfoForProfile?userId={userModel.Id}");
         var responce = await _httpClient.GetAsync(_urlNameForSend);
         if(responce != null && (int)responce.StatusCode == 200)
         {
             try
             {
-                (UserModelEntity, TeamEntity, EquipmentEntity?) result = await responce.Content.ReadFromJsonAsync<(UserModelEntity, TeamEntity, EquipmentEntity?)>();
+                (UserModelEntity i1, TeamEntity i2) resultJson = await responce.Content.ReadFromJsonAsync<(UserModelEntity, TeamEntity)>();
+                string? result = await responce.Content.ReadAsStringAsync();
                 ResetUrl();
-                return result;
+                return default;
 
             }
-            catch(Exception)
+            catch(Exception ex)
             {
                 ResetUrl();
                 return (default, default, default);

@@ -15,4 +15,27 @@ public class EventModelEntity
     public int TeamId { get; set; }
     public virtual TeamEntity Team { get; set; } = null!;
 
+
+    public static EventModelEntity CreateEventModel(
+        string? nameTeamEnemy,
+        string namePolygon,
+        string coordinates,
+        TimeOnly time,
+        DateOnly date,
+        UserModelEntity user
+        )
+    {
+        EventModelEntity eventModel = new EventModelEntity() 
+        {
+            NameTeamEnemy = nameTeamEnemy,
+            NamePolygon = namePolygon,
+            Time = time,
+            Date = date,
+            Coordinates = coordinates,
+            TeamId = (int)user.TeamId,
+
+        };
+        return eventModel;
+    }
+
 }
