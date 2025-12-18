@@ -21,10 +21,19 @@
                         Binding="{Binding  
                         Source={x:Reference isEnabledWeaponMain},
                         Path=IsToggled}"
-                        Value="True"
+                        Value="false"
                         >
-                        <Setter Property="IsEnabled" Value="True"/>
+                        <Setter Property="IsEnabled" Value="false"/>
                     </DataTrigger>
+                          <DataTrigger 
+                               TargetType="Entry"
+                               Binding="{Binding  
+                               Source={x:Reference isEnabledWeaponMain},
+                               Path=IsToggled}"
+                               Value="true"
+                               >
+                              <Setter Property="IsEnabled" Value="true"/>
+                         </DataTrigger>
                 </Entry.Triggers>
             </Entry>            
         </Border>
@@ -68,7 +77,7 @@
             </VerticalStackLayout>
         </Border>
         <Border>
-            <Button Text="Update"/>
+            <Button Text="Update" Command="{Binding UpdateEquipmentCommand}"/>
         </Border>
 
     </VerticalStackLayout>

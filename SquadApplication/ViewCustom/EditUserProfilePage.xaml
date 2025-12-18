@@ -54,5 +54,6 @@
                 <Entry PlaceholderColor="Gray" Placeholder="YourName" FontSize="20"/>
             </HorizontalStackLayout>
         </Border>
+        <Button Text="UpdateProfile" Command="{Binding UpdateProfileCommand}"/>
     </VerticalStackLayout>
 </ContentPage>
