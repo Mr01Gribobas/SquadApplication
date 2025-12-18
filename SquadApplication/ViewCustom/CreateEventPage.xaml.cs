@@ -1,15 +1,19 @@
 
+
 namespace SquadApplication.ViewCustom;
 
 public partial class CreateEventPage : ContentPage
 {
-	public CreateEventViewModel _viewModel { get; set; }
-	public CreateEventPage(IUserSession userSession)
-	{
-		InitializeComponent();
-		_viewModel = new CreateEventViewModel();
-		BindingContext = _viewModel;
+    private readonly UserModelEntity _user;
+
+    public CreateEventViewModel _viewModel { get; set; }
+    public CreateEventPage(IUserSession userSession)
+    {
+        _user = userSession.CurrentUser;
+        InitializeComponent();
+        _viewModel = new CreateEventViewModel(this, _user);
+        BindingContext = _viewModel;
 
 
-	}
+    }
 }

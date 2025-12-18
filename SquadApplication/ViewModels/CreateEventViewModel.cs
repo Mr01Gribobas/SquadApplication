@@ -6,6 +6,8 @@ public partial class CreateEventViewModel : ObservableObject
         _user = user;
         _eventPage = eventPage;
     }
+         
+
 
     private readonly UserModelEntity _user;
     private readonly CreateEventPage _eventPage;
@@ -28,11 +30,15 @@ public partial class CreateEventViewModel : ObservableObject
     [RelayCommand]
     public void CreateEvent()
     {
-
+        Examination();
     }
     private void Examination()
     {
-        var res = DateTime.Parse(Date); //Parse("20.12.2025:09:00:00:00").ToString()
+        var dateOnly = DateOnly.Parse(Date); //"20.12.2025"
+        var timeOnly = TimeOnly.Parse(Time);//10:10:10
+        var coordinates = CoordinatesPolygon;
+        var namePolygon = NamePolygon;
+        var enemy = NameTeamEnemy; 
     }
 
 

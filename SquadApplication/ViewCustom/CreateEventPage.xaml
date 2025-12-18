@@ -19,9 +19,10 @@
                 <StackLayout>
                     <Label Text="Название полигона " TextColor="AliceBlue"/>
                     <Entry
-                         Placeholder="____"
+                         Placeholder="Название"
                          PlaceholderColor="Gray"
                          TextColor="White"
+                        Text="{Binding NamePolygon}"
                          BackgroundColor="Transparent" />
                 </StackLayout>
             </Border>
@@ -29,9 +30,10 @@
                 <StackLayout>
                     <Label Text="Координаты полигона " TextColor="AliceBlue"/>
                     <Entry
-                        Placeholder="____"
+                        Placeholder="000000.00000"
                         PlaceholderColor="Gray"
                         TextColor="White"
+                        Text="{Binding CoordinatesPolygon}"
                         />
                 </StackLayout>
             </Border>
@@ -39,10 +41,10 @@
                 <StackLayout>
                     <Label Text="Дата" TextColor="AliceBlue"/>
                     <Entry
-                        Placeholder="____" 
+                        Placeholder="30.12.2025" 
                         PlaceholderColor="Gray"
                         TextColor="White"
-                        
+                        Text="{Binding Date}"
                         />
                 </StackLayout>
             </Border>
@@ -50,9 +52,10 @@
                 <StackLayout>
                     <Label Text="Время" TextColor="AliceBlue"/>
                     <Entry
-                         Placeholder="____"
+                         Placeholder="24:60"
                          PlaceholderColor="Gray"
                          TextColor="White"
+                        Text="{Binding Time}"
                         />
                 </StackLayout>
             </Border>
@@ -60,15 +63,16 @@
                 <StackLayout>
                     <Label Text="Соперник" TextColor="AliceBlue"/>
                     <Entry
-                        Placeholder="____"
+                        Placeholder="Имя команды соперника либо своя игра"
                         PlaceholderColor="Gray"
                         TextColor="White"
+                        Text="{Binding NameTeamEnemy}"
                         />
                 </StackLayout>
             </Border>
         </StackLayout>
         <Border WidthRequest="200" HeightRequest="100">
-            <Button Text="Create" BackgroundColor="Transparent"></Button>
+            <Button Text="Create" Command="{Binding CreateEventCommand}" BackgroundColor="Transparent"></Button>
         </Border>
             
         
