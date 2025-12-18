@@ -1,6 +1,15 @@
 ﻿namespace SquadApplication.ViewModels;
 public partial class CreateEventViewModel : ObservableObject
 {
+    public CreateEventViewModel(CreateEventPage eventPage,UserModelEntity user)
+    {
+        _user = user;
+        _eventPage = eventPage;
+    }
+
+    private readonly UserModelEntity _user;
+    private readonly CreateEventPage _eventPage;
+
     [ObservableProperty]
     private string? date;    //Parse("20.12.2025:09:00:00:00").ToString();
 
@@ -21,7 +30,10 @@ public partial class CreateEventViewModel : ObservableObject
     {
 
     }
-
+    private void Examination()
+    {
+        var res = DateTime.Parse(Date); //Parse("20.12.2025:09:00:00:00").ToString()
+    }
 
 
 
