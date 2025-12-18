@@ -17,13 +17,13 @@ public partial class EditEquipmentViewModel : ObservableObject
 
 
     [ObservableProperty]
-    private bool inStokeMainWeapon;
+    private bool inStokeMainWeapon = false;
     [ObservableProperty]
     private string mainWeapon;
 
 
     [ObservableProperty]
-    private bool inStokesecondaryWeapon;
+    private bool inStokesecondaryWeapon = false;
     [ObservableProperty]
     private string secondaryWeapon;
 
@@ -41,6 +41,10 @@ public partial class EditEquipmentViewModel : ObservableObject
     private void UpdateEquipment()
     {
         var requestManager = (ManagerPostRequests<EquipmentEntity>)_requestManager;
+        if(!ValidateData())
+        {
+            return;//error
+        }
         var createdEquip = EquipmentEntity.CreateEquipment
             (
             mainWeapon: InStokeMainWeapon,
@@ -70,6 +74,25 @@ public partial class EditEquipmentViewModel : ObservableObject
         requestManager.ResetUrl();
     }
 
+    private bool ValidateData()
+    {
+        if(InStokeMainWeapon)
+        {
+            if(MainWeapon.Length <= 0 | MainWeapon.Length > 100)
+            {
+                return false;
+            }
+        }
+        if(InStokesecondaryWeapon)
+        {
+            if(SecondaryWeapon.Length <= 0 | SecondaryWeapon.Length > 100)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     private async void GetEquipById(int userId)
     {

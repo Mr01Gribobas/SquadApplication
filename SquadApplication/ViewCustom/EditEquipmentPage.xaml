@@ -8,12 +8,14 @@
             <Border>
                    <HorizontalStackLayout Padding="10" Margin="10">
                        <Label Text="MainWeapon" TextColor="AliceBlue" FontSize="20"/>
-                       <Switch x:Name="isEnabledWeaponMain" IsToggled="False"  Margin="110,-9,0,0"/>
+                <Switch x:Name="isEnabledWeaponMain" IsToggled="{Binding InStokeMainWeapon}"  Margin="110,-9,0,0"/>
                    </HorizontalStackLayout>
             </Border>
         <Border>
-            <Entry                 
+            <Entry 
+                 TextColor="AliceBlue"
                  Placeholder="Введите name weapon"
+                 Text="{Binding MainWeapon}"
                  PlaceholderColor="Gray">
                 <Entry.Triggers>
                     <DataTrigger 
@@ -39,13 +41,15 @@
         </Border>
         <Border>
             <HorizontalStackLayout Padding="10" Margin="10">
-                <Label Text="MainWeapon" TextColor="AliceBlue" FontSize="20"/>
-                <Switch x:Name="isEnabledWeaponSecndary" IsToggled="False"  Margin="110,-9,0,0"/>
+                <Label Text="SecondaryWeapon" TextColor="AliceBlue" FontSize="20"/>
+                <Switch x:Name="isEnabledWeaponSecndary" IsToggled="{Binding InStokesecondaryWeapon}"  Margin="110,-9,0,0"/>
             </HorizontalStackLayout>
         </Border>
         <Border>
             <Entry                 
                 Placeholder="Введите name weapon"
+                TextColor="AliceBlue"
+                Text="{Binding SecondaryWeapon}"
                 PlaceholderColor="Gray">
                 <Entry.Triggers>
                     <DataTrigger 
@@ -64,15 +68,15 @@
             <VerticalStackLayout Padding="10">
             <HorizontalStackLayout>
                 <Label Text="Head" TextColor="AliceBlue" FontSize="20"/>
-                    <Switch Margin="110,-9,0,0"/>
+                    <Switch Margin="110,-9,0,0" IsToggled="{Binding HeadEquipment}"/>
             </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Label Text="Body" TextColor="AliceBlue" FontSize="20"/>
-                    <Switch Margin="110,-9,0,0"/>
+                    <Switch Margin="110,-9,0,0" IsToggled="{Binding BodyEquipment}"/>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Label Text="UnLoud" TextColor="AliceBlue" FontSize="20"/>
-                    <Switch Margin="110,-9,0,0" />
+                    <Switch Margin="110,-9,0,0" IsToggled="{Binding UnloudingWeapon}"/>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
         </Border>

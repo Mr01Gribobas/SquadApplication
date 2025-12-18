@@ -64,6 +64,12 @@ public class MainPostController : Controller
         }
         else
         {
+            var userFromDb = _squadDbContext.Players.FirstOrDefault(u => u.Id == userId);
+            if(userFromDb is not null)
+            {
+                userFromDb.Equipment = requipFromApp;
+            }
+
             _squadDbContext.Equipments.Add(requipFromApp);
             _squadDbContext.SaveChanges();
             return Ok(requipFromApp);

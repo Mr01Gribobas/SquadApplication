@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace SquadApplication.Models.EntityModels;
 
@@ -35,26 +34,27 @@ public class EquipmentEntity
         string secondaryNameWeapon = null
         )
     {
-        if(owner is null )
+        if(owner is null)
         {
             return null;
         }
+
         var equipment = new EquipmentEntity()
-            {
-                MainWeapon = mainWeapon,
-                SecondaryWeapon = secondaryWeapon,
-                HeadEquipment = headEq,
-                BodyEquipment = bodyEq,
-                UnloudingEquipment = unloudingEq,
+        {
+            MainWeapon = mainWeapon,
+            SecondaryWeapon = secondaryWeapon,
+            HeadEquipment = headEq,
+            BodyEquipment = bodyEq,
+            UnloudingEquipment = unloudingEq,
 
-                NameMainWeapon = nameMainWeapon,
-                NameSecondaryWeapon = secondaryNameWeapon,
+            NameMainWeapon = nameMainWeapon,
+            NameSecondaryWeapon = secondaryNameWeapon,
 
-                OwnerEquipmentId = owner.Id,
-                OwnerEquipment = owner,
-            };
+            OwnerEquipmentId = owner.Id,
+            OwnerEquipment = owner,
+        };
         return equipment;
     }
-    
 
-    }
+
+}
