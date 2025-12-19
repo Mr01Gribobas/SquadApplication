@@ -23,15 +23,22 @@ public class MainPostController : Controller
         if(
             user is not null &&
             user.TeamId is not null &
-            user._role == Role.Commander |
-            user._role == Role.AssistantCommander)
+            (user._role == Role.Commander |
+            user._role == Role.AssistantCommander))
         {
-            newEvent.Team = user.Team;
-            newEvent.TeamId = (int)user.TeamId == 0 ? throw new NullReferenceException() : (int)user.TeamId;
+            try
+            {
+                newEvent.Team = user.Team;
+                newEvent.TeamId = (int)user.TeamId == 0 ? throw new NullReferenceException() : (int)user.TeamId;
 
-            _squadDbContext.Events.Add(newEvent);
-            _squadDbContext.SaveChanges();
-            return Ok();
+                _squadDbContext.Events.Add(newEvent);
+                _squadDbContext.SaveChanges();
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return Unauthorized();
+            }
         }
         return Unauthorized();
     }

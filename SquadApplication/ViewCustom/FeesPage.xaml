@@ -83,7 +83,7 @@
                                 <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
                                         StrokeThickness="0"
                                         >
-                                    <Label Text="Team"
+                            <Label Text="{Binding NameTeamEnemu}"
                                            TextColor="Red" 
                                            FontSize="10"
                                            FontAttributes="Bold"
@@ -98,7 +98,7 @@
                                            FontSize="12"
                                            TextColor="White"/>
                         <Label
-                            Text="NamePolygon"
+                            Text="{Binding NamePolygon}"
                             TextColor="Red"
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
@@ -115,7 +115,7 @@
                                            FontSize="12"
                                            TextColor="White"/>
                         <Label
-                            Text="210304012.42141"
+                            Text="{Binding CoordinatesPolygon}"
                             TextColor="Red"
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
@@ -132,7 +132,7 @@
                         <Label
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
-                            Text="Date"
+                            Text="{Binding DateAndTime}"
                             TextColor="Red"
                             />
                     </StackLayout>
@@ -148,7 +148,7 @@
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
                             TextColor="Red"
-                            Text="CountPlayers"/>
+                            Text="{Binding CountMembers}"/>
 
                     </StackLayout>
 

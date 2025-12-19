@@ -41,7 +41,7 @@
                 <StackLayout>
                     <Label Text="Дата" TextColor="AliceBlue"/>
                     <Entry
-                        Placeholder="30.12.2025" 
+                        Placeholder="мм.дд.гг" 
                         PlaceholderColor="Gray"
                         TextColor="White"
                         Text="{Binding Date}"

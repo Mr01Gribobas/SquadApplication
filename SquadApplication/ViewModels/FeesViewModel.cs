@@ -1,4 +1,8 @@
 ﻿
+
+
+using System.Text;
+
 namespace SquadApplication.ViewModels;
 
 public partial class FeesViewModel : ObservableObject
@@ -22,6 +26,7 @@ public partial class FeesViewModel : ObservableObject
 
     [ObservableProperty]
     private string? nameTeamEnemu; 
+
     [ObservableProperty]
     private string? namePolygon;
 
@@ -38,7 +43,19 @@ public partial class FeesViewModel : ObservableObject
 
     private void InitialProperty(EventModelEntity? eventFromDb)
     {
-        throw new NotImplementedException();
+        NamePolygon = eventFromDb.NamePolygon;
+        CoordinatesPolygon = eventFromDb.Coordinates;
+        DateAndTime = ConvertDateAndTime(eventFromDb.Date, eventFromDb.Time);
+        CountMembers = eventFromDb.CountMembers.ToString();
+    }
+
+    private string? ConvertDateAndTime(DateOnly? date, TimeOnly? time)
+    {
+        
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.Append(date?.ToString()??"Not found");
+        stringBuilder.Append(time?.ToString() ?? "Not found");
+        return stringBuilder.ToString();
     }
 
     [RelayCommand]

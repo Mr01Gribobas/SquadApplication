@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 
 public partial class CreateEventViewModel : ObservableObject
 {
@@ -36,19 +34,19 @@ public partial class CreateEventViewModel : ObservableObject
     {
         if(!Examination() ||
             _user is null ||
-            _user._role != Role.Commander ||
-            _user._role != Role.AssistantCommander)
+            _user._role != Role.Commander 
+          )
         {
             return;//error
         }
 
         var newEvent = EventModelEntity.CreateEventModel(
             nameTeamEnemy: NameTeamEnemy,
-            namePolygon:NamePolygon,
-            coordinates:CoordinatesPolygon,
+            namePolygon: NamePolygon,
+            coordinates: CoordinatesPolygon,
             time: TimeOnly.Parse(Time),
             date: DateOnly.Parse(Date),
-            user:_user
+            user: _user
             );
 
         var requestPost = (ManagerPostRequests<EventModelEntity>)_requestManager;
@@ -62,12 +60,20 @@ public partial class CreateEventViewModel : ObservableObject
 
     private bool Examination()
     {
-        var dateOnly = DateOnly.Parse(Date); //"20.12.2025"
-        var timeOnly = TimeOnly.Parse(Time);//10:10:10
-        var coordinates = CoordinatesPolygon;
-        var namePolygon = NamePolygon;
-        var enemy = NameTeamEnemy;
-        return true;
+        try
+        {
+
+            var dateOnly = DateOnly.Parse(Date); //"20.12.2025"
+            var timeOnly = TimeOnly.Parse(Time);//10:10:10
+            var coordinates = CoordinatesPolygon ?? throw new NullReferenceException();
+            var namePolygon = NamePolygon ?? throw new NullReferenceException() ;
+            var enemy = NameTeamEnemy ?? throw new NullReferenceException();
+            return true;
+        }
+        catch(Exception ex)
+        {
+            return false;
+        }
     }
 
 
