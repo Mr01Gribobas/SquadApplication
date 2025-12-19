@@ -70,7 +70,8 @@ public class MainGetController : Controller
     [HttpGet]
     public IActionResult? GetEvent(int teamId)
     {
-        return Ok(_dataBaseRepository.GetEvent(teamId));
+        var result = _dataBaseRepository.GetEvent(teamId);
+        return Ok(result);
     }
 
 

@@ -122,7 +122,7 @@ public class DataBaseRepository
 
     public EventModelEntity? GetEvent(int teamId)
     {
-        return _squadDbContext.Events.FirstOrDefault(t=>t.TeamId == teamId);
+        return _squadDbContext.Events.Include(e=>e.Team).FirstOrDefault(t=>t.TeamId == teamId);
     }
 
     public EquipmentEntity? GetEquipById(int id)

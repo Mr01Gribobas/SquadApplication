@@ -20,8 +20,15 @@ public class MainPostController : Controller
             return Unauthorized();
         }
         var user = _squadDbContext.Players.FirstOrDefault(u => u.Id == commanderId);
-        if(user is not null && user._role != Role.Commander | user._role != Role.AssistantCommander)
+        if(
+            user is not null &&
+            user.TeamId is not null &
+            user._role == Role.Commander |
+            user._role == Role.AssistantCommander)
         {
+            newEvent.Team = user.Team;
+            newEvent.TeamId = (int)user.TeamId;
+
             _squadDbContext.Events.Add(newEvent);
             _squadDbContext.SaveChanges();
             return Ok();
@@ -57,8 +64,8 @@ public class MainPostController : Controller
     [HttpPost]
     public async Task<IActionResult?> CreateEquip(int userId)
     {
-        EquipmentEntity equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentEntity>();
-        if(equipFromApp == null)
+        EquipmentEntity? equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentEntity>();
+        if(equipFromApp == null | userId != equipFromApp?.OwnerEquipmentId)
         {
             return Unauthorized();
         }
