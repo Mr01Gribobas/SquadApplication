@@ -1,4 +1,5 @@
 ﻿using SquadServer.Models;
+using System.Linq;
 
 namespace SquadServer.Repositoryes;
 
@@ -119,9 +120,9 @@ public class DataBaseRepository
         return list;
     }
 
-    public EventModelEntity? GeuEvent()
+    public EventModelEntity? GetEvent(int teamId)
     {
-        return _squadDbContext.Events.FirstOrDefault();
+        return _squadDbContext.Events.FirstOrDefault(t=>t.TeamId == teamId);
     }
 
     public EquipmentEntity? GetEquipById(int id)

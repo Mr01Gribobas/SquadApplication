@@ -68,9 +68,9 @@ public class MainGetController : Controller
     }
 
     [HttpGet]
-    public IActionResult? GetEvent()
+    public IActionResult? GetEvent(int teamId)
     {
-        return Json(_dataBaseRepository.GeuEvent());
+        return Ok(_dataBaseRepository.GetEvent(teamId));
     }
 
 
