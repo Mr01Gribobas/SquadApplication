@@ -9,6 +9,7 @@ public partial class EditYourProfileViewModel : ObservableObject
         _user = user;
         _editProfilePage = profilePage;
         InitalProperty(_user);
+        _requestManager = new ManagerPostRequests<UserModelEntity>();
     }
 
     private void InitalProperty(UserModelEntity user)
@@ -25,7 +26,7 @@ public partial class EditYourProfileViewModel : ObservableObject
         Age = user?._age.ToString() ?? "Не указан";
     }
 
-    private IRequestManager<EquipmentEntity> _requestManager;
+    private IRequestManager<UserModelEntity> _requestManager;
     public EditUserProfilePage _editProfilePage;
     private UserModelEntity _user;
 
@@ -133,7 +134,8 @@ public partial class EditYourProfileViewModel : ObservableObject
                 _selectedRole = Models.Role.Mechanic;
                 break;
             default:
-                return false;
+                _selectedRole = _user._role;
+                break;
         }
 
 

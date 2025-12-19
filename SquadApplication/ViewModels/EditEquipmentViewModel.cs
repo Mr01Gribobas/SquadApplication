@@ -64,12 +64,12 @@ public partial class EditEquipmentViewModel : ObservableObject
         {
 
             requestManager.SetUrl($"CreateEquip?userId={_user.Id}");
-            requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.CreateEquip);
+            await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.CreateEquip);
         }
         else if(_user.EquipmentId is not null && _equipment is not null)
         {
             requestManager.SetUrl($"UpdateEquip?equipId={_equipment.Id}");
-            requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
+            await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
         }
         requestManager.ResetUrl();
         await Shell.Current.GoToAsync($"/{nameof(YourEquipPage)}");
@@ -97,7 +97,10 @@ public partial class EditEquipmentViewModel : ObservableObject
 
     private async void GetEquipById(int userId)
     {
-        if(_user is null | userId <= 0 || _user.EquipmentId is null)
+        if(_user is null |
+            userId <= 0 |
+            _user.EquipmentId is null |
+            _user.EquipmentId <= 0)
         {
             return;
         }

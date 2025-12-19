@@ -135,9 +135,9 @@ public class DataBaseRepository
         return eqip;
     }
 
-    internal TeamEntity GetTeamByUserId(UserModelEntity userFromDb)
+    public TeamEntity GetTeamByUserId(UserModelEntity userFromDb)
     {
-        TeamEntity? resultSearch =  _squadDbContext.Teams.FirstOrDefault(t=>t.Id==userFromDb.TeamId);
+        TeamEntity? resultSearch =  _squadDbContext.Teams.Include(t=>t.Members).FirstOrDefault(t=>t.Id==userFromDb.TeamId);
 
         return resultSearch;
     }

@@ -27,16 +27,16 @@ public class UserModelEntity
     [JsonInclude]
     public bool? _isStaffed { get; private set; }//укомплектованность
 
-    
-    public Int64 _enterCode { get; set; }    
+
+    public Int64 _enterCode { get; set; }
     public bool? _goingToTheGame { get; set; }//явка на игру 
 
-    
+
     public int? EquipmentId { get; set; }
 
     [JsonIgnore]
     public virtual EquipmentEntity? Equipment { get; set; }//снаряжение
-     
+
     public int? TeamId { get; set; }
 
     [JsonIgnore]
@@ -63,24 +63,41 @@ public class UserModelEntity
         return newUser;
     }
 
+    
+    
     public static void UpdateProfile(UserModelEntity userFromApp, UserModelEntity userEntity)
     {
         userEntity._userName = userFromApp._userName;
         userEntity._callSing = userFromApp._callSing;
         userEntity._role = userFromApp._role;
-       userEntity._phoneNumber = userFromApp._phoneNumber;
+        userEntity._phoneNumber = userFromApp._phoneNumber;
         userEntity._teamName = userFromApp._teamName;
         userEntity._age = userFromApp._age;
         userEntity.TeamId = userFromApp.TeamId;
+    }
+    public bool UpdateStaffed(EquipmentEntity equip)
+    {        
+        if(
+                equip.BodyEquipment &
+                equip.HeadEquipment &
+                equip.UnloudingEquipment &
+                equip.MainWeapon &
+                equip.NameMainWeapon != string.Empty
+                )
+        {
+            this._isStaffed = true;            
+            return true;
+        }
+        this._isStaffed = false;
+        return false;
 
     }
-
     private static Int64 GenerationCode(string phuneNumber)
     {
         if(phuneNumber is null)
             throw new ArgumentNullException();
 
-        char[] skipsNumbers =  phuneNumber.Skip(5).ToArray();
+        char[] skipsNumbers = phuneNumber.Skip(5).ToArray();
         string newString = new string(skipsNumbers);
 
         if(!int.TryParse(newString, out int code))

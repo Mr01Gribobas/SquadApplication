@@ -57,22 +57,28 @@ public class MainPostController : Controller
     [HttpPost]
     public async Task<IActionResult?> CreateEquip(int userId)
     {
-        EquipmentEntity requipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentEntity>();
-        if(requipFromApp == null)
+        EquipmentEntity equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentEntity>();
+        if(equipFromApp == null)
         {
             return Unauthorized();
         }
         else
         {
-            var userFromDb = _squadDbContext.Players.FirstOrDefault(u => u.Id == userId);
-            if(userFromDb is not null)
-            {
-                userFromDb.Equipment = requipFromApp;
-            }
-
-            _squadDbContext.Equipments.Add(requipFromApp);
+            _squadDbContext.Equipments.Add(equipFromApp);
             _squadDbContext.SaveChanges();
-            return Ok(requipFromApp);
+            var userFromDb = _squadDbContext.Players.FirstOrDefault(u => u.Id == userId);
+            if(userFromDb is null)
+            {
+                return Unauthorized();
+            }
+            userFromDb.EquipmentId = equipFromApp.Id;
+            userFromDb.Equipment = equipFromApp;
+            if(!userFromDb.UpdateStaffed(equipFromApp))
+            {
+                return Unauthorized();
+            }
+            _squadDbContext.SaveChanges();
+            return Ok(equipFromApp);
         }
 
 
@@ -87,13 +93,18 @@ public class MainPostController : Controller
         }
         else
         {
-            EquipmentEntity? equipEntity = _squadDbContext.Equipments.FirstOrDefault(eq => eq.Id == equipId);
+            EquipmentEntity? equipEntity = _squadDbContext.Equipments.Include(e => e.OwnerEquipment).FirstOrDefault(eq => eq.Id == equipId);
             if(equipEntity == null)
             {
                 return Unauthorized();
             }
 
             EquipmentEntity.UpdateEquip(equipFromApp, equipEntity);
+            if(!equipEntity.OwnerEquipment.UpdateStaffed(equipEntity))
+            {
+                return Unauthorized();
+            }
+
             _squadDbContext.SaveChanges();
             return Ok(equipEntity);
         }
