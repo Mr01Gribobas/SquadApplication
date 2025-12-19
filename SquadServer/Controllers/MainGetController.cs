@@ -71,7 +71,8 @@ public class MainGetController : Controller
     public IActionResult? GetEvent(int teamId)
     {
         var result = _dataBaseRepository.GetEvent(teamId);
-        return Ok(result);
+        HttpContext.Response.StatusCode = 200;
+        return Json(result);
     }
 
 

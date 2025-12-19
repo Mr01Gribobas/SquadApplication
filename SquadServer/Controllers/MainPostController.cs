@@ -27,7 +27,7 @@ public class MainPostController : Controller
             user._role == Role.AssistantCommander)
         {
             newEvent.Team = user.Team;
-            newEvent.TeamId = (int)user.TeamId;
+            newEvent.TeamId = (int)user.TeamId == 0 ? throw new NullReferenceException() : (int)user.TeamId;
 
             _squadDbContext.Events.Add(newEvent);
             _squadDbContext.SaveChanges();
