@@ -1,12 +1,9 @@
-
-using Android.Media;
-
 namespace SquadApplication.ViewCustom;
 
 public partial class PolygonsPage : ContentPage
 {
 	public PolygonsViewModel _polygonsViewModel;
-	private UserModelEntity _user;
+	private UserModelEntity? _user;
 	public PolygonsPage(IUserSession userSession)
 	{
         _user = userSession.CurrentUser;

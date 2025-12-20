@@ -91,7 +91,7 @@ public partial class CreateEventViewModel : ObservableObject
             return false;
         }
         var slpitString = CoordinatesPolygon.Split(",");
-        ;
+        
         foreach(var stringCoordinates in slpitString)
         {
             foreach(char _char in stringCoordinates)
@@ -106,6 +106,6 @@ public partial class CreateEventViewModel : ObservableObject
             }
         }
 
-        
+        return true;
     }
 }

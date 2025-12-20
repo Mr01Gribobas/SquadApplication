@@ -62,19 +62,19 @@ public partial class MainPage : ContentPage
         switch(result.ToString())
         {
             case "Главная":
-                await Shell.Current.GoToAsync($"/{nameof(YourEquipPage)}");// ?UserId={UserId}
+                await Shell.Current.GoToAsync($"/{nameof(YourEquipPage)}");
                 break;
             case "Сборы":
-                await Shell.Current.GoToAsync($"/{nameof(FeesPage)}");// ?UserId={UserId}
+                await Shell.Current.GoToAsync($"/{nameof(FeesPage)}");
                 break;
             case "Участники":
-                await Shell.Current.GoToAsync($"/{nameof(ParticipantsPage)}?UserId={UserId}");
+                await Shell.Current.GoToAsync($"/{nameof(ParticipantsPage)}");
                 break;
             case "Прокаты":
-                await Shell.Current.GoToAsync($"/{nameof(RentalsPage)}");// ?UserId={UserId}
+                await Shell.Current.GoToAsync($"/{nameof(RentalsPage)}");
                 break;
             case "Профиль":
-                await Shell.Current.GoToAsync($"/{nameof(ProfilePage)}");// ?UserId={UserId}
+                await Shell.Current.GoToAsync($"/{nameof(ProfilePage)}");
                 break;
             case "Заказы":
                 await Shell.Current.GoToAsync($"/{nameof(OrderPage)}");

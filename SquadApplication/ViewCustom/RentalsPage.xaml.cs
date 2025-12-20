@@ -9,7 +9,7 @@ public partial class RentalsPage : ContentPage
     public RentalsPage(IUserSession userSession)
     {
         _user = userSession.CurrentUser;
-        _rentalView = new RentailsViewModel();
+        _rentalView = new RentailsViewModel(this,_user);
         BindingContext = _rentalView;
         InitializeComponent();
 
