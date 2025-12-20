@@ -1,8 +1,4 @@
-﻿using SquadApplication.Repositories.Enums;
-using SquadApplication.Repositories.Interfaces;
-using System.Net.Http.Json;
-
-namespace SquadApplication.Repositories.ManagerRequest;
+﻿namespace SquadApplication.Repositories.ManagerRequest;
 
 public class ManagerGetRequests<T> : IRequestManager<T>
     where T : class

@@ -1,27 +1,28 @@
-﻿using System.Threading.Tasks;
-
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 
 public partial class PolygonsViewModel : ObservableObject
 {
     private IRequestManager<PolygonEntity> _managerGet;
-    public PolygonsViewModel()
+    public PolygonsViewModel(PolygonsPage polygonsPage, UserModelEntity user)
     {
+        _user = user;
+        _polygonPage = polygonsPage;
         _managerGet = new ManagerGetRequests<PolygonEntity>();
         SetPolygons();
     }
 
     [ObservableProperty]
-    private ObservableCollection<PolygonEntity> polygons ;
+    private ObservableCollection<PolygonEntity> polygons;
+    private readonly UserModelEntity _user;
+    private readonly PolygonsPage _polygonPage;
 
-    private async Task<List<PolygonEntity>> SetPolygons()
+    private async Task SetPolygons()
     {
         _managerGet.SetUrl("GetAllPolygons");
-        List<PolygonEntity> list =  await _managerGet.GetDataAsync(GetRequests.GetAllPolygons);
+        List<PolygonEntity> list = await _managerGet.GetDataAsync(GetRequests.GetAllPolygons);
         if(list is not null)
         {
-            polygons = new ObservableCollection<PolygonEntity>(list);
+            Polygons = new ObservableCollection<PolygonEntity>(list);
         }
-        return list;
     }
 }

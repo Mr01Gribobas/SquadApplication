@@ -1,9 +1,7 @@
 namespace SquadApplication.ViewCustom;
 
-[QueryProperty(nameof(UserId), "UserId")]
 public partial class ParticipantsPage : ContentPage
 {
-    public int UserId { get; set; }
     private ParticipantsViewModel _parricipantsModel;
     private UserModelEntity _userModel { get; set; }
 

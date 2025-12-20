@@ -2,4 +2,13 @@
 
 public partial class RentailsViewModel : ObservableObject
 {
+    private readonly UserModelEntity _user;
+    private readonly RentalsPage _rentalPage;
+    private readonly IRequestManager<RentailsViewModel> _requestManager;  
+    public RentailsViewModel(RentalsPage rentalsPage , UserModelEntity modelEntity)
+    {
+        _user = modelEntity;
+        _rentalPage = rentalsPage;
+        _requestManager = new ManagerGetRequests<RentailsViewModel>();
+    }
 }
