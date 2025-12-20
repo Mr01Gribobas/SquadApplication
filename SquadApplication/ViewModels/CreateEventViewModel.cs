@@ -34,7 +34,7 @@ public partial class CreateEventViewModel : ObservableObject
     {
         if(!Examination() ||
             _user is null ||
-            _user._role != Role.Commander 
+            _user._role != Role.Commander
           )
         {
             return;//error
@@ -65,8 +65,16 @@ public partial class CreateEventViewModel : ObservableObject
 
             var dateOnly = DateOnly.Parse(Date); //"20.12.2025"
             var timeOnly = TimeOnly.Parse(Time);//10:10:10
-            var coordinates = CoordinatesPolygon ?? throw new NullReferenceException();
-            var namePolygon = NamePolygon ?? throw new NullReferenceException() ;
+
+            if(CoordinatesPolygon.Length <= 0)
+            {
+                return false;
+            }
+            if(ExaminationCoordinates())
+            {
+
+            }
+            var namePolygon = NamePolygon ?? throw new NullReferenceException();
             var enemy = NameTeamEnemy ?? throw new NullReferenceException();
             return true;
         }
@@ -76,6 +84,28 @@ public partial class CreateEventViewModel : ObservableObject
         }
     }
 
+    private bool ExaminationCoordinates()
+    {
+        if(CoordinatesPolygon is null)
+        {
+            return false;
+        }
+        var slpitString = CoordinatesPolygon.Split(",");
+        ;
+        foreach(var stringCoordinates in slpitString)
+        {
+            foreach(char _char in stringCoordinates)
+            {
+                if(!int.TryParse(Convert.ToString(_char), out int number))
+                {
+                    if(_char != '.')
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
 
-
+        
+    }
 }

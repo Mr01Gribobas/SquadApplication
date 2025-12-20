@@ -26,7 +26,7 @@ public partial class FeesViewModel : ObservableObject
 
     [ObservableProperty]
     private string? nameTeamEnemu; 
-
+     
     [ObservableProperty]
     private string? namePolygon;
 
