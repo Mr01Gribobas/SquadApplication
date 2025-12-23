@@ -1,4 +1,5 @@
-﻿namespace SquadApplication.ViewModels;
+﻿
+namespace SquadApplication.ViewModels;
 
 public partial class RentailsViewModel : ObservableObject
 {
@@ -10,5 +11,13 @@ public partial class RentailsViewModel : ObservableObject
         _user = modelEntity;
         _rentalPage = rentalsPage;
         _requestManager = new ManagerGetRequests<RentailsViewModel>();
+        GetRentalsFromDb();
+    }
+
+    private void GetRentalsFromDb()
+    {
+        var request = (ManagerGetRequests<RentailsViewModel>)_requestManager;
+        request.SetUrl("");
+
     }
 }
