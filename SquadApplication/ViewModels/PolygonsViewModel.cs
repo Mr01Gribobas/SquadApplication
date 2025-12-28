@@ -1,4 +1,7 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using System.ComponentModel;
+using System.Threading.Tasks;
+
+namespace SquadApplication.ViewModels;
 public partial class PolygonsViewModel : ObservableObject
 {
     private IRequestManager<PolygonEntity> _managerGet;
@@ -28,5 +31,11 @@ public partial class PolygonsViewModel : ObservableObject
                 Polygons.Add(item);
             }
         }
+    }
+
+    [RelayCommand]
+    public async Task AppendPolygon()
+    {
+        await Shell.Current.GoToAsync($"{nameof(AppendPolygonPage)}");
     }
 }

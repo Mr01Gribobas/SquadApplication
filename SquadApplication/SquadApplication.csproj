@@ -68,6 +68,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="ViewCustom\AppendPolygonPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="ViewCustom\AuthorizedPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
