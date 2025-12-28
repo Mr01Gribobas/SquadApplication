@@ -1,9 +1,6 @@
-﻿
-namespace SquadApplication.ViewModels;
-
+﻿namespace SquadApplication.ViewModels;
 public partial class EditYourProfileViewModel : ObservableObject
 {
-
     public EditYourProfileViewModel(EditUserProfilePage profilePage, UserModelEntity user)
     {
         _user = user;
@@ -73,8 +70,8 @@ public partial class EditYourProfileViewModel : ObservableObject
             _teamId: _user.TeamId
             );
 
-
         var requestManager = (ManagerPostRequests<UserModelEntity>)_requestManager;
+
         if(requestManager is null)
         {
             throw new NullReferenceException();
@@ -137,8 +134,6 @@ public partial class EditYourProfileViewModel : ObservableObject
                 _selectedRole = _user._role;
                 break;
         }
-
-
         return true;
     }
 

@@ -1,6 +1,4 @@
-﻿
-namespace SquadApplication.ViewModels;
-
+﻿namespace SquadApplication.ViewModels;
 public partial class RentailsViewModel : ObservableObject
 {
     private readonly UserModelEntity _user;
@@ -18,6 +16,5 @@ public partial class RentailsViewModel : ObservableObject
     {
         var request = (ManagerGetRequests<RentailsViewModel>)_requestManager;
         request.SetUrl("");
-
     }
 }

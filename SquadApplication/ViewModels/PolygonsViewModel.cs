@@ -1,5 +1,4 @@
 ﻿namespace SquadApplication.ViewModels;
-
 public partial class PolygonsViewModel : ObservableObject
 {
     private IRequestManager<PolygonEntity> _managerGet;

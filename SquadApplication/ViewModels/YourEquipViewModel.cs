@@ -1,6 +1,4 @@
 ﻿namespace SquadApplication.ViewModels;
-
-
 public partial class YourEquipViewModel : ObservableObject
 {
     private UserModelEntity _user;

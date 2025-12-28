@@ -1,8 +1,4 @@
-﻿
-
-
-using System.Text;
-
+﻿using System.Text;
 namespace SquadApplication.ViewModels;
 
 public partial class FeesViewModel : ObservableObject

@@ -1,5 +1,4 @@
 ﻿namespace SquadApplication.ViewModels;
-
 public partial class EditEquipmentViewModel : ObservableObject
 {
     public EditEquipmentViewModel(EditEquipmentPage page, UserModelEntity user)

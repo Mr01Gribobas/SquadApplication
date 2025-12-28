@@ -1,6 +1,4 @@
 ﻿namespace SquadApplication.ViewModels;
-
-
 public partial class ParticipantsViewModel : ObservableObject
 {
     private UserModelEntity _userModelEntity;
@@ -12,7 +10,6 @@ public partial class ParticipantsViewModel : ObservableObject
         _userModelEntity = userModel;
         GetMembersTeam(_userModelEntity.Id);
     }
-
 
     public Int32 _countUsers => Users.Count;
     private ParticipantsPage _participantsPage;

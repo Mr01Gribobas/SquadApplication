@@ -1,5 +1,4 @@
 ﻿namespace SquadApplication.ViewModels;
-
 public partial class OrderViewModel : ObservableObject
 {
     private OrderPage _orderPage;
@@ -84,6 +83,4 @@ public partial class OrderViewModel : ObservableObject
         Orders.Clear();
 
     }
-
-
 }

@@ -1,6 +1,4 @@
-﻿
-namespace SquadApplication.ViewModels;
-
+﻿namespace SquadApplication.ViewModels;
 public partial class ProfileViewModel : ObservableObject
 {
     private UserModelEntity _user;
@@ -9,7 +7,6 @@ public partial class ProfileViewModel : ObservableObject
         _user = userModel;
         SetProfile(_user);
     }
-
     private void SetProfile(UserModelEntity user)
     {
         if(user is null)
