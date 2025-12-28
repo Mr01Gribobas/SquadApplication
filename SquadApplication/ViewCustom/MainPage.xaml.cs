@@ -1,6 +1,5 @@
 namespace SquadApplication.ViewCustom;
 
-
 [QueryProperty(nameof(UserId), "UserId")]
 public partial class MainPage : ContentPage
 {

@@ -1,7 +1,4 @@
-
-
 namespace SquadApplication.ViewCustom;
-
 public partial class CreateEventPage : ContentPage
 {
     private readonly UserModelEntity _user;
