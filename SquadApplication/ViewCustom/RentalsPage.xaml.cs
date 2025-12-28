@@ -1,4 +1,3 @@
-
 namespace SquadApplication.ViewCustom;
 
 public partial class RentalsPage : ContentPage
@@ -12,7 +11,5 @@ public partial class RentalsPage : ContentPage
         _rentalView = new RentailsViewModel(this,_user);
         BindingContext = _rentalView;
         InitializeComponent();
-
-
     }
 }

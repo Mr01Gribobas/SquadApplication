@@ -1,5 +1,4 @@
 namespace SquadApplication.ViewCustom;
-
 public partial class YourEquipPage : ContentPage
 {
 	private YourEquipViewModel _viewModel;
