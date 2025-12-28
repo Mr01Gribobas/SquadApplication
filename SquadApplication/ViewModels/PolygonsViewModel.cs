@@ -7,8 +7,10 @@ public partial class PolygonsViewModel : ObservableObject
         _user = user;
         _polygonPage = polygonsPage;
         _managerGet = new ManagerGetRequests<PolygonEntity>();
+        Polygons = new ObservableCollection<PolygonEntity>();
         SetPolygons();
     }
+
 
     [ObservableProperty]
     private ObservableCollection<PolygonEntity> polygons;
@@ -21,7 +23,10 @@ public partial class PolygonsViewModel : ObservableObject
         List<PolygonEntity> list = await _managerGet.GetDataAsync(GetRequests.GetAllPolygons);
         if(list is not null)
         {
-            Polygons = new ObservableCollection<PolygonEntity>(list);
+            foreach(PolygonEntity item in list)
+            {
+                Polygons.Add(item);
+            }
         }
     }
 }

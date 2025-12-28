@@ -4,14 +4,10 @@
              x:Class="SquadApplication.ViewCustom.PolygonsPage"
              BackgroundImageSource="hkauthorize.jpg"
              Title="PolygonsPage">
-    <VerticalStackLayout Padding="10">
-        <Label 
-            Text="Polugons"
-            FontSize="24" 
-            HorizontalOptions="Center" />
+    <VerticalStackLayout Padding="10">        
         <ScrollView>
             <StackLayout>
-                <Label Text="Pol" TextColor="Red"/>
+                <Label Text="Polygons" TextColor="Red"/>
                 <CollectionView x:Name="PolygonsListViewItem"  
                 Background="Transparent"
                 ItemsSource="{Binding Polygons}"
@@ -19,13 +15,9 @@
                 HorizontalOptions="Center"
                 >
                     <CollectionView.EmptyView>
-                        <Label 
-                Text="Список пока пуст !!"
-                TextColor="Gray"
-                BackgroundColor="Transparent"
-                FontSize="14"
-                HorizontalTextAlignment="Center"
-                VerticalTextAlignment="Center"/>
+                            
+                        <Button BackgroundColor="Red" Text="Add number one polygon"/>
+                            
                     </CollectionView.EmptyView>
 
                     <CollectionView.ItemTemplate>
@@ -46,6 +38,7 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+                        <Button BackgroundColor="DarkGreen" Text="Add Polygon"/>
             </StackLayout>
         </ScrollView>
                         
