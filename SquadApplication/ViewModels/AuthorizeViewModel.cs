@@ -1,6 +1,5 @@
 ﻿using SquadApplication.Repositories;
 namespace SquadApplication.ViewModels;
-
 public partial class AuthorizeViewModel : ObservableObject
 {
     private AuthorizedPage _authorizedPage;

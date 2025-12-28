@@ -1,12 +1,4 @@
-﻿
-
-
-using SquadApplication.Serices.ApiServices;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
-
-namespace SquadApplication.ViewCustom;
+﻿namespace SquadApplication.ViewCustom;
 
 public partial class AuthorizedPage : ContentPage
 {

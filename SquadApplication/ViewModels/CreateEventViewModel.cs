@@ -1,5 +1,4 @@
 ﻿namespace SquadApplication.ViewModels;
-
 public partial class CreateEventViewModel : ObservableObject
 {
     public CreateEventViewModel(CreateEventPage eventPage, UserModelEntity user)
