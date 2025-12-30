@@ -39,6 +39,7 @@
                                     <Label Text="{Binding Path=Id}" TextColor="White"/>
                                     <Label Text="{Binding Path=Name}" TextColor="White"/>
                                     <Label Text="{Binding Path=Coordinates}" TextColor="White"/>
+                                    <Button Text="Delete" Command="{Binding DeletePolygonCommand}"/>
                                 </StackLayout>
                             </Border>
                         </DataTemplate>

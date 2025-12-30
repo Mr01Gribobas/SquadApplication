@@ -35,6 +35,16 @@ public partial class AppendPolygonViewModel: ObservableObject
             }
         }
     }
+
+    [RelayCommand]
+    public void DeletePolygon()
+    {
+        //todo
+    }
+
+
+
+
     private bool ValidatePropyrty(string polygonName, string polygonCoordinates)
     {
         string coordinates = polygonCoordinates.Replace(" ", "");
