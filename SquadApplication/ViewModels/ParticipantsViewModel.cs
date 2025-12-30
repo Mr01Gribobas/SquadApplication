@@ -24,6 +24,13 @@ public partial class ParticipantsViewModel : ObservableObject
     [ObservableProperty]
     private Role role;
 
+    [RelayCommand]
+    public void DeletePlayer()
+    {
+
+    }
+
+
     private async void GetMembersTeam(int userId)
     {
         if(_userModelEntity is null)

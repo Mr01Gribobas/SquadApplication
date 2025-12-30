@@ -30,15 +30,31 @@
                         Stroke="DarkKhaki"
                         StrokeShape="1"                        
                         >
-                        <StackLayout
-                            VerticalOptions="Center"
-                            HorizontalOptions="Center"                      
+                        <HorizontalStackLayout
+                            VerticalOptions="Start"
+                            HorizontalOptions="Start"                      
                             >
-                                <Label Text="{Binding Path=_userName}" TextColor="White"/>
-                                <Label Text="{Binding Path=_callSing}" TextColor="White"/>
-                                <Label Text="{Binding Path=_role}" TextColor="White"/>
-                                <Label x:Name="isStaffed" Text="{Binding Path=_isStaffed}" TextColor="White"/>
-                            </StackLayout>
+                                <VerticalStackLayout>
+                                    
+                                <HorizontalStackLayout>
+                                    <Label Text="Name : " TextColor="AliceBlue" FontSize="20"/>
+                                        <Label Text="{Binding Path=_userName}" TextColor="White" FontSize="20"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout>
+                                        <Label Text="Callsing : " TextColor="AliceBlue" FontSize="20"/>
+                                        <Label Text="{Binding Path=_callSing}" TextColor="White" FontSize="20"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout>
+                                        <Label Text="Role : " TextColor="AliceBlue" FontSize="20"/>
+                                        <Label Text="{Binding Path=_role}" TextColor="White" FontSize="20"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout>
+                                        <Label Text="Full Equip : " TextColor="AliceBlue" FontSize="20"/>
+                                        <Label x:Name="isStaffed" Text="{Binding Path=_isStaffed}" TextColor="White" FontSize="20"/>
+                                </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                                <Button Text="❌" Margin="100,10,0,10" WidthRequest="100" Command="{Binding DeletePlayerCommand}" />
+                            </HorizontalStackLayout>
                     </Border>                    
                 </DataTemplate>
             </CollectionView.ItemTemplate> 
