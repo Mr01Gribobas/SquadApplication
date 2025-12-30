@@ -4,21 +4,24 @@ using System.Threading.Tasks;
 namespace SquadApplication.ViewModels;
 public partial class PolygonsViewModel : ObservableObject
 {
-    private IRequestManager<PolygonEntity> _managerGet;
     public PolygonsViewModel(PolygonsPage polygonsPage, UserModelEntity user)
     {
         _user = user;
         _polygonPage = polygonsPage;
         _managerGet = new ManagerGetRequests<PolygonEntity>();
+        roleUser = _user._role.ToString();
         Polygons = new ObservableCollection<PolygonEntity>();
         SetPolygons();
     }
-
+    private IRequestManager<PolygonEntity> _managerGet;
+    private readonly UserModelEntity _user;
+    private readonly PolygonsPage _polygonPage;
+    public Int32 _countPolygon => Polygons.Count;
 
     [ObservableProperty]
     private ObservableCollection<PolygonEntity> polygons;
-    private readonly UserModelEntity _user;
-    private readonly PolygonsPage _polygonPage;
+    [ObservableProperty]
+    private string roleUser; 
 
     private async Task SetPolygons()
     {

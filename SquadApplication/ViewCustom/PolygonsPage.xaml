@@ -4,29 +4,34 @@
              x:Class="SquadApplication.ViewCustom.PolygonsPage"
              BackgroundImageSource="hkauthorize.jpg"
              Title="PolygonsPage">
-    <VerticalStackLayout Padding="10">        
+    <VerticalStackLayout x:Name="loyoutItem" Padding="10">        
         <ScrollView>
-            <StackLayout>
-                <Label Text="Polygons" TextColor="Red"/>
+            <StackLayout >
+                <Button 
+                       BackgroundColor="DarkGreen"
+                       Text="Add Polygon">
+                    <Button.Triggers>
+                        <DataTrigger
+                         TargetType="Button"
+                         Binding="{Binding RoleUser}"
+                         Value="Private"
+                                    >
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
                 <CollectionView x:Name="PolygonsListViewItem"  
                 Background="Transparent"
                 ItemsSource="{Binding Polygons}"
-                VerticalOptions="Start"
-                HorizontalOptions="Center"
+                VerticalOptions="Fill"
+                HorizontalOptions="Fill"
                 >
-                    <CollectionView.EmptyView>
-                            
-                        <Button BackgroundColor="Red" Text="Add number one polygon"/>
-                            
-                    </CollectionView.EmptyView>
-
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Border
                            Stroke="DarkKhaki"
                            StrokeShape="1"
                                      >
-                
                                 <StackLayout
                                        VerticalOptions="Center"
                                        HorizontalOptions="Center">
@@ -38,9 +43,8 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-                        <Button BackgroundColor="DarkGreen" Text="Add Polygon"/>
             </StackLayout>
         </ScrollView>
-                        
+        
     </VerticalStackLayout>
 </ContentPage>

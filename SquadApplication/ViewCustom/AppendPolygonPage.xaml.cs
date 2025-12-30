@@ -1,5 +1,3 @@
-using AndroidX.Lifecycle;
-
 namespace SquadApplication.ViewCustom;
 
 public partial class AppendPolygonPage : ContentPage

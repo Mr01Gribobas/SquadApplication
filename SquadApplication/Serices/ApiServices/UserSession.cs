@@ -12,7 +12,7 @@ public class UserSession : IUserSession
         get => _currentUser;
         set
         {
-            _currentUser = value;
+            _currentUser = value; 
             if(value is not null)
             {
                 _ = SaveUserAsync();
