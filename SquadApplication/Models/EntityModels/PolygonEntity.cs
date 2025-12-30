@@ -8,12 +8,18 @@ public class PolygonEntity
 
 
 
-    public static List<PolygonEntity> GetTestData()
+    public static PolygonEntity CreatePolygonModel(string name, string coordinates)
     {
-        List<PolygonEntity> polygons = new List<PolygonEntity>();
-        polygons.Add(new PolygonEntity() {Name ="Gorelovo", Coordinates = "123413.4123" });
-        polygons.Add(new PolygonEntity() {Name ="Gruzino", Coordinates = "223413.5523" });
-        polygons.Add(new PolygonEntity() {Name ="Molyri", Coordinates = "523513.999923" });
-        return polygons;
+        if(name is null | coordinates is null)
+        {
+            return null;
+        }
+        PolygonEntity polygonEntity = new PolygonEntity()
+        {
+            Name = name,
+            Coordinates = coordinates
+        };
+        return polygonEntity;
+
     }
 }

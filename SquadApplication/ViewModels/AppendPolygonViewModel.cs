@@ -1,4 +1,6 @@
-﻿using System.Linq.Expressions;
+﻿using SquadApplication.Repositories.ManagerRequest;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SquadApplication.ViewModels;
 
@@ -20,7 +22,7 @@ public partial class AppendPolygonViewModel: ObservableObject
 
 
     [RelayCommand]
-    public void AppendPolygon()
+    public async Task AppendPolygon()
     {
         if(!ValidatePropyrty(polygonName, polygonCoordinates))
         {
@@ -28,7 +30,13 @@ public partial class AppendPolygonViewModel: ObservableObject
         }
         else
         {
-
+            PolygonEntity polygon = PolygonEntity.CreatePolygonModel(PolygonName,PolygonCoordinates);
+            if(polygon is not null)
+            {
+                var requestManager = (ManagerPostRequests<PolygonEntity>)_requestManager;
+                requestManager.SetUrl("");
+                await requestManager.PostRequests(polygon,PostsRequests.AddPolygon);
+            }
         }
     }
 

@@ -2,11 +2,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.AppendPolygonPage"
+             BackgroundImageSource="hkauthorize.jpg"
              Title="AppendPolygonPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="10">
+        <HorizontalStackLayout>
+        <Label Text="Name"/>
+        <Entry Placeholder="Name" PlaceholderColor="Gray"/>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout>
+        <Label Text="Coordinates"/>
+        <Entry PlaceholderColor="Grey" Placeholder="00000.00000"/>
+        </HorizontalStackLayout>
+        <Button VerticalOptions="End"/>
     </VerticalStackLayout>
 </ContentPage>
