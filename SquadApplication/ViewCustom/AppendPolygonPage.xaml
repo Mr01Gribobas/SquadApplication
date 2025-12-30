@@ -12,8 +12,8 @@
 
         <HorizontalStackLayout>
         <Label Text="Coordinates"/>
-        <Entry PlaceholderColor="Grey" Placeholder="00000.00000"/>
+            <Entry PlaceholderColor="Grey" Placeholder="60.043010, 30.104596"/>
         </HorizontalStackLayout>
-        <Button VerticalOptions="End"/>
+        <Button VerticalOptions="End" Command="{Binding AppendPolygonCommand}"/>
     </VerticalStackLayout>
 </ContentPage>

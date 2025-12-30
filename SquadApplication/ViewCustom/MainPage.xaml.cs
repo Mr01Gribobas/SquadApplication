@@ -9,10 +9,10 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         BindingContext = new MainViewModel();
         _userSession1 = userSession;
+       
     }
 
-
-
+  
     private UserModelEntity User { get; set; }
     public int UserId
     {

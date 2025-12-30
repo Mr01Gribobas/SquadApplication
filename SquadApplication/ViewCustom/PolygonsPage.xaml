@@ -9,6 +9,7 @@
             <StackLayout >
                 <Button 
                        BackgroundColor="DarkGreen"
+                    Command="{Binding AppendPolygonCommand}"
                        Text="Add Polygon">
                     <Button.Triggers>
                         <DataTrigger
