@@ -85,7 +85,7 @@ public partial class FeesViewModel : ObservableObject
         if(_requestManager is null | _user is null)
             return;
 
-        var request = new ManagerGetRequests<EventModelEntity>();
+        var request = (ManagerGetRequests<EventModelEntity>)_requestManager;
         request.SetUrl($"GetEvent?teamId={_user.TeamId}");
         List<EventModelEntity>? responce = await request.GetDataAsync(GetRequests.GetEvent);
 
@@ -105,7 +105,7 @@ public partial class FeesViewModel : ObservableObject
         {
             return;
         }
-        var request = (ManagerGetRequests<UserModelEntity>)_requestManager;
+        var request =  new ManagerGetRequests<UserModelEntity>();
         request.SetUrl($"GetAllTeamMembers?userId={userId}");
         var responce = await request.GetDataAsync(GetRequests.GetAllTeamMembers);
         if(responce != null)

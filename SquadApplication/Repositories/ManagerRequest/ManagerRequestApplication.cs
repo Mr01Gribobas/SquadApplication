@@ -1,6 +1,6 @@
 ﻿namespace SquadApplication.Repositories.ManagerRequest;
 
-public class ManagerGetRequests<T> : IRequestManager<T>,IDisposable
+public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
     where T : class
 {
     public ManagerGetRequests()
@@ -112,6 +112,11 @@ public class ManagerGetRequests<T> : IRequestManager<T>,IDisposable
     }
 
 
+
+    ~ManagerGetRequests()
+    {
+        Dispose(false);
+    }
     public void Dispose()
     {
         Dispose(true);
