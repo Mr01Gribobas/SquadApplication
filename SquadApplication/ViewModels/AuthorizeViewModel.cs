@@ -90,6 +90,7 @@ public partial class AuthorizeViewModel : ObservableObject
             return;
         }
         Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId = {userFromResponce.Id}"); 
+        //выводить код авторизации пользователя 
     }
 
 

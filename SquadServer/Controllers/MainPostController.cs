@@ -19,7 +19,7 @@ public class MainPostController : Controller
         {
             return Unauthorized();
         }
-        var user = _squadDbContext.Players.FirstOrDefault(u => u.Id == commanderId);
+        var user = _squadDbContext.Players.Include(t=>t.Team).FirstOrDefault(u => u.Id == commanderId);
         if(
             user is not null &&
             user.TeamId is not null &

@@ -39,6 +39,10 @@ public partial class FeesViewModel : ObservableObject
 
     private void InitialProperty(EventModelEntity? eventFromDb)
     {
+        if(eventFromDb is null)
+        {
+            return;
+        }
         NamePolygon = eventFromDb.NamePolygon;
         CoordinatesPolygon = eventFromDb.Coordinates;
         DateAndTime = ConvertDateAndTime(eventFromDb.Date, eventFromDb.Time);
