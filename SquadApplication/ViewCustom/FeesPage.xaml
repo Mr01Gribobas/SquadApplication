@@ -97,13 +97,13 @@
                                 <Label Text="📍 Название полигона =>"
                                            FontSize="12"
                                            TextColor="White"/>
-                        <Label
-                            Text="{Binding NamePolygon}"
-                            TextColor="Red"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="2"
-                            
-                            />
+                                <Label
+                                 Text="{Binding NamePolygon}"
+                                 TextColor="Red"
+                                 Grid.Column="1"
+                                 Grid.ColumnSpan="2"
+                                 
+                                     />
                     </StackLayout>
                                    
 
@@ -120,7 +120,9 @@
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
                             />
-                    </StackLayout>
+                            <Label Text="Copy" TextColor="AliceBlue" FontSize="10"/>
+                            <Button Command="{Binding CopyCoordinatesCommand}"  MaximumHeightRequest="15" MaximumWidthRequest="15" Text="copy" FontSize="Small"/>
+                        </StackLayout>
                                 <!-- Дата и время -->
                                 <StackLayout Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
                                              Orientation="Horizontal"
@@ -211,7 +213,7 @@
                     <CollectionView 
                         x:Name="ParticipantsLisyViewItem1"  
                         Background="Transparent"
-                        ItemsSource="{Binding Users}"
+                        ItemsSource="{Binding UsersIsGoToTheGame}"
                         VerticalOptions="Start"
                         HorizontalOptions="Center"
                         Margin="5"
@@ -246,7 +248,7 @@
                     <CollectionView
                         x:Name="ParticipantsLisyViewItem3"  
                         Background="Transparent"
-                        ItemsSource="{Binding Users}"
+                        ItemsSource="{Binding UsersIsNotGoTheGame}"
                         VerticalOptions="Start"
                         HorizontalOptions="Center"
                         Margin="5"

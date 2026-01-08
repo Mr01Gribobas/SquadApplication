@@ -71,9 +71,20 @@ public class MainGetController : Controller
     public IActionResult? GetEvent(int teamId)
     {
         var result = _dataBaseRepository.GetEvent(teamId);
+        if(result == null)
+        {
+            return BadRequest();
+        }
+
+
+        List<EventModelEntity> events = new List<EventModelEntity>();
+        events.Add(result);
+
         HttpContext.Response.StatusCode = 200;
-        return Json(result);
+        return Ok(events);
     }
+
+
 
 
     [HttpGet]
@@ -97,7 +108,7 @@ public class MainGetController : Controller
                 _itemTwo = infoForProfile.objectTeam,
                 _itemThree = infoForProfile.objectEquipment
             };
-            
+
             var jsonData3 = JsonSerializer.Serialize(container);
             return Ok(jsonData3);
 
