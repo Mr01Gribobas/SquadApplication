@@ -1,4 +1,5 @@
 ﻿namespace SquadApplication.ViewModels;
+
 public partial class CreateEventViewModel : ObservableObject
 {
     public CreateEventViewModel(CreateEventPage eventPage, UserModelEntity user)
@@ -50,12 +51,15 @@ public partial class CreateEventViewModel : ObservableObject
 
         var requestPost = (ManagerPostRequests<EventModelEntity>)_requestManager;
         requestPost.SetUrl($"CreateEvent?commanderId={_user.Id}");
-        var resultCreated = await requestPost.PostRequests(newEvent, PostsRequests.CreateEvent);
+        bool resultCreated = await requestPost.PostRequests(newEvent, PostsRequests.CreateEvent);
         if(!resultCreated)
         {
-            //error
+            await _eventPage.DisplayAlertAsync("Error", "Problems create event", "Ok");
+            await Shell.Current.GoToAsync("..");
         }
+        await Shell.Current.GoToAsync("..");
     }
+
 
     private bool Examination()
     {
@@ -90,7 +94,7 @@ public partial class CreateEventViewModel : ObservableObject
             return false;
         }
         var slpitString = CoordinatesPolygon.Split(",");
-        
+
         foreach(var stringCoordinates in slpitString)
         {
             foreach(char _char in stringCoordinates)

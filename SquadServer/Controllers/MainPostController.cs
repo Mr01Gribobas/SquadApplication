@@ -14,11 +14,17 @@ public class MainPostController : Controller
     [HttpPost]
     public async Task<IActionResult?> CreateEvent(int commanderId)
     {
-        EventModelEntity newEvent = await HttpContext.Request.ReadFromJsonAsync<EventModelEntity>();
+        EventModelEntity? newEvent = await HttpContext.Request.ReadFromJsonAsync<EventModelEntity>();
         if(newEvent is null)
         {
             return Unauthorized();
         }
+
+        if(_squadDbContext.Events.FirstOrDefault() is not null)
+        {
+            return Unauthorized();
+        }
+
         var user = _squadDbContext.Players.Include(t=>t.Team).FirstOrDefault(u => u.Id == commanderId);
         if(
             user is not null &&
