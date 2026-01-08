@@ -42,7 +42,7 @@ public partial class FeesViewModel : ObservableObject
 
 
 
-    private void InitialProperty(EventModelEntity? eventFromDb)
+    private async void  InitialProperty(EventModelEntity? eventFromDb)
     {
         if(eventFromDb is null)
         {
@@ -52,7 +52,7 @@ public partial class FeesViewModel : ObservableObject
         CoordinatesPolygon = eventFromDb.Coordinates;
         DateAndTime = ConvertDateAndTime(eventFromDb.Date, eventFromDb.Time);
         CountMembers = eventFromDb.CountMembers.ToString();
-        GetMembersTeam(_user.Id);
+        await GetMembersTeam(_user.Id);
     }
 
     private string? ConvertDateAndTime(DateOnly? date, TimeOnly? time)
@@ -85,7 +85,7 @@ public partial class FeesViewModel : ObservableObject
         if(_requestManager is null | _user is null)
             return;
 
-        var request = (ManagerGetRequests<EventModelEntity>)_requestManager;
+        var request = new ManagerGetRequests<EventModelEntity>();
         request.SetUrl($"GetEvent?teamId={_user.TeamId}");
         List<EventModelEntity>? responce = await request.GetDataAsync(GetRequests.GetEvent);
 
@@ -96,9 +96,10 @@ public partial class FeesViewModel : ObservableObject
             return;
         }
         EventModelEntity? eventFromDb = responce.FirstOrDefault();
+        request.ResetUrl();
         InitialProperty(eventFromDb);
     }
-    private async void GetMembersTeam(int userId)
+    private async Task  GetMembersTeam(int userId)
     {
         if(_user is null)
         {

@@ -1,6 +1,6 @@
 ﻿namespace SquadApplication.Repositories.ManagerRequest;
 
-public class ManagerGetRequests<T> : IRequestManager<T>
+public class ManagerGetRequests<T> : IRequestManager<T>,IDisposable
     where T : class
 {
     public ManagerGetRequests()
@@ -10,6 +10,7 @@ public class ManagerGetRequests<T> : IRequestManager<T>
     private HttpClient _httpClient;
     public string _urlNameForSend { get; private set; } = "http://10.0.2.2:5213/MainGet/";
     public int _currentStatusCode { get; private set; }
+    private bool _disposed = false;
 
     public void ResetUrl() => _urlNameForSend = "http://10.0.2.2:5213/MainGet/";
 
@@ -108,5 +109,23 @@ public class ManagerGetRequests<T> : IRequestManager<T>
     public Task<bool> PostRequests(T objectValue, PostsRequests postRequests)
     {
         throw new NotImplementedException();
+    }
+
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+    protected virtual void Dispose(bool disposing)
+    {
+        if(!_disposed)
+        {
+            if(disposing)
+            {
+                _httpClient?.Dispose();
+            }
+            _disposed = true;
+        }
     }
 }
