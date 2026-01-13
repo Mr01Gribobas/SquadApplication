@@ -11,6 +11,10 @@ public class SquadDbContext: DbContext
     public DbSet<HisoryEventsModelEntity> HistoryEvents { get; set; }
     public DbSet<TeamEntity> Teams { get; set; }
 
+    public DbSet<DeviceRegistartionModelEntity> DeviceRegistartionModelEntities { get; set; }
+
+
+
     public SquadDbContext(){ }
     public SquadDbContext(DbContextOptions<SquadDbContext> options) : base (options)
     {

@@ -9,7 +9,6 @@ public class DeviceRegistartionModelEntity
     public string DeviceToken { get; set; } = null!;
     public string DevicePlatform { get; set; } = null!;
     public int UserId { get; set; } = 0!;
-    public string DeviceModel { get; set; }
 
     public DateTime CreatedAt { get; set; }
     public DateTime? LastActiveAt { get; set; }

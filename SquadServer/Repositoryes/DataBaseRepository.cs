@@ -1,5 +1,4 @@
 ﻿using SquadServer.Models;
-using System.Linq;
 
 namespace SquadServer.Repositoryes;
 
@@ -10,6 +9,8 @@ public class DataBaseRepository
     {
         this._squadDbContext = _squadDbContext;
     }
+    public  SquadDbContext GetCurrentContextDb() => _squadDbContext;
+
 
 
 
@@ -122,7 +123,7 @@ public class DataBaseRepository
 
     public EventModelEntity? GetEvent(int teamId)
     {
-        return _squadDbContext.Events.Include(e=>e.Team).FirstOrDefault(t=>t.TeamId == teamId);
+        return _squadDbContext.Events.Include(e => e.Team).FirstOrDefault(t => t.TeamId == teamId);
     }
 
     public EquipmentEntity? GetEquipById(int id)
@@ -138,7 +139,7 @@ public class DataBaseRepository
 
     public TeamEntity GetTeamByUserId(UserModelEntity userFromDb)
     {
-        TeamEntity? resultSearch =  _squadDbContext.Teams.Include(t=>t.Members).FirstOrDefault(t=>t.Id==userFromDb.TeamId);
+        TeamEntity? resultSearch = _squadDbContext.Teams.Include(t => t.Members).FirstOrDefault(t => t.Id == userFromDb.TeamId);
 
         return resultSearch;
     }
