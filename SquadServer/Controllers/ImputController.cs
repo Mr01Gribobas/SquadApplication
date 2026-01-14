@@ -1,8 +1,6 @@
 using SquadServer.Models;
 using SquadServer.Repositoryes;
-using System.Text.Json;
 namespace SquadServer.Controllers;
-
 
 [Controller]
 public class ImputController : Controller
