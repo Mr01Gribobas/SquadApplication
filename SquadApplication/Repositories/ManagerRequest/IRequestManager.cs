@@ -1,6 +1,6 @@
 ﻿using SquadApplication.Repositories.Enums;
 
-namespace SquadApplication.Repositories.Interfaces;
+namespace SquadApplication.Repositories.ManagerRequest;
 
 public interface IRequestManager<T>
 {

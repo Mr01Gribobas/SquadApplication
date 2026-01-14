@@ -45,6 +45,7 @@ public class DataBaseManager : IRequestManagerForEnter
         else if(_currentStatusCode == 401)
         {
             return null;
+            
         }
         return null;
     }
