@@ -23,9 +23,17 @@ public class DeviceTokenManager : IDeviceTokenManager
         }
 
         var newToken = GenerateDeviceTokenInternal();
+
+
+        if(newToken is not null)
+        {
+            Task.Run(async () => await SecureStorage.SetAsync(DeviceTokenKey, newToken)).Wait();
+            return newToken;
+        }
+        return null;
     }//TODO
 
-    private object GenerateDeviceTokenInternal()
+    private string GenerateDeviceTokenInternal()
     {
         var installationId = GetOrCreateInstallationId().ToString();
         var platform = Task.Run(async () => await GetPlatformAsync()).Result;
@@ -45,20 +53,57 @@ public class DeviceTokenManager : IDeviceTokenManager
         Console.WriteLine($"Token is created : {token}");
         return token;
     }
-
-    public string GetDeviceInfo()
-    {
-        throw new NotImplementedException();
-    }
-
     public string GetOrCreateInstallationId()
     {
         throw new NotImplementedException();
     }
-
-    public Task<string> GetPlatformAsync()
+    private string GenerateInstallationId()
     {
-        throw new NotImplementedException();
+        var deviceId = GetDeviceUniqueId();
+    }
+
+    private string GetDeviceUniqueId()
+    {
+        try
+        {
+#if ANDROID
+            var context = Android.
+                         App.
+                         Application.
+                         Context;
+
+            var deviceId = Android.
+                         Provider.
+                         Settings.
+                         Secure.
+                         GetString(context.ContentResolver, Android.Provider.Settings.Secure.AndroidId);
+            if(!string.IsNullOrEmpty(deviceId) & deviceId != "9774d56d682e549c")
+            {
+                return $"android_{deviceId}";
+            }//TODO
+#endif
+
+            //#if IOS
+            //Error         
+            //#endif
+
+            return $"{DeviceInfo.Model}_{DeviceInfo.Platform}_{DeviceInfo.VersionString}";
+        }
+        catch(Exception)
+        {
+          return  Guid.NewGuid().ToString();  
+        }
+    }
+
+    public string GetDeviceInfo()
+    {
+        return $"{DeviceInfo.Model} ({DeviceInfo.Platform} {DeviceInfo.Version})";
+    }
+
+
+    public async Task<string> GetPlatformAsync()
+    {
+        return DeviceInfo.Platform.ToString().ToLower();
     }
 }
 
