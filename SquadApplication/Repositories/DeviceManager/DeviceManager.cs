@@ -137,18 +137,77 @@ public class DeviceManager : IDeviceManager
         return await SecureStorage.GetAsync("ayth_token");
     }
 
-    public Task<bool> IsDeviceRegisteredAsync()
+    public async Task<bool> IsDeviceRegisteredAsync()
     {
-        throw new NotImplementedException();
+        var status = await SecureStorage.GetAsync(DeviceRegistrationKey);
+        var isRegistoryLocal = status == "true";
+
+
+        if(!isRegistoryLocal)
+        {
+            return false;
+        }
+
+        return true;
     }
 
-    public Task<bool> UnregisterDeviceForCurrentUserAsync()
-    {
-        throw new NotImplementedException();
-    }
 
-    public Task<bool> UpdateDeviceTokenAsync()
+    public async Task<bool> UpdateDeviceTokenAsync()
     {
-        throw new NotImplementedException();
+        if(_userSession.CurrentUser is null)
+        {
+            return false;
+        }
+
+        try
+        {
+            await AddAuthorizationHeaderAsync();
+            var installationId = GetInstallationId();
+            var newToken = GetCurrentDeviceToken();
+
+            var request = new DeviceTokenUpdateRequest() 
+            {
+                InstallationId = installationId,
+                NewToken = newToken,
+            };
+
+            var responce = await _httpClient.PutAsJsonAsync($"UpdateToken?userId={_user.Id}",request);
+            return responce.IsSuccessStatusCode; 
+        }
+        catch(Exception)
+        {
+            return false;
+        }
+    }
+    public async Task<bool> UnregisterDeviceForCurrentUserAsync()
+    {
+        if(_userSession.CurrentUser == null)
+        {
+            return false;
+        }
+        if(_connectivity.NetworkAccess != NetworkAccess.Internet)
+        {
+            return false;
+        }
+
+        try
+        {
+            await AddAuthorizationHeaderAsync();
+
+            var installationId = GetInstallationId();
+            var responce = await _httpClient.PostAsync($"UnregisterDevice?{installationId}&userID={_user.Id}", null);
+
+            if(responce.IsSuccessStatusCode)
+            {
+                SecureStorage.Remove(DeviceTokenKey);
+                return true;
+            }
+            return false;
+        }
+        catch(Exception)
+        {
+            return false;
+        }
+
     }
 }
