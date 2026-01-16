@@ -1,7 +1,5 @@
-﻿using Android.Print;
-using SquadApplication.Services.DeviceRegistrationService;
+﻿using SquadApplication.Models.DeviceRegistrationModel;
 using SquadApplication.Services.DeviceTokenService;
-using System.Globalization;
 using System.Net.Http.Headers;
 
 namespace SquadApplication.Repositories.DeviceManager;
@@ -21,14 +19,15 @@ public class DeviceManager : IDeviceManager
     private readonly IUserSession _userSession;
     private readonly IConnectivity _connectivity;
     private readonly IDeviceTokenManager _deviceTokenService;
+    private UserModelEntity _user => _userSession.CurrentUser;
 
     private const string DeviceRegistrationKey = "device_registered";
     private const string DeviceTokenKey = "device_token";
     private const string InstallationIdKey = "installation_id";
 
     public DeviceManager(
-               HttpClient client ,
-               IUserSession userSession ,
+               HttpClient client,
+               IUserSession userSession,
                IConnectivity connectivity,
                IDeviceTokenManager tokenManager)
     {
@@ -43,7 +42,7 @@ public class DeviceManager : IDeviceManager
 
     private void OptionHttpClient()
     {
-        _httpClient.BaseAddress = new Uri("http://10.0.2.2:5213/DeviceRegistartion");
+        _httpClient.BaseAddress = new Uri("http://10.0.2.2:5213/DeviceRegistartion/");
         _httpClient.Timeout = TimeSpan.FromSeconds(60);
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
@@ -57,9 +56,9 @@ public class DeviceManager : IDeviceManager
             return saveToken;
         }
 
-        var newToken= _deviceTokenService.GenerateDeviceToken();
+        var newToken = _deviceTokenService.GenerateDeviceToken();
 
-        Task.Run(async () => await SecureStorage.SetAsync(DeviceTokenKey,newToken));
+        Task.Run(async () => await SecureStorage.SetAsync(DeviceTokenKey, newToken));
         return newToken;
     }
 
@@ -92,16 +91,32 @@ public class DeviceManager : IDeviceManager
             var token = GetCurrentDeviceToken();
             var platform = await _deviceTokenService.GetPlatformAsync();
 
-            var request = new DeviceRegistrationRequest() 
+            var request = new DeviceRegistrationRequest()
             {
-                
+                DevicePlatform = platform,
+                DeviceToken = token,
+                InstallationId = installationId
             };//
+
+            var responce = await _httpClient.PostAsJsonAsync($"RegistartionDevice?userId={_user.Id}", request);
+            if(responce.IsSuccessStatusCode)
+            {
+                await SecureStorage.SetAsync(DeviceRegistrationKey, "true");
+                Console.WriteLine("Registered ok");
+                return true;
+
+            }
+            else
+            {
+                var error = await responce.Content.ReadAsStringAsync();
+                Console.WriteLine("error");
+                return false;
+            }
 
         }
         catch(Exception)
         {
-
-            throw;
+            return false;
         }
 
     }
@@ -112,7 +127,7 @@ public class DeviceManager : IDeviceManager
 
         if(!string.IsNullOrEmpty(token))
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",token);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
     }
 
