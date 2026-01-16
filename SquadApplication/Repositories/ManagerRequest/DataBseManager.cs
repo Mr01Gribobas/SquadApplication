@@ -1,14 +1,20 @@
-﻿namespace SquadApplication.Repositories;
+﻿using SquadApplication.Repositories.DeviceManager;
+
+namespace SquadApplication.Repositories;
 
 public class DataBaseManager : IRequestManagerForEnter
 {
-    public DataBaseManager(IUserSession userSession)
+    public DataBaseManager(IUserSession userSession, IDeviceManager deviceManager)
     {
         _httpClient = new HttpClient();
-        _userSession = userSession; 
+        _userSession = userSession;
+        _deviceManager = deviceManager;
     }
     private readonly IUserSession _userSession;
     private readonly HttpClient _httpClient;
+    private readonly IDeviceManager _deviceManager;
+
+
     private string _urlNameForSend = "http://10.0.2.2:5213/Imput/";
     public int _currentStatusCode { get; private set; }
     public int GetStatusCode() => _currentStatusCode;
@@ -29,9 +35,12 @@ public class DataBaseManager : IRequestManagerForEnter
             {
                 UserModelEntity? createdUser = await responce.Content.ReadFromJsonAsync<UserModelEntity>();
                 _userSession.CurrentUser = createdUser;
+
+                await _deviceManager.RegisterDeviceForCurrentUserAsync();//TODO WORK
+
                 return createdUser;
 
-            } 
+            }
             catch(Exception ex)
             {
 
@@ -45,7 +54,7 @@ public class DataBaseManager : IRequestManagerForEnter
         else if(_currentStatusCode == 401)
         {
             return null;
-            
+
         }
         return null;
     }
@@ -61,9 +70,11 @@ public class DataBaseManager : IRequestManagerForEnter
         if(_currentStatusCode == 200)
         {
             UserModelEntity? userFromServer = await responce.Content.ReadFromJsonAsync<UserModelEntity>();
-            if(userFromServer is not null )
+            if(userFromServer is not null)
             {
                 _userSession.CurrentUser = userFromServer;
+                await _deviceManager.RegisterDeviceForCurrentUserAsync();//TODO WORK
+
             }
             return userFromServer;
         }
@@ -73,4 +84,19 @@ public class DataBaseManager : IRequestManagerForEnter
         }
         return null;
     }
+
+    public async Task LogoutAsync()
+    {
+        try
+        {
+            await _deviceManager.UnregisterDeviceForCurrentUserAsync();
+            _userSession.CurrentUser = null;
+            //delete user ok 
+        }
+        catch(Exception)
+        {
+            Console.WriteLine("Error work");
+        }
+    }
+
 }
