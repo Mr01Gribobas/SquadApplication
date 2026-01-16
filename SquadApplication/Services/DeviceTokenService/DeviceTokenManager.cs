@@ -1,8 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-
 namespace SquadApplication.Services.DeviceTokenService;
-
 
 public class DeviceTokenManager : IDeviceTokenManager
 {
