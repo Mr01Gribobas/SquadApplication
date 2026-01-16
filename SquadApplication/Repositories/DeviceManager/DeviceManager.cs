@@ -1,4 +1,5 @@
 ﻿using Android.Print;
+using SquadApplication.Services.DeviceRegistrationService;
 using SquadApplication.Services.DeviceTokenService;
 using System.Globalization;
 using System.Net.Http.Headers;
@@ -91,7 +92,11 @@ public class DeviceManager : IDeviceManager
             var token = GetCurrentDeviceToken();
             var platform = await _deviceTokenService.GetPlatformAsync();
 
-            var request = new DeviceRegistrationRequest();//
+            var request = new DeviceRegistrationRequest() 
+            {
+                
+            };//
+
         }
         catch(Exception)
         {
