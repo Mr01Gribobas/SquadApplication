@@ -1,13 +1,14 @@
 ﻿using SquadApplication.Repositories;
+using SquadApplication.Repositories.DeviceManager;
 namespace SquadApplication.ViewModels;
 public partial class AuthorizeViewModel : ObservableObject
 {
     private AuthorizedPage _authorizedPage;
     private IRequestManagerForEnter _requestManager;
-    public AuthorizeViewModel(AuthorizedPage authorizedPage,IUserSession userSession)
+    public AuthorizeViewModel(AuthorizedPage authorizedPage,IUserSession userSession, IDeviceManager deviceManager)
     {
         _authorizedPage = authorizedPage;
-        _requestManager = new DataBaseManager(userSession);
+        _requestManager = new DataBaseManager(userSession, deviceManager);
     }
 
     [ObservableProperty]

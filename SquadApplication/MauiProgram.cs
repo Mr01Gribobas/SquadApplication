@@ -1,4 +1,7 @@
-﻿namespace SquadApplication;
+﻿using SquadApplication.Repositories.DeviceManager;
+using SquadApplication.Services.DeviceTokenService;
+
+namespace SquadApplication;
 
 public static class MauiProgram
 {
@@ -13,6 +16,9 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
+        builder.Services.AddSingleton<IDeviceManager, DeviceManager>();
+        builder.Services.AddSingleton<IDeviceTokenManager, DeviceTokenManager>();
+
         builder.Services.AddSingleton<IUserSession, UserSession>();
 
 #if DEBUG
