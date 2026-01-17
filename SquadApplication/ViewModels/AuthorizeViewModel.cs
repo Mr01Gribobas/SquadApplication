@@ -4,11 +4,15 @@ namespace SquadApplication.ViewModels;
 public partial class AuthorizeViewModel : ObservableObject
 {
     private AuthorizedPage _authorizedPage;
+    private readonly IDeviceManager _deviceManager;
     private IRequestManagerForEnter _requestManager;
-    public AuthorizeViewModel(AuthorizedPage authorizedPage,IUserSession userSession, IDeviceManager deviceManager)
+    public AuthorizeViewModel(AuthorizedPage authorizedPage,
+        IUserSession userSession,
+        IDeviceManager deviceMagager)
     {
         _authorizedPage = authorizedPage;
-        _requestManager = new DataBaseManager(userSession, deviceManager);
+        _deviceManager = deviceMagager;
+        _requestManager = new DataBaseManager(userSession);
     }
 
     [ObservableProperty]

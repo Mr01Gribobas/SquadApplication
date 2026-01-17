@@ -6,9 +6,9 @@ public class DeviceTokenManager : IDeviceTokenManager
 {
     private const string InstallationIdKey = "installation_id";
     private const string DeviceTokenKey = "device_token";
-    public string GenerateDeviceToken()
+    public async Task<string> GenerateDeviceToken()
     {
-        var existingToken = Task.Run(async () => await SecureStorage.GetAsync(DeviceTokenKey)).Result;
+        var existingToken =  await SecureStorage.GetAsync(DeviceTokenKey);
         if(!string.IsNullOrEmpty(existingToken))
         {
             return existingToken;
@@ -18,17 +18,17 @@ public class DeviceTokenManager : IDeviceTokenManager
 
 
         if(newToken is not null)
-        {
-            Task.Run(async () => await SecureStorage.SetAsync(DeviceTokenKey, newToken)).Wait();
+        { 
+            await SecureStorage.SetAsync(DeviceTokenKey, newToken);
             return newToken;
         }
         return null;
     }//TODO
 
-    private string GenerateDeviceTokenInternal()
+    private async Task<string> GenerateDeviceTokenInternal()
     {
-        var installationId = GetOrCreateInstallationId().ToString();
-        var platform = Task.Run(async () => await GetPlatformAsync()).Result;
+        var installationId =  GetOrCreateInstallationId().ToString();
+        var platform =  await GetPlatformAsync();
         var timestamp = DateTime.UtcNow.Ticks;
         var baseToken = $"{platform}_{installationId}_{timestamp}";
 
@@ -45,9 +45,9 @@ public class DeviceTokenManager : IDeviceTokenManager
         Console.WriteLine($"Token is created : {token}");
         return token;
     }
-    public string GetOrCreateInstallationId()
+    public async Task<string> GetOrCreateInstallationId()
     {
-        var exitstingId = Task.Run(async () => await SecureStorage.GetAsync(InstallationIdKey)).Result;
+        var exitstingId =  await SecureStorage.GetAsync(InstallationIdKey);
 
         if(!string.IsNullOrEmpty(exitstingId))
         {

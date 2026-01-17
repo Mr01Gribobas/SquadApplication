@@ -4,11 +4,11 @@ namespace SquadApplication.Repositories;
 
 public class DataBaseManager : IRequestManagerForEnter
 {
-    public DataBaseManager(IUserSession userSession, IDeviceManager deviceManager)
+    public DataBaseManager(IUserSession userSession, IDeviceManager deviceManager = null)
     {
         _httpClient = new HttpClient();
         _userSession = userSession;
-        _deviceManager = deviceManager;
+        //_deviceManager = deviceManager;
     }
     private readonly IUserSession _userSession;
     private readonly HttpClient _httpClient;

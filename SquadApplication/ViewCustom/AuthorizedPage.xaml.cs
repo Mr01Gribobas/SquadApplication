@@ -5,11 +5,20 @@ namespace SquadApplication.ViewCustom;
 public partial class AuthorizedPage : ContentPage
 {
     private AuthorizeViewModel _authorizeView;
-    public AuthorizedPage(IUserSession userSession, IDeviceManager deviceManager)
+    private IDeviceManager _deviceManager;
+    public AuthorizedPage(IUserSession userSession, IDeviceManager _deviceManager)
     {
         InitializeComponent();
-        _authorizeView = new AuthorizeViewModel(this, userSession, deviceManager);
+        this._deviceManager = _deviceManager;
+        _authorizeView = new AuthorizeViewModel(this, userSession,this._deviceManager);
         BindingContext = _authorizeView;
+        TestWork();
     }
+    private void TestWork()
+    {
+        var devicePlatfom = DeviceInfo.Platform;
+        var deviceModel = DeviceInfo.Model;
+        var deviceType = DeviceInfo.DeviceType;
 
+    }
 }
