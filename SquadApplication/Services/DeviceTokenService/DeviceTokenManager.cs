@@ -8,17 +8,17 @@ public class DeviceTokenManager : IDeviceTokenManager
     private const string DeviceTokenKey = "device_token";
     public async Task<string> GenerateDeviceToken()
     {
-        var existingToken =  await SecureStorage.GetAsync(DeviceTokenKey);
+        var existingToken = await SecureStorage.GetAsync(DeviceTokenKey);
         if(!string.IsNullOrEmpty(existingToken))
         {
             return existingToken;
         }
 
-        var newToken = GenerateDeviceTokenInternal();
+        var newToken = await GenerateDeviceTokenInternal();
 
 
         if(newToken is not null)
-        { 
+        {
             await SecureStorage.SetAsync(DeviceTokenKey, newToken);
             return newToken;
         }
@@ -27,8 +27,8 @@ public class DeviceTokenManager : IDeviceTokenManager
 
     private async Task<string> GenerateDeviceTokenInternal()
     {
-        var installationId =  GetOrCreateInstallationId().ToString();
-        var platform =  await GetPlatformAsync();
+        var installationId = await GetOrCreateInstallationId();
+        var platform = await GetPlatformAsync();
         var timestamp = DateTime.UtcNow.Ticks;
         var baseToken = $"{platform}_{installationId}_{timestamp}";
 
@@ -47,7 +47,7 @@ public class DeviceTokenManager : IDeviceTokenManager
     }
     public async Task<string> GetOrCreateInstallationId()
     {
-        var exitstingId =  await SecureStorage.GetAsync(InstallationIdKey);
+        var exitstingId = await SecureStorage.GetAsync(InstallationIdKey);
 
         if(!string.IsNullOrEmpty(exitstingId))
         {
@@ -56,7 +56,7 @@ public class DeviceTokenManager : IDeviceTokenManager
 
         var newId = GenerateInstallationId();
 
-        Task.Run(async () => await SecureStorage.SetAsync(InstallationIdKey, newId)).Wait();
+        await SecureStorage.SetAsync(InstallationIdKey, newId);
 
         return newId;
 
@@ -70,7 +70,9 @@ public class DeviceTokenManager : IDeviceTokenManager
         using var sha256 = SHA256.Create();
         var hash = sha256.ComputeHash(Encoding.UTF8.GetBytes($"{deviceId}_{timestamp}_{random}"));
 
-        return Convert.ToBase64String(hash).Replace("/", "_").Replace("+", "-").Replace("=", "").Substring(0, 22);
+        var base64 = Convert.ToBase64String(hash);
+        var safeBase64 = base64.Replace("/", "_").Replace("+", "-").Replace("=", "");
+        return safeBase64.Length >= 22 ? safeBase64[..22] : safeBase64;
     }
 
     private string GetDeviceUniqueId()
