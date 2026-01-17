@@ -1,10 +1,27 @@
 ﻿namespace SquadApplication;
 public partial class AppShell : Shell
 {
-    public AppShell()
+    private readonly IServiceProvider _serviceProvider;
+
+    public AppShell(IServiceProvider serviceProvider)
     {
+        _serviceProvider = serviceProvider;
         InitializeComponent();
         InitRouting();
+        this.Navigated += OnShellNavigated;
+    }
+
+    private void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
+    {
+        if(e.Current?.Location?.OriginalString?.Contains("AuthorizedPage")==true)
+        {
+            InitialAuthorizePage();
+        }
+    }
+
+    private void InitialAuthorizePage()
+    {
+        throw new NotImplementedException();
     }
 
     private void InitRouting()
@@ -24,8 +41,8 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute(nameof(PolygonsPage),typeof(PolygonsPage));
         Routing.RegisterRoute(nameof(AppendPolygonPage),typeof(AppendPolygonPage));
-        
-
     }
 }
+        
+
         
