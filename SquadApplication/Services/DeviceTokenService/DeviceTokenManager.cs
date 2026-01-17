@@ -6,6 +6,7 @@ public class DeviceTokenManager : IDeviceTokenManager
 {
     private const string InstallationIdKey = "installation_id";
     private const string DeviceTokenKey = "device_token";
+    public DeviceTokenManager() { }
     public async Task<string> GenerateDeviceToken()
     {
         var existingToken = await SecureStorage.GetAsync(DeviceTokenKey);

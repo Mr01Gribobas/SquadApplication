@@ -4,15 +4,7 @@ using System.Net.Http.Headers;
 
 namespace SquadApplication.Repositories.DeviceManager;
 
-public interface IDeviceManager
-{
-    Task<bool> RegisterDeviceForCurrentUserAsync();
-    Task<bool> UnregisterDeviceForCurrentUserAsync();
-    Task<bool> UpdateDeviceTokenAsync();
-    Task<bool> IsDeviceRegisteredAsync();
-    string GetCurrentDeviceToken();
-    string GetInstallationId();
-}
+
 public class DeviceManager : IDeviceManager
 {
     private readonly HttpClient _httpClient;
@@ -47,26 +39,26 @@ public class DeviceManager : IDeviceManager
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
 
-    public string GetCurrentDeviceToken()
+    public async Task<string> GetCurrentDeviceToken()
     {
-        var saveToken = Task.Run(async () => await SecureStorage.GetAsync(DeviceTokenKey)).Result;
+        var saveToken = await SecureStorage.GetAsync(DeviceTokenKey);
 
         if(!string.IsNullOrEmpty(saveToken))
         {
             return saveToken;
         }
 
-        var newToken = _deviceTokenService.GenerateDeviceToken();
+        var newToken = await _deviceTokenService.GenerateDeviceToken();
 
-        Task.Run(async () => await SecureStorage.SetAsync(DeviceTokenKey, newToken));
+        await SecureStorage.SetAsync(DeviceTokenKey, newToken);
         return newToken;
     }
 
 
 
-    public string GetInstallationId()
+    public async Task<string> GetInstallationId()
     {
-        return _deviceTokenService.GetOrCreateInstallationId();
+        return await _deviceTokenService.GetOrCreateInstallationId();
     }
 
 
@@ -87,8 +79,8 @@ public class DeviceManager : IDeviceManager
         {
             await AddAuthorizationHeaderAsync();
 
-            var installationId = GetInstallationId();
-            var token = GetCurrentDeviceToken();
+            var installationId = await GetInstallationId();
+            var token = await GetCurrentDeviceToken();
             var platform = await _deviceTokenService.GetPlatformAsync();
 
             var request = new DeviceRegistrationRequest()
@@ -162,17 +154,17 @@ public class DeviceManager : IDeviceManager
         try
         {
             await AddAuthorizationHeaderAsync();
-            var installationId = GetInstallationId();
-            var newToken = GetCurrentDeviceToken();
+            var installationId = await GetInstallationId();
+            var newToken = await GetCurrentDeviceToken();
 
-            var request = new DeviceTokenUpdateRequest() 
+            var request = new DeviceTokenUpdateRequest()
             {
                 InstallationId = installationId,
                 NewToken = newToken,
             };
 
-            var responce = await _httpClient.PutAsJsonAsync($"UpdateToken?userId={_user.Id}",request);
-            return responce.IsSuccessStatusCode; 
+            var responce = await _httpClient.PutAsJsonAsync($"UpdateToken?userId={_user.Id}", request);
+            return responce.IsSuccessStatusCode;
         }
         catch(Exception)
         {
@@ -194,7 +186,7 @@ public class DeviceManager : IDeviceManager
         {
             await AddAuthorizationHeaderAsync();
 
-            var installationId = GetInstallationId();
+            var installationId = await GetInstallationId();
             var responce = await _httpClient.PostAsync($"UnregisterDevice?{installationId}&userID={_user.Id}", null);
 
             if(responce.IsSuccessStatusCode)

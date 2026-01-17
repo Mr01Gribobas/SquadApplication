@@ -6,7 +6,7 @@ public partial class AuthorizedPage : ContentPage
 {
     private AuthorizeViewModel _authorizeView;
     private IDeviceManager _deviceManager;
-    public AuthorizedPage(IUserSession userSession, IDeviceManager _deviceManager)
+    public AuthorizedPage(IUserSession userSession)
     {
         InitializeComponent();
         this._deviceManager = _deviceManager;
