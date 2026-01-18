@@ -5,7 +5,7 @@ using SquadServer.Services.Service_DeviceRegistration;
 namespace SquadServer.Controllers;
 
 [Controller]
-public class DeviceRegistartionController : ControllerBase
+public class DeviceRegistartionController : Controller
 {
     private readonly IDeviceRegistrationService _deviceRegistrationService;
     public DeviceRegistartionController(IDeviceRegistrationService registrationService)
@@ -13,6 +13,7 @@ public class DeviceRegistartionController : ControllerBase
         _deviceRegistrationService = registrationService;
     }
 
+    
     [HttpPost]
     public async Task<IActionResult> RegistartionDevice(int userId)
     {
@@ -22,7 +23,7 @@ public class DeviceRegistartionController : ControllerBase
 
         try
         {
-            if(userId! <= 0)
+            if(userId > 0 | userId != 0)
             {
                 await _deviceRegistrationService.RegisterDeviceAsync(
                     dtoDevice: dtoRegistration,

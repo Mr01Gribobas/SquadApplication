@@ -20,7 +20,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<HttpClient>(cl =>
         {
             var client = new HttpClient();
-            client.BaseAddress = new Uri("http://10.0.2.2:5213/DeviceRegistartion/");
+            
             client.Timeout = TimeSpan.FromSeconds(60);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             return client;

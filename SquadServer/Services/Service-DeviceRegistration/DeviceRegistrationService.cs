@@ -4,13 +4,12 @@ namespace SquadServer.Services.Service_DeviceRegistration
 {
     public class DeviceRegistrationService : IDeviceRegistrationService
     {
-        public DeviceRegistrationService(SquadDbContext dbContext, ILogger logger)
+        public DeviceRegistrationService(SquadDbContext dbContext)
         {
             _squadDbContext = dbContext;
-            _logger = logger;
         }
         private readonly SquadDbContext _squadDbContext;
-        private readonly ILogger _logger;//TODO
+        //private readonly ILogger _logger;//TODO
 
 
         public SquadDbContext GetDbContext() => _squadDbContext;
@@ -24,7 +23,7 @@ namespace SquadServer.Services.Service_DeviceRegistration
                 //update
                 existingDevice.DeviceToken = dtoDevice.DeviceToken;
                 existingDevice.UserId = userId;
-                existingDevice.DevicePlatform = dtoDevice.DevicePlatforg;
+                existingDevice.DevicePlatform = dtoDevice.DevicePlatform;
                 existingDevice.LastActiveAt = DateTime.UtcNow;
                 existingDevice.IsActive = true;
             }
@@ -33,7 +32,7 @@ namespace SquadServer.Services.Service_DeviceRegistration
                 //create new 
                 var deviceModel = new DeviceRegistartionModelEntity()
                 {
-                    DevicePlatform = dtoDevice.DevicePlatforg,
+                    DevicePlatform = dtoDevice.DevicePlatform,
                     DeviceToken = dtoDevice.DeviceToken,
                     InstallationId = dtoDevice.InstallationId,
                     UserId = userId,

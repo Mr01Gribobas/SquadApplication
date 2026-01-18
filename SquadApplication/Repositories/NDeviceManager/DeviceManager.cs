@@ -13,6 +13,7 @@ public class DeviceManager : IDeviceManager
     private readonly IDeviceTokenManager _deviceTokenService;
     private UserModelEntity _user => _userSession.CurrentUser;
 
+    private string _urlRegistrationDevice = "http://10.0.2.2:5213/DeviceRegistartion/";
     private const string DeviceRegistrationKey = "device_registered";
     private const string DeviceTokenKey = "device_token";
     private const string InstallationIdKey = "installation_id";
@@ -86,6 +87,7 @@ public class DeviceManager : IDeviceManager
 
             var installationId = await GetInstallationId();
             var token = await GetCurrentDeviceToken();
+
             var platform = await _deviceTokenService.GetPlatformAsync();
 
             var request = new DeviceRegistrationRequest()
@@ -94,8 +96,8 @@ public class DeviceManager : IDeviceManager
                 DeviceToken = token,
                 InstallationId = installationId
             };//
-
-            var responce = await _httpClient.PostAsJsonAsync($"RegistartionDevice?userId={_user.Id}", request);
+            var content = JsonContent.Create(request);
+            var responce = await _httpClient.PostAsync(_urlRegistrationDevice+$"RegistartionDevice?userId={_user.Id}", content);
             if(responce.IsSuccessStatusCode)
             {
                 await SecureStorage.SetAsync(DeviceRegistrationKey, "true");

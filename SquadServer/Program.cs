@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Options;
 using SquadServer.Models;
+using SquadServer.Services.Service_DeviceRegistration;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.AddCors(build =>
         //option.AllowCredentials();
     });
 });
+builder.Services.AddScoped<IDeviceRegistrationService, DeviceRegistrationService>();
 builder.Services.AddControllers().AddJsonOptions(option =>
 {
     option.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
