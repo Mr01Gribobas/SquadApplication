@@ -1,5 +1,5 @@
 ﻿using SquadApplication.Repositories;
-using SquadApplication.Repositories.DeviceManager;
+using SquadApplication.Repositories.NDeviceManager;
 namespace SquadApplication.ViewModels;
 public partial class AuthorizeViewModel : ObservableObject
 {
@@ -12,7 +12,7 @@ public partial class AuthorizeViewModel : ObservableObject
     {
         _authorizedPage = authorizedPage;
         _deviceManager = deviceMagager;
-        _requestManager = new DataBaseManager(userSession);
+        _requestManager = new DataBaseManager(userSession,deviceMagager);
     }
 
     [ObservableProperty]

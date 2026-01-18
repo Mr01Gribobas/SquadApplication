@@ -1,9 +1,8 @@
-﻿using Org.Apache.Http.Client;
-using SquadApplication.Models.DeviceRegistrationModel;
+﻿using SquadApplication.Models.DeviceRegistrationModel;
 using SquadApplication.Services.DeviceTokenService;
 using System.Net.Http.Headers;
 
-namespace SquadApplication.Repositories.DeviceManager;
+namespace SquadApplication.Repositories.NDeviceManager;
 
 
 public class DeviceManager : IDeviceManager
@@ -24,7 +23,7 @@ public class DeviceManager : IDeviceManager
                IDeviceTokenManager tokenManager,
                IUserSession userSession
                )
-               
+
     {
         _httpClient = httpClient;
         _userSession = userSession;
@@ -32,8 +31,19 @@ public class DeviceManager : IDeviceManager
         _connectivity = connectivity;
 
 
-    }    
-
+    }
+    public bool SetUserFromSession(UserModelEntity user)
+    {
+        try
+        {
+            _userSession.CurrentUser = user;
+            return true;
+        }
+        catch(Exception ex)
+        {
+            return false;
+        }
+    }
     public async Task<string> GetCurrentDeviceToken()
     {
         var saveToken = await SecureStorage.GetAsync(DeviceTokenKey);

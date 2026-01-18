@@ -1,5 +1,5 @@
 ﻿
-using SquadApplication.Repositories.DeviceManager;
+using SquadApplication.Repositories.NDeviceManager;
 
 namespace SquadApplication.ViewCustom;
 
@@ -11,7 +11,7 @@ public partial class AuthorizedPage : ContentPage
     {
         InitializeComponent();
         this._deviceManager = deviceManager;
-        _viewModel = new AuthorizeViewModel(this, userSession, this._deviceManager);
+        _viewModel = new AuthorizeViewModel(this, userSession,_deviceManager);
         BindingContext = _viewModel;
         TestWork();
     }

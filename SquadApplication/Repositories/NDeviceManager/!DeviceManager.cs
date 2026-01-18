@@ -2,7 +2,7 @@
 using SquadApplication.Services.DeviceTokenService;
 using System.Net.Http.Headers;
 
-namespace SquadApplication.Repositories.DeviceManager;
+namespace SquadApplication.Repositories.NDeviceManager;
 
 public interface IDeviceManager
 {

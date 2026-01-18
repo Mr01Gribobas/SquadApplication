@@ -1,4 +1,4 @@
-﻿using SquadApplication.Repositories.DeviceManager;
+﻿using SquadApplication.Repositories.NDeviceManager;
 using SquadApplication.Services.DeviceTokenService;
 using System.Net.Http.Headers;
 
