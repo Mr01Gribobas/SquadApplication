@@ -1,4 +1,5 @@
-﻿using SquadApplication.Models.DeviceRegistrationModel;
+﻿using Org.Apache.Http.Client;
+using SquadApplication.Models.DeviceRegistrationModel;
 using SquadApplication.Services.DeviceTokenService;
 using System.Net.Http.Headers;
 
@@ -18,26 +19,20 @@ public class DeviceManager : IDeviceManager
     private const string InstallationIdKey = "installation_id";
 
     public DeviceManager(
-               HttpClient client,
-               IUserSession userSession,
                IConnectivity connectivity,
-               IDeviceTokenManager tokenManager)
+               HttpClient httpClient,
+               IDeviceTokenManager tokenManager,
+               IUserSession userSession
+               )
+               
     {
-        _connectivity = connectivity;
+        _httpClient = httpClient;
         _userSession = userSession;
         _deviceTokenService = tokenManager;
-        _httpClient = client;
+        _connectivity = connectivity;
 
-        OptionHttpClient();
 
-    }
-
-    private void OptionHttpClient()
-    {
-        _httpClient.BaseAddress = new Uri("http://10.0.2.2:5213/DeviceRegistartion/");
-        _httpClient.Timeout = TimeSpan.FromSeconds(60);
-        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-    }
+    }    
 
     public async Task<string> GetCurrentDeviceToken()
     {

@@ -5,50 +5,14 @@ namespace SquadApplication;
 public partial class AppShell : Shell
 {
     private readonly IServiceProvider _serviceProvider;
-    private AuthorizedPage _authorizedPage;
     public AppShell(IServiceProvider serviceProvider)
     {
-        HomeShellContent.h
         _serviceProvider = serviceProvider;
         InitializeComponent();
         InitRouting();
-        this.Navigated += OnShellNavigated;
     }
 
-    private void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
-    {
-        if(e.Current?.Location?.OriginalString?.Contains("AuthorizedPage") == true)
-        {
-            InitialAuthorizePage();
-        }
-    }
-
-    private void InitialAuthorizePage()
-    {
-        if(_authorizedPage != null)
-        {
-            return;
-        }
-        //if(HomeShellContent is AuthorizedPage page)
-        //{
-        //    if(page is not null)
-        //    {
-        //        var userSession = _serviceProvider.GetService<IUserSession>();
-        //        var deviceManager = _serviceProvider.GetService<IDeviceManager>();
-        //        page.InitializeWithDependencies(userSession, deviceManager);
-        //        _authorizedPage = page;
-        //    }
-        //}
-
-
-    }
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        InitialAuthorizePage();
-    }
-
-
+   
     private void InitRouting()
     {
         Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
