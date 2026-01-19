@@ -48,9 +48,10 @@ public partial class FeesViewModel : ObservableObject
         var responce = await request.GetDataAsync(GetRequests.GameAttendance);
         if(request._currentStatusCode == 200)
         {
-
+            UpdateLists();
         }
     }
+
 
 
     [RelayCommand]
@@ -68,9 +69,17 @@ public partial class FeesViewModel : ObservableObject
 
     private void UpdateLists()
     {
-        Console.WriteLine(Users);
-        Console.WriteLine(UsersIsGoToTheGame);
-        Console.WriteLine(UsersIsNotGoTheGame);
+        SortList(Users);
+        SortList(UsersIsGoToTheGame);
+        SortList(UsersIsNotGoTheGame);
+    }
+
+    private void SortList(ObservableCollection<UserModelEntity> users)
+    {
+        foreach(UserModelEntity user in users)
+        {
+            SortUsers(user);
+        }
     }
 
     private async void InitialProperty(EventModelEntity? eventFromDb)
@@ -144,19 +153,24 @@ public partial class FeesViewModel : ObservableObject
         {
             foreach(var member in responce)
             {
-                switch(member._goingToTheGame)
-                {
-                    case null:
-                        Users.Add(member);
-                         break;
-                    case true:
-                        UsersIsGoToTheGame.Add(member);
-                        break;
-                    case false:
-                        UsersIsNotGoTheGame.Add(member);
-                        break;
-                }
+                SortUsers(member);
             }
+        }
+    }
+
+    private void SortUsers(UserModelEntity member)
+    {
+        switch(member._goingToTheGame)
+        {
+            case null:
+                Users.Add(member);
+                break;
+            case true:
+                UsersIsGoToTheGame.Add(member);
+                break;
+            case false:
+                UsersIsNotGoTheGame.Add(member);
+                break;
         }
     }
 }

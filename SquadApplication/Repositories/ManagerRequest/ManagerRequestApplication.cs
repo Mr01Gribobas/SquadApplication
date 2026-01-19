@@ -107,10 +107,11 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
         var responce = await _httpClient.GetAsync(_urlNameForSend);
         if((int)responce.StatusCode == 200)
         {
+            _currentStatusCode = 200; 
             var dataFromResponce = await responce.Content.ReadFromJsonAsync<List<T>>();
             return (flowControl: false, value: dataFromResponce);
         }
-
+        _currentStatusCode = (int)responce.StatusCode;
         return (flowControl: true, value: null);
     }
 

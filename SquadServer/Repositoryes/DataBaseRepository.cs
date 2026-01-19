@@ -9,14 +9,14 @@ public class DataBaseRepository
     {
         this._squadDbContext = _squadDbContext;
     }
-    public  SquadDbContext GetCurrentContextDb() => _squadDbContext;
+    public SquadDbContext GetCurrentContextDb() => _squadDbContext;
 
 
 
-    public async Task<bool> GameAttendance(int userId,bool isWill)
+    public async Task<bool> GameAttendance(int userId, bool isWill)
     {
-        var userFromDb = await _squadDbContext.Players.FirstOrDefaultAsync(u=>u.Id==userId);
-        if (userFromDb == null)
+        var userFromDb = await _squadDbContext.Players.FirstOrDefaultAsync(u => u.Id == userId);
+        if(userFromDb == null)
         {
             return false;
         }
