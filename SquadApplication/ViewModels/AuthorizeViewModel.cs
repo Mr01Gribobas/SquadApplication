@@ -1,6 +1,4 @@
-﻿using SquadApplication.Repositories;
-using SquadApplication.Repositories.NDeviceManager;
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 public partial class AuthorizeViewModel : ObservableObject
 {
     private AuthorizedPage _authorizedPage;

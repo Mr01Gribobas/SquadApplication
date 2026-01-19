@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace SquadApplication.Serices.ApiServices;
+﻿namespace SquadApplication.Serices.ApiServices;
 
 public class UserSession : IUserSession
 {

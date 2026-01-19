@@ -1,6 +1,4 @@
-﻿using SquadApplication.Services.DeviceTokenService;
-
-namespace SquadApplication.Services.DeviceRegistrationService;
+﻿namespace SquadApplication.Services.DeviceRegistrationService;
 
 
 public class DeviceRegistrationService : IDeviceRegistrationService

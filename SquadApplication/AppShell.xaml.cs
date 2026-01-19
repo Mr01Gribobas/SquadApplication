@@ -1,6 +1,4 @@
-﻿using SquadApplication.Repositories.NDeviceManager;
-
-namespace SquadApplication;
+﻿namespace SquadApplication;
 
 public partial class AppShell : Shell
 {

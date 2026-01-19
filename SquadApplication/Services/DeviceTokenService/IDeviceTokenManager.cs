@@ -1,7 +1,4 @@
-﻿using System.Security.Cryptography;
-using System.Text;
-
-namespace SquadApplication.Services.DeviceTokenService;
+﻿namespace SquadApplication.Services.DeviceTokenService;
 
 public interface IDeviceTokenManager
 {

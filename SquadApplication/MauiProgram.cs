@@ -1,8 +1,4 @@
-﻿using SquadApplication.Repositories.NDeviceManager;
-using SquadApplication.Services.DeviceTokenService;
-using System.Net.Http.Headers;
-
-namespace SquadApplication;
+﻿namespace SquadApplication;
 
 public static class MauiProgram
 {
