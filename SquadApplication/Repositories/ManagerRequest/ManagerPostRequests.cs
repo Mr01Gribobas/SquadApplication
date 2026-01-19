@@ -15,7 +15,11 @@ public class ManagerPostRequests<T> : IRequestManager<T>
     public int _currentStatusCode { get; private set; }
 
 
-    public void ResetUrl() => _urlNameForSend = "http://10.0.2.2:5213/MainPost/";
+    public void ResetUrlAndStatusCode()
+    {
+        _urlNameForSend = "http://10.0.2.2:5213/MainPost/"; 
+        _currentStatusCode = 0;
+    }
     public void SetUrl(string controllAction)
     {
         _urlNameForSend += controllAction;
@@ -31,8 +35,10 @@ public class ManagerPostRequests<T> : IRequestManager<T>
         var resultResponce = await _httpClient.PostAsJsonAsync<T>(_urlNameForSend, objectValue);
         if((int)resultResponce.StatusCode == 200)
         {
+            _currentStatusCode=200;
             return true;
         }
+        _currentStatusCode = (int)resultResponce.StatusCode;
         return false;
     }
     public async Task<bool> PostRequests(T objectValue, PostsRequests postRequests)

@@ -12,7 +12,12 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
     public int _currentStatusCode { get; private set; }
     private bool _disposed = false;
 
-    public void ResetUrl() => _urlNameForSend = "http://10.0.2.2:5213/MainGet/";
+    public void ResetUrlAndStatusCode() 
+    {
+        _urlNameForSend = "http://10.0.2.2:5213/MainGet/";
+        _currentStatusCode = 0;
+    } 
+
 
     public void SetUrl(string controllAction)
     {

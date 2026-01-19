@@ -50,6 +50,8 @@ public partial class FeesViewModel : ObservableObject
         {
             UpdateLists();
         }
+        request.ResetUrlAndStatusCode();
+
     }
 
 
@@ -65,6 +67,8 @@ public partial class FeesViewModel : ObservableObject
         {
             UpdateLists();
         }
+
+        request.ResetUrlAndStatusCode();
     }
 
     private void UpdateLists()
