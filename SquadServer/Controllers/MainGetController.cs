@@ -91,7 +91,9 @@ public class MainGetController : Controller
     public IActionResult? GetEquipByUserId(int userId)
     {
         var equip = _dataBaseRepository.GetEquipByUserId(userId);
-        return Json(equip);
+        List<EquipmentEntity> equipments = new List<EquipmentEntity>();
+        equipments.Add(equip);
+        return Ok(equipments);
     }
 
     [HttpGet]
@@ -119,5 +121,14 @@ public class MainGetController : Controller
         {
             return Unauthorized();
         }
+    }
+    [HttpGet]
+    public async Task<IActionResult> GameAttendance(int userId, bool isWill)
+    {
+        if(await _dataBaseRepository.GameAttendance(userId, isWill))
+        {
+            return Ok(null);
+        }
+        return StatusCode(401);
     }
 }

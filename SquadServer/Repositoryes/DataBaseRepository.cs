@@ -13,6 +13,17 @@ public class DataBaseRepository
 
 
 
+    public async Task<bool> GameAttendance(int userId,bool isWill)
+    {
+        var userFromDb = await _squadDbContext.Players.FirstOrDefaultAsync(u=>u.Id==userId);
+        if (userFromDb == null)
+        {
+            return false;
+        }
+        userFromDb._goingToTheGame = isWill;
+        _squadDbContext.SaveChanges();
+        return true;
+    }
 
     public UserModelEntity? GetUserFromDb(int loginCode)
     {

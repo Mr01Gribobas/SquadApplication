@@ -8,5 +8,7 @@ public enum GetRequests
     GetAllEventsHistory,
     GetEvent,
     GetEquipById,
+    GameAttendance
+
 }
 

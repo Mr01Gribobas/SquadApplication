@@ -42,13 +42,37 @@ public partial class FeesViewModel : ObservableObject
     [RelayCommand]
     public async void CurrentHumanWillBe()
     {
+        var isWill = true;
+        var request = (ManagerGetRequests<EventModelEntity>)_requestManager;
+        request.SetUrl($"GameAttendance?userId={_user.Id}&isWill={isWill}");
+        var responce = await request.GetDataAsync(GetRequests.GameAttendance);
+        if(request._currentStatusCode == 200)
+        {
 
+        }
     }
+
+
     [RelayCommand]
-        public async void CurrentHumanWillNot()
+    public async void CurrentHumanWillNot()
     {
-
+        var isWill = false;
+        var request = (ManagerGetRequests<EventModelEntity>)_requestManager;
+        request.SetUrl($"GameAttendance?userId={_user.Id}&isWill={isWill}");
+        var responce = await request.GetDataAsync(GetRequests.GameAttendance);
+        if(request._currentStatusCode == 200)
+        {
+            UpdateLists();
+        }
     }
+
+    private void UpdateLists()
+    {
+        Console.WriteLine(Users);
+        Console.WriteLine(UsersIsGoToTheGame);
+        Console.WriteLine(UsersIsNotGoTheGame);
+    }
+
     private async void InitialProperty(EventModelEntity? eventFromDb)
     {
         if(eventFromDb is null)
@@ -124,7 +148,7 @@ public partial class FeesViewModel : ObservableObject
                 {
                     case null:
                         Users.Add(member);
-                        break;
+                         break;
                     case true:
                         UsersIsGoToTheGame.Add(member);
                         break;
