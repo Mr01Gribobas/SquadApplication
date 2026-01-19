@@ -88,6 +88,14 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
                     return valueEquipById;
                 }
                 break;
+            case GetRequests.GameAttendance:
+
+                (bool flowControlGameAttendance, List<T>? objects) = await RequestAction();
+                if(!flowControlGameAttendance)
+                {
+                    return objects;
+                }
+                break;
             default:
                 return null;
         }

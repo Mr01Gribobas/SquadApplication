@@ -93,6 +93,8 @@ public class MainGetController : Controller
         var equip = _dataBaseRepository.GetEquipByUserId(userId);
         return Json(equip);
     }
+
+    [HttpGet]
     public IActionResult? GetAllInfoForProfile(int userId)
     {
         try
