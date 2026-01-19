@@ -1,5 +1,4 @@
-﻿using System.Text;
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 
 public partial class FeesViewModel : ObservableObject
 {
@@ -40,9 +39,17 @@ public partial class FeesViewModel : ObservableObject
     [ObservableProperty]
     private string? countMembers;
 
+    [RelayCommand]
+    public async void CurrentHumanWillBe()
+    {
 
+    }
+    [RelayCommand]
+        public async void CurrentHumanWillNot()
+    {
 
-    private async void  InitialProperty(EventModelEntity? eventFromDb)
+    }
+    private async void InitialProperty(EventModelEntity? eventFromDb)
     {
         if(eventFromDb is null)
         {
@@ -69,6 +76,7 @@ public partial class FeesViewModel : ObservableObject
     {
         await Shell.Current.GoToAsync($"/{nameof(CreateEventPage)}");
     }
+
     [RelayCommand]
     private async void CopyCoordinates()
     {
@@ -99,13 +107,13 @@ public partial class FeesViewModel : ObservableObject
         request.ResetUrl();
         InitialProperty(eventFromDb);
     }
-    private async Task  GetMembersTeam(int userId)
+    private async Task GetMembersTeam(int userId)
     {
         if(_user is null)
         {
             return;
         }
-        var request =  new ManagerGetRequests<UserModelEntity>();
+        var request = new ManagerGetRequests<UserModelEntity>();
         request.SetUrl($"GetAllTeamMembers?userId={userId}");
         var responce = await request.GetDataAsync(GetRequests.GetAllTeamMembers);
         if(responce != null)

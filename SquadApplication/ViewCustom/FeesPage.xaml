@@ -173,6 +173,8 @@
                     FontAttributes="Bold"
                     CornerRadius="10"
                     HeightRequest="50"
+                    Command="{Binding CurrentHumanWillBeCommand}"
+                    
                     />
 
             <Button Grid.Column="1"
@@ -182,6 +184,7 @@
                     FontAttributes="Bold"
                     CornerRadius="10"
                     HeightRequest="50"
+                    Command="{Binding CurrentHumanWillNotCommand}"
                     />
         </Grid>
     </Grid>
