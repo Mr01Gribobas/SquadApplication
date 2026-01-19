@@ -141,7 +141,7 @@ public partial class FeesViewModel : ObservableObject
             return;
         }
         EventModelEntity? eventFromDb = responce.FirstOrDefault();
-        request.ResetUrl();
+        request.ResetUrlAndStatusCode();
         InitialProperty(eventFromDb);
     }
     private async Task GetMembersTeam(int userId)

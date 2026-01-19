@@ -82,7 +82,7 @@ public partial class EditYourProfileViewModel : ObservableObject
             requestManager.SetUrl($"UpdateProfile?userId={_user.Id}");
             requestManager?.PostRequests(objectValue: newUser, PostsRequests.UpdateProfile);
         }
-        requestManager.ResetUrl();
+        requestManager.ResetUrlAndStatusCode();
         await Shell.Current.GoToAsync($"/{nameof(YourEquipPage)}");
 
     }

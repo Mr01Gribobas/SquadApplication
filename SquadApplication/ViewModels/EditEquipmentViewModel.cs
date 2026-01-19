@@ -70,7 +70,7 @@ public partial class EditEquipmentViewModel : ObservableObject
             requestManager.SetUrl($"UpdateEquip?equipId={_equipment.Id}");
             await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
         }
-        requestManager.ResetUrl();
+        requestManager.ResetUrlAndStatusCode();
         await Shell.Current.GoToAsync($"/{nameof(YourEquipPage)}");
     }
 
@@ -116,7 +116,7 @@ public partial class EditEquipmentViewModel : ObservableObject
             BodyEquipment = equip.BodyEquipment;
             UnloudingWeapon = equip.UnloudingEquipment;
         }
-        getRequest.ResetUrl();
+        getRequest.ResetUrlAndStatusCode();
     }
 
 
