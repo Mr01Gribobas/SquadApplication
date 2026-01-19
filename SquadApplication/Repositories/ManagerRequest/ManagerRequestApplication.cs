@@ -12,11 +12,11 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
     public int _currentStatusCode { get; private set; }
     private bool _disposed = false;
 
-    public void ResetUrlAndStatusCode() 
+    public void ResetUrlAndStatusCode()
     {
         _urlNameForSend = "http://10.0.2.2:5213/MainGet/";
         _currentStatusCode = 0;
-    } 
+    }
 
 
     public void SetUrl(string controllAction)
@@ -110,13 +110,12 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
     private async Task<(bool flowControl, List<T>? value)> RequestAction()
     {
         var responce = await _httpClient.GetAsync(_urlNameForSend);
+        _currentStatusCode = (int)responce.StatusCode;
         if((int)responce.StatusCode == 200)
         {
-            _currentStatusCode = 200; 
             var dataFromResponce = await responce.Content.ReadFromJsonAsync<List<T>>();
             return (flowControl: false, value: dataFromResponce);
         }
-        _currentStatusCode = (int)responce.StatusCode;
         return (flowControl: true, value: null);
     }
 

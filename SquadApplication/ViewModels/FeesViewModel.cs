@@ -2,7 +2,7 @@
 
 public partial class FeesViewModel : ObservableObject
 {
-    public FeesViewModel(FeesPage feesPage, UserModelEntity user)
+    public FeesViewModel(FeesPage feesPage, IUserSession user)
     {
         _feesPage = feesPage;
         _user = user;
@@ -11,7 +11,7 @@ public partial class FeesViewModel : ObservableObject
 
     }
     private readonly FeesPage _feesPage;
-    private readonly UserModelEntity _user;
+    private readonly IUserSession _user;
     private readonly IRequestManager<EventModelEntity> _requestManager;
 
 
@@ -43,10 +43,9 @@ public partial class FeesViewModel : ObservableObject
     public async void CurrentHumanWillBe()
     {
         var isWill = true;
-        var request = (ManagerGetRequests<EventModelEntity>)_requestManager;
-        request.SetUrl($"GameAttendance?userId={_user.Id}&isWill={isWill}");
+        ManagerGetRequests<UserModelEntity> request = CreateGetRequestUserModel(isWill);
         var responce = await request.GetDataAsync(GetRequests.GameAttendance);
-        if(request._currentStatusCode == 200)
+        if(request._currentStatusCode == 200 | request._currentStatusCode == 204)
         {
             UpdateLists();
         }
@@ -60,15 +59,21 @@ public partial class FeesViewModel : ObservableObject
     public async void CurrentHumanWillNot()
     {
         var isWill = false;
-        var request = (ManagerGetRequests<EventModelEntity>)_requestManager;
-        request.SetUrl($"GameAttendance?userId={_user.Id}&isWill={isWill}");
-        var responce = await request.GetDataAsync(GetRequests.GameAttendance);
-        if(request._currentStatusCode == 200)
+        ManagerGetRequests<UserModelEntity> request = CreateGetRequestUserModel(isWill);
+        var responce = await request.GetDataAsync(GetRequests.GameAttendance) as List<UserModelEntity>;//getUser
+        if(request._currentStatusCode == 200 | request._currentStatusCode == 204)
         {
             UpdateLists();
         }
 
         request.ResetUrlAndStatusCode();
+    }
+
+    private ManagerGetRequests<UserModelEntity> CreateGetRequestUserModel(bool isWill)
+    {
+        var request = new ManagerGetRequests<UserModelEntity>();
+        request.SetUrl($"GameAttendance?userId={_user.CurrentUser.Id}&isWill={isWill}");
+        return request;
     }
 
     private void UpdateLists()
@@ -80,6 +85,10 @@ public partial class FeesViewModel : ObservableObject
 
     private void SortList(ObservableCollection<UserModelEntity> users)
     {
+        if(users is null)
+        {
+            return;
+        }
         foreach(UserModelEntity user in users)
         {
             SortUsers(user);
@@ -96,7 +105,7 @@ public partial class FeesViewModel : ObservableObject
         CoordinatesPolygon = eventFromDb.Coordinates;
         DateAndTime = ConvertDateAndTime(eventFromDb.Date, eventFromDb.Time);
         CountMembers = eventFromDb.CountMembers.ToString();
-        await GetMembersTeam(_user.Id);
+        await GetMembersTeam(_user.CurrentUser.Id);
     }
 
     private string? ConvertDateAndTime(DateOnly? date, TimeOnly? time)
@@ -131,7 +140,7 @@ public partial class FeesViewModel : ObservableObject
             return;
 
         var request = (ManagerGetRequests<EventModelEntity>)_requestManager;
-        request.SetUrl($"GetEvent?teamId={_user.TeamId}");
+        request.SetUrl($"GetEvent?teamId={_user.CurrentUser.TeamId}");
         List<EventModelEntity>? responce = await request.GetDataAsync(GetRequests.GetEvent);
 
         if(responce is null ||

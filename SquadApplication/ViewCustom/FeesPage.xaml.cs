@@ -8,7 +8,7 @@ public partial class FeesPage : ContentPage
 
 		_user = userSession.CurrentUser;
         InitializeComponent();
-		_feesViewModel = new FeesViewModel(this,_user);
+		_feesViewModel = new FeesViewModel(this, userSession);
 		BindingContext = _feesViewModel;
 
     }

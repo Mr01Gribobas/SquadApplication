@@ -125,10 +125,23 @@ public class MainGetController : Controller
     [HttpGet]
     public async Task<IActionResult> GameAttendance(int userId, bool isWill)
     {
-        if(await _dataBaseRepository.GameAttendance(userId, isWill))
+        try
         {
-            return Ok(null);
+            var user = await _dataBaseRepository.GameAttendance(userId, isWill);
+            var listUser = new List<UserModelEntity>();
+            if(user is not null)
+            {
+                listUser.Add(user);
+                return Ok(listUser);
+            }
+            return Unauthorized();
+
         }
-        return StatusCode(401);
+        catch(Exception)
+        {
+            return Unauthorized();
+        }
     }
+
+
 }
