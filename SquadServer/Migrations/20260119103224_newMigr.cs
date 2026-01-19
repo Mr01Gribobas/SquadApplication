@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SquadServer.Migrations
 {
     /// <inheritdoc />
-    public partial class One : Migration
+    public partial class newMigr : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -137,6 +137,29 @@ namespace SquadServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DeviceRegistartionModelEntities",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DeviceToken = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DevicePlatform = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastActiveAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    InstallationId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeviceRegistartionModelEntities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DeviceRegistartionModelEntities_Players_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Players",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Equipments",
                 columns: table => new
                 {
@@ -161,6 +184,11 @@ namespace SquadServer.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeviceRegistartionModelEntities_UserId",
+                table: "DeviceRegistartionModelEntities",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Equipments_OwnerEquipmentId",
@@ -189,6 +217,9 @@ namespace SquadServer.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "DeviceRegistartionModelEntities");
+
             migrationBuilder.DropTable(
                 name: "Equipments");
 

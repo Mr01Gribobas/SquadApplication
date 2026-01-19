@@ -17,7 +17,7 @@ namespace SquadServer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.0")
+                .HasAnnotation("ProductVersion", "10.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -61,6 +61,43 @@ namespace SquadServer.Migrations
                         .IsUnique();
 
                     b.ToTable("Equipments");
+                });
+
+            modelBuilder.Entity("SquadServer.Models.ModelsEntity.DeviceRegistartionModelEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DevicePlatform")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeviceToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InstallationId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastActiveAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("DeviceRegistartionModelEntities");
                 });
 
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.EventModelEntity", b =>
@@ -273,6 +310,15 @@ namespace SquadServer.Migrations
                         .IsRequired();
 
                     b.Navigation("OwnerEquipment");
+                });
+
+            modelBuilder.Entity("SquadServer.Models.ModelsEntity.DeviceRegistartionModelEntity", b =>
+                {
+                    b.HasOne("SquadServer.Models.UserModelEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.TeamEntity", b =>
