@@ -11,7 +11,3 @@ public class EventNotificationData
     public int RequiredMembers { get; set; }
     public string ActionUrl { get; set; }
 }
-public class TeamNotificationData
-{
-
-}
