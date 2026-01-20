@@ -1,5 +1,6 @@
 ﻿using SquadServer.DTO_Classes.DTO_DeviceModel;
 using SquadServer.DTO_Classes.DTO_Notifiation;
+using System.Text.Json;
 
 namespace SquadServer.Services.Service_Notification;
 
@@ -14,19 +15,21 @@ public class NotificationService : INotificationService
         _context = context;
     }
 
-    public Task<NotificationResult> SendEventNotificationAsync(EventNotificationDto notification)
+    public async Task<NotificationResult> SendEventNotificationAsync(EventNotificationDto notification)
     {
-        throw new NotImplementedException();
+        return await SendToTeamAsync(notification.EventData.TeamId,notification);
     }
 
-    public Task<NotificationResult> SendTeamNotificationAsync(TeamNotificationDTO notification)
+    public async Task<NotificationResult> SendTeamNotificationAsync(TeamNotificationDTO notification)
     {
-        throw new NotImplementedException();
+        return await SendToTeamAsync(notification.TeamId,notification);
     }
 
-    public Task<NotificationResult> SendToAllUsersAsync(NotificationDTO notification)
+    public async Task<NotificationResult> SendToAllUsersAsync(NotificationDTO notification)
     {
-        throw new NotImplementedException();
+
+        var alluser = await _context.Players.Select(p => p.Id).ToListAsync();
+        return await SendToUsersAsync(alluser,notification);
     }
 
     public async Task<NotificationResult> SendToTeamAsync(int teamId, NotificationDTO notification)
@@ -65,14 +68,35 @@ public class NotificationService : INotificationService
                     continue;
                 }
                 var notificationModel = await CreateNotificationEntityModel(userId, notification);
-            }
-            catch(Exception)
-            {
 
-                throw;
+                delivires.Add(new NotificationDelivery() 
+                {
+                    UserId = user.Id,
+                    UserName = user._userName,
+                    Delivered = true,
+                    DeliveredAt = DateTime.UtcNow,
+                    NotificationId = notificationModel.Id,
+                });
+                result.SuccessfulDeliveries += 1;
+                //message for user.Id
             }
-            
+            catch(Exception ex)
+            {
+                delivires.Add(new NotificationDelivery
+                {
+                    UserId = userId,
+                    Delivered = false,
+                    Error = ex.Message
+                });
+                result.FailedDeliveries++;
+            }
         }
+        result.Success = result.SuccessfulDeliveries > 0;
+        result.TotalUsers = userIds.Count();
+        result.Deliveries = delivires;
+        result.Message = $"Доставлено: {result.SuccessfulDeliveries}, Ошибок: {result.FailedDeliveries}";
+
+        return result;
     }
 
     private Dictionary<string, object> ConvertToDictionary<TData>(TData data) where TData : class, new()
@@ -111,9 +135,9 @@ public class NotificationService : INotificationService
         {
             notificationEntity.SetData(dto._data);
         }
+
+        await _context.Notifications.AddAsync(notificationEntity);  
         await _context.SaveChangesAsync();
-        //add
-        //save
         return notificationEntity;
     }
 
