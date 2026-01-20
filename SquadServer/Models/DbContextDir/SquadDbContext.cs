@@ -12,6 +12,7 @@ public class SquadDbContext: DbContext
     public DbSet<TeamEntity> Teams { get; set; }
 
     public DbSet<DeviceRegistartionModelEntity> DeviceRegistartionModelEntities { get; set; }
+    public DbSet<NotificationEntity> Notifications { get; set; }
 
 
 
@@ -30,6 +31,9 @@ public class SquadDbContext: DbContext
         modelBuilder.ApplyConfiguration(new EquipmentEntityConfiguration());
         modelBuilder.ApplyConfiguration(new HisoryEventsModelEntityConfiguration());
         modelBuilder.ApplyConfiguration(new TeamEntityConfiguration());
+
+        modelBuilder.ApplyConfiguration(new DeviceRegistartionModelConfig());
+        modelBuilder.ApplyConfiguration(new NotificationEntityConfig());
         base.OnModelCreating(modelBuilder);
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
