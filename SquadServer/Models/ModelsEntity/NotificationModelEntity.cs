@@ -23,11 +23,8 @@ public class NotificationEntity
 
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime? SentAt { get; set; }
-    public DateTime? ReadAt { get; set; }
     public bool IsRead { get; set; }
     public bool IsSent { get; set; }
-    public string? ErrorMessage { get; set; }
 
     public virtual UserModelEntity User { get; set; }
     public int? UserId { get; set; } = null!;
@@ -53,8 +50,29 @@ public class NotificationEntity
         }
     }
 
-    public void SetData(Dictionary<string, object> data)
+    public void SetData<TData>(TData data)
+        where TData : class, new()
     {
+        if(data is null)
+        {
+            DataJson = null;
+            return;
+        }
         DataJson = JsonSerializer.Serialize(data);
+    }
+    public Dictionary<string, object> GetDataDictionary()
+    {
+        if(string.IsNullOrEmpty(DataJson))
+            return new Dictionary<string, object>();
+
+        try
+        {
+            return JsonSerializer.Deserialize<Dictionary<string, object>>(DataJson)
+                ?? new Dictionary<string, object>();
+        }
+        catch
+        {
+            return new Dictionary<string, object>();
+        }
     }
 }
