@@ -1,5 +1,6 @@
 ﻿
 using SquadApplication.Repositories.NDeviceManager;
+using System.Net.Sockets;
 
 namespace SquadApplication.ViewCustom;
 
@@ -13,14 +14,7 @@ public partial class AuthorizedPage : ContentPage
         this._deviceManager = deviceManager;
         _viewModel = new AuthorizeViewModel(this, userSession,_deviceManager);
         BindingContext = _viewModel;
-        TestWork();
+        
     }
-    private void TestWork()
-    {
-        var devicePlatfom = DeviceInfo.Platform;
-        var deviceModel = DeviceInfo.Model;
-        var deviceType = DeviceInfo.DeviceType;
-
-    }
-
+    
 }

@@ -129,7 +129,7 @@
                                             BackgroundColor="Transparent"/>
                          </Border>
 
-
+                        
                         <Border Stroke="DarkCyan"
                                 StrokeThickness="1"
                                 StrokeShape="RoundRectangle 10"
@@ -145,10 +145,27 @@
                                 HeightRequest="50"
                                 FontSize="16"/>
                         </Border>
+                        
+                        <Border Stroke="DarkCyan"
+        StrokeThickness="1"
+        StrokeShape="RoundRectangle 10"
+        BackgroundColor="Transparent">
+
+                            <Button Text="TestButton"
+        Command="{Binding TestMethodCommand}"            
+        BackgroundColor="Transparent"
+        TextColor="White"
+        FontAttributes="Bold"
+        CornerRadius="10"
+        HeightRequest="50"
+        FontSize="16"/>
+                        </Border>
                     </StackLayout>
 
                 </VerticalStackLayout>
             </Border>
+        
         </Grid>
+
     </ScrollView>
 </ContentPage>

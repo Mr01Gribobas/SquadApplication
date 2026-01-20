@@ -1,4 +1,6 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using System.Net.Sockets;
+
+namespace SquadApplication.ViewModels;
 public partial class AuthorizeViewModel : ObservableObject
 {
     private AuthorizedPage _authorizedPage;
@@ -45,6 +47,30 @@ public partial class AuthorizeViewModel : ObservableObject
         }
        await Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId={userFromResponce.Id}");
     }
+    [RelayCommand]
+    public async Task TestMethod()
+    {
+        await TestWork();
+    }
+    private async Task TestWork()
+    {
+        var devicePlatfom = DeviceInfo.Platform;
+        var deviceModel = DeviceInfo.Model;
+        var deviceType = DeviceInfo.DeviceType;
+        await TestServer();
+
+    }
+    private async Task TestServer()
+    {
+        TcpClient tcpClient = new TcpClient("192.168.0.38", 5000);
+        NetworkStream stream = tcpClient.GetStream();
+        byte[] buffer = new byte[1024];
+        int byteRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+        string responce = Encoding.UTF8.GetString(buffer, 0, byteRead);
+        await _authorizedPage.DisplayAlertAsync("Titel",responce.ToString(),"OK");
+        //ok
+    }
+
 
 
     [RelayCommand]
