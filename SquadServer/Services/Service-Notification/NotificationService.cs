@@ -48,7 +48,43 @@ public class NotificationService : INotificationService
 
     }
 
-    public Task<NotificationResult> SendToUserAsync(int userId, NotificationDTO notification)
+    public async Task<NotificationResult> SendToUserAsync(int userId, NotificationDTO notification)
+    {
+        var result = new NotificationResult();
+        try
+        {
+            var user =await  _context.Players.FirstOrDefaultAsync(p => p.Id == userId);
+            if(user is not null)
+            {
+                result.Message = $"Пользователь {userId} не найден";
+                return result;
+            }
+            var notificationModel = await CreateNotificationEntityModel(userId,notification);
+            if(_pushService is not null)
+            {
+                await SendPushNotificationAsync(userId,notification);
+            }
+            result.Success = true;
+            result.TotalUsers = 1;
+            result.SuccessfulDeliveries = 1;
+            result.Deliveries.Add(new NotificationDelivery
+            {
+                UserId = userId,
+                UserName = user._callSing,
+                Delivered = true,
+                DeliveredAt = DateTime.UtcNow,
+                NotificationId = notificationModel.Id
+            });
+            //ok
+        }
+        catch(Exception ex)
+        {
+            result.Message = ex.Message;
+        }
+        return result;
+    }
+
+    private async Task SendPushNotificationAsync(int userId, NotificationDTO notification)
     {
         throw new NotImplementedException();
     }
@@ -99,25 +135,7 @@ public class NotificationService : INotificationService
         return result;
     }
 
-    private Dictionary<string, object> ConvertToDictionary<TData>(TData data) where TData : class, new()
-    {
-        var dict = new Dictionary<string, object>();
-        if(data is not null)
-        {
-            return dict;
-        }
-        var properties = typeof(TData).GetProperties();
-        foreach(var property in properties)
-        {
-            var value = property.GetValue(data);
-            if(value is not null)
-            {
-                dict[property.Name] = value;
-            }
-        }
-        return dict;
-    }
-
+   
     private async Task<NotificationEntity> CreateNotificationEntityModel(int userId, NotificationDTO dto)
     {
         var notificationEntity = new NotificationEntity()
