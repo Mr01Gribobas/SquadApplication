@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
 
 namespace SquadApplication.ViewModels;
+
 public partial class AuthorizeViewModel : ObservableObject
 {
     private AuthorizedPage _authorizedPage;
@@ -12,7 +13,7 @@ public partial class AuthorizeViewModel : ObservableObject
     {
         _authorizedPage = authorizedPage;
         _deviceManager = deviceMagager;
-        _requestManager = new DataBaseManager(userSession,deviceMagager);
+        _requestManager = new DataBaseManager(userSession, deviceMagager);
     }
 
     [ObservableProperty]
@@ -40,12 +41,12 @@ public partial class AuthorizeViewModel : ObservableObject
         }
         DataBaseManager requestManager = (DataBaseManager)_requestManager;
         UserModelEntity? userFromResponce = await requestManager.SendDataForEnter(AccesCode);
-        if(userFromResponce is null | userFromResponce?.Id <=0 )
+        if(userFromResponce is null | userFromResponce?.Id <= 0)
         {
-            await _authorizedPage.DisplayAlertAsync("Error","Пользователя с таким кодом нету!","Ok");
+            await _authorizedPage.DisplayAlertAsync("Error", "Пользователя с таким кодом нету!", "Ok");
             return;
         }
-       await Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId={userFromResponce.Id}");
+        await Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId={userFromResponce.Id}");
     }
     [RelayCommand]
     public async Task TestMethod()
@@ -62,14 +63,26 @@ public partial class AuthorizeViewModel : ObservableObject
     }
     private async Task TestServer()
     {
-        TcpClient tcpClient = new TcpClient("192.168.0.38", 5000);
-        NetworkStream stream = tcpClient.GetStream();
-        byte[] buffer = new byte[1024];
-        int byteRead = await stream.ReadAsync(buffer, 0, buffer.Length);
-        string responce = Encoding.UTF8.GetString(buffer, 0, byteRead);
-        await _authorizedPage.DisplayAlertAsync("Titel",responce.ToString(),"OK");
+        try
+        {
+            TcpClient client = new("192.168.0.38", 5000);
+            NetworkStream network = client.GetStream();
+
+            byte[] buffer = new byte[1024];
+            var responce = await network.ReadAsync(buffer, 0, buffer.Length);
+            var responceString = Encoding.UTF8.GetString(buffer, 0, responce);
+            Console.WriteLine(responceString.ToString());
+
+        }
+        catch(Exception)
+        {
+
+            throw;
+        }
         //ok
     }
+
+
 
 
 
@@ -92,7 +105,7 @@ public partial class AuthorizeViewModel : ObservableObject
     SendUserData:
         DataBaseManager requestManager = (DataBaseManager)_requestManager;
         UserModelEntity? userFromResponce = await requestManager.SendDataForRegistration(newUser);
-        if(userFromResponce is null | userFromResponce?.Id <=0)
+        if(userFromResponce is null | userFromResponce?.Id <= 0)
         {
             if(requestManager.GetStatusCode() == 201)
             {
@@ -111,21 +124,21 @@ public partial class AuthorizeViewModel : ObservableObject
                 }
                 else
                 {
-                   await Shell.Current.GoToAsync($".."); 
+                    await Shell.Current.GoToAsync($"..");
                 }
                 goto SendUserData;
             }
             // invalide data
             return;
         }
-        Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId = {userFromResponce.Id}"); 
+        Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId = {userFromResponce.Id}");
         //выводить код авторизации пользователя 
     }
 
 
     private bool ValidateData()
     {
-                
+
         if(PhoneNumber[0] == '+')
         {
             string skipPlus = new String(PhoneNumber?.Skip(1).ToArray());
