@@ -40,12 +40,40 @@ public class EventNotificationDistributor
         }
         catch(Exception ex)
         {
-            return new NotificationResult() {
+            return new NotificationResult()
+            {
                 Success = false,
                 Message = ex.Message
             };
         }
     }
+
+
+
+    public async Task<NotificationResult> NotifyEventUpdate(EventModelEntity eventModel, string changesDiscription)
+    {
+        return await NotifyEventUpdateAsync(eventModel, changesDiscription);
+    }
+
+    private async Task<NotificationResult> NotifyEventUpdateAsync(EventModelEntity eventModel, string changesDiscription)
+    {
+        var notification = new EventNotificationDto()
+        {
+            eventId = eventModel.Id,
+            EventData = eventModel,
+            _title = $"Update event",
+            _message = GenerateDefaultEventMessage(eventModel),
+            _notificationType = NotificationType.EventUpdated,
+            _notificationPriority = NotificationPriority.Normal,
+            _data = new
+            {
+                EventId = eventModel.Id,
+                Changes = changesDiscription
+            }
+        };
+        return await _notificationService.SendToTeamAsync(teamId:eventModel.TeamId,notification:notification);
+    }
+
 
 
 

@@ -71,14 +71,14 @@ public partial class AuthorizeViewModel : ObservableObject
             byte[] buffer = new byte[1024];
             var responce = await network.ReadAsync(buffer, 0, buffer.Length);
             var responceString = Encoding.UTF8.GetString(buffer, 0, responce);
-            Console.WriteLine(responceString.ToString());
 
+            await _authorizedPage.DisplayAlertAsync("Message", $"{responceString.ToString()}", "Ok");
         }
-        catch(Exception)
+        catch(Exception ex)
         {
-
-            throw;
+            await _authorizedPage.DisplayAlertAsync("Error", $"{ex.Message}", "Ok");
         }
+
         //ok
     }
 
