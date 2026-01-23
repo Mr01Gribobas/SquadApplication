@@ -50,7 +50,7 @@ public class EventNotificationDistributor
 
 
 
-    public async Task<NotificationResult> NotifyEventUpdate(EventModelEntity eventModel, string changesDiscription)
+    public async Task<NotificationResult> NotifyEventExamingUpdate(EventModelEntity eventModel, string changesDiscription)
     {
         return await NotifyEventUpdateAsync(eventModel, changesDiscription);
     }
@@ -74,11 +74,46 @@ public class EventNotificationDistributor
         return await _notificationService.SendToTeamAsync(teamId:eventModel.TeamId,notification:notification);
     }
 
+    public async Task<NotificationResult> NotifyEventCancellationExamingAsync(EventModelEntity eventModel,string season)
+    {
+        return await NotifyEventCancellationAsync(eventModel,season);
+    }
 
+    private async Task<NotificationResult> NotifyEventCancellationAsync(EventModelEntity eventModel, string season)
+    {
+        var notification = new EventNotificationDto()
+        {
+            eventId= eventModel.Id,
+            EventData = eventModel,
+            _title = $"Event cancellation",
+            _message = $"Событие отменено по причине {season}",
+            _notificationType  = NotificationType.EventCancelled,
+            _notificationPriority= NotificationPriority.High,
+            _data = new
+            {
+                EventId=eventModel.Id,
+                Reason = season
+            }
+        };
+        return await _notificationService.SendToTeamAsync(eventModel.TeamId,notification);
+    }
 
+    public async Task<NotificationResult> ExamingAndSendGameReminderAsync(EventModelEntity eventModelEntity,TimeSpan  timeBeforeEvent) 
+    {
+        return await SendGameReminderAsync(eventModelEntity,timeBeforeEvent);
+    }
 
+    private async Task<NotificationResult> SendGameReminderAsync(EventModelEntity eventModelEntity, TimeSpan timeBeforeEvent)
+    {
+        var timeText = timeBeforeEvent.TotalHours >= 24 ? $"{timeBeforeEvent.TotalDays} дней":$"{timeBeforeEvent.TotalHours} часов";
+        var notification = new EventNotificationDto()
+        {
+            eventId = eventModelEntity.Id,
+            EventData = eventModelEntity,   
+            _title = $"Напоминание",
 
-
+        };
+    }
 
     private string GenerateDefaultEventMessage(EventModelEntity eventModelEntity)
     {
