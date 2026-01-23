@@ -1,5 +1,4 @@
 ﻿using SquadServer.Models;
-
 namespace SquadServer.Repositoryes;
 
 public class DataBaseRepository

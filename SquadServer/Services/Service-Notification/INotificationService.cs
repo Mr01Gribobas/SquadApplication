@@ -13,4 +13,5 @@ public interface INotificationService
     // Специальные методы для удобства
     Task<NotificationResult> SendEventNotificationAsync(EventNotificationDto notification);
     Task<NotificationResult> SendTeamNotificationAsync(TeamNotificationDTO notification);
+    SquadDbContext GetContext();
 }

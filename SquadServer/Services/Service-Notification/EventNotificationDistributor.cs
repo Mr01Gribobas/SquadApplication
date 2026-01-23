@@ -1,13 +1,16 @@
 ﻿using SquadServer.DTO_Classes.DTO_Notifiation;
+using SquadServer.Repositoryes;
 
 namespace SquadServer.Services.Service_Notification;
 
 public class EventNotificationDistributor
 {
     private readonly INotificationService _notificationService;
+    private readonly DataBaseRepository _dataBaseRepository; 
     public EventNotificationDistributor(INotificationService notification)
     {
         _notificationService = notification;
+        _dataBaseRepository = new DataBaseRepository(_notificationService.GetContext());//TODO
     }
     public async Task<NotificationResult> NotifyNewEventAsync(EventModelEntity eventModelEntity, string message = null)
     {
@@ -167,6 +170,7 @@ public class EventNotificationDistributor
 
     private async Task<int> GetCaptainIdAsync(int teamId)
     {
+
         //getId
         return default;
     }

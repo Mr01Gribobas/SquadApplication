@@ -1,6 +1,5 @@
 ﻿using SquadServer.DTO_Classes.DTO_DeviceModel;
 using SquadServer.DTO_Classes.DTO_Notifiation;
-using System.Text.Json;
 
 namespace SquadServer.Services.Service_Notification;
 
@@ -14,22 +13,23 @@ public class NotificationService : INotificationService
     {
         _context = context;
     }
+    public SquadDbContext GetContext() => _context;
 
     public async Task<NotificationResult> SendEventNotificationAsync(EventNotificationDto notification)
     {
-        return await SendToTeamAsync(notification.EventData.TeamId,notification);
+        return await SendToTeamAsync(notification.EventData.TeamId, notification);
     }
 
     public async Task<NotificationResult> SendTeamNotificationAsync(TeamNotificationDTO notification)
     {
-        return await SendToTeamAsync(notification.TeamId,notification);
+        return await SendToTeamAsync(notification.TeamId, notification);
     }
 
     public async Task<NotificationResult> SendToAllUsersAsync(NotificationDTO notification)
     {
 
         var alluser = await _context.Players.Select(p => p.Id).ToListAsync();
-        return await SendToUsersAsync(alluser,notification);
+        return await SendToUsersAsync(alluser, notification);
     }
 
     public async Task<NotificationResult> SendToTeamAsync(int teamId, NotificationDTO notification)
@@ -53,16 +53,16 @@ public class NotificationService : INotificationService
         var result = new NotificationResult();
         try
         {
-            var user =await  _context.Players.FirstOrDefaultAsync(p => p.Id == userId);
+            var user = await _context.Players.FirstOrDefaultAsync(p => p.Id == userId);
             if(user is not null)
             {
                 result.Message = $"Пользователь {userId} не найден";
                 return result;
             }
-            var notificationModel = await CreateNotificationEntityModel(userId,notification);
+            var notificationModel = await CreateNotificationEntityModel(userId, notification);
             if(_pushService is not null)
             {
-                await SendPushNotificationAsync(userId,notification);
+                await SendPushNotificationAsync(userId, notification);
             }
             result.Success = true;
             result.TotalUsers = 1;
@@ -105,7 +105,7 @@ public class NotificationService : INotificationService
                 }
                 var notificationModel = await CreateNotificationEntityModel(userId, notification);
 
-                delivires.Add(new NotificationDelivery() 
+                delivires.Add(new NotificationDelivery()
                 {
                     UserId = user.Id,
                     UserName = user._userName,
@@ -135,7 +135,7 @@ public class NotificationService : INotificationService
         return result;
     }
 
-   
+
     private async Task<NotificationEntity> CreateNotificationEntityModel(int userId, NotificationDTO dto)
     {
         var notificationEntity = new NotificationEntity()
@@ -154,7 +154,7 @@ public class NotificationService : INotificationService
             notificationEntity.SetData(dto._data);
         }
 
-        await _context.Notifications.AddAsync(notificationEntity);  
+        await _context.Notifications.AddAsync(notificationEntity);
         await _context.SaveChangesAsync();
         return notificationEntity;
     }
