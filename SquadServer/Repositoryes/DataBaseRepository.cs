@@ -24,6 +24,10 @@ public class DataBaseRepository
         _squadDbContext.SaveChanges();
         return userFromDb;
     }
+    public async Task<UserModelEntity?> GetCaptainByTeamIdAsync(int teamId)
+    {
+        return await _squadDbContext.Players.FirstOrDefaultAsync(p => p.TeamId == teamId & p._role == Role.Commander);
+    }
 
     public UserModelEntity? GetUserFromDb(int loginCode)
     {

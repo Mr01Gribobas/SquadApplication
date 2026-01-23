@@ -71,48 +71,104 @@ public class EventNotificationDistributor
                 Changes = changesDiscription
             }
         };
-        return await _notificationService.SendToTeamAsync(teamId:eventModel.TeamId,notification:notification);
+        return await _notificationService.SendToTeamAsync(teamId: eventModel.TeamId, notification: notification);
     }
 
-    public async Task<NotificationResult> NotifyEventCancellationExamingAsync(EventModelEntity eventModel,string season)
+    public async Task<NotificationResult> NotifyEventCancellationExamingAsync(EventModelEntity eventModel, string season)
     {
-        return await NotifyEventCancellationAsync(eventModel,season);
+        return await NotifyEventCancellationAsync(eventModel, season);
     }
 
     private async Task<NotificationResult> NotifyEventCancellationAsync(EventModelEntity eventModel, string season)
     {
         var notification = new EventNotificationDto()
         {
-            eventId= eventModel.Id,
+            eventId = eventModel.Id,
             EventData = eventModel,
             _title = $"Event cancellation",
             _message = $"Событие отменено по причине {season}",
-            _notificationType  = NotificationType.EventCancelled,
-            _notificationPriority= NotificationPriority.High,
+            _notificationType = NotificationType.EventCancelled,
+            _notificationPriority = NotificationPriority.High,
             _data = new
             {
-                EventId=eventModel.Id,
+                EventId = eventModel.Id,
                 Reason = season
             }
         };
-        return await _notificationService.SendToTeamAsync(eventModel.TeamId,notification);
+        return await _notificationService.SendToTeamAsync(eventModel.TeamId, notification);
     }
 
-    public async Task<NotificationResult> ExamingAndSendGameReminderAsync(EventModelEntity eventModelEntity,TimeSpan  timeBeforeEvent) 
+    public async Task<NotificationResult> ExamingAndSendGameReminderAsync(EventModelEntity eventModelEntity, TimeSpan timeBeforeEvent)
     {
-        return await SendGameReminderAsync(eventModelEntity,timeBeforeEvent);
+        return await SendGameReminderAsync(eventModelEntity, timeBeforeEvent);
     }
 
     private async Task<NotificationResult> SendGameReminderAsync(EventModelEntity eventModelEntity, TimeSpan timeBeforeEvent)
     {
-        var timeText = timeBeforeEvent.TotalHours >= 24 ? $"{timeBeforeEvent.TotalDays} дней":$"{timeBeforeEvent.TotalHours} часов";
+        var timeText = timeBeforeEvent.TotalHours >= 24 ? $"{timeBeforeEvent.TotalDays} дней" : $"{timeBeforeEvent.TotalHours} часов";
         var notification = new EventNotificationDto()
         {
             eventId = eventModelEntity.Id,
-            EventData = eventModelEntity,   
+            EventData = eventModelEntity,
             _title = $"Напоминание",
-
+            _message = $"start event :{eventModelEntity.NameTeamEnemy} remained {timeText}",
+            _notificationType = NotificationType.GameReminder,
+            _notificationPriority = NotificationPriority.Normal,
+            _data = new
+            {
+                EventId = eventModelEntity.Id,
+                TimeUntilEvent = timeText,
+                ShouldBringEquipment = true
+            },
         };
+        return await _notificationService.SendToTeamAsync(teamId: eventModelEntity.TeamId, notification: notification);
+    }
+    public async Task<NotificationResult> ExamingAndNotifyParticipationConfimation(
+                                                                          EventModelEntity eventModel,
+                                                                          int userId,
+                                                                          string userName,
+                                                                          bool isParticipating
+                                                                          )
+    {
+        return await NotifyParticipationConfimation(eventModel, userId, userName, isParticipating);
+    }
+
+    private async Task<NotificationResult> NotifyParticipationConfimation(EventModelEntity eventModel, int userId, string userName, bool isParticipating)
+    {
+        var action = isParticipating ? "Is going " : "Not going";
+        var notification = new TeamNotificationDTO()
+        {
+            TeamId = eventModel.TeamId,
+            SenderName = userName,
+            SenderUserId = userId,
+            _title = $"{userName}  {action}",
+            _message = $"{userName} {action} is event {eventModel.NameTeamEnemy}",
+            _notificationPriority = NotificationPriority.Normal,
+            _data = new
+            {
+                EventId = eventModel.Id,
+                Action = action,
+                UserId = userId
+            }
+        };
+        var captainId = await GetCaptainIdAsync(eventModel.TeamId);
+        if(captainId > 0)
+        {
+            return await _notificationService.SendToUserAsync(userId: captainId, notification: notification);
+        }
+
+
+        return new NotificationResult()
+        {
+            Success = false,
+            Message = $"Not found by id"
+        };
+    }
+
+    private async Task<int> GetCaptainIdAsync(int teamId)
+    {
+        //getId
+        return default;
     }
 
     private string GenerateDefaultEventMessage(EventModelEntity eventModelEntity)
