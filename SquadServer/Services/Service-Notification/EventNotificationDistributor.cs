@@ -6,7 +6,7 @@ namespace SquadServer.Services.Service_Notification;
 public class EventNotificationDistributor
 {
     private readonly INotificationService _notificationService;
-    private readonly DataBaseRepository _dataBaseRepository; 
+    private readonly DataBaseRepository _dataBaseRepository;
     public EventNotificationDistributor(INotificationService notification)
     {
         _notificationService = notification;
@@ -170,9 +170,11 @@ public class EventNotificationDistributor
 
     private async Task<int> GetCaptainIdAsync(int teamId)
     {
+        var captain = await _dataBaseRepository.GetCaptainByTeamIdAsync(teamId);
+        if(captain != null)
+            return captain.Id;
 
-        //getId
-        return default;
+        return 0;
     }
 
     private string GenerateDefaultEventMessage(EventModelEntity eventModelEntity)
