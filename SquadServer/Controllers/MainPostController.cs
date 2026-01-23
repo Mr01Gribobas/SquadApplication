@@ -1,4 +1,5 @@
 ﻿using SquadServer.Models;
+using SquadServer.Services.Service_Notification;
 
 namespace SquadServer.Controllers;
 
@@ -6,9 +7,12 @@ public class MainPostController : Controller
 {
 
     private readonly SquadDbContext _squadDbContext;
-    public MainPostController(SquadDbContext squadDb)
+    private readonly EventNotificationDistributor _notificationDistributor;
+
+    public MainPostController(SquadDbContext squadDb,EventNotificationDistributor notificationDistributor)
     {
         _squadDbContext = squadDb;
+        _notificationDistributor = notificationDistributor;
     }
 
     [HttpPost]
@@ -37,8 +41,10 @@ public class MainPostController : Controller
                 newEvent.Team = user.Team;
                 newEvent.TeamId = (int)user.TeamId == 0 ? throw new NullReferenceException() : (int)user.TeamId;
 
-                _squadDbContext.Events.Add(newEvent);
-                _squadDbContext.SaveChanges();
+                 await _squadDbContext.Events.AddAsync(newEvent);
+                 await _squadDbContext.SaveChangesAsync();
+
+                var nottification = await _notificationDistributor.NotifyNewEventAsync(newEvent);
                 return Ok();
             }
             catch(Exception ex)

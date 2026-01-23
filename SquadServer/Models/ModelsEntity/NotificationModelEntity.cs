@@ -9,6 +9,7 @@ public class NotificationEntity
 {
     public int Id { get; set; }
 
+
     public string Title { get; set; } = null!;
     public string Message { get; set; } = null!;
     public NotificationType Type { get; set; }
