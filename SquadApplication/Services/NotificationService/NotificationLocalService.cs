@@ -11,7 +11,7 @@ public  class NotificationLocalService
     public async Task CheckForNotification()
     {
         //var httpClient = new ...
-        await ShowLocalNotification("NewTitle","New Message");
+        await ShowLocalNotification("NewTitleeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","New Messageeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
     }
 
 

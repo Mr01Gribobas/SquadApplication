@@ -1,8 +1,4 @@
-﻿
-using SquadApplication.Repositories.NDeviceManager;
-using System.Net.Sockets;
-
-namespace SquadApplication.ViewCustom;
+﻿namespace SquadApplication.ViewCustom;
 
 public partial class AuthorizedPage : ContentPage
 {
@@ -12,9 +8,9 @@ public partial class AuthorizedPage : ContentPage
     {
         InitializeComponent();
         this._deviceManager = deviceManager;
-        _viewModel = new AuthorizeViewModel(this, userSession,_deviceManager);
+        _viewModel = new AuthorizeViewModel(this, userSession, _deviceManager);
         BindingContext = _viewModel;
-        
     }
-    
 }
+
+

@@ -1,6 +1,4 @@
-﻿using System.Net.Sockets;
-
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 
 public partial class AuthorizeViewModel : ObservableObject
 {
@@ -58,33 +56,9 @@ public partial class AuthorizeViewModel : ObservableObject
         var devicePlatfom = DeviceInfo.Platform;
         var deviceModel = DeviceInfo.Model;
         var deviceType = DeviceInfo.DeviceType;
-        await TestServer();
+
 
     }
-    private async Task TestServer()
-    {
-        try
-        {
-            TcpClient client = new("192.168.0.38", 5000);
-            NetworkStream network = client.GetStream();
-
-            byte[] buffer = new byte[1024];
-            var responce = await network.ReadAsync(buffer, 0, buffer.Length);
-            var responceString = Encoding.UTF8.GetString(buffer, 0, responce);
-
-            await _authorizedPage.DisplayAlertAsync("Message", $"{responceString.ToString()}", "Ok");
-        }
-        catch(Exception ex)
-        {
-            await _authorizedPage.DisplayAlertAsync("Error", $"{ex.Message}", "Ok");
-        }
-
-        //ok
-    }
-
-
-
-
 
     [RelayCommand]
     private async Task Registration()
