@@ -7,24 +7,31 @@ public partial class MainPage : ContentPage
 {
     private IUserSession _userSession1;
     private readonly NotificationLocalService _notificationLocal;
-
+    private Timer _timer;
     public MainPage(IUserSession userSession)
     {
         InitializeComponent();
         BindingContext = new MainViewModel();
         _userSession1 = userSession;
         _notificationLocal = new NotificationLocalService();
-        CheckNotification();
+        StartCheckNotification();
     }
 
-    private async Task CheckNotification()
+    private async Task StartCheckNotification()
     {
-        if(_userSession1 is null||_userSession1.CurrentUser is null)
+        if(_userSession1 is null || _userSession1.CurrentUser is null)
         {
             return;
         }
-        await _notificationLocal.CheckForEventNotification((int)_userSession1.CurrentUser.TeamId);
+        _timer = new Timer(async _ =>
+        {
+            await _notificationLocal.CheckForEventNotification((int)_userSession1.CurrentUser.TeamId);
+
+        }, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
     }
+
+
+
 
     private UserModelEntity User { get; set; }
     public int UserId

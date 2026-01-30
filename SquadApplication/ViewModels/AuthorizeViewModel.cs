@@ -56,9 +56,9 @@ public partial class AuthorizeViewModel : ObservableObject
         var devicePlatfom = DeviceInfo.Platform;
         var deviceModel = DeviceInfo.Model;
         var deviceType = DeviceInfo.DeviceType;
-
-
     }
+
+
 
     [RelayCommand]
     private async Task Registration()

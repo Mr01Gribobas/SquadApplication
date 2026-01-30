@@ -1,10 +1,8 @@
-﻿using SquadApplication.Repositories.NDeviceManager;
-
-namespace SquadApplication.Repositories;
+﻿namespace SquadApplication.Repositories;
 
 public class DataBaseManager : IRequestManagerForEnter
 {
-    public DataBaseManager(IUserSession userSession, IDeviceManager deviceManager )
+    public DataBaseManager(IUserSession userSession, IDeviceManager deviceManager)
     {
         _httpClient = new HttpClient();
         _userSession = userSession;
@@ -35,8 +33,8 @@ public class DataBaseManager : IRequestManagerForEnter
             {
                 UserModelEntity? createdUser = await responce.Content.ReadFromJsonAsync<UserModelEntity>();
                 _userSession.CurrentUser = createdUser;
-                
-                
+
+
                 await _deviceManager.RegisterDeviceForCurrentUserAsync();//TODO WORK
 
                 return createdUser;
