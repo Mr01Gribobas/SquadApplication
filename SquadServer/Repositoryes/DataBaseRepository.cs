@@ -12,6 +12,17 @@ public class DataBaseRepository
 
 
 
+    public async Task<bool> CheckEvent(int teamId)
+    {
+        var eventFromDb = await _squadDbContext.Events.FirstOrDefaultAsync(e => e.TeamId == teamId);
+        if(eventFromDb is not null)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
     public async Task<UserModelEntity> GameAttendance(int userId, bool isWill)//TODO
     {
         var userFromDb = await _squadDbContext.Players.FirstOrDefaultAsync(u => u.Id == userId);

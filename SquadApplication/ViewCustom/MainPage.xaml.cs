@@ -1,18 +1,31 @@
+using SquadApplication.Services.NotificationService;
+
 namespace SquadApplication.ViewCustom;
 
 [QueryProperty(nameof(UserId), "UserId")]
 public partial class MainPage : ContentPage
 {
     private IUserSession _userSession1;
+    private readonly NotificationLocalService _notificationLocal;
+
     public MainPage(IUserSession userSession)
     {
         InitializeComponent();
         BindingContext = new MainViewModel();
         _userSession1 = userSession;
-       
+        _notificationLocal = new NotificationLocalService();
+        CheckNotification();
     }
 
-  
+    private async Task CheckNotification()
+    {
+        if(_userSession1 is null||_userSession1.CurrentUser is null)
+        {
+            return;
+        }
+        await _notificationLocal.CheckForEventNotification((int)_userSession1.CurrentUser.TeamId);
+    }
+
     private UserModelEntity User { get; set; }
     public int UserId
     {

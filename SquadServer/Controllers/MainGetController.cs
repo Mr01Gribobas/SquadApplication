@@ -15,7 +15,7 @@ public class MainGetController : Controller
         _squadDbContext = squadDb;
         _dataBaseRepository = new DataBaseRepository(_squadDbContext);
     }
-
+           
 
     [HttpGet]
     public IActionResult? GetUserById(int Id)

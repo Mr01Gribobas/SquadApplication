@@ -44,7 +44,7 @@ public class MainPostController : Controller
                  await _squadDbContext.Events.AddAsync(newEvent);
                  await _squadDbContext.SaveChangesAsync();
 
-                var nottification = await _notificationDistributor.NotifyNewEventAsync(newEvent);
+                //var nottification = await _notificationDistributor.NotifyNewEventAsync(newEvent);
                 return Ok();
             }
             catch(Exception ex)
