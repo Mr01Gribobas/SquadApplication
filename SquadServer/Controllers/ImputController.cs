@@ -1,3 +1,4 @@
+using SquadServer.Extension;
 using SquadServer.Models;
 using SquadServer.Repositoryes;
 namespace SquadServer.Controllers;
@@ -22,6 +23,8 @@ public class ImputController : Controller
     [HttpGet]
     public IActionResult Login(int loginCode)
     {
+        Controller.LogInformation("Start action : Login");
+
         if(loginCode < 0)
         {
             return Unauthorized();
@@ -39,6 +42,7 @@ public class ImputController : Controller
     [HttpPost]
     public async Task<IActionResult>? Registration()
     {
+        Controller.LogInformation("Start action : Registration");
 
         //HttpContext.Request.ContentType = "application/json";
         UserModelEntity? userFromApp = await HttpContext.Request.
@@ -64,6 +68,8 @@ public class ImputController : Controller
 
     private bool Validate(UserModelEntity userFromApp)
     {
+        Controller.LogInformation("Start validation");
+
         if(userFromApp is null)
         {
             HttpContext.Response.StatusCode = 401;//nullUser

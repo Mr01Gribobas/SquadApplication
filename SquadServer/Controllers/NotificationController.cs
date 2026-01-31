@@ -1,4 +1,5 @@
-﻿using SquadServer.Repositoryes;
+﻿using SquadServer.Extension;
+using SquadServer.Repositoryes;
 
 namespace SquadServer.Controllers;
 
@@ -18,10 +19,8 @@ public class NotificationController : Controller
     [HttpGet]
     public async Task<IActionResult> CheckEventInDb(int teamId)
     {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine($"Start Check event");
-        Console.ForegroundColor = ConsoleColor.White;
-
+        Controller.LogInformation("Start action : CheckEventInDb");
+        
         if(await _dataBaseRepository.CheckEvent(teamId))
         {
             return Ok(true);

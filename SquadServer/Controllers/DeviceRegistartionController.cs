@@ -1,5 +1,6 @@
 ﻿using SquadServer.DTO_Classes;
 using SquadServer.DTO_Classes.DTO_DeviceModel;
+using SquadServer.Extension;
 using SquadServer.Services.Service_DeviceRegistration;
 
 namespace SquadServer.Controllers;
@@ -17,6 +18,8 @@ public class DeviceRegistartionController : Controller
     [HttpPost]
     public async Task<IActionResult> RegistartionDevice(int userId)
     {
+        Controller.LogInformation("Start action : RegistartionDevice");
+
         var dtoRegistration = await HttpContext.Request.ReadFromJsonAsync<DeviceRegistrationDTO>();
         if(dtoRegistration is null)
             return Unauthorized();
@@ -43,6 +46,8 @@ public class DeviceRegistartionController : Controller
     [HttpPost]
     public async Task<IActionResult> UnregisterDevice(string installationId, int userID)
     {
+        Controller.LogInformation("Start action : UnregisterDevice");
+
         if(string.IsNullOrEmpty(installationId) | userID <= 0)
         {
             return StatusCode(401);
@@ -61,6 +66,8 @@ public class DeviceRegistartionController : Controller
     [HttpPut]
     public async Task<IActionResult> UpdateToken(int userId)
     {
+        Controller.LogInformation("Start action : UpdateToken");
+
         var dtoUpdateToken = await HttpContext.Request.ReadFromJsonAsync<DeviceTokenUpdateDTO>();
         try
         {
@@ -76,6 +83,8 @@ public class DeviceRegistartionController : Controller
     [HttpGet]
     public async Task<IActionResult> GetTokens(int userId)
     {
+        Controller.LogInformation("Start action : GetTokens");
+
         try
         {
             var token = await _deviceRegistrationService.GetUserDeviceTokensAsync(userId);

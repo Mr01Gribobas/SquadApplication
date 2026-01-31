@@ -1,4 +1,5 @@
 ﻿using SquadServer.DTO_Classes;
+using SquadServer.Extension;
 using SquadServer.Models;
 using SquadServer.Repositoryes;
 using System.Text.Json;
@@ -20,6 +21,8 @@ public class MainGetController : Controller
     [HttpGet]
     public IActionResult? GetUserById(int Id)
     {
+        Controller.LogInformation("Start action : GetUserById");
+
         var user = _dataBaseRepository.GetUserById(Id);
         if(user is null)
         {
@@ -34,6 +37,8 @@ public class MainGetController : Controller
     [HttpGet]
     public IActionResult? GetAllTeamMembers(int userId)
     {
+        Controller.LogInformation("Start action : GetAllTeamMembers");
+
         try
         {
             var listMembers = _dataBaseRepository.GetAllMembers(userId);
@@ -49,6 +54,8 @@ public class MainGetController : Controller
     [HttpGet]
     public IActionResult? GetAllReantil(int teamId)
     {
+        Controller.LogInformation("Start action : GetAllReantil");
+
         var list = _dataBaseRepository.GetAllReantil(teamId);
         return Json(list);
     }
@@ -56,6 +63,8 @@ public class MainGetController : Controller
     [HttpGet]
     public IActionResult? GetAllPolygons()
     {
+        Controller.LogInformation("Start action : GetAllPolygons");
+
         var list = _dataBaseRepository.GetAllPolygons();
         return Json(list);
     }
@@ -63,6 +72,8 @@ public class MainGetController : Controller
     [HttpGet]
     public IActionResult? GetAllEventsHistory()
     {
+        Controller.LogInformation("Start action : GetAllEventsHistory");
+
         var list = _dataBaseRepository.GetEventHistory();
         return Json(list);
     }
@@ -70,6 +81,8 @@ public class MainGetController : Controller
     [HttpGet]
     public IActionResult? GetEvent(int teamId)
     {
+        Controller.LogInformation("Start action : GetEvent");
+
         var result = _dataBaseRepository.GetEvent(teamId);
         if(result == null)
         {
@@ -90,6 +103,8 @@ public class MainGetController : Controller
     [HttpGet]
     public IActionResult? GetEquipByUserId(int userId)
     {
+        Controller.LogInformation("Start action : GetEquipByUserId");
+
         var equip = _dataBaseRepository.GetEquipByUserId(userId);
         List<EquipmentEntity> equipments = new List<EquipmentEntity>();
         equipments.Add(equip);
@@ -99,6 +114,8 @@ public class MainGetController : Controller
     [HttpGet]
     public IActionResult? GetAllInfoForProfile(int userId)
     {
+        Controller.LogInformation("Start action : GetAllInfoForProfile");
+
         try
         {
             RequestTuplesManager requestTuples = new RequestTuplesManager(_dataBaseRepository);
@@ -125,6 +142,8 @@ public class MainGetController : Controller
     [HttpGet]
     public async Task<IActionResult> GameAttendance(int userId, bool isWill)
     {
+        Controller.LogInformation("Start action : Login");
+
         try
         {
             var user = await _dataBaseRepository.GameAttendance(userId, isWill);
