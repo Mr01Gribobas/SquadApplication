@@ -8,6 +8,7 @@ public partial class MainPage : ContentPage
     private IUserSession _userSession1;
     private readonly NotificationLocalService _notificationLocal;
     private IDispatcherTimer _timer;
+    private int sum = 0;
     public MainPage(IUserSession userSession)
     {
         InitializeComponent();
@@ -28,6 +29,7 @@ public partial class MainPage : ContentPage
         _timer.Tick += async (sender, e) =>
         {
             await _notificationLocal.CheckForEventNotification((int)_userSession1.CurrentUser.TeamId);
+            sum += 1;
         };
         _timer.Start();
     }
