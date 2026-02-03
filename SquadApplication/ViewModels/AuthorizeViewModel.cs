@@ -1,4 +1,6 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using Android.Provider;
+
+namespace SquadApplication.ViewModels;
 
 public partial class AuthorizeViewModel : ObservableObject
 {
@@ -140,4 +142,5 @@ public partial class AuthorizeViewModel : ObservableObject
         }
         return true;
     }
+    private 
 }

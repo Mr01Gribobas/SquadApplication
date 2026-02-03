@@ -22,7 +22,9 @@
                     <Label Text="⚔️" 
                            FontSize="40"
                            HorizontalOptions="Center"/>
-                    <Label Text="КОМАНДНЫЙ ЦЕНТР"
+                    <Label
+                        x:Name="mainLabelTest"
+                        Text="КОМАНДНЫЙ ЦЕНТР"
                            TextColor="DarkGoldenrod"
                            FontSize="24"
                            FontAttributes="Bold"
@@ -45,7 +47,9 @@
                 <VerticalStackLayout Spacing="20">  
 
                     <!-- Форма входа -->
-                    <StackLayout  Spacing="15">
+                    <StackLayout
+                        x:Name="LoginForm"
+                        Spacing="15">
                         <Border 
                             Stroke="DarkCyan"
                                 StrokeThickness="1"
@@ -68,6 +72,7 @@
                              BackgroundColor="Transparent">
                         <Button Text="ВОЙТИ В СИСТЕМУ"
                                 Command="{Binding LoginCommand}"
+                                Focused="Focused_event"
                                 BackgroundColor="Transparent"
                                 TextColor="White"
                                 FontAttributes="Bold"
@@ -80,7 +85,9 @@
                     </StackLayout>
 
                     <!-- Форма регистрации -->
-                    <StackLayout     Spacing="15">
+                    <StackLayout 
+                        x:Name="RegisterForm"
+                        Spacing="15">
 
                         <Border 
                             Stroke="DarkCyan"
