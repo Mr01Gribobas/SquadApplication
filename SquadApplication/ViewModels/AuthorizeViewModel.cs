@@ -1,5 +1,4 @@
-﻿using Android.Provider;
-
+﻿
 namespace SquadApplication.ViewModels;
 
 public partial class AuthorizeViewModel : ObservableObject
@@ -114,33 +113,69 @@ public partial class AuthorizeViewModel : ObservableObject
 
     private bool ValidateData()
     {
-
-        if(PhoneNumber[0] == '+')
+        var data = new DataForm
         {
-            string skipPlus = new String(PhoneNumber?.Skip(1).ToArray());
-            if(PhoneNumber is null | !Int64.TryParse(skipPlus, out Int64 number))
+            _name = Name,
+            _callSing = CallSing,
+            _phoneNumber = PhoneNumber,
+            _team = Team,
+        };
+
+        if(!data.CheckProperty())
+            return false;
+
+        if(data._phoneNumber[0] == '+')
+        {
+            string skipPlus = new String(data._phoneNumber?.Skip(1).ToArray());
+            if(!Int64.TryParse(skipPlus, out Int64 _))
             {
-                //
                 return false;
             }
         }
-        else if(PhoneNumber is null | !Int64.TryParse(PhoneNumber, out Int64 number))
+        else if(!Int64.TryParse(data._phoneNumber, out Int64 _))
         {
             return false;
         }
-        else if(Name is null | Name.Length > 50 | Name.Length < 2)
+
+        if(data._name.Length > 50 | data._name.Length < 2)
         {
             return false;
         }
-        else if(CallSing is null | CallSing.Length > 50 | CallSing.Length < 2)
+        if(data._callSing.Length > 50 | data._callSing.Length < 2)
         {
             return false;
         }
-        else if(Team is null | Team.Length > 100 | Team.Length < 2)
+        if(data._team.Length > 100 | data._team.Length < 2)
         {
             return false;
         }
         return true;
     }
-    private 
+    private class DataForm
+    {
+        public string _accesCode;
+
+        public string _name;
+
+        public string _callSing;
+
+        public string _team;
+
+        public string _phoneNumber;
+        public bool CheckProperty()
+        {
+            if(_callSing is null)
+                return false;
+            if(_name is null)
+                return false;
+            if(_team is null)
+                return false;
+            if(_phoneNumber is null)
+                return false;
+            return true;
+        }
+    }
+
+
+
 }
