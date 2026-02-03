@@ -47,27 +47,28 @@ public partial class FeesViewModel : ObservableObject
         var responce = await request.GetDataAsync(GetRequests.GameAttendance);
         if(request._currentStatusCode == 200 | request._currentStatusCode == 204)
         {
-            UpdateLists();
+            UpdateLists(responce.FirstOrDefault());
         }
         request.ResetUrlAndStatusCode();
 
     }
-
-
 
     [RelayCommand]
     public async void CurrentHumanWillNot()
     {
         var isWill = false;
         ManagerGetRequests<UserModelEntity> request = CreateGetRequestUserModel(isWill);
-        var responce = await request.GetDataAsync(GetRequests.GameAttendance) as List<UserModelEntity>;//getUser
+        List<UserModelEntity?> responce = await request.GetDataAsync(GetRequests.GameAttendance) as List<UserModelEntity>;//getUser
         if(request._currentStatusCode == 200 | request._currentStatusCode == 204)
         {
-            UpdateLists();
+            UpdateLists(responce.FirstOrDefault());
         }
 
         request.ResetUrlAndStatusCode();
     }
+
+
+
 
     private ManagerGetRequests<UserModelEntity> CreateGetRequestUserModel(bool isWill)
     {
@@ -76,22 +77,46 @@ public partial class FeesViewModel : ObservableObject
         return request;
     }
 
-    private void UpdateLists()
+    private void UpdateLists(UserModelEntity user)
     {
-        SortList(Users);
-        SortList(UsersIsGoToTheGame);
-        SortList(UsersIsNotGoTheGame);
-    }
-
-    private void SortList(ObservableCollection<UserModelEntity> users)
-    {
-        if(users is null)
-        {
+        if(user is null)
             return;
-        }
-        foreach(UserModelEntity user in users)
+        SortUsers(user);
+    }
+    private void SortUsers(UserModelEntity member)
+    {
+        switch(member._goingToTheGame)
         {
-            SortUsers(user);
+            case null:
+                if(Users.FirstOrDefault(u => u.Id == member.Id) is null)
+                {
+                    Users.Add(member);
+                    if(UsersIsGoToTheGame.FirstOrDefault(u => u.Id == member.Id) is not null)
+                        UsersIsGoToTheGame.Remove(UsersIsGoToTheGame.FirstOrDefault(u => u.Id == member.Id));
+                    if(UsersIsNotGoTheGame.FirstOrDefault(u => u.Id == member.Id) is not null)
+                        UsersIsNotGoTheGame.Remove(UsersIsNotGoTheGame.FirstOrDefault(u => u.Id == member.Id));
+                }
+                break;
+            case true:
+                if(UsersIsGoToTheGame.FirstOrDefault(u => u.Id == member.Id) is null)
+                {
+                    UsersIsGoToTheGame.Add(member);
+                    if(Users.FirstOrDefault(u => u.Id == member.Id) is not null)
+                        Users.Remove(Users.FirstOrDefault(u => u.Id == member.Id));
+                    if(UsersIsNotGoTheGame.FirstOrDefault(u => u.Id == member.Id) is not null)
+                        UsersIsNotGoTheGame.Remove(UsersIsNotGoTheGame.FirstOrDefault(u => u.Id == member.Id));
+                }
+                break;
+            case false:
+                if(UsersIsNotGoTheGame.FirstOrDefault(u => u.Id == member.Id) is null)
+                {
+                    UsersIsNotGoTheGame.Add(member);
+                    if(UsersIsGoToTheGame.FirstOrDefault(u => u.Id == member.Id) is not null)
+                        UsersIsGoToTheGame.Remove(UsersIsGoToTheGame.FirstOrDefault(u => u.Id == member.Id));
+                    if(Users.FirstOrDefault(u => u.Id == member.Id) is not null)
+                        Users.Remove(Users.FirstOrDefault(u => u.Id == member.Id));
+                }
+                break;
         }
     }
 
@@ -171,19 +196,5 @@ public partial class FeesViewModel : ObservableObject
         }
     }
 
-    private void SortUsers(UserModelEntity member)
-    {
-        switch(member._goingToTheGame)
-        {
-            case null:
-                Users.Add(member);
-                break;
-            case true:
-                UsersIsGoToTheGame.Add(member);
-                break;
-            case false:
-                UsersIsNotGoTheGame.Add(member);
-                break;
-        }
-    }
+
 }

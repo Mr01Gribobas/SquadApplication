@@ -28,7 +28,7 @@ public partial class MainPage : ContentPage
         _timer.Interval = TimeSpan.FromSeconds(10);
         _timer.Tick += async (sender, e) =>
         {
-            await _notificationLocal.CheckForEventNotification((int)_userSession1.CurrentUser.TeamId);
+            await _notificationLocal.CheckForEventNotification((int)_userSession1.CurrentUser.TeamId, _userSession1.CurrentUser._goingToTheGame);
             sum += 1;
         };
         _timer.Start();

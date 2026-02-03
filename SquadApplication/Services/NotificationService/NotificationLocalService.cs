@@ -16,10 +16,11 @@ public class NotificationLocalService
         var toast = Toast.Make(message, ToastDuration.Long);
         await toast.Show();
     }
-    public async Task CheckForEventNotification(int teamId)
+    public async Task CheckForEventNotification(int teamId,bool? isGoToGame = null)
     {
         var responce = await _httpClient.GetFromJsonAsync<bool>($"{staticUrl}/Notification/CheckEventInDb?teamId={teamId}");
-        await ShowLocalNotification("Event", $"Result from server : {responce}");
+        if(responce && isGoToGame is null)
+            await ShowLocalNotification("Event", $"ЕСТЬ АКТИВНОЕ СОБЫТИЕ");
     }
 
 
