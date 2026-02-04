@@ -61,25 +61,24 @@ public partial class EditYourProfileViewModel : ObservableObject
         var dataForm =new DataForm(
             _name:Name,
             _callSing:CallSing,
-            _age: int.TryParse(Age,out int _ ) ? int.Parse(Age) : null ,
+            _age: Age ,
             _role:Role,
             _phoneNumber:PhoneNumber,
             _teamName:TeamName         
-            ) 
-            ;
+            );
 
-        if(!ValidateDataUser())
+        if(!ValidateDataUser(dataForm))
         {
             return;//error
         }
 
         UserModelEntity newUser = UserModelEntity.CreateUserEntity(
-            _name: Name,
-            _callSing: CallSing,
+            _name: dataForm._name,
+            _callSing: dataForm._callSing,
             _role: _selectedRole,
-            _phone: PhoneNumber,
-            _age: int.Parse(Age),
-            _teamName: TeamName,
+            _phone: dataForm._phoneNumber,
+            _age: int.Parse(dataForm._age),
+            _teamName: dataForm._teamName,
             _teamId: _user.TeamId
             );
 
@@ -99,37 +98,37 @@ public partial class EditYourProfileViewModel : ObservableObject
         await Shell.Current.GoToAsync($"/{nameof(YourEquipPage)}");
 
     }
-    private bool ValidateDataUser()
+    private bool ValidateDataUser(DataForm dataForm)
     {
-        if(PhoneNumber[0] == '+')
+        if(dataForm._phoneNumber is not null && dataForm._phoneNumber[0] == '+')
         {
-            string skipPlus = new String(PhoneNumber?.Skip(1).ToArray());
-            if(PhoneNumber is null | !Int64.TryParse(skipPlus, out Int64 number))
+            string skipPlus = new String(dataForm._phoneNumber?.Skip(1).ToArray());
+            if(dataForm._phoneNumber is null || !Int64.TryParse(skipPlus, out Int64 _))
             {
-                //
                 return false;
             }
+                
         }
-        else if(PhoneNumber is null | !Int64.TryParse(PhoneNumber, out Int64 number))
+        else if(dataForm._phoneNumber is null || !Int64.TryParse(dataForm._phoneNumber, out Int64 _))
         {
             return false;
         }
-        if(!int.TryParse(Age, out int resultParse))
+        if(!int.TryParse(dataForm._age, out int _))
         {
             return false;
         }
-        else if(int.TryParse(Age, out int age))
+        else if(int.TryParse(dataForm._age, out int age))
         {
             if(age > 200 || age <= 0)
             {
                 return false;
             }
         }
-        if(TeamName is null | TeamName.Length > 100 | TeamName.Length <= 0)
+        if(dataForm._teamName is null | dataForm._teamName.Length > 100 | dataForm._teamName.Length <= 0)
         {
             return false;
         }
-        switch(Role)
+        switch(dataForm._role)
         {
             case "Командир":
                 _selectedRole = Models.Role.Commander;
@@ -157,6 +156,6 @@ public partial class EditYourProfileViewModel : ObservableObject
          string _teamName,
          string _phoneNumber,
          string _role,
-         int? _age
+         string _age
         );
 }
