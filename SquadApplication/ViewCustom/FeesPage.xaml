@@ -3,12 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.FeesPage"
              Title="FeesPage"
-             BackgroundImageSource="hkauthorize.jpg"
+             BackgroundImageSource="fess.jpg"
              >
-    <VerticalStackLayout>
+    <VerticalStackLayout
+        BackgroundColor="#50508080"
+        Opacity="1.0"
+        >
         
     
-    <Grid RowDefinitions="Auto,*,Auto"
+    <Grid
+        BackgroundColor="#50508080"
+        
+        RowDefinitions="Auto,*,Auto"
           Padding="15">
 
         <!-- Заголовок -->
@@ -161,7 +167,9 @@
                 <Button Margin="10" Text="Create" Command="{Binding CreateEventCommand}"></Button>
         </StackLayout>
                 
-        <Grid Grid.Row="2"
+        <Grid
+            BackgroundColor="#50508080"
+            Grid.Row="2"
               ColumnDefinitions="*,*"
               ColumnSpacing="10"
               IsVisible="True">
@@ -188,7 +196,9 @@
                     />
         </Grid>
     </Grid>
-    <StackLayout>
+    <StackLayout
+        BackgroundColor="#50508080"
+        >
                 
           <Border 
               Stroke="White"

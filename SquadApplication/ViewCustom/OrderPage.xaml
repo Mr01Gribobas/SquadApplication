@@ -2,22 +2,31 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.OrderPage"
-             BackgroundImageSource="hkauthorize.jpg"
+             BackgroundImageSource="updateprofileandequip.jpg"
              Title="OrderPage">
-    <VerticalStackLayout>
+    <VerticalStackLayout
+        BackgroundColor="#99809080"
+        >
         <Label 
             Text="Order"
-            TextColor="Aquamarine"
+            TextColor="WhiteSmoke"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <StackLayout>
-            <Label Text="Введи название ,колл-во и цену за еденицу товара" TextColor="Aquamarine" HorizontalOptions="Center"/>
+        <StackLayout
+            BackgroundColor="#809080"
+            >
+            <Label
+                Opacity="1.0"
+                Text="Введи название ,колл-во и цену за еденицу товара"
+                TextColor="WhiteSmoke"
+                FontSize="16"
+                HorizontalOptions="Center"/>
                 
             <Border>
             <HorizontalStackLayout Margin="5">
-                <Entry x:Name="nameProduct" WidthRequest="100"  Placeholder="Name" PlaceholderColor="Gray" Text="{Binding Name}" TextColor="White"/>
-                    <Entry x:Name="priceProduct" WidthRequest="100" Placeholder="Price" PlaceholderColor="Gray" Text="{Binding Price}" TextColor="White" />
-                    <Entry x:Name="countProduct" WidthRequest="100" Placeholder="Count" PlaceholderColor="Gray" Text="{Binding Count}" TextColor="White"/>
+                <Entry x:Name="nameProduct" WidthRequest="100"  Placeholder="Name" PlaceholderColor="DarkGray" Text="{Binding Name}" TextColor="White"/>
+                    <Entry x:Name="priceProduct" WidthRequest="100" Placeholder="Price" PlaceholderColor="DarkGray" Text="{Binding Price}" TextColor="White" />
+                    <Entry x:Name="countProduct" WidthRequest="100" Placeholder="Count" PlaceholderColor="DarkGray" Text="{Binding Count}" TextColor="White"/>
                     <Button Command="{Binding AddProductCommand}"  Margin="4" Text="+1" />
                     <Button Command="{Binding ReduceProductCommand}" Margin="4"  Text="-1"/>
             </HorizontalStackLayout>

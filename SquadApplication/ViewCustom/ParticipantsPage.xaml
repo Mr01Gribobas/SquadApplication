@@ -3,9 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.ParticipantsPage"
              Title="ParticipantsPage"
-             BackgroundImageSource="hkauthorize.jpg"
+             BackgroundImageSource="players.jpg"
              >
-    <StackLayout Padding="5" HorizontalOptions="Center" VerticalOptions="Start">
+        
+    <StackLayout
+        BackgroundColor="#50809080"
+        Padding="5"
+        HorizontalOptions="Center"
+        VerticalOptions="Start">
         <Label Text="Участники" FontSize="24" HorizontalOptions="Center" VerticalOptions="Start"/>
         <ScrollView>     
             

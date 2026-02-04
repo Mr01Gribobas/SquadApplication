@@ -2,9 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.CreateEventPage"
-             BackgroundImageSource="hkauthorize.jpg"
+             BackgroundImageSource="createevent.jpg"
              Title="CreateEventPage">
-    <VerticalStackLayout>
+    <VerticalStackLayout
+         Background="#90808080"
+        >
         <Label 
             Text="Create Event"
             TextColor="White"

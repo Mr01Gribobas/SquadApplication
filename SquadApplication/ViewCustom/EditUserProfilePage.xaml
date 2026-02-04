@@ -2,9 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.EditUserProfilePage"
-             BackgroundImageSource="hkauthorize.jpg"
+             BackgroundImageSource="updateprofileandequip.jpg"
              Title="EditUserProfilePage">
-    <VerticalStackLayout>
+    <VerticalStackLayout
+        BackgroundColor="#90808080"
+        >
         <Border>
             <HorizontalStackLayout Padding="10" Margin="10">
                 <Label Text="Имя" TextColor="AliceBlue" FontSize="20"/>
