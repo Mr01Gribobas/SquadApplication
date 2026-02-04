@@ -1,4 +1,7 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using System.Data;
+
+namespace SquadApplication.ViewModels;
+
 public partial class EditYourProfileViewModel : ObservableObject
 {
     public EditYourProfileViewModel(EditUserProfilePage profilePage, UserModelEntity user)
@@ -55,6 +58,16 @@ public partial class EditYourProfileViewModel : ObservableObject
     [RelayCommand]
     private async Task UpdateProfile()
     {
+        var dataForm =new DataForm(
+            _name:Name,
+            _callSing:CallSing,
+            _age: int.TryParse(Age,out int _ ) ? int.Parse(Age) : null ,
+            _role:Role,
+            _phoneNumber:PhoneNumber,
+            _teamName:TeamName         
+            ) 
+            ;
+
         if(!ValidateDataUser())
         {
             return;//error
@@ -137,4 +150,13 @@ public partial class EditYourProfileViewModel : ObservableObject
         return true;
     }
 
+    private record DataForm(
+        
+        string _name,
+         string _callSing,
+         string _teamName,
+         string _phoneNumber,
+         string _role,
+         int? _age
+        );
 }

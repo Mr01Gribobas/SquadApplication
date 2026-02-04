@@ -151,7 +151,7 @@ public partial class AuthorizeViewModel : ObservableObject
         }
         return true;
     }
-    private class DataForm
+    private record DataForm
     {
         public string _accesCode;
 
