@@ -6,56 +6,222 @@
              Title="MainPage"
              BackgroundImageSource="hkauthorize.jpg"             
              >
-    
-        <ScrollView           
-            
-            VerticalOptions="Center"
-            HorizontalOptions="Center"> 
 
-        
-        <CollectionView
-            x:Name="ListItems"
-            Margin="10"            
-            SelectionMode="Single"
-            SelectionChanged="CollectionView_SelectionChanged"   
-            BackgroundColor="Transparent"           
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
-            >
-            <CollectionView.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Главная</x:String>
-                    <x:String>Сборы</x:String>
-                    <x:String>Полигоны</x:String>
-                    <x:String>Участники</x:String>
-                    <x:String>Прокаты</x:String>
-                    <x:String>Профиль</x:String>
-                    <x:String>Заказы</x:String>
-                </x:Array>
-            </CollectionView.ItemsSource>
-            <CollectionView.ItemTemplate >
-                <DataTemplate>                    
-                    <Border
-                        Stroke="DarkGray"
-                        StrokeThickness="2"
-                        StrokeShape="22"
-                        Padding="1"
-                        >
-                        <Label 
-                        Text="{Binding}"
-                        TextColor="White"
-                        FontSize="19"
-                        BackgroundColor="Transparent"
-                        Margin="25"
-                        WidthRequest="100"
-                        HeightRequest="90"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                            />
+    <VerticalStackLayout>
+        <!-- Основной фон -->
+        <BoxView AbsoluteLayout.LayoutFlags="All" 
+                 AbsoluteLayout.LayoutBounds="0,0,1,1"
+                 Color="#0a0f1c"/>
 
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-        </ScrollView>
+        <!-- Тактическая сетка (точки по углам) -->
+        <AbsoluteLayout x:Name="TacticalGrid" 
+                        AbsoluteLayout.LayoutFlags="All" 
+                        AbsoluteLayout.LayoutBounds="0,0,1,1"
+                        Opacity="0.15">
+
+            <!-- Верхний левый угол -->
+            <BoxView AbsoluteLayout.LayoutFlags="PositionProportional"
+                     AbsoluteLayout.LayoutBounds="0.1,0.1,4,4"
+                     Color="#1e90ff"
+                     CornerRadius="2"/>
+
+            <!-- Верхний правый угол -->
+            <BoxView AbsoluteLayout.LayoutFlags="PositionProportional"
+                     AbsoluteLayout.LayoutBounds="0.9,0.1,4,4"
+                     Color="#1e90ff"
+                     CornerRadius="2"/>
+
+            <!-- Нижний левый угол -->
+            <BoxView AbsoluteLayout.LayoutFlags="PositionProportional"
+                     AbsoluteLayout.LayoutBounds="0.1,0.9,4,4"
+                     Color="#1e90ff"
+                     CornerRadius="2"/>
+
+            <!-- Нижний правый угол -->
+            <BoxView AbsoluteLayout.LayoutFlags="PositionProportional"
+                     AbsoluteLayout.LayoutBounds="0.9,0.9,4,4"
+                     Color="#1e90ff"
+                     CornerRadius="2"/>
+        </AbsoluteLayout>
+
+        <!-- Заголовок -->
+        <Border x:Name="TitleBorder"
+                AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
+                AbsoluteLayout.LayoutBounds="0.5,0.1,0.8,60"
+                Stroke="Transparent"
+                BackgroundColor="#1a2332"
+                StrokeThickness="1"
+                StrokeShape="10"
+                Padding="15"
+                Opacity="0.8">
+            <Border.Shadow>
+                <Shadow Brush="#1e90ff" 
+                        Offset="0,5" 
+                        Opacity="0.3"
+                        Radius="10"/>
+            </Border.Shadow>
+
+            <Label Text="HSQUAD TACTICAL"
+                   TextColor="White"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center">
+               
+            </Label>
+        </Border>
+
+        <!-- Основной контейнер -->
+        <VerticalStackLayout AbsoluteLayout.LayoutFlags="All" 
+                    AbsoluteLayout.LayoutBounds="0,0.2,1,0.8"
+                    >
+
+            <VerticalStackLayout Spacing="20" Padding="0,0,0,20">
+
+                <!-- Карта/Статус команды -->
+                <Border x:Name="StatusCard"
+                        Margin="20,0"
+                        BackgroundColor="#16213e"
+                        Stroke="#1e90ff"
+                        StrokeThickness="1"
+                        StrokeShape="15"
+                        Padding="20"
+                        Opacity="0.9">
+                    <Border.Shadow>
+                        <Shadow Brush="#1e90ff" 
+                                Offset="0,0" 
+                                Opacity="0.2"
+                                Radius="15"/>
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="КОМАНДА В БОЕВОЙ ГОТОВНОСТИ"
+                               TextColor="#00ff9d"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"/>
+
+                        <BoxView HeightRequest="2" 
+                                 Color="#1e90ff" 
+                                 Margin="0,5,0,10"
+                                 Opacity="0.5"/>
+
+                        <!-- Статистика в строку -->
+                        <FlexLayout Direction="Row" 
+                                   JustifyContent="SpaceBetween"
+                                   AlignItems="Center"
+                                   Wrap="NoWrap">
+
+                            <!-- Бойцы -->
+                            <VerticalStackLayout Spacing="5" 
+                                               HorizontalOptions="Center"
+                                               FlexLayout.Basis="33%">
+                                <Label x:Name="FightersCount"
+                                       Text="12"
+                                       TextColor="White"
+                                       FontSize="28"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"/>
+                                <Label Text="Бойцов"
+                                       TextColor="#8da6c9"
+                                       FontSize="12"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+
+                            <!-- Активные -->
+                            <VerticalStackLayout Spacing="5" 
+                                               HorizontalOptions="Center"
+                                               FlexLayout.Basis="33%">
+                                <Label x:Name="ActiveCount"
+                                       Text="3"
+                                       TextColor="White"
+                                       FontSize="28"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"/>
+                                <Label Text="Активных"
+                                       TextColor="#8da6c9"
+                                       FontSize="12"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+
+                            <!-- До выхода -->
+                            <VerticalStackLayout Spacing="5" 
+                                               HorizontalOptions="Center"
+                                               FlexLayout.Basis="33%">
+                                <Label x:Name="TimeLeft"
+                                       Text="24ч"
+                                       TextColor="White"
+                                       FontSize="28"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"/>
+                                <Label Text="До выхода"
+                                       TextColor="#8da6c9"
+                                       FontSize="12"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+
+                        </FlexLayout>
+                    </VerticalStackLayout>
+                </Border>
+                    
+                <VerticalStackLayout
+                    MaximumWidthRequest="1200"
+                    MaximumHeightRequest="2000"
+                    >         
+
+                    <CollectionView                         
+                              x:Name="ListItems"
+                              Margin="10"            
+                              SelectionMode="Single"
+                              SelectionChanged="CollectionView_SelectionChanged"   
+                              BackgroundColor="Transparent"           
+                              HorizontalOptions="Center"
+                              ItemsLayout="VerticalGrid,2"
+                              VerticalOptions="Fill"
+                        HeightRequest="500"
+                        VerticalScrollBarVisibility="Default"
+                              >
+                        <CollectionView.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Главная</x:String>
+                                <x:String>Сборы</x:String>
+                                <x:String>Полигоны</x:String>
+                                <x:String>Участники</x:String>
+                                <x:String>Прокаты</x:String>
+                                <x:String>Профиль</x:String>
+                                <x:String>Заказы</x:String>
+                                <x:String>Настройки</x:String>
+                               
+                            </x:Array>
+                        </CollectionView.ItemsSource>
+                        <CollectionView.ItemTemplate >
+                            <DataTemplate>
+                                <Border
+                                     Stroke="DarkGray"
+                                     StrokeThickness="2"
+                                     StrokeShape="22"
+                                     Margin="5"
+                                     Padding="1"
+                                     >
+                                    <Label 
+                                      Text="{Binding}"
+                                      TextColor="White"
+                                      FontSize="Medium"
+                                      BackgroundColor="Transparent"
+                                      Margin="1"
+                                      WidthRequest="170"
+                                        VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                      HeightRequest="150"
+                                          />
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
 </ContentPage>

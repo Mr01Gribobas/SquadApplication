@@ -196,10 +196,10 @@ public class CustomsAnimation
     public async Task SniperDotAnimation(Entry entry)
     {
         // Создаем красную точку как прицел
-        var dot = new Frame
+        var dot = new Border
         {
             BackgroundColor = Colors.Red,
-            CornerRadius = 10,
+            StrokeThickness = 10,
             WidthRequest = 10,
             HeightRequest = 10,
             Scale = 0,

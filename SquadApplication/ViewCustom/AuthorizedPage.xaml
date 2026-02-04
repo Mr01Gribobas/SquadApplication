@@ -20,10 +20,11 @@
 
                 <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
                     <Label Text="⚔️" 
+                           x:Name="mainLabelTest"
                            FontSize="40"
                            HorizontalOptions="Center"/>
                     <Label
-                        x:Name="mainLabelTest"
+                        
                         Text="КОМАНДНЫЙ ЦЕНТР"
                            TextColor="DarkGoldenrod"
                            FontSize="24"
@@ -72,7 +73,7 @@
                              BackgroundColor="Transparent">
                         <Button Text="ВОЙТИ В СИСТЕМУ"
                                 Command="{Binding LoginCommand}"
-                                Focused="Focused_event"
+                                Clicked="LoadedPage"
                                 BackgroundColor="Transparent"
                                 TextColor="White"
                                 FontAttributes="Bold"
