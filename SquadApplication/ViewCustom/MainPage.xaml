@@ -4,60 +4,28 @@
              x:Class="SquadApplication.ViewCustom.MainPage"
              xmlns:local ="clr-namespace:SquadApplication.ViewCustom" 
              Title="MainPage"
-             BackgroundImageSource="hkauthorize.jpg"             
+             BackgroundImageSource="test2.jpg"             
              >
 
-    <VerticalStackLayout>
-        <!-- Основной фон -->
-        <BoxView AbsoluteLayout.LayoutFlags="All" 
-                 AbsoluteLayout.LayoutBounds="0,0,1,1"
-                 Color="#0a0f1c"/>
-
-        <!-- Тактическая сетка (точки по углам) -->
-        <AbsoluteLayout x:Name="TacticalGrid" 
-                        AbsoluteLayout.LayoutFlags="All" 
-                        AbsoluteLayout.LayoutBounds="0,0,1,1"
-                        Opacity="0.15">
-
-            <!-- Верхний левый угол -->
-            <BoxView AbsoluteLayout.LayoutFlags="PositionProportional"
-                     AbsoluteLayout.LayoutBounds="0.1,0.1,4,4"
-                     Color="#1e90ff"
-                     CornerRadius="2"/>
-
-            <!-- Верхний правый угол -->
-            <BoxView AbsoluteLayout.LayoutFlags="PositionProportional"
-                     AbsoluteLayout.LayoutBounds="0.9,0.1,4,4"
-                     Color="#1e90ff"
-                     CornerRadius="2"/>
-
-            <!-- Нижний левый угол -->
-            <BoxView AbsoluteLayout.LayoutFlags="PositionProportional"
-                     AbsoluteLayout.LayoutBounds="0.1,0.9,4,4"
-                     Color="#1e90ff"
-                     CornerRadius="2"/>
-
-            <!-- Нижний правый угол -->
-            <BoxView AbsoluteLayout.LayoutFlags="PositionProportional"
-                     AbsoluteLayout.LayoutBounds="0.9,0.9,4,4"
-                     Color="#1e90ff"
-                     CornerRadius="2"/>
-        </AbsoluteLayout>
+    <VerticalStackLayout
+        Background="#50808080"
+        >
+       
 
         <!-- Заголовок -->
         <Border x:Name="TitleBorder"
                 AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
                 AbsoluteLayout.LayoutBounds="0.5,0.1,0.8,60"
                 Stroke="Transparent"
-                BackgroundColor="#1a2332"
+                BackgroundColor="#50808080"
                 StrokeThickness="1"
                 StrokeShape="10"
                 Padding="15"
                 Opacity="0.8">
             <Border.Shadow>
-                <Shadow Brush="#1e90ff" 
+                <Shadow Brush="#b3c96b" 
                         Offset="0,5" 
-                        Opacity="0.3"
+                        Opacity="0.7"
                         Radius="10"/>
             </Border.Shadow>
 
@@ -81,14 +49,14 @@
                 <!-- Карта/Статус команды -->
                 <Border x:Name="StatusCard"
                         Margin="20,0"
-                        BackgroundColor="#16213e"
-                        Stroke="#1e90ff"
+                        BackgroundColor="#50808080"
+                        Stroke="#b3c96b"
                         StrokeThickness="1"
                         StrokeShape="15"
                         Padding="20"
-                        Opacity="0.9">
+                        Opacity="0.7">
                     <Border.Shadow>
-                        <Shadow Brush="#1e90ff" 
+                        <Shadow Brush="#b3c96b" 
                                 Offset="0,0" 
                                 Opacity="0.2"
                                 Radius="15"/>
@@ -102,7 +70,7 @@
                                HorizontalTextAlignment="Center"/>
 
                         <BoxView HeightRequest="2" 
-                                 Color="#1e90ff" 
+                                 Color="#b3c96b" 
                                  Margin="0,5,0,10"
                                  Opacity="0.5"/>
 
@@ -110,6 +78,7 @@
                         <FlexLayout Direction="Row" 
                                    JustifyContent="SpaceBetween"
                                    AlignItems="Center"
+                                    
                                    Wrap="NoWrap">
 
                             <!-- Бойцы -->
