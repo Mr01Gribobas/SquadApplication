@@ -23,8 +23,8 @@ public partial class PolygonsPage : ContentPage
             loyoutItem.Add(
                 new Label()
                 {
-                    BackgroundColor = Colors.BlueViolet,
-                    TextColor = Colors.White,
+                    BackgroundColor = new Color(90908080),//"#50508080",
+                    TextColor = Colors.DarkGray,
                     FontSize = 30,
                     Text = "Not found !",
                     Margin = new Thickness(0,200,0,0),

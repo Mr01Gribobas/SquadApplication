@@ -1,4 +1,5 @@
-﻿namespace SquadApplication.ViewModels;
+﻿
+namespace SquadApplication.ViewModels;
 public partial class EditEquipmentViewModel : ObservableObject
 {
     public EditEquipmentViewModel(EditEquipmentPage page, UserModelEntity user)
@@ -103,20 +104,30 @@ public partial class EditEquipmentViewModel : ObservableObject
         {
             return;
         }
-        var getRequest = (ManagerGetRequests<EquipmentEntity>)_requestManager;
-        getRequest.SetUrl($"GetEquipByUserId?userId={userId}");
-        var responce = await getRequest.GetDataAsync(GetRequests.GetEquipById);
-        var equip = responce.FirstOrDefault();
-        if(equip is not null)
+        try
         {
-            _equipment = equip;
-            MainWeapon = equip.NameMainWeapon;
-            SecondaryWeapon = equip.NameSecondaryWeapon ?? "Не зарегано";
-            HeadEquipment = equip.HeadEquipment;
-            BodyEquipment = equip.BodyEquipment;
-            UnloudingWeapon = equip.UnloudingEquipment;
+            var getRequest = new ManagerGetRequests<EquipmentEntity>();
+            getRequest.SetUrl($"GetEquipByUserId?userId={userId}");
+            var responce = await getRequest.GetDataAsync(GetRequests.GetEquipById);
+            var equip = responce.FirstOrDefault();
+            if(equip is not null)
+            {
+                _equipment = equip;
+                MainWeapon = equip.NameMainWeapon;
+                SecondaryWeapon = equip.NameSecondaryWeapon ?? "Не зарегано";
+                HeadEquipment = equip.HeadEquipment;
+                BodyEquipment = equip.BodyEquipment;
+                UnloudingWeapon = equip.UnloudingEquipment;
+            }
+            getRequest.ResetUrlAndStatusCode();
+
         }
-        getRequest.ResetUrlAndStatusCode();
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw new Exception();
+        }
+        
     }
 
 
