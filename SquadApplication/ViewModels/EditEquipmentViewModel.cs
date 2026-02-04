@@ -1,5 +1,6 @@
 ﻿
 namespace SquadApplication.ViewModels;
+
 public partial class EditEquipmentViewModel : ObservableObject
 {
     public EditEquipmentViewModel(EditEquipmentPage page, UserModelEntity user)
@@ -40,20 +41,30 @@ public partial class EditEquipmentViewModel : ObservableObject
     [RelayCommand]
     private async Task UpdateEquipment()
     {
-        var requestManager = (ManagerPostRequests<EquipmentEntity>)_requestManager;
-        if(!ValidateData())
+        var dataForm = new DataForm(
+            _inStokeMainWeapon: InStokeMainWeapon,
+            _inStokesecondaryWeapon: InStokesecondaryWeapon,
+            _secondaryWeapon:SecondaryWeapon,
+            _mainWeapon:MainWeapon,
+            _headEquipment:HeadEquipment,
+            _bodyEquipment:BodyEquipment,
+            _unloudingWeapon: UnloudingWeapon
+            );
+
+        if(!ValidateData(dataForm))
         {
             return;//error
         }
+        var requestManager = (ManagerPostRequests<EquipmentEntity>)_requestManager;
         var createdEquip = EquipmentEntity.CreateEquipment
             (
-            mainWeapon: InStokeMainWeapon,
-            secondaryWeapon: InStokesecondaryWeapon,
-            headEq: HeadEquipment,
-            bodyEq: BodyEquipment,
-            unloudingEq: UnloudingWeapon,
-            nameMainWeapon: MainWeapon,
-            secondaryNameWeapon: SecondaryWeapon,
+            mainWeapon: dataForm._inStokeMainWeapon,
+            secondaryWeapon: dataForm._inStokesecondaryWeapon,
+            headEq: dataForm._headEquipment,
+            bodyEq: dataForm._bodyEquipment,
+            unloudingEq: dataForm._unloudingWeapon,
+            nameMainWeapon: dataForm._mainWeapon,
+            secondaryNameWeapon: dataForm._secondaryWeapon,
             owner: _user
             );
         if(requestManager is null)
@@ -75,18 +86,18 @@ public partial class EditEquipmentViewModel : ObservableObject
         await Shell.Current.GoToAsync($"/{nameof(YourEquipPage)}");
     }
 
-    private bool ValidateData()
+    private bool ValidateData(DataForm formData)
     {
-        if(InStokeMainWeapon)
+        if(formData._inStokeMainWeapon)
         {
-            if(MainWeapon.Length <= 0 | MainWeapon.Length > 100)
+            if(formData._mainWeapon.Length <= 0 | formData._mainWeapon.Length > 100)
             {
                 return false;
             }
         }
-        if(InStokesecondaryWeapon)
+        if(formData._inStokesecondaryWeapon)
         {
-            if(SecondaryWeapon.Length <= 0 | SecondaryWeapon.Length > 100)
+            if(formData._secondaryWeapon.Length <= 0 | formData._secondaryWeapon.Length > 100)
             {
                 return false;
             }
@@ -127,9 +138,17 @@ public partial class EditEquipmentViewModel : ObservableObject
             Console.WriteLine(ex.Message);
             throw new Exception();
         }
-        
+
     }
 
-
+    private record DataForm(
+       bool _inStokeMainWeapon,
+       string _mainWeapon,
+       bool _inStokesecondaryWeapon,
+       string _secondaryWeapon,
+       bool _headEquipment,
+       bool _bodyEquipment,
+       bool _unloudingWeapon
+       );
 
 }
