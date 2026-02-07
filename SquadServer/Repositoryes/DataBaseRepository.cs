@@ -1,4 +1,5 @@
 ﻿using SquadServer.Models;
+using static SquadServer.Controllers.NotificationController;
 namespace SquadServer.Repositoryes;
 
 public class DataBaseRepository
@@ -12,14 +13,15 @@ public class DataBaseRepository
 
 
 
-    public async Task<bool> CheckEvent(int teamId)
+    public async Task<EvenCheck> CheckEvent(int teamId, int userID)
     {
         var eventFromDb = await _squadDbContext.Events.FirstOrDefaultAsync(e => e.TeamId == teamId);
-        if(eventFromDb is not null)
+        var userIsgoing = await _squadDbContext.Players.FirstOrDefaultAsync(u => u.Id == userID);
+        if(eventFromDb is not null && userIsgoing is not null)
         {
-            return true;
+            return new EvenCheck(isGoTogame: userIsgoing._goingToTheGame ?? false, availabilityEvent: true);
         }
-        return false;
+        return new EvenCheck(isGoTogame:false, availabilityEvent: false);
     }
 
 

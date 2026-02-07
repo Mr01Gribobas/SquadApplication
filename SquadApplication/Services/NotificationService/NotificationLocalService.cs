@@ -16,13 +16,16 @@ public class NotificationLocalService
         var toast = Toast.Make(message, ToastDuration.Long);
         await toast.Show();
     }
-    public async Task CheckForEventNotification(int teamId,bool? isGoToGame = null)
+    public async Task CheckForEventNotification(int teamId, int userId)
     {
-        var responce = await _httpClient.GetFromJsonAsync<bool>($"{staticUrl}/Notification/CheckEventInDb?teamId={teamId}");
-        if(responce && isGoToGame is null)
+        EvenCheck? responce = await _httpClient.GetFromJsonAsync<EvenCheck>($"{staticUrl}/Notification/CheckEventInDb?teamId={teamId}&userId={userId}");
+        if(!responce.isGoTogame && responce.availabilityEvent)
+        {
             await ShowLocalNotification("Event", $"ЕСТЬ АКТИВНОЕ СОБЫТИЕ");
+        }
     }
+    private record class EvenCheck(bool availabilityEvent, bool isGoTogame);
 
 
-   
+
 }

@@ -17,17 +17,15 @@ public class NotificationController : Controller
 
 
     [HttpGet]
-    public async Task<IActionResult> CheckEventInDb(int teamId)
+    public async Task<IActionResult> CheckEventInDb(int teamId, int userId)
     {
         Controller.LogInformation("Start action : CheckEventInDb");
-        
-        if(await _dataBaseRepository.CheckEvent(teamId))
+        if(userId <=0 || teamId <= 0)
         {
-            return Ok(true);
+            return Ok(new EvenCheck(isGoTogame: false, availabilityEvent: false));
         }
-        else
-        {
-            return Ok(false);
-        }
+       EvenCheck event_chek =  await _dataBaseRepository.CheckEvent(teamId, userId);
+            return Ok(event_chek);
     }
+    public record class EvenCheck(bool availabilityEvent, bool isGoTogame);
 }
