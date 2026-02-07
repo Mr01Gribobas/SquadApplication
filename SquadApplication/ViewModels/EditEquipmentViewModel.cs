@@ -3,12 +3,6 @@ namespace SquadApplication.ViewModels;
 
 public partial class EditEquipmentViewModel : ObservableObject
 {
-    public EditEquipmentViewModel(EditEquipmentPage page, UserModelEntity user)
-    {
-        _user = user;
-        _requestManager = new ManagerPostRequests<EquipmentEntity>();
-        GetEquipById(_user.Id);
-    }
 
 
     private IRequestManager<EquipmentEntity> _requestManager;
@@ -37,6 +31,12 @@ public partial class EditEquipmentViewModel : ObservableObject
     [ObservableProperty]
     private bool unloudingWeapon;
 
+    public EditEquipmentViewModel(EditEquipmentPage page, UserModelEntity user)
+    {
+        _user = user;
+        _requestManager = new ManagerPostRequests<EquipmentEntity>();
+        GetEquipById(_user.Id);
+    }
 
     [RelayCommand]
     private async Task UpdateEquipment()

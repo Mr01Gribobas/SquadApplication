@@ -2,11 +2,6 @@
 
 public partial class AppendPolygonViewModel: ObservableObject 
 {
-    public AppendPolygonViewModel(AppendPolygonPage polygonPage , UserModelEntity user)
-    {
-        _user = user;
-        _requestManager = new ManagerPostRequests<PolygonEntity>();
-    }
     private readonly IRequestManager<PolygonEntity> _requestManager;
     private readonly UserModelEntity _user;
 
@@ -16,6 +11,11 @@ public partial class AppendPolygonViewModel: ObservableObject
     [ObservableProperty]
     private string polygonCoordinates;
 
+    public AppendPolygonViewModel(AppendPolygonPage polygonPage , UserModelEntity user)
+    {
+        _user = user;
+        _requestManager = new ManagerPostRequests<PolygonEntity>();
+    }
 
     [RelayCommand]
     public async Task AppendPolygon()

@@ -8,9 +8,10 @@ public partial class RentailsViewModel : ObservableObject
     private readonly IRequestManager<RentailsViewModel> _requestManager;
     public Int32 _countPolygon => Rentals.Count;
 
-
     [ObservableProperty]
     private ObservableCollection<ReantalEntity> rentals;
+
+
 
     public RentailsViewModel(RentalsPage rentalsPage , UserModelEntity modelEntity)
     {

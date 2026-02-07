@@ -6,15 +6,6 @@ public partial class AuthorizeViewModel : ObservableObject
     private AuthorizedPage _authorizedPage;
     private readonly IDeviceManager _deviceManager;
     private IRequestManagerForEnter _requestManager;
-    public AuthorizeViewModel(AuthorizedPage authorizedPage,
-        IUserSession userSession,
-        IDeviceManager deviceMagager)
-    {
-        _authorizedPage = authorizedPage;
-        _deviceManager = deviceMagager;
-        _requestManager = new DataBaseManager(userSession, deviceMagager);
-    }
-
     [ObservableProperty]
     private string accesCode;
 
@@ -30,6 +21,16 @@ public partial class AuthorizeViewModel : ObservableObject
 
     [ObservableProperty]
     private string phoneNumber;
+
+    public AuthorizeViewModel(AuthorizedPage authorizedPage,
+        IUserSession userSession,
+        IDeviceManager deviceMagager)
+    {
+        _authorizedPage = authorizedPage;
+        _deviceManager = deviceMagager;
+        _requestManager = new DataBaseManager(userSession, deviceMagager);
+    }
+
 
     [RelayCommand]
     private async Task Login()

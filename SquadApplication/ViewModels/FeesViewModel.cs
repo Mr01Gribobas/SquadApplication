@@ -2,14 +2,7 @@
 
 public partial class FeesViewModel : ObservableObject
 {
-    public FeesViewModel(FeesPage feesPage, IUserSession user)
-    {
-        _feesPage = feesPage;
-        _user = user;
-        _requestManager = new ManagerGetRequests<EventModelEntity>();
-        GetCurrentEvent();
 
-    }
     private readonly FeesPage _feesPage;
     private readonly IUserSession _user;
     private readonly IRequestManager<EventModelEntity> _requestManager;
@@ -38,6 +31,16 @@ public partial class FeesViewModel : ObservableObject
 
     [ObservableProperty]
     private string? countMembers;
+
+    public FeesViewModel(FeesPage feesPage, IUserSession user)
+    {
+        _feesPage = feesPage;
+        _user = user;
+        _requestManager = new ManagerGetRequests<EventModelEntity>();
+        GetCurrentEvent();
+
+    }
+    
 
     [RelayCommand]
     public async void CurrentHumanWillBe()

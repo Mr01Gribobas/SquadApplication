@@ -2,11 +2,7 @@
 public partial class OrderViewModel : ObservableObject
 {
     private OrderPage _orderPage;
-    public OrderViewModel(OrderPage orderPage)
-    {
-        _orderPage = orderPage;
-        orders = new ObservableCollection<Order>();
-    }
+   
     [ObservableProperty]
     private string name;
 
@@ -20,7 +16,14 @@ public partial class OrderViewModel : ObservableObject
     private ObservableCollection<Order> orders;
 
     [ObservableProperty]
-    private string totalSum; 
+    private string totalSum;
+
+
+    public OrderViewModel(OrderPage orderPage)
+    {
+        _orderPage = orderPage;
+        orders = new ObservableCollection<Order>();
+    }
 
     [RelayCommand]
     public void AddProduct()

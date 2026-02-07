@@ -2,13 +2,6 @@
 
 public partial class CreateEventViewModel : ObservableObject
 {
-    public CreateEventViewModel(CreateEventPage eventPage, UserModelEntity user)
-    {
-        _user = user;
-        _eventPage = eventPage;
-        _requestManager = new ManagerPostRequests<EventModelEntity>();
-    }
-
 
     private IRequestManager<EventModelEntity> _requestManager;
     private readonly UserModelEntity _user;
@@ -28,6 +21,16 @@ public partial class CreateEventViewModel : ObservableObject
 
     [ObservableProperty]
     private string? namePolygon;
+
+    public CreateEventViewModel(CreateEventPage eventPage, UserModelEntity user)
+    {
+        _user = user;
+        _eventPage = eventPage;
+        _requestManager = new ManagerPostRequests<EventModelEntity>();
+    }
+
+
+    
 
     [RelayCommand]
     public async Task CreateEvent()

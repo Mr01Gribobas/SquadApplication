@@ -2,15 +2,6 @@
 public partial class ParticipantsViewModel : ObservableObject
 {
     private UserModelEntity _userModelEntity;
-    public ParticipantsViewModel(ParticipantsPage participantsPage, UserModelEntity userModel)
-    {
-        users = new ObservableCollection<UserModelEntity>();
-        this._participantsPage = participantsPage;
-        _requestsInServer = new ManagerGetRequests<UserModelEntity>();
-        _userModelEntity = userModel;
-        GetMembersTeam(_userModelEntity.Id);
-    }
-
     public Int32 _countUsers => Users.Count;
     private ParticipantsPage _participantsPage;
     private IRequestManager<UserModelEntity> _requestsInServer;
@@ -23,6 +14,15 @@ public partial class ParticipantsViewModel : ObservableObject
 
     [ObservableProperty]
     private Role role;
+    public ParticipantsViewModel(ParticipantsPage participantsPage, UserModelEntity userModel)
+    {
+        users = new ObservableCollection<UserModelEntity>();
+        this._participantsPage = participantsPage;
+        _requestsInServer = new ManagerGetRequests<UserModelEntity>();
+        _userModelEntity = userModel;
+        GetMembersTeam(_userModelEntity.Id);
+    }
+
 
     [RelayCommand]
     public void DeletePlayer()

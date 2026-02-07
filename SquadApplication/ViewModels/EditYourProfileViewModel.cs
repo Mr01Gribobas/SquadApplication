@@ -4,27 +4,6 @@ namespace SquadApplication.ViewModels;
 
 public partial class EditYourProfileViewModel : ObservableObject
 {
-    public EditYourProfileViewModel(EditUserProfilePage profilePage, UserModelEntity user)
-    {
-        _user = user;
-        _editProfilePage = profilePage;
-        InitalProperty(_user);
-        _requestManager = new ManagerPostRequests<UserModelEntity>();
-    }
-
-    private void InitalProperty(UserModelEntity user)
-    {
-        if(user is null)
-        {
-            return;
-        }
-        Name = user._userName;
-        CallSing = user._callSing;
-        Role = user._role.ToString();
-        PhoneNumber = user._phoneNumber;
-        TeamName = user._teamName;
-        Age = user?._age.ToString() ?? "Не указан";
-    }
 
     private IRequestManager<UserModelEntity> _requestManager;
     public EditUserProfilePage _editProfilePage;
@@ -52,6 +31,30 @@ public partial class EditYourProfileViewModel : ObservableObject
 
     [ObservableProperty]
     private string teamName;
+
+    public EditYourProfileViewModel(EditUserProfilePage profilePage, UserModelEntity user)
+    {
+        _user = user;
+        _editProfilePage = profilePage;
+        InitalProperty(_user);
+        _requestManager = new ManagerPostRequests<UserModelEntity>();
+    }
+
+    private void InitalProperty(UserModelEntity user)
+    {
+        if(user is null)
+        {
+            return;
+        }
+        Name = user._userName;
+        CallSing = user._callSing;
+        Role = user._role.ToString();
+        PhoneNumber = user._phoneNumber;
+        TeamName = user._teamName;
+        Age = user?._age.ToString() ?? "Не указан";
+    }
+
+   
 
 
 

@@ -6,6 +6,12 @@ public partial class PolygonsViewModel : ObservableObject
     private readonly PolygonsPage _polygonPage;
     public Int32 _countPolygon => Polygons.Count;
 
+    [ObservableProperty]
+    private ObservableCollection<PolygonEntity> polygons;
+
+    [ObservableProperty]
+    private string roleUser; 
+
     public PolygonsViewModel(PolygonsPage polygonsPage, UserModelEntity user)
     {
         _user = user;
@@ -16,11 +22,6 @@ public partial class PolygonsViewModel : ObservableObject
         SetPolygons();
     }
 
-    [ObservableProperty]
-    private ObservableCollection<PolygonEntity> polygons;
-
-    [ObservableProperty]
-    private string roleUser; 
 
     private async Task SetPolygons()
     {
