@@ -5,7 +5,53 @@
              BackgroundImageSource="rentails.jpg"
              Title="RentalsPage">
     <VerticalStackLayout
+        x:Name="loyoutItem"
         BackgroundColor="#50508080"
         >
+        
+        <ScrollView>
+            <StackLayout >
+                <Button 
+                BackgroundColor="DarkGreen"
+             Command="{Binding AppendRentailCommand}"
+                Text="Add Rentail">
+                    <Button.Triggers>
+                        <DataTrigger
+                  TargetType="Button"
+                  Binding="{Binding RoleUser}"
+                  Value="Private"
+                             >
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <CollectionView x:Name="PolygonsListViewItem"  
+         Background="Transparent"
+         ItemsSource="{Binding Rentails}"
+         VerticalOptions="Fill"
+         HorizontalOptions="Fill"
+         >
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                    Stroke="DarkKhaki"
+                    StrokeShape="1"
+                              >
+                                <StackLayout
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center">
+                                    <Label Text="{Binding Path=Id}" TextColor="White"/>
+                                    <Label Text="Rentail info" TextColor="White"/>
+                                    <Label Text="Rentail info2" TextColor="White"/>
+                                    <Button Text="Delete" Command="{Binding DeleteRentailCommand}"/>
+                                </StackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
+
+
     </VerticalStackLayout>
 </ContentPage>

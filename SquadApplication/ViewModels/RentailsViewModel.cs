@@ -21,6 +21,14 @@ public partial class RentailsViewModel : ObservableObject
         GetRentalsFromDb();
     }
 
+
+    [RelayCommand]
+    public void DeleteRental()
+    {
+
+    }
+
+
     private void GetRentalsFromDb()
     {
         var request = (ManagerGetRequests<RentailsViewModel>)_requestManager;

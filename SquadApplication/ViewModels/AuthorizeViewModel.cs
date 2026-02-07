@@ -100,7 +100,8 @@ public partial class AuthorizeViewModel : ObservableObject
                 }
                 else
                 {
-                    await Shell.Current.GoToAsync($"..");
+                    return;
+                    //await Shell.Current.GoToAsync($"..");
                 }
                 goto SendUserData;
             }
