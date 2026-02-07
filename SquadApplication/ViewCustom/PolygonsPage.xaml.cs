@@ -1,4 +1,6 @@
-﻿namespace SquadApplication.ViewCustom;
+﻿using System.Drawing;
+
+namespace SquadApplication.ViewCustom;
 
 public partial class PolygonsPage : ContentPage
 {
@@ -23,7 +25,7 @@ public partial class PolygonsPage : ContentPage
             loyoutItem.Add(
                 new Label()
                 {
-                    BackgroundColor = new Color(90908080),//"#50508080",
+                    BackgroundColor = Colors.Transparent,//"#50508080",
                     TextColor = Colors.DarkGray,
                     FontSize = 30,
                     Text = "Not found !",
