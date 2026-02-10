@@ -97,13 +97,16 @@ public partial class MainPage : ContentPage
                 await Shell.Current.GoToAsync($"/{nameof(RentalsPage)}");
                 break;
             case "Профиль":
-                await Shell.Current.GoToAsync($"/{nameof(ProfilePage)}");
+                await Shell.Current.GoToAsync($"/{nameof(HomePage)}");
                 break;
             case "Заказы":
                 await Shell.Current.GoToAsync($"/{nameof(OrderPage)}");
                 break;
             case "Полигоны":
                 await Shell.Current.GoToAsync($"/{nameof(PolygonsPage)}");
+                break;
+            case "Мероприятия":
+                await Shell.Current.GoToAsync($"/{nameof(EventsForAllCommands)}");
                 break;
             default:
                 break;

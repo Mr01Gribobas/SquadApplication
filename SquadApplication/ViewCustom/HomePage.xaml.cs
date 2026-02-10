@@ -10,6 +10,6 @@ public partial class HomePage : ContentPage
 		InitializeComponent();
         _homePageView = new HomeViewModel(_user);
         BindingContext = _homePageView;
-
+        
     }
 }
