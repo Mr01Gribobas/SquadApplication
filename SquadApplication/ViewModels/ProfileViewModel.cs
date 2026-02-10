@@ -1,6 +1,7 @@
 ﻿namespace SquadApplication.ViewModels;
-public partial class ProfileViewModel : ObservableObject
+public partial class HomeViewModel : ObservableObject
 {
+    private readonly HomePage _homePage;
     private UserModelEntity _user;
 
     [ObservableProperty]
@@ -30,7 +31,7 @@ public partial class ProfileViewModel : ObservableObject
     [ObservableProperty]
     private int? equipmentId;
 
-    public ProfileViewModel(UserModelEntity userModel) 
+    public HomeViewModel(UserModelEntity userModel) 
     {
         _user = userModel;
         SetProfile(_user);

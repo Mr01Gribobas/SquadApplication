@@ -153,13 +153,13 @@
                         <CollectionView.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
                                 <x:String>Главная</x:String>
-                                <x:String>Сборы</x:String>
+                                <x:String>Профиль</x:String>
                                 <x:String>Полигоны</x:String>
                                 <x:String>Участники</x:String>
+                                <x:String>Сборы</x:String>
+                                <x:String>Мероприятия</x:String>
                                 <x:String>Прокаты</x:String>
-                                <x:String>Профиль</x:String>
                                 <x:String>Заказы</x:String>
-                                <x:String>Настройки</x:String>
                                
                             </x:Array>
                         </CollectionView.ItemsSource>
