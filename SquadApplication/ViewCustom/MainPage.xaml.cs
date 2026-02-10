@@ -85,7 +85,7 @@ public partial class MainPage : ContentPage
         switch(result.ToString())
         {
             case "Главная":
-                await Shell.Current.GoToAsync($"/{nameof(YourEquipPage)}");
+                await Shell.Current.GoToAsync($"/{nameof(HomePage)}");
                 break;
             case "Сборы":
                 await Shell.Current.GoToAsync($"/{nameof(FeesPage)}");
@@ -97,7 +97,7 @@ public partial class MainPage : ContentPage
                 await Shell.Current.GoToAsync($"/{nameof(RentalsPage)}");
                 break;
             case "Профиль":
-                await Shell.Current.GoToAsync($"/{nameof(HomePage)}");
+                await Shell.Current.GoToAsync($"/{nameof(ProfilePage)}");
                 break;
             case "Заказы":
                 await Shell.Current.GoToAsync($"/{nameof(OrderPage)}");
@@ -106,7 +106,7 @@ public partial class MainPage : ContentPage
                 await Shell.Current.GoToAsync($"/{nameof(PolygonsPage)}");
                 break;
             case "Мероприятия":
-                await Shell.Current.GoToAsync($"/{nameof(EventsForAllCommands)}");
+                await Shell.Current.GoToAsync($"/{nameof(EventsForAllCommandsPage)}");
                 break;
             default:
                 break;

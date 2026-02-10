@@ -83,7 +83,7 @@ public partial class EditEquipmentViewModel : ObservableObject
             await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
         }
         requestManager.ResetUrlAndStatusCode();
-        await Shell.Current.GoToAsync($"/{nameof(YourEquipPage)}");
+        await Shell.Current.GoToAsync($"/{nameof(HomePage)}");
     }
 
     private bool ValidateData(DataForm formData)

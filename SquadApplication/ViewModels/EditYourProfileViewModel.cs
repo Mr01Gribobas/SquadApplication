@@ -98,7 +98,7 @@ public partial class EditYourProfileViewModel : ObservableObject
             requestManager?.PostRequests(objectValue: newUser, PostsRequests.UpdateProfile);
         }
         requestManager.ResetUrlAndStatusCode();
-        await Shell.Current.GoToAsync($"/{nameof(YourEquipPage)}");
+        await Shell.Current.GoToAsync($"/{nameof(HomePage)}");
 
     }
     private bool ValidateDataUser(DataForm dataForm)

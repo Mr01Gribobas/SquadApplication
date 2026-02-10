@@ -70,8 +70,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="ViewCustom\HomePage.xaml.cs">
-	    <DependentUpon>HomePage.xaml</DependentUpon>
+	  <Compile Update="ViewCustom\ProfilePage.xaml.cs">
+	    <DependentUpon>ProfilePage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="ViewCustom\EventsForAllCommandsPage.xaml.cs">
 	    <DependentUpon>EventsForAllCommandsPage.xaml</DependentUpon>
@@ -112,7 +112,7 @@
 	  <MauiXaml Update="ViewCustom\PolygonsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ViewCustom\HomePage.xaml">
+	  <MauiXaml Update="ViewCustom\ProfilePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ViewCustom\RentalsPage.xaml">

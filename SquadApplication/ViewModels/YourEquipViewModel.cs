@@ -1,10 +1,62 @@
 ﻿namespace SquadApplication.ViewModels;
-public partial class YourEquipViewModel : ObservableObject
+public partial class HomeViewModel : ObservableObject
 {
     private UserModelEntity _user;
     private IRequestManager<EquipmentEntity> _requestManager;
     private EquipmentEntity _equipment;
-    public YourEquipViewModel(YourEquipPage page, UserModelEntity user)
+
+    //==============================
+    [ObservableProperty]
+    private string name;
+
+    [ObservableProperty]
+    private string callSing;
+
+    [ObservableProperty]
+    private string role;
+
+    [ObservableProperty]
+    private string phoneNumber;
+
+    [ObservableProperty]
+    private string age;
+
+    [ObservableProperty]
+    private string isStaffed;
+
+    [ObservableProperty]
+    private string teamName;
+
+    [ObservableProperty]
+    private string equipmentId;
+    //==============================
+    [ObservableProperty]
+    private string mainWeapon;
+
+    [ObservableProperty]
+    private string secondaryWeapon;
+
+    [ObservableProperty]
+    private string headEquipment;
+
+    [ObservableProperty]
+    private string bodyEquipment;
+
+    [ObservableProperty]
+    private string unloudingWeapon;
+
+    //==============================
+    [ObservableProperty]
+    private string nameTeam;
+
+    [ObservableProperty]
+    private string countMembers;
+
+    [ObservableProperty]
+    private string isEvent;
+
+
+    public HomeViewModel(HomePage page, UserModelEntity user)
     {
         _user = user;
         if(_user is not null)
@@ -67,55 +119,7 @@ public partial class YourEquipViewModel : ObservableObject
         EquipmentId = modelEntity.EquipmentId is null | modelEntity.EquipmentId <= 0 ? "Нету зарегистрированных екипов" : modelEntity.EquipmentId.ToString();
     }
 
-    //==============================
-    [ObservableProperty]
-    private string name;
-
-    [ObservableProperty]
-    private string callSing;
-
-    [ObservableProperty]
-    private string role;
-
-    [ObservableProperty]
-    private string phoneNumber;
-
-    [ObservableProperty]
-    private string age;
-
-    [ObservableProperty]
-    private string isStaffed;
-
-    [ObservableProperty]
-    private string teamName;
-
-    [ObservableProperty]
-    private string equipmentId;
-    //==============================
-    [ObservableProperty]
-    private string mainWeapon;
-
-    [ObservableProperty]
-    private string secondaryWeapon;
-
-    [ObservableProperty]
-    private string headEquipment;
-
-    [ObservableProperty]
-    private string bodyEquipment;
-
-    [ObservableProperty]
-    private string unloudingWeapon;
-
-    //==============================
-    [ObservableProperty]
-    private string nameTeam;
-
-    [ObservableProperty]
-    private string countMembers;
-
-    [ObservableProperty]
-    private string isEvent;
+   
 
     [RelayCommand]
     private void UpdateEquipment()

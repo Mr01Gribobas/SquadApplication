@@ -1,12 +1,12 @@
 namespace SquadApplication.ViewCustom;
-public partial class YourEquipPage : ContentPage
+public partial class HomePage : ContentPage
 {
-	private YourEquipViewModel _viewModel;
+	private HomeViewModel _viewModel;
 	
-	public YourEquipPage(IUserSession userSession)
+	public HomePage(IUserSession userSession)
 	{
 		InitializeComponent();
-		_viewModel = new YourEquipViewModel(this,userSession.CurrentUser);
+		_viewModel = new HomeViewModel(this,userSession.CurrentUser);
 		BindingContext = _viewModel;
 
 	}
