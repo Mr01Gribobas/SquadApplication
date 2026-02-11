@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.AuthorizedPage"
              Title="AuthorizedPage"            
-             BackgroundImageSource="hkauthorize.jpg"
+             BackgroundImageSource="test2.jpg"
              >
-    <ScrollView>
+    <ScrollView Background="#50508080">
         <Grid RowDefinitions="Auto,*,Auto"
               RowSpacing="0"
               Padding="20">
