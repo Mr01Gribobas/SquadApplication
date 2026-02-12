@@ -9,6 +9,13 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+                <Color x:Key="PdaBackground">#0f0f0b</Color>
+                <Color x:Key="PdaBorder">#5f6b4d</Color>
+                <Color x:Key="PdaLight">#b8c4a5</Color>
+                <Color x:Key="PdaHighlight">#e6f0d0</Color>
+                <Color x:Key="PdaDark">#1a1e1a</Color>
+                <Color x:Key="PdaAccent">#2e3a24</Color>
+                <Color x:Key="PdaText">#7a8b5b</Color>
             
         </ResourceDictionary>
     </Application.Resources>
