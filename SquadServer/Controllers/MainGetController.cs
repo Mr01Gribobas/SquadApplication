@@ -16,7 +16,7 @@ public class MainGetController : Controller
         _squadDbContext = squadDb;
         _dataBaseRepository = new DataBaseRepository(_squadDbContext);
     }
-           
+
 
     [HttpGet]
     public IActionResult? GetUserById(int Id)
@@ -112,7 +112,19 @@ public class MainGetController : Controller
     }
 
     [HttpGet]
-    public IActionResult? GetAllInfoForProfile(int userId)
+    public IActionResult? GetAllInfoUser(int userId)
+    {
+
+    }
+
+    [HttpGet]
+    public IActionResult? GetAllEventsForAllCommands()
+    {
+
+    }
+
+    [HttpGet]
+    public IActionResult? GetAllInfoForHomeProfile(int userId)
     {
         Controller.LogInformation("Start action : GetAllInfoForProfile");
 

@@ -30,7 +30,7 @@ internal class RequestTuple
         {
             throw new ArgumentNullException();
         }
-        UpdateUrl($"GetAllInfoForProfile?userId={userModel.Id}");
+        UpdateUrl($"GetAllInfoForHomeProfile?userId={userModel.Id}");
         var responce = await _httpClient.GetAsync(_urlNameForSend);
         if(responce != null && (int)responce.StatusCode == 200)
         {
