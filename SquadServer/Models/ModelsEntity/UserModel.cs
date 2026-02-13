@@ -43,6 +43,11 @@ public class UserModelEntity
     public virtual TeamEntity? Team { get; set; }
 
 
+    public int? StatisticId { get; set; }
+
+    [JsonIgnore]
+    public virtual PlayerStatisticsModelEntity? Statistic { get; set; } = null!;
+    
 
     public static UserModelEntity CreateUserEntity(string _teamName, string _name, string _callSing, string _phone, Role _role, int? _age, int? _teamId)
     {

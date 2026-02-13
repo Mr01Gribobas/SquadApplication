@@ -17,5 +17,11 @@ public class UserModelEntityConfiguration : IEntityTypeConfiguration<UserModelEn
             WithMany(u=>u.Members).
             HasForeignKey(u => u.TeamId).
             IsRequired(false);
+
+        builder.
+            HasOne(s=>s.Statistic).
+            WithOne(p=>p.UserModel).
+            HasForeignKey<PlayerStatisticsModelEntity>(k=>k.UserModelId).
+            OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -11,6 +11,9 @@ public class SquadDbContext: DbContext
     public DbSet<HisoryEventsModelEntity> HistoryEvents { get; set; }
     public DbSet<TeamEntity> Teams { get; set; }
 
+    public DbSet<EventsForAllCommandsModelEntity> EventsForAllCommands { get; set; }    
+    public DbSet<PlayerStatisticsModelEntity> PlayerStatistics { get; set; }
+
     public DbSet<DeviceRegistartionModelEntity> DeviceRegistartionModelEntities { get; set; }
     public DbSet<NotificationEntity> Notifications { get; set; }
 
@@ -34,6 +37,9 @@ public class SquadDbContext: DbContext
 
         modelBuilder.ApplyConfiguration(new DeviceRegistartionModelConfig());
         modelBuilder.ApplyConfiguration(new NotificationEntityConfig());
+
+        modelBuilder.ApplyConfiguration(new PlayerStatisticsModelEntityConfig());
+        modelBuilder.ApplyConfiguration(new EventsForAllCommandsModelEntityConfig());
         base.OnModelCreating(modelBuilder);
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
