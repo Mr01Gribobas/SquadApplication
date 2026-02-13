@@ -4,13 +4,13 @@
              x:Class="SquadApplication.ViewCustom.EventsForAllCommandsPage"
              BackgroundImageSource="events.jpg"
              Title="EventsForAllCommands">
-    <RefreshView
-        
+    <RefreshView      
        >
 
             <!-- Шапка с фильтрами -->
         <CollectionView x:Name="EventsList"
                        BackgroundColor="#50508080"
+                        ItemsSource="{Binding Path= Events}"
                        SelectionMode="Single"
                        SelectionChanged="OnEventSelected">
 
@@ -19,7 +19,7 @@
                 <VerticalStackLayout Spacing="10" Padding="10">
 
                     <!-- Панель поиска и фильтров -->
-                    <Border BackgroundColor="#1a2332"
+                    <Border BackgroundColor="#90201090"
                             Stroke="#2a3c5a"
                             StrokeThickness="1"
                             StrokeShape="10"
@@ -27,7 +27,7 @@
 
                         <VerticalStackLayout Spacing="10">
                             <!-- Поиск -->
-                            <Border BackgroundColor="#0a0f1c"
+                            <Border BackgroundColor="#90303030"
                                     Stroke="#1e90ff"
                                     StrokeThickness="1"
                                     StrokeShape="8"
@@ -64,7 +64,7 @@
                     </Border>
 
                     <!-- Статистика -->
-                    <Border BackgroundColor="#16213e"
+                    <Border BackgroundColor="#90201090"
                             Stroke="#1e90ff"
                             StrokeThickness="1"
                             StrokeShape="10"
@@ -107,30 +107,26 @@
 
                     <!-- Кнопка создания (только для командира) -->
                     <Border x:Name="CreateEventButton"
-                            BackgroundColor="#00ff9d"
+                            BackgroundColor="#90407070"
                             Stroke="#00cc7a"
                             StrokeThickness="1"
                             StrokeShape="10"
-                            Padding="15"
+                            Padding="10"
                             >
 
-                        <HorizontalStackLayout Spacing="10"
+                        <HorizontalStackLayout Spacing="5"
                                               HorizontalOptions="Center">
-                            <Label Text="➕"
-                                   FontSize="20"
-                                   TextColor="#0a0f1c"
-                                   VerticalTextAlignment="Center"/>
+                            <Button 
+                                Opacity="0.7"
+                                Text="Create event"
+                                WidthRequest="360"
+                                HeightRequest="50"
+                                FontFamily="24"
+                                Command="{Binding CreateEventCommand}"/>
 
-                            <Label Text="Создать мероприятие"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   TextColor="#0a0f1c"
-                                   VerticalTextAlignment="Center"/>
                         </HorizontalStackLayout>
 
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnCreateEventTapped"/>
-                        </Border.GestureRecognizers>
+                        
                     </Border>
                 </VerticalStackLayout>
             </CollectionView.Header>

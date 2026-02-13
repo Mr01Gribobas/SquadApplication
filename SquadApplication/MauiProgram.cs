@@ -11,6 +11,7 @@ public static class MauiProgram
             fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
         }).UseMauiCommunityToolkit();
+
         builder.Services.AddSingleton<HttpClient>(cl =>
         {
             var client = new HttpClient();

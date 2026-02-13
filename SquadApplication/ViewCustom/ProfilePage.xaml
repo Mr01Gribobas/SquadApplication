@@ -2,40 +2,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.ProfilePage"
-             BackgroundImageSource="createevent.jpg"
+             BackgroundImageSource="mainprofile.jpg"
              Title="ProfilePage">
     <AbsoluteLayout>
         <BoxView AbsoluteLayout.LayoutFlags="All"
                  AbsoluteLayout.LayoutBounds="0,0,1,1">
             <BoxView.Background>
-                <LinearGradientBrush EndPoint="0,1">
-                    <GradientStop Color="#0a0f0c" Offset="0"/>
-                    <GradientStop Color="#1a1f1c" Offset="1"/>
-                </LinearGradientBrush>
+                <Color>#50809080</Color>
             </BoxView.Background>
         </BoxView>
 
         <!-- Тактическая сетка (очень прозрачная) -->
-        <AbsoluteLayout AbsoluteLayout.LayoutFlags="All" 
-                        AbsoluteLayout.LayoutBounds="0,0,1,1"
-                        Opacity="0.1">
-            <BoxView AbsoluteLayout.LayoutFlags="PositionProportional"
-                     AbsoluteLayout.LayoutBounds="0.1,0.1,4,4"
-                     Color="#b3c96b"
-                     CornerRadius="2"/>
-            <BoxView AbsoluteLayout.LayoutFlags="PositionProportional"
-                     AbsoluteLayout.LayoutBounds="0.9,0.1,4,4"
-                     Color="#b3c96b"
-                     CornerRadius="2"/>
-            <BoxView AbsoluteLayout.LayoutFlags="PositionProportional"
-                     AbsoluteLayout.LayoutBounds="0.1,0.9,4,4"
-                     Color="#b3c96b"
-                     CornerRadius="2"/>
-            <BoxView AbsoluteLayout.LayoutFlags="PositionProportional"
-                     AbsoluteLayout.LayoutBounds="0.9,0.9,4,4"
-                     Color="#b3c96b"
-                     CornerRadius="2"/>
-        </AbsoluteLayout>
+        
 
         <ScrollView AbsoluteLayout.LayoutFlags="All"
                     AbsoluteLayout.LayoutBounds="0,0,1,1"
@@ -379,14 +357,16 @@
                             </Grid.ColumnDefinitions>
 
                             <!-- Основное -->
-                            <Border Grid.Column="0"
+                            <Border
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2"                                
                                    BackgroundColor="#30808080"
                                    Stroke="#b3c96b"
                                    StrokeThickness="1"
                                    StrokeShape="12"
                                    Padding="15">
                                 <VerticalStackLayout Spacing="8">
-                                    <Label Text="🔫 ОСНОВНОЕ"
+                                    <Label Text="🔫 Любимое оружие"
                                            TextColor="#b3c96b"
                                            FontSize="12"
                                            Opacity="0.9"/>
@@ -412,92 +392,13 @@
                             </Border>
 
                             <!-- Вторичное -->
-                            <Border Grid.Column="1"
-                                   BackgroundColor="#30808080"
-                                   Stroke="#b3c96b"
-                                   StrokeThickness="1"
-                                   StrokeShape="12"
-                                   Padding="15">
-                                <VerticalStackLayout Spacing="8">
-                                    <Label Text="🔫 ВТОРИЧНОЕ"
-                                           TextColor="#b3c96b"
-                                           FontSize="12"
-                                           Opacity="0.9"/>
-                                    <Label Text="Текст тест"
-                                           TextColor="White"
-                                           FontSize="18"
-                                           FontAttributes="Bold"/>
-                                    <HorizontalStackLayout Spacing="12">
-                                        <Label Text="⚡"
-                                               FontSize="14"
-                                               TextColor="#b3c96b"/>
-                                        <Label Text="0.4"
-                                               TextColor="White"
-                                               FontSize="14"/>
-                                        <Label Text="🎯"
-                                               FontSize="14"
-                                               TextColor="#b3c96b"/>
-                                        <Label Text="25м"
-                                               TextColor="White"
-                                               FontSize="14"/>
-                                    </HorizontalStackLayout>
-                                </VerticalStackLayout>
-                            </Border>
+                            
                         </Grid>
 
                         <BoxView HeightRequest="1" 
                                  Color="#b3c96b" 
                                  Margin="15,0"
                                  Opacity="0.2"/>
-
-                        <!-- Состояние экипировки -->
-                        <VerticalStackLayout Padding="15" Spacing="12">
-                            <HorizontalStackLayout Spacing="10">
-                                <Label Text="ЗАЩИТА"
-                                       TextColor="White"
-                                       FontSize="13"
-                                       Opacity="0.9"/>
-                                <Label Text="Текст тест"
-                                       TextColor="#b3c96b"
-                                       FontSize="13"/>
-                                <Label Text="РАЗГРУЗКА"
-                                       TextColor="White"
-                                       FontSize="13"
-                                       Opacity="0.9"
-                                       Margin="20,0,0,0"/>
-                                <Label Text="Текст тест"
-                                       TextColor="#b3c96b"
-                                       FontSize="13"/>
-                            </HorizontalStackLayout>
-
-                            <HorizontalStackLayout Spacing="15">
-                                <!-- Прогресс брони -->
-                                <Border BackgroundColor="#30808080"
-                                       Stroke="Transparent"
-                                       StrokeShape="6"
-                                       HeightRequest="8"
-                                       WidthRequest="100">
-                                    <BoxView WidthRequest="124"
-                                            HeightRequest="8"
-                                            Color="#b3c96b"
-                                            Opacity="0.8"
-                                            HorizontalOptions="Start"/>
-                                </Border>
-
-                                <!-- Прогресс разгрузки -->
-                                <Border BackgroundColor="#30808080"
-                                       Stroke="Transparent"
-                                       StrokeShape="6"
-                                       HeightRequest="8"
-                                       WidthRequest="100">
-                                    <BoxView WidthRequest="424"
-                                            HeightRequest="8"
-                                            Color="#b3c96b"
-                                            Opacity="0.8"
-                                            HorizontalOptions="Start"/>
-                                </Border>
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
 
@@ -667,90 +568,7 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- БЛОК 4: РАСХОДНИКИ -->
-                <Border BackgroundColor="#50808080"
-                        Stroke="#b3c96b"
-                        StrokeThickness="1"
-                        StrokeShape="15"
-                        Padding="15"
-                        Opacity="0.8">
-
-                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="15">
-
-                        <!-- Шары -->
-                        <Border Grid.Column="0"
-                               BackgroundColor="#30808080"
-                               Stroke="Transparent"
-                               StrokeShape="10"
-                               Padding="12">
-                            <VerticalStackLayout Spacing="6">
-                                <Label Text="🎯"
-                                       FontSize="22"
-                                       TextColor="#b3c96b"/>
-                                <Label Text="ШАРЫ"
-                                       TextColor="#b3c96b"
-                                       FontSize="11"/>
-                                <Label Text="Текст тест"
-                                       TextColor="White"
-                                       FontSize="20"
-                                       FontAttributes="Bold"/>
-                                <Label Text="в наличии"
-                                       TextColor="White"
-                                       FontSize="9"
-                                       Opacity="0.7"/>
-                            </VerticalStackLayout>
-                        </Border>
-
-                        <!-- Газ -->
-                        <Border Grid.Column="1"
-                               BackgroundColor="#30808080"
-                               Stroke="Transparent"
-                               StrokeShape="10"
-                               Padding="12">
-                            <VerticalStackLayout Spacing="6">
-                                <Label Text="💨"
-                                       FontSize="22"
-                                       TextColor="#b3c96b"/>
-                                <Label Text="ГАЗ"
-                                       TextColor="#b3c96b"
-                                       FontSize="11"/>
-                                <Label Text="Текст тест"
-                                       TextColor="White"
-                                       FontSize="20"
-                                       FontAttributes="Bold"/>
-                                <Label Text="баллонов"
-                                       TextColor="White"
-                                       FontSize="9"
-                                       Opacity="0.7"/>
-                            </VerticalStackLayout>
-                        </Border>
-
-                        <!-- Батарея -->
-                        <Border Grid.Column="2"
-                               BackgroundColor="#30808080"
-                               Stroke="Transparent"
-                               StrokeShape="10"
-                               Padding="12">
-                            <VerticalStackLayout Spacing="6">
-                                <Label Text="🔋"
-                                       FontSize="22"
-                                       TextColor="#b3c96b"/>
-                                <Label Text="АКБ"
-                                       TextColor="#b3c96b"
-                                       FontSize="11"/>
-                                <Label Text="Текст тест"
-                                       TextColor="White"
-                                       FontSize="20"
-                                       FontAttributes="Bold"/>
-                                <ProgressBar Progress="45"
-                                            BackgroundColor="#30808080"
-                                            ProgressColor="FloralWhite"
-                                            HeightRequest="4"
-                                            WidthRequest="80"/>
-                            </VerticalStackLayout>
-                        </Border>
-                    </Grid>
-                </Border>
+                
 
                 <!-- Нижняя панель - время и статус -->
                 <Border BackgroundColor="#40808080"
