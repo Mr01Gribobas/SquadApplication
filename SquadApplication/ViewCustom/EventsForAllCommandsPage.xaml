@@ -4,15 +4,14 @@
              x:Class="SquadApplication.ViewCustom.EventsForAllCommandsPage"
              BackgroundImageSource="events.jpg"
              Title="EventsForAllCommands">
-    <RefreshView      
-       >
+    <RefreshView  >
 
             <!-- Шапка с фильтрами -->
         <CollectionView x:Name="EventsList"
                        BackgroundColor="#50508080"
-                        ItemsSource="{Binding Path= Events}"
+                       ItemsSource="{Binding Path= Events}"
                        SelectionMode="Single"
-                       SelectionChanged="OnEventSelected">
+                       >
 
 
             <CollectionView.Header>

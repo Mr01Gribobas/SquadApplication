@@ -9,10 +9,19 @@
         x:Name="loyoutItem"
         Padding="10">        
         <ScrollView>
-            <StackLayout >
+            <StackLayout>
+                <Border
+                            Margin="10,5"
+                            Stroke="#2a3c5a"
+                            StrokeThickness="1"
+                            BackgroundColor="#1a2332"
+                            StrokeShape="12"
+                            Padding="0"
+                    >
+                    
                 <Button 
                        BackgroundColor="DarkGreen"
-                    Command="{Binding AppendPolygonCommand}"
+                       Command="{Binding AppendPolygonCommand}"
                        Text="Add Polygon">
                     <Button.Triggers>
                         <DataTrigger
@@ -24,6 +33,7 @@
                         </DataTrigger>
                     </Button.Triggers>
                 </Button>
+                </Border>
                 <CollectionView x:Name="PolygonsListViewItem"  
                 Background="Transparent"
                 ItemsSource="{Binding Polygons}"
