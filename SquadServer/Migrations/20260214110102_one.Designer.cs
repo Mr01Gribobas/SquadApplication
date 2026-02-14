@@ -12,8 +12,8 @@ using SquadServer.Models.DbContextDir;
 namespace SquadServer.Migrations
 {
     [DbContext(typeof(SquadDbContext))]
-    [Migration("20260119103224_newMigr")]
-    partial class newMigr
+    [Migration("20260214110102_one")]
+    partial class one
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,7 +81,8 @@ namespace SquadServer.Migrations
 
                     b.Property<string>("DeviceToken")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("InstallationId")
                         .IsRequired()
@@ -139,6 +140,37 @@ namespace SquadServer.Migrations
                     b.ToTable("Events");
                 });
 
+            modelBuilder.Entity("SquadServer.Models.ModelsEntity.EventsForAllCommandsModelEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CoordinatesPolygon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DescriptionFull")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DescriptionShort")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PolygonName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TeamNameOrganization")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EventsForAllCommands");
+                });
+
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.HisoryEventsModelEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -161,6 +193,109 @@ namespace SquadServer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HistoryEvents");
+                });
+
+            modelBuilder.Entity("SquadServer.Models.ModelsEntity.NotificationEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DataJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSent")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RelatedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("SquadServer.Models.ModelsEntity.PlayerStatisticsModelEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AchievementsJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CallSingPlayer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CountDieds")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CountEvents")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CountFees")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CountKill")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCommanderCheck")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDataStatistics")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NamePlayer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OldDataJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserModelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PlayerStatistics");
                 });
 
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.TeamEntity", b =>
@@ -264,6 +399,12 @@ namespace SquadServer.Migrations
                     b.Property<int?>("EquipmentId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("EventsForAllCommandsModelEntityId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StatisticId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("TeamId")
                         .HasColumnType("int");
 
@@ -299,6 +440,12 @@ namespace SquadServer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EventsForAllCommandsModelEntityId");
+
+                    b.HasIndex("StatisticId")
+                        .IsUnique()
+                        .HasFilter("[StatisticId] IS NOT NULL");
+
                     b.HasIndex("TeamId");
 
                     b.ToTable("Players");
@@ -320,6 +467,21 @@ namespace SquadServer.Migrations
                     b.HasOne("SquadServer.Models.UserModelEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SquadServer.Models.ModelsEntity.NotificationEntity", b =>
+                {
+                    b.HasOne("SquadServer.Models.ModelsEntity.EventModelEntity", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId");
+
+                    b.HasOne("SquadServer.Models.UserModelEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Event");
 
                     b.Navigation("User");
                 });
@@ -347,10 +509,21 @@ namespace SquadServer.Migrations
 
             modelBuilder.Entity("SquadServer.Models.UserModelEntity", b =>
                 {
+                    b.HasOne("SquadServer.Models.ModelsEntity.EventsForAllCommandsModelEntity", null)
+                        .WithMany("Players")
+                        .HasForeignKey("EventsForAllCommandsModelEntityId");
+
+                    b.HasOne("SquadServer.Models.ModelsEntity.PlayerStatisticsModelEntity", "Statistic")
+                        .WithOne("UserModel")
+                        .HasForeignKey("SquadServer.Models.UserModelEntity", "StatisticId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("SquadServer.Models.ModelsEntity.TeamEntity", "Team")
                         .WithMany("Members")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Statistic");
 
                     b.Navigation("Team");
                 });
@@ -358,6 +531,17 @@ namespace SquadServer.Migrations
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.EventModelEntity", b =>
                 {
                     b.Navigation("Team")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SquadServer.Models.ModelsEntity.EventsForAllCommandsModelEntity", b =>
+                {
+                    b.Navigation("Players");
+                });
+
+            modelBuilder.Entity("SquadServer.Models.ModelsEntity.PlayerStatisticsModelEntity", b =>
+                {
+                    b.Navigation("UserModel")
                         .IsRequired();
                 });
 

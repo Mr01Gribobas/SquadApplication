@@ -1,5 +1,4 @@
-﻿using SquadServer.Models;
-namespace SquadServer.DTO_Classes.DTO_AuxiliaryModels;
+﻿namespace SquadServer.DTO_Classes.DTO_AuxiliaryModels;
 
 
 public record class EventsForAllCommandsModelDTO

@@ -11,6 +11,6 @@ public class PlayerStatisticsModelEntityConfig : IEntityTypeConfiguration<Player
             WithOne(p => p.Statistic).
             HasForeignKey<UserModelEntity>(u=>u.StatisticId);
 
-        builder.Property(e => e.Achievements);
+        builder.Ignore(e => e.Achievements);
     }
 }

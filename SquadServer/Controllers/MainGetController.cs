@@ -114,12 +114,13 @@ public class MainGetController : Controller
     [HttpGet]
     public IActionResult? GetAllInfoUser(int userId)
     {
-
+        return default(IActionResult?);
     }
 
     [HttpGet]
     public IActionResult? GetAllEventsForAllCommands()
     {
+        return default(IActionResult?);
 
     }
 
