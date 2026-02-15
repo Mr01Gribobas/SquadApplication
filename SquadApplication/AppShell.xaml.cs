@@ -21,7 +21,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(FeesPage), typeof(FeesPage));
         Routing.RegisterRoute(nameof(CreateEventPage), typeof(CreateEventPage));
         Routing.RegisterRoute(nameof(EventsForAllCommandsPage), typeof(EventsForAllCommandsPage));
-        //Routing.RegisterRoute(nameof(CreateEventsForAllCommandsPage), typeof(CreateEventsForAllCommandsPage));
+        Routing.RegisterRoute(nameof(CreateEventsForAllCommandsPage), typeof(CreateEventsForAllCommandsPage));
 
         Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
         Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));

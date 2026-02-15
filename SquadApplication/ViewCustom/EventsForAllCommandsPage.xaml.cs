@@ -11,5 +11,11 @@ public partial class EventsForAllCommandsPage : ContentPage
 		_eventsForAllCommandsView = new EventsForAllCommandsView(user);
 		BindingContext = _eventsForAllCommandsView;
         InitializeComponent();
+        Loaded += EventsForAllCommandsPage_Loaded;
 	}
+
+    private void EventsForAllCommandsPage_Loaded(object? sender, EventArgs e)
+    {
+        _eventsForAllCommandsView.GetEvents();
+    }
 }

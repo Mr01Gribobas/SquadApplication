@@ -115,15 +115,17 @@ public class MainGetController : Controller
     [HttpGet]
     public async Task<IActionResult?> GetAllInfoUser(int userId)
     {
-       UserAllInfoStatisticDTO? info = await _dataBaseRepository.GetAllInfoUser(userId);
+        List<UserAllInfoStatisticDTO> listInfo = new List<UserAllInfoStatisticDTO>();
+        UserAllInfoStatisticDTO? info = await _dataBaseRepository.GetAllInfoUser(userId);
+        listInfo.Add(info);
 
-        return Ok(info);
+        return Ok(listInfo);
     }
 
     [HttpGet]
     public async Task<IActionResult?> GetAllEventsForAllCommands()
     {
-        List<EventsForAllCommandsModelDTO> events  = await  _dataBaseRepository.GetAllEventsForAllCommands();
+        List<EventsForAllCommandsModelDTO> events = await _dataBaseRepository.GetAllEventsForAllCommands();
         return Ok(events);
 
     }
