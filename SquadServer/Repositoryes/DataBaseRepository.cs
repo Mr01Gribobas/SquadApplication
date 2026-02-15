@@ -1,4 +1,5 @@
-﻿using SquadServer.Models;
+﻿using SquadServer.DTO_Classes.DTO_AuxiliaryModels;
+using SquadServer.Models;
 using static SquadServer.Controllers.NotificationController;
 namespace SquadServer.Repositoryes;
 
@@ -21,7 +22,7 @@ public class DataBaseRepository
         {
             return new EvenCheck(isGoTogame: userIsgoing._goingToTheGame ?? false, availabilityEvent: true);
         }
-        return new EvenCheck(isGoTogame:false, availabilityEvent: false);
+        return new EvenCheck(isGoTogame: false, availabilityEvent: false);
     }
 
 
@@ -170,4 +171,50 @@ public class DataBaseRepository
 
         return resultSearch;
     }
+
+    public async Task<List<EventsForAllCommandsModelDTO>> GetAllEventsForAllCommands()
+    {
+        var listEvents = await _squadDbContext.EventsForAllCommands.Include(e=>e.Players).ToListAsync();
+
+        if(listEvents is null || listEvents.Count <= 0)
+        {
+            return null;
+        }
+        List<EventsForAllCommandsModelDTO> newList = new();
+        foreach(EventsForAllCommandsModelEntity ev in listEvents)
+        {
+            newList.Add(new EventsForAllCommandsModelDTO
+                (
+                TeamNameOrganization: ev.TeamNameOrganization,
+                DescriptionFull: ev.DescriptionFull,
+                DescriptionShort: ev.DescriptionShort,
+                CoordinatesPolygon: ev.CoordinatesPolygon,
+                PolygonName: ev.PolygonName,
+                Users: ev.Players.ToList()
+                ));
+        }
+        return newList;
+    }
+
+    public async Task<UserAllInfoStatisticDTO> GetAllInfoUser(int userId)
+    {
+        var user = await _squadDbContext.Players.Include(s=>s.Statistic).FirstOrDefaultAsync(u=>u.Id==userId);
+
+        var statistic = await _squadDbContext.PlayerStatistics.Include(u=>u.UserModel).FirstOrDefaultAsync(u=>u.Id==userId);
+
+        UserAllInfoStatisticDTO statisticDTO = new UserAllInfoStatisticDTO(
+            NamePlayer: user._userName ,
+            CallSingPlayer:user._callSing,
+            CountKill:statistic.CountKill,
+            CountDieds:statistic.CountDieds,
+            CountEvents:statistic.CountEvents,
+            CountFees:statistic.CountFees,
+            LastUpdateDataStatistics:statistic.LastUpdateDataStatistics,
+            OldDataJson:statistic.OldDataJson,
+            Achievements:statistic.Achievements
+            );
+        return statisticDTO;
+    }  
 }
+            
+            

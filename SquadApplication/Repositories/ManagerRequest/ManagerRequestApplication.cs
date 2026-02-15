@@ -100,6 +100,15 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
                 {
                     return objects;
                 }
+                break;                
+
+             case GetRequests.AllInfoForProfile:
+
+                (bool flowAllInfo, List<T>? statistics)  = await RequestAction();
+                if(!flowAllInfo)
+                {
+                    return statistics;
+                }
                 break;
             default:
                 return null;

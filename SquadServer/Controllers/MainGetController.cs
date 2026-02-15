@@ -1,4 +1,5 @@
 ﻿using SquadServer.DTO_Classes;
+using SquadServer.DTO_Classes.DTO_AuxiliaryModels;
 using SquadServer.Extension;
 using SquadServer.Models;
 using SquadServer.Repositoryes;
@@ -112,15 +113,18 @@ public class MainGetController : Controller
     }
 
     [HttpGet]
-    public IActionResult? GetAllInfoUser(int userId)
+    public async Task<IActionResult?> GetAllInfoUser(int userId)
     {
-        return default(IActionResult?);
+       UserAllInfoStatisticDTO? info = await _dataBaseRepository.GetAllInfoUser(userId);
+
+        return Ok(info);
     }
 
     [HttpGet]
-    public IActionResult? GetAllEventsForAllCommands()
+    public async Task<IActionResult?> GetAllEventsForAllCommands()
     {
-        return default(IActionResult?);
+        List<EventsForAllCommandsModelDTO> events  = await  _dataBaseRepository.GetAllEventsForAllCommands();
+        return Ok(events);
 
     }
 
