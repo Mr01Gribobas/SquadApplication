@@ -24,7 +24,11 @@ public partial class EventsForAllCommandsView : ObservableObject
     public async void CreateEvent()
     {
         Console.WriteLine("Create");
-        await Shell.Current.GoToAsync($"/{nameof(CreateEventsForAllCommandsPage)}/?UserId={_user.UserId}");
+        if(_user.CurrentUser._role != Role.Commander)
+        {
+            return;
+        }
+        await Shell.Current.GoToAsync($"/{nameof(CreateEventsForAllCommandsPage)}/?CommanderId={_user.UserId}");
 
     }
 

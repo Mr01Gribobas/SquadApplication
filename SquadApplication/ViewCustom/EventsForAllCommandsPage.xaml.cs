@@ -8,7 +8,7 @@ public partial class EventsForAllCommandsPage : ContentPage
     public EventsForAllCommandsPage(IUserSession user)
 	{
 		_user = user;
-		_eventsForAllCommandsView = new EventsForAllCommandsView(user);
+		_eventsForAllCommandsView = new EventsForAllCommandsView(this,user);
 		BindingContext = _eventsForAllCommandsView;
         InitializeComponent();
         Loaded += EventsForAllCommandsPage_Loaded;
