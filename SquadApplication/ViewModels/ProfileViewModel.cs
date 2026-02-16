@@ -57,10 +57,13 @@ public partial class ProfileViewModel : ObservableObject
 
     private async Task InitialProperty(UserAllInfoStatisticDTO model)
     {
-        UserAllInfoStatisticDTO? result = JsonSerializer.Deserialize<UserAllInfoStatisticDTO>(model.OldDataJson);
-        _oldDataJson = result ??= new UserAllInfoStatisticDTO
-                                                     ("??", "??", 0, 0, 0, 0, default, "??",
-                                                     new List<Achievement>(){ new Achievement() {NameAchievement="??",Discription="??" } });
+        if(model.OldDataJson is not null)
+        {
+            UserAllInfoStatisticDTO? result = JsonSerializer.Deserialize<UserAllInfoStatisticDTO>(model.OldDataJson);
+            _oldDataJson = result ??= new UserAllInfoStatisticDTO
+                                                         ("??", "??", 0, 0, 0, 0, default, "??",
+                                                         new List<Achievement>() { new Achievement() { NameAchievement = "??", Discription = "??" } });
+        }
         CallSingPlayer = model.CallSingPlayer;
         CountDieds = model.CountDieds;
         CountKill = model.CountKill;
@@ -68,7 +71,7 @@ public partial class ProfileViewModel : ObservableObject
         CountEvents = model.CountEvents;
         LastUpdateDataStatistics = model.LastUpdateDataStatistics.ToString();
 
-        if(model.Achievements.Count >0 )
+        if(model.Achievements.Count > 0)
         {
             foreach(Achievement item in model.Achievements)
             {
@@ -76,8 +79,8 @@ public partial class ProfileViewModel : ObservableObject
             }
         }
     }
-    
 
-    
+
+
 
 }
