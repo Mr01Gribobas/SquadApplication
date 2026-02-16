@@ -1,4 +1,5 @@
 ﻿namespace SquadApplication.ViewModels;
+
 public partial class ParticipantsViewModel : ObservableObject
 {
     private UserModelEntity _userModelEntity;
@@ -21,19 +22,54 @@ public partial class ParticipantsViewModel : ObservableObject
         _requestsInServer = new ManagerGetRequests<UserModelEntity>();
         _userModelEntity = userModel;
     }
-        
+
 
 
     [RelayCommand]
-    public void PromoteAPlayer(UserModelEntity user)
+    public async Task PromoteAPlayer(UserModelEntity user)
     {
-        _requestsInServer.SetUrl($"");
+        if(!await ExamingOperation(user, true))
+            return;
+
+        _requestsInServer.SetUrl($"PlayerUpdateRank?userId={user.Id}");
     }
 
-    [RelayCommand]
-    public void DemoteAPlayer(UserModelEntity user)
-    {
 
+    [RelayCommand]
+    public async Task DemoteAPlayer(UserModelEntity user)
+    {
+        if(!await ExamingOperation(user, false))
+            return;
+
+    }
+    private async Task<bool> ExamingOperation(UserModelEntity user, bool rank)
+    {
+        try
+        {
+            if(user is null)
+                throw new ArgumentNullException("user is null");
+
+            if(rank)
+            {
+                if(rank && user._role == Role.AssistantCommander)
+                    return await _participantsPage.DisplayAlertAsync("Предупреждение", "Следующее звание игрока ~Командир~ и он займет ваше место a вы станете его заместителем", "Продолжить", "Отмена");
+                if(rank && user._role == Role.Commander)
+                    throw new Exception("Вы не можете повысить самого себя...Куда еще выше ?");
+            }
+            else
+            {
+                if(!rank && user._role == Role.Private)
+                    return await _participantsPage.DisplayAlertAsync("Предупреждение", "Нету звания ниже ~Рядового~ продолжая операцию вы удалите игрока из команды а его данные и достижения будут стёрты  ", "Продолжить", "Отмена");
+                if(!rank && user._role == Role.Commander)
+                    throw new Exception("Вы не можете понизить самого себя только путем повышения своего помощника ");
+            }
+            return true;
+        }
+        catch(Exception ex)
+        {                                                     
+            await _participantsPage.DisplayAlertAsync("Error", $"{ex.Message}", "Ok");
+            return false;
+        }
     }
 
 

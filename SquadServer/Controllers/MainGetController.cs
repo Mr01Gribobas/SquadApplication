@@ -1,11 +1,4 @@
-﻿using SquadServer.DTO_Classes;
-using SquadServer.DTO_Classes.DTO_AuxiliaryModels;
-using SquadServer.Extension;
-using SquadServer.Models;
-using SquadServer.Repositoryes;
-using System.Text.Json;
-
-namespace SquadServer.Controllers;
+﻿namespace SquadServer.Controllers;
 
 public class MainGetController : Controller
 {
@@ -16,6 +9,13 @@ public class MainGetController : Controller
     {
         _squadDbContext = squadDb;
         _dataBaseRepository = new DataBaseRepository(_squadDbContext);
+    }
+
+
+    [HttpPatch]
+    public IActionResult? PlayerUpdateRank(int userId , bool rank)
+    {
+        return default(IActionResult?);
     }
 
 
