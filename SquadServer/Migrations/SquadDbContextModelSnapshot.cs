@@ -293,6 +293,9 @@ namespace SquadServer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserModelId")
+                        .IsUnique();
+
                     b.ToTable("PlayerStatistics");
                 });
 
@@ -440,10 +443,6 @@ namespace SquadServer.Migrations
 
                     b.HasIndex("EventsForAllCommandsModelEntityId");
 
-                    b.HasIndex("StatisticId")
-                        .IsUnique()
-                        .HasFilter("[StatisticId] IS NOT NULL");
-
                     b.HasIndex("TeamId");
 
                     b.ToTable("Players");
@@ -484,6 +483,17 @@ namespace SquadServer.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SquadServer.Models.ModelsEntity.PlayerStatisticsModelEntity", b =>
+                {
+                    b.HasOne("SquadServer.Models.UserModelEntity", "UserModel")
+                        .WithOne("Statistic")
+                        .HasForeignKey("SquadServer.Models.ModelsEntity.PlayerStatisticsModelEntity", "UserModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserModel");
+                });
+
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.TeamEntity", b =>
                 {
                     b.HasOne("SquadServer.Models.ModelsEntity.EventModelEntity", "Event")
@@ -511,17 +521,10 @@ namespace SquadServer.Migrations
                         .WithMany("Players")
                         .HasForeignKey("EventsForAllCommandsModelEntityId");
 
-                    b.HasOne("SquadServer.Models.ModelsEntity.PlayerStatisticsModelEntity", "Statistic")
-                        .WithOne("UserModel")
-                        .HasForeignKey("SquadServer.Models.UserModelEntity", "StatisticId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("SquadServer.Models.ModelsEntity.TeamEntity", "Team")
                         .WithMany("Members")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Statistic");
 
                     b.Navigation("Team");
                 });
@@ -537,12 +540,6 @@ namespace SquadServer.Migrations
                     b.Navigation("Players");
                 });
 
-            modelBuilder.Entity("SquadServer.Models.ModelsEntity.PlayerStatisticsModelEntity", b =>
-                {
-                    b.Navigation("UserModel")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.TeamEntity", b =>
                 {
                     b.Navigation("Members");
@@ -553,6 +550,8 @@ namespace SquadServer.Migrations
             modelBuilder.Entity("SquadServer.Models.UserModelEntity", b =>
                 {
                     b.Navigation("Equipment");
+
+                    b.Navigation("Statistic");
                 });
 #pragma warning restore 612, 618
         }

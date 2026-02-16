@@ -9,7 +9,7 @@ public class PlayerStatisticsModelEntityConfig : IEntityTypeConfiguration<Player
         builder.
             HasOne(p => p.UserModel).
             WithOne(p => p.Statistic).
-            HasForeignKey<UserModelEntity>(u=>u.StatisticId);
+            HasForeignKey<PlayerStatisticsModelEntity>(u=>u.UserModelId);
 
         builder.Ignore(e => e.Achievements);
     }

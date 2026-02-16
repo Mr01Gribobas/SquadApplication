@@ -64,29 +64,6 @@ namespace SquadServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PlayerStatistics",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NamePlayer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CallSingPlayer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CountKill = table.Column<int>(type: "int", nullable: false),
-                    CountDieds = table.Column<int>(type: "int", nullable: false),
-                    CountFees = table.Column<int>(type: "int", nullable: false),
-                    CountEvents = table.Column<int>(type: "int", nullable: false),
-                    LastUpdateDataStatistics = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OldDataJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AchievementsJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsCommanderCheck = table.Column<bool>(type: "bit", nullable: false),
-                    UserModelId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PlayerStatistics", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Polygons",
                 columns: table => new
                 {
@@ -149,12 +126,6 @@ namespace SquadServer.Migrations
                         column: x => x.EventsForAllCommandsModelEntityId,
                         principalTable: "EventsForAllCommands",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Players_PlayerStatistics_StatisticId",
-                        column: x => x.StatisticId,
-                        principalTable: "PlayerStatistics",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Players_Teams_TeamId",
                         column: x => x.TeamId,
@@ -272,6 +243,35 @@ namespace SquadServer.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PlayerStatistics",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NamePlayer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CallSingPlayer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CountKill = table.Column<int>(type: "int", nullable: false),
+                    CountDieds = table.Column<int>(type: "int", nullable: false),
+                    CountFees = table.Column<int>(type: "int", nullable: false),
+                    CountEvents = table.Column<int>(type: "int", nullable: false),
+                    LastUpdateDataStatistics = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    OldDataJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AchievementsJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsCommanderCheck = table.Column<bool>(type: "bit", nullable: false),
+                    UserModelId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlayerStatistics", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlayerStatistics_Players_UserModelId",
+                        column: x => x.UserModelId,
+                        principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_DeviceRegistartionModelEntities_UserId",
                 table: "DeviceRegistartionModelEntities",
@@ -299,16 +299,15 @@ namespace SquadServer.Migrations
                 column: "EventsForAllCommandsModelEntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Players_StatisticId",
-                table: "Players",
-                column: "StatisticId",
-                unique: true,
-                filter: "[StatisticId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Players_TeamId",
                 table: "Players",
                 column: "TeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlayerStatistics_UserModelId",
+                table: "PlayerStatistics",
+                column: "UserModelId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reantils_TeamId",
@@ -339,6 +338,9 @@ namespace SquadServer.Migrations
                 name: "Notifications");
 
             migrationBuilder.DropTable(
+                name: "PlayerStatistics");
+
+            migrationBuilder.DropTable(
                 name: "Polygons");
 
             migrationBuilder.DropTable(
@@ -349,9 +351,6 @@ namespace SquadServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "EventsForAllCommands");
-
-            migrationBuilder.DropTable(
-                name: "PlayerStatistics");
 
             migrationBuilder.DropTable(
                 name: "Teams");

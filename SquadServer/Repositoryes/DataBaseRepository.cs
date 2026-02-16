@@ -207,7 +207,10 @@ public class DataBaseRepository
             {
                 NamePlayer = user._userName,
                 CallSingPlayer = user._callSing,
-                LastUpdateDataStatistics = DateTime.UtcNow
+                LastUpdateDataStatistics = DateTime.UtcNow,
+                UserModel = user,
+                UserModelId = userId
+                
             };
             await _squadDbContext.PlayerStatistics.AddAsync(statistic);
             await _squadDbContext.SaveChangesAsync();
