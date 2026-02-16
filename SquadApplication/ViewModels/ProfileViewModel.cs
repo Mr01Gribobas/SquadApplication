@@ -91,7 +91,8 @@ public partial class ProfileViewModel : ObservableObject
         LiveWeapon = model.LiveWeapon;
         AchievementsCount = model.Achievements.Count;
         PlayerRole = _user._role.ToString();
-        PlayerName = _user._userName
+        PlayerName = _user._userName;
+        DataRegistr = $"Дата регистрации {_user._dataRegistr}";
 
         if(model.Achievements.Count > 0)
         {

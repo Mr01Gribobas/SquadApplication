@@ -64,6 +64,7 @@ public class UserModelEntity
             _phoneNumber = _phone,
             _age = _age,
             _enterCode = GenerationCode(_phone),
+            _dataRegistr = DateTime.UtcNow,
             TeamId = _teamId
         };
 

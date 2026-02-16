@@ -20,6 +20,9 @@ public class UserModelEntity
     [JsonInclude]
     public bool? _isStaffed { get; private set; }//укомплектованность
 
+    [JsonInclude]
+    public DateTime _dataRegistr { get; private set; }
+
 
 
     public bool? _goingToTheGame { get; set; }//явка на игру 
