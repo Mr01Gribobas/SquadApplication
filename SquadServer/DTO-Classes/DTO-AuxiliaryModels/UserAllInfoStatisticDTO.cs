@@ -5,6 +5,7 @@ namespace SquadServer.DTO_Classes.DTO_AuxiliaryModels;
 
 public record class UserAllInfoStatisticDTO
     (
+    string LiveWeapon,
     string NamePlayer,
     string CallSingPlayer,
     int CountKill,

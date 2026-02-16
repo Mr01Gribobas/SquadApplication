@@ -198,9 +198,9 @@ public class DataBaseRepository
 
     public async Task<UserAllInfoStatisticDTO> GetAllInfoUser(int userId)
     {
-        var user = await _squadDbContext.Players.Include(s => s.Statistic).FirstOrDefaultAsync(u => u.Id == userId);
+        var user = await _squadDbContext.Players.Include(s => s.Statistic).Include(e=>e.Equipment).FirstOrDefaultAsync(u => u.Id == userId);
 
-        PlayerStatisticsModelEntity? statistic = await _squadDbContext.PlayerStatistics.Include(u => u.UserModel).FirstOrDefaultAsync(u => u.Id == userId);
+        PlayerStatisticsModelEntity? statistic = await _squadDbContext.PlayerStatistics.Include(u => u.UserModel).FirstOrDefaultAsync(u => u.UserModelId == userId);
         if(statistic is null)
         {
             statistic = new PlayerStatisticsModelEntity()
@@ -217,6 +217,7 @@ public class DataBaseRepository
         }
 
         UserAllInfoStatisticDTO statisticDTO = new UserAllInfoStatisticDTO(
+            LiveWeapon:user.Equipment?.NameMainWeapon??"Не найдено",
             NamePlayer: user._userName,
             CallSingPlayer: user._callSing,
             CountKill: statistic.CountKill,

@@ -25,7 +25,10 @@ public class UserModelEntity
     public int? _age { get; private set; }//возраст
 
     [JsonInclude]
-    public bool? _isStaffed { get; private set; }//укомплектованность
+    public bool? _isStaffed { get; private set; }//укомплектованность\
+
+    [JsonInclude]
+    public DateTime _dataRegistr {  get; private set; }
 
 
     public Int64 _enterCode { get; set; }

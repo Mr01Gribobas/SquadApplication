@@ -102,11 +102,11 @@
                                            TextColor="#b3c96b"
                                            FontSize="11"
                                            Opacity="0.9"/>
-                                    <Label Text="Текст тест"
+                                    <Label Text="{Binding CallSingPlayer}"
                                            TextColor="White"
                                            FontSize="26"
                                            FontAttributes="Bold"/>
-                                    <Label Text="Текст тест"
+                                    <Label Text="{Binding PlayerName}"
                                            TextColor="#b3c96b"
                                            FontSize="14"
                                            Opacity="0.8"/>
@@ -117,10 +117,11 @@
                                         Stroke="Transparent"
                                         StrokeShape="8"
                                         Padding="12,8">
-                                    <Label Text="Текст тест"
+                                    <Label Text="{Binding PlayerRole}"
                                            TextColor="White"
                                            FontSize="14"
                                            FontAttributes="Bold"/>
+                                    
                                 </Border>
                             </Grid>
                         </Border>
@@ -149,18 +150,14 @@
                                     <Label Text="📅"
                                            FontSize="18"
                                            TextColor="#b3c96b"/>
-                                    <Label Text="В ЗОНЕ"
+                                    <Label Text="Дата регистрации"
                                            TextColor="#b3c96b"
                                            FontSize="10"
                                            Opacity="0.9"/>
-                                    <Label Text="Текст тест"
+                                    <Label Text="{Binding DataRegistr}"
                                            TextColor="White"
                                            FontSize="18"
-                                           FontAttributes="Bold"/>
-                                    <Label Text="Текст тест"
-                                           TextColor="White"
-                                           FontSize="9"
-                                           Opacity="0.7"/>
+                                           FontAttributes="Bold"/>                                   
                                 </VerticalStackLayout>
                             </Border>
 
@@ -181,7 +178,7 @@
                                            TextColor="#b3c96b"
                                            FontSize="10"
                                            Opacity="0.9"/>
-                                    <Label Text="Текст тест"
+                                    <Label Text="{Binding CountKill}"
                                            TextColor="White"
                                            FontSize="22"
                                            FontAttributes="Bold"/>
@@ -205,11 +202,11 @@
                                     <Label Text="🎯"
                                            FontSize="18"
                                            TextColor="#b3c96b"/>
-                                    <Label Text="ТОЧНОСТЬ"
+                                    <Label Text="Смертей"
                                            TextColor="#b3c96b"
                                            FontSize="10"
                                            Opacity="0.9"/>
-                                    <Label Text="Текст тест"
+                                    <Label Text="{Binding CountDieds}"
                                            TextColor="White"
                                            FontSize="22"
                                            FontAttributes="Bold"/>
@@ -234,18 +231,15 @@
                                     <Label Text="🎮"
                                            FontSize="18"
                                            TextColor="#b3c96b"/>
-                                    <Label Text="ИГР"
+                                    <Label Text="Сври игры"
                                            TextColor="#b3c96b"
                                            FontSize="10"
                                            Opacity="0.9"/>
-                                    <Label Text="Текст тест"
+                                    <Label Text="{Binding CountFees}"
                                            TextColor="White"
                                            FontSize="20"
                                            FontAttributes="Bold"/>
-                                    <Label Text="мероприятий"
-                                           TextColor="White"
-                                           FontSize="9"
-                                           Opacity="0.7"/>
+                                   
                                 </VerticalStackLayout>
                             </Border>
 
@@ -262,18 +256,15 @@
                                     <Label Text="📋"
                                            FontSize="18"
                                            TextColor="#b3c96b"/>
-                                    <Label Text="СБОРЫ"
+                                    <Label Text="Мероприятия"
                                            TextColor="#b3c96b"
                                            FontSize="10"
                                            Opacity="0.9"/>
-                                    <Label Text="Текст тест"
+                                    <Label Text="{Binding CountEvents}"
                                            TextColor="White"
                                            FontSize="20"
                                            FontAttributes="Bold"/>
-                                    <Label Text="командных"
-                                           TextColor="White"
-                                           FontSize="9"
-                                           Opacity="0.7"/>
+                                    
                                 </VerticalStackLayout>
                             </Border>
 
@@ -290,11 +281,11 @@
                                     <Label Text="📌"
                                            FontSize="18"
                                            TextColor="#b3c96b"/>
-                                    <Label Text="ЗАДАНИЙ"
+                                    <Label Text="Достижений"
                                            TextColor="#b3c96b"
                                            FontSize="10"
                                            Opacity="0.9"/>
-                                    <Label Text="Текст тест"
+                                    <Label Text="{ Binding AchievementsCount}"
                                            TextColor="White"
                                            FontSize="20"
                                            FontAttributes="Bold"/>

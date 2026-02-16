@@ -15,6 +15,24 @@ public partial class ProfileViewModel : ObservableObject
     [ObservableProperty]
     private string callSingPlayer;
 
+
+    [ObservableProperty]
+    private string playerName;
+
+    [ObservableProperty]
+    private string playerRole;
+
+    [ObservableProperty]
+    private string dataRegistr;
+
+    [ObservableProperty]
+    private int achievementsCount;
+
+    [ObservableProperty]
+    private string liveWeapon;
+
+
+
     [ObservableProperty]
     private int countKill;
 
@@ -61,7 +79,7 @@ public partial class ProfileViewModel : ObservableObject
         {
             UserAllInfoStatisticDTO? result = JsonSerializer.Deserialize<UserAllInfoStatisticDTO>(model.OldDataJson);
             _oldDataJson = result ??= new UserAllInfoStatisticDTO
-                                                         ("??", "??", 0, 0, 0, 0, default, "??",
+                                                         ("??","??", "??", 0, 0, 0, 0, default, "??",
                                                          new List<Achievement>() { new Achievement() { NameAchievement = "??", Discription = "??" } });
         }
         CallSingPlayer = model.CallSingPlayer;
@@ -70,6 +88,10 @@ public partial class ProfileViewModel : ObservableObject
         CountFees = model.CountFees;
         CountEvents = model.CountEvents;
         LastUpdateDataStatistics = model.LastUpdateDataStatistics.ToString();
+        LiveWeapon = model.LiveWeapon;
+        AchievementsCount = model.Achievements.Count;
+        PlayerRole = _user._role.ToString();
+        PlayerName = _user._userName
 
         if(model.Achievements.Count > 0)
         {
