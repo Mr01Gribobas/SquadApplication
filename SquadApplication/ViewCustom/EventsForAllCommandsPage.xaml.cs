@@ -16,6 +16,6 @@ public partial class EventsForAllCommandsPage : ContentPage
 
     private void EventsForAllCommandsPage_Loaded(object? sender, EventArgs e)
     {
-        _eventsForAllCommandsView.GetEvents();
+        _eventsForAllCommandsView.GetEventsAsync();
     }
 }

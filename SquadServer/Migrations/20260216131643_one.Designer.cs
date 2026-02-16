@@ -12,7 +12,7 @@ using SquadServer.Models.DbContextDir;
 namespace SquadServer.Migrations
 {
     [DbContext(typeof(SquadDbContext))]
-    [Migration("20260214110102_one")]
+    [Migration("20260216131643_one")]
     partial class one
     {
         /// <inheritdoc />
@@ -161,6 +161,9 @@ namespace SquadServer.Migrations
 
                     b.Property<string>("PolygonName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TeamIdOrganization")
+                        .HasColumnType("int");
 
                     b.Property<string>("TeamNameOrganization")
                         .IsRequired()

@@ -1,6 +1,8 @@
 ﻿using SquadServer.DTO_Classes.DTO_AuxiliaryModels;
+using SquadServer.Models.ModelsEntity.AuxiliaryModels;
 
 namespace SquadApplication.ViewModels;
+
 public partial class ProfileViewModel : ObservableObject
 {
     private readonly ProfilePage _homePage;
@@ -8,17 +10,74 @@ public partial class ProfileViewModel : ObservableObject
     private UserAllInfoStatisticDTO _userInfo;
     private readonly ManagerGetRequests<UserAllInfoStatisticDTO> _managerGet;
 
-    public ProfileViewModel(ProfilePage page , UserModelEntity userModel) 
+    private UserAllInfoStatisticDTO _oldDataJson;
+
+    [ObservableProperty]
+    private string callSingPlayer;
+
+    [ObservableProperty]
+    private int countKill;
+
+    [ObservableProperty]
+    private int countDieds;
+
+    [ObservableProperty]
+    private int countFees;
+
+    [ObservableProperty]
+    private int countEvents;
+
+    [ObservableProperty]
+    private string lastUpdateDataStatistics;
+
+    [ObservableProperty]
+    private ObservableCollection<Achievement> achievements;
+
+
+
+    public ProfileViewModel(ProfilePage page, UserModelEntity userModel)
     {
         _user = userModel;
-       _homePage = page;
+        _homePage = page;
         _managerGet = new ManagerGetRequests<UserAllInfoStatisticDTO>();
+        achievements = new ObservableCollection<Achievement>();
     }
 
     public async void GetFullInfoForProfile(int id)
     {
         _managerGet.SetUrl($"GetAllInfoUser?userId={_user.Id}");
         List<UserAllInfoStatisticDTO>? responce = await _managerGet.GetDataAsync(GetRequests.AllInfoForProfile);
+        if(responce.Count > 0 && responce.FirstOrDefault() is not null)
+        {
+
+            InitialProperty(responce.FirstOrDefault());
+        }
         _managerGet.ResetUrlAndStatusCode();
     }
+
+    private async Task InitialProperty(UserAllInfoStatisticDTO model)
+    {
+        UserAllInfoStatisticDTO? result = JsonSerializer.Deserialize<UserAllInfoStatisticDTO>(model.OldDataJson);
+        _oldDataJson = result ??= new UserAllInfoStatisticDTO
+                                                     ("??", "??", 0, 0, 0, 0, default, "??",
+                                                     new List<Achievement>(){ new Achievement() {NameAchievement="??",Discription="??" } });
+        CallSingPlayer = model.CallSingPlayer;
+        CountDieds = model.CountDieds;
+        CountKill = model.CountKill;
+        CountFees = model.CountFees;
+        CountEvents = model.CountEvents;
+        LastUpdateDataStatistics = model.LastUpdateDataStatistics.ToString();
+
+        if(model.Achievements.Count >0 )
+        {
+            foreach(Achievement item in model.Achievements)
+            {
+                Achievements.Add(item);
+            }
+        }
+    }
+    
+
+    
+
 }

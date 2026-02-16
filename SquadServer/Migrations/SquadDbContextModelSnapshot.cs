@@ -159,6 +159,9 @@ namespace SquadServer.Migrations
                     b.Property<string>("PolygonName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TeamIdOrganization")
+                        .HasColumnType("int");
+
                     b.Property<string>("TeamNameOrganization")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
