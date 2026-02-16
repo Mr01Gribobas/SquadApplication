@@ -416,6 +416,9 @@ namespace SquadServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("_dataRegistr")
+                        .HasColumnType("datetime2");
+
                     b.Property<long>("_enterCode")
                         .HasColumnType("bigint");
 

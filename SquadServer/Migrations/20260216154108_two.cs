@@ -111,6 +111,7 @@ namespace SquadServer.Migrations
                     _userName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     _age = table.Column<int>(type: "int", nullable: true),
                     _isStaffed = table.Column<bool>(type: "bit", nullable: true),
+                    _dataRegistr = table.Column<DateTime>(type: "datetime2", nullable: false),
                     _enterCode = table.Column<long>(type: "bigint", nullable: false),
                     _goingToTheGame = table.Column<bool>(type: "bit", nullable: true),
                     EquipmentId = table.Column<int>(type: "int", nullable: true),

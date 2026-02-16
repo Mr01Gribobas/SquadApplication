@@ -12,7 +12,7 @@ using SquadServer.Models.DbContextDir;
 namespace SquadServer.Migrations
 {
     [DbContext(typeof(SquadDbContext))]
-    [Migration("20260216145431_two")]
+    [Migration("20260216154108_two")]
     partial class two
     {
         /// <inheritdoc />
@@ -418,6 +418,9 @@ namespace SquadServer.Migrations
                     b.Property<string>("_callSing")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("_dataRegistr")
+                        .HasColumnType("datetime2");
 
                     b.Property<long>("_enterCode")
                         .HasColumnType("bigint");
