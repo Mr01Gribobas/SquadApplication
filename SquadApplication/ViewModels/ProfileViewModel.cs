@@ -72,7 +72,7 @@ public partial class ProfileViewModel : ObservableObject
         if(responce.Count > 0 && responce.FirstOrDefault() is not null)
         {
 
-            InitialProperty(responce.FirstOrDefault());
+             InitialProperty(responce.FirstOrDefault());
         }
         _managerGet.ResetUrlAndStatusCode();
     }
