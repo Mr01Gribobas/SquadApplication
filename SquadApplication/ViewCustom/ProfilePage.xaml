@@ -361,7 +361,7 @@
                                            TextColor="#b3c96b"
                                            FontSize="12"
                                            Opacity="0.9"/>
-                                    <Label Text="Текст тест"
+                                    <Label Text="{Binding LiveWeapon}"
                                            TextColor="White"
                                            FontSize="18"
                                            FontAttributes="Bold"/>
@@ -439,122 +439,39 @@
                                    Padding="15"
                                    JustifyContent="SpaceBetween">
 
-                            <!-- Ветеран -->
-                            <Border WidthRequest="100"
-                                   HeightRequest="100"
-                                   Margin="2"
-                                   BackgroundColor="#30808080"
-                                   Stroke="#b3c96b"
-                                   StrokeThickness="1"
-                                   StrokeShape="12"
-                                   Padding="12"
-                                   Opacity="1">
-                                <VerticalStackLayout Spacing="5"
-                                                   HorizontalOptions="Center"
-                                                   VerticalOptions="Center">
-                                    <Label Text="⚔️"
-                                           FontSize="32"
-                                           TextColor="#b3c96b"
-                                           HorizontalTextAlignment="Center"/>
-                                    <Label Text="ВЕТЕРАН"
-                                           TextColor="White"
-                                           FontSize="10"
-                                           FontAttributes="Bold"
-                                           HorizontalTextAlignment="Center"/>
-                                    <Label Text="50+ игр"
-                                           TextColor="#b3c96b"
-                                           FontSize="8"
-                                           Opacity="0.8"
-                                           HorizontalTextAlignment="Center"/>
-                                </VerticalStackLayout>
-                            </Border>
+                            <CollectionView
+                                 x:Name="AchievementsList"
+                                 BackgroundColor="#50508080"
+                                ItemsSource="{Binding Achievements}" >
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
 
-                            <!-- Снайпер -->
-                            <Border WidthRequest="100"
-                                   HeightRequest="100"
-                                   Margin="2"
-                                   BackgroundColor="#30808080"
-                                   Stroke="#b3c96b"
-                                   StrokeThickness="1"
-                                   StrokeShape="12"
-                                   Padding="12"
-                                   Opacity="1">
-                                <VerticalStackLayout Spacing="5"
-                                                   HorizontalOptions="Center"
-                                                   VerticalOptions="Center">
-                                    <Label Text="🎯"
-                                           FontSize="32"
-                                           TextColor="#b3c96b"
-                                           HorizontalTextAlignment="Center"/>
-                                    <Label Text="СНАЙПЕР"
-                                           TextColor="White"
-                                           FontSize="10"
-                                           FontAttributes="Bold"
-                                           HorizontalTextAlignment="Center"/>
-                                    <Label Text="100 убийств"
-                                           TextColor="#b3c96b"
-                                           FontSize="8"
-                                           Opacity="0.8"
-                                           HorizontalTextAlignment="Center"/>
-                                </VerticalStackLayout>
-                            </Border>
+                                                                                        
+                                            
+                                        <Border 
+                                            BackgroundColor="#30808080"
+                                            Stroke="#b3c96b"
+                                            StrokeThickness="1"
+                                            StrokeShape="12"
+                                            Padding="15">
+                                        
+                                        <VerticalStackLayout Spacing="8">
+                                            <Label Text="{Binding Path=NameAchievement}"
+                                                   TextColor="#b3c96b"
+                                                   FontSize="12"
+                                                   Opacity="0.9"/>
+                                            <Label Text="{Binding Path=Discription}"
+                                                   TextColor="White"
+                                                   FontSize="18"
+                                                   FontAttributes="Bold"/>
+                                            
+                                        </VerticalStackLayout>
+                                       </Border>
 
-                            <!-- Организатор -->
-                            <Border WidthRequest="100"
-                                   HeightRequest="100"
-                                   Margin="2"
-                                   BackgroundColor="#30808080"
-                                   Stroke="#b3c96b"
-                                   StrokeThickness="1"
-                                   StrokeShape="12"
-                                   Padding="12"
-                                   Opacity="0.14">
-                                <VerticalStackLayout Spacing="5"
-                                                   HorizontalOptions="Center"
-                                                   VerticalOptions="Center">
-                                    <Label Text="📋"
-                                           FontSize="32"
-                                           TextColor="#b3c96b"
-                                           HorizontalTextAlignment="Center"/>
-                                    <Label Text="КОМАНДИР"
-                                           TextColor="White"
-                                           FontSize="10"
-                                           FontAttributes="Bold"
-                                           HorizontalTextAlignment="Center"/>
-                                    <Label Text="10 сборов"
-                                           TextColor="#b3c96b"
-                                           FontSize="8"
-                                           Opacity="0.8"
-                                           HorizontalTextAlignment="Center"/>
-                                </VerticalStackLayout>
-                            </Border>
-
-                            <!-- Заблокировано -->
-                            <Border WidthRequest="100"
-                                   HeightRequest="100"
-                                   Margin="2"
-                                   BackgroundColor="#20808080"
-                                   Stroke="#b3c96b"
-                                   StrokeThickness="1"
-                                   StrokeDashArray="2,2"
-                                   StrokeShape="12"
-                                   Padding="12"
-                                   Opacity="0.5">
-                                <VerticalStackLayout Spacing="5"
-                                                   HorizontalOptions="Center"
-                                                   VerticalOptions="Center">
-                                    <Label Text="❓"
-                                           FontSize="32"
-                                           TextColor="#b3c96b"
-                                           Opacity="0.5"
-                                           HorizontalTextAlignment="Center"/>
-                                    <Label Text="?????"
-                                           TextColor="White"
-                                           FontSize="10"
-                                           Opacity="0.5"
-                                           HorizontalTextAlignment="Center"/>
-                                </VerticalStackLayout>
-                            </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                                
+                            </CollectionView>
                         </FlexLayout>
                     </VerticalStackLayout>
                 </Border>
@@ -562,6 +479,8 @@
                 
 
                 <!-- Нижняя панель - время и статус -->
+
+                   
                 <Border BackgroundColor="#40808080"
                         Stroke="#b3c96b"
                         StrokeThickness="1"
@@ -569,53 +488,29 @@
                         StrokeShape="0"
                         Padding="15"
                         Opacity="0.7">
-
-                    <Grid ColumnDefinitions="*, *, *">
-                        <!-- Время -->
-                        <HorizontalStackLayout Grid.Column="0"
-                                              Spacing="8"
-                                              VerticalOptions="Center">
-                            <Label Text="🕐"
-                                   FontSize="16"
-                                   TextColor="#b3c96b"/>
-                            <Label Text="Текст тест"
-                                   TextColor="White"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   FontFamily="Courier"/>
-                        </HorizontalStackLayout>
-
-                        <!-- Дата -->
-                        <HorizontalStackLayout Grid.Column="1"
+                        <HorizontalStackLayout 
                                               Spacing="8"
                                               HorizontalOptions="Center"
                                               VerticalOptions="Center">
-                            <Label Text="📅"
-                                   FontSize="16"
-                                   TextColor="#b3c96b"/>
-                            <Label Text="Текст тест"
-                                   TextColor="White"
-                                   FontSize="14"/>
-                        </HorizontalStackLayout>
-
-                        <!-- Проверено -->
-                        <HorizontalStackLayout Grid.Column="2"
-                                              Spacing="8"
-                                              HorizontalOptions="End"
-                                              VerticalOptions="Center">
-                            <Label Text="✓"
-                                   FontSize="18"
-                                   TextColor="#b3c96b"/>
-                            <Label Text="ПРОВЕРЕНО"
+                        <Label Text="Проверено командиром   ✓"
                                    TextColor="#b3c96b"
-                                   FontSize="12"/>
-                            <Label Text="Текст тест"
-                                   TextColor="White"
-                                   FontSize="12"
-                                   Opacity="0.8"/>
+                                   FontSize="17">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    TargetType="Label"
+                                    Binding="{Binding CommanderIsCheck}"
+                                    Value="false">
+                                    <Setter Property="TextColor" Value="Red"/>
+                                    <Setter Property="Text" Value="Командир не проводил проверку "></Setter>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
                         </HorizontalStackLayout>
-                    </Grid>
                 </Border>
+                            
+                            
+                           
+                    
 
             </VerticalStackLayout>
         </ScrollView>

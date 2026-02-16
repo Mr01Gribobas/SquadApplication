@@ -226,7 +226,8 @@ public class DataBaseRepository
             CountFees: statistic.CountFees,
             LastUpdateDataStatistics: statistic.LastUpdateDataStatistics,
             OldDataJson: statistic.OldDataJson,
-            Achievements: statistic.Achievements
+            Achievements: statistic.Achievements,
+            CommanderIsCheck:statistic.IsCommanderCheck
             );
         return statisticDTO;
     }

@@ -5,12 +5,16 @@ namespace SquadApplication.ViewModels;
 
 public partial class ProfileViewModel : ObservableObject
 {
+    private readonly ManagerGetRequests<UserAllInfoStatisticDTO> _managerGet;
     private readonly ProfilePage _homePage;
     private UserModelEntity _user;
     private UserAllInfoStatisticDTO _userInfo;
-    private readonly ManagerGetRequests<UserAllInfoStatisticDTO> _managerGet;
-
     private UserAllInfoStatisticDTO _oldDataJson;
+
+
+
+    [ObservableProperty]
+    private bool commanderIsCheck;
 
     [ObservableProperty]
     private string callSingPlayer;
@@ -80,7 +84,7 @@ public partial class ProfileViewModel : ObservableObject
             UserAllInfoStatisticDTO? result = JsonSerializer.Deserialize<UserAllInfoStatisticDTO>(model.OldDataJson);
             _oldDataJson = result ??= new UserAllInfoStatisticDTO
                                                          ("??","??", "??", 0, 0, 0, 0, default, "??",
-                                                         new List<Achievement>() { new Achievement() { NameAchievement = "??", Discription = "??" } });
+                                                         new List<Achievement>() { new Achievement() { NameAchievement = "??", Discription = "??" } },false);
         }
         CallSingPlayer = model.CallSingPlayer;
         CountDieds = model.CountDieds;
@@ -92,8 +96,8 @@ public partial class ProfileViewModel : ObservableObject
         AchievementsCount = model.Achievements.Count;
         PlayerRole = _user._role.ToString();
         PlayerName = _user._userName;
-        DataRegistr = $"Дата регистрации {_user._dataRegistr}";
-
+        DataRegistr = $"{_user._dataRegistr.ToString().Replace("/",":")}";
+        CommanderIsCheck = model.CommanderIsCheck;
         if(model.Achievements.Count > 0)
         {
             foreach(Achievement item in model.Achievements)

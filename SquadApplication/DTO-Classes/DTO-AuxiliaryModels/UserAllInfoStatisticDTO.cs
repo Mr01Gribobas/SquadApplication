@@ -13,5 +13,6 @@ public record class UserAllInfoStatisticDTO
     int CountEvents,
     DateTime LastUpdateDataStatistics,
     string OldDataJson,
-    List<Achievement>? Achievements
+    List<Achievement>? Achievements,
+    bool CommanderIsCheck 
     );
