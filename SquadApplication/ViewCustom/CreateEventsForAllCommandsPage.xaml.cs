@@ -11,8 +11,8 @@ public partial class CreateEventsForAllCommandsPage : ContentPage
     public CreateEventsForAllCommandsPage(IUserSession user)
 	{
         _user = user;
-		InitializeComponent();
         _createEventsForAllCommandsView = new CreateEventsForAllCommandsViewModel(this,user) ;
         BindingContext = _createEventsForAllCommandsView;
+		InitializeComponent();
 	}
 }

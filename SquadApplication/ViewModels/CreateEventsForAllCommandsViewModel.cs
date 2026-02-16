@@ -33,22 +33,30 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         _postManager = new ManagerPostRequests<EventsForAllCommandsModelDTO>();
     }
 
-
+    [RelayCommand]
     private async Task RequestFolCreateEvent()
     {
+        if(_user.CurrentUser._role != Role.Commander)
+            await _createEventPage.DisplayAlertAsync("Error", "You not commander", "Ok");
+
         try
         {
+            ExaminationCoordinates();
             Validation();
-            var modelEvnt = CreateModel();
-            _postManager.SetUrl($"CreateEventForAllCommands?commanderId={_user.CurrentUser.Id}");
+            var commanderId =_createEventPage.CommanderId <= 0 ? _user.CurrentUser.Id : _createEventPage.CommanderId;
+            EventsForAllCommandsModelDTO modelEvnt = CreateModel();
+            _postManager.SetUrl($"CreateEventForAllCommands?commanderId={commanderId}");
             var result = await _postManager.PostRequests(objectValue: modelEvnt, PostsRequests.CreateEventForCommands);
             if(result)
                 await _createEventPage.DisplayAlertAsync("Ok", "Create is ok", "Ok");
+
+            await Shell.Current.GoToAsync("..");
 
         }
         catch(Exception ex)
         {
             await _createEventPage.DisplayAlertAsync("Errir", $"{ex.Message}", "Ok");
+            await Shell.Current.GoToAsync("..");
         }
         finally
         {
@@ -62,9 +70,36 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
 
     private void Validation()
     {
-        throw new NotImplementedException();
+
+        if(TeamNameOrganization != _user.CurrentUser._teamName)
+            throw new Exception("Ошибка аутентификации перезеадите в приложение !!");
+        if(string.IsNullOrEmpty(DescriptionShort))
+            throw new Exception("Не коректное описание ");
+        if(string.IsNullOrEmpty(DescriptionFull))
+            throw new Exception("Не коректное описание ");
     }
 
+    private void ExaminationCoordinates()
+    {
+        if(CoordinatesPolygon is null)
+            throw new Exception("Coordinates is null");
+
+
+        string coordinates = CoordinatesPolygon.Replace(" ", "");
+        var coordinatesSplits = coordinates.Split(",");
+        for(int i = 0; i < coordinatesSplits.Length; i++)
+        {
+            foreach(char item in coordinatesSplits[i])
+            {
+                if(item is '.' | item is '-')
+                    continue;
+
+                if(!int.TryParse(item.ToString(), out _))
+                    throw new Exception("Coordinates is null");
+
+            }
+        }
+    }
     private EventsForAllCommandsModelDTO CreateModel()
     {
         EventsForAllCommandsModelDTO newModel = new EventsForAllCommandsModelDTO(
@@ -72,7 +107,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             DescriptionShort: DescriptionShort,
             DescriptionFull: DescriptionFull,
             CoordinatesPolygon: CoordinatesPolygon,
-            PolygonName: PolygonName,
+            PolygonName: PolygonName ?? $"Not name polygon",
             Users: new List<UserModelEntity>() { _user.CurrentUser }
             );
         return newModel;
