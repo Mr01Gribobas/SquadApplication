@@ -11,6 +11,12 @@ public partial class ParticipantsPage : ContentPage
         InitializeComponent();
         _parricipantsModel = new ParticipantsViewModel(this, _userModel);
         BindingContext = _parricipantsModel;
+        Loaded += ParticipantsPage_Loaded;
+    }
+
+    private void ParticipantsPage_Loaded(object? sender, EventArgs e)
+    {
+        _parricipantsModel.GetMembersTeam(_userModel.Id);
     }
 }
 

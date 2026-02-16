@@ -20,18 +20,24 @@ public partial class ParticipantsViewModel : ObservableObject
         this._participantsPage = participantsPage;
         _requestsInServer = new ManagerGetRequests<UserModelEntity>();
         _userModelEntity = userModel;
-        GetMembersTeam(_userModelEntity.Id);
     }
+        
 
 
     [RelayCommand]
-    public void DeletePlayer()
+    public void PromoteAPlayer(UserModelEntity user)
+    {
+        _requestsInServer.SetUrl($"");
+    }
+
+    [RelayCommand]
+    public void DemoteAPlayer(UserModelEntity user)
     {
 
     }
 
 
-    private async void GetMembersTeam(int userId)
+    public async void GetMembersTeam(int userId)
     {
         if(_userModelEntity is null)
         {
@@ -47,5 +53,6 @@ public partial class ParticipantsViewModel : ObservableObject
                 Users.Add(member);
             }
         }
+        request.ResetUrlAndStatusCode();
     }
 }

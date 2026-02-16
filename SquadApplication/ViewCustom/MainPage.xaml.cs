@@ -21,13 +21,10 @@ public partial class MainPage : ContentPage
 
     private async void OnPageLoaded(object? sender, EventArgs e)
     {
-        await ShowMessage();
+
     }
 
-    private async Task ShowMessage()
-    {
-        await this.DisplayAlertAsync("Ваш код доступа", $"{_userSession1.CurrentUser._enterCode}", "Ok"); 
-    }
+    
 
     private async Task StartCheckNotification()
     {

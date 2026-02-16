@@ -6,9 +6,9 @@ public partial class AuthorizeViewModel : ObservableObject
     private AuthorizedPage _authorizedPage;
     private readonly IDeviceManager _deviceManager;
     private IRequestManagerForEnter _requestManager;
+
     [ObservableProperty]
     private string accesCode;
-
 
     [ObservableProperty]
     private string name;
@@ -48,18 +48,8 @@ public partial class AuthorizeViewModel : ObservableObject
         }
         await Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId={userFromResponce.Id}");
     }
-    [RelayCommand]
-    public async Task TestMethod()
-    {
-        await TestWork();
-    }
-    private async Task TestWork()
-    {
-        var devicePlatfom = DeviceInfo.Platform;
-        var deviceModel = DeviceInfo.Model;
-        var deviceType = DeviceInfo.DeviceType;
-    }
 
+    
 
 
     [RelayCommand]
@@ -101,15 +91,15 @@ public partial class AuthorizeViewModel : ObservableObject
                 else
                 {
                     return;
-                    //await Shell.Current.GoToAsync($"..");
                 }
                 goto SendUserData;
             }
-            // invalide data
+            await _authorizedPage.DisplayAlertAsync("Error data","Invalid data", "Ok");
             return;
         }
-        Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId = {userFromResponce.Id}");
-        //выводить код авторизации пользователя 
+
+        await _authorizedPage.DisplayAlertAsync("Kode",$"Ваш код доступа {userFromResponce._enterCode}", "Ok");
+        await Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId = {userFromResponce.Id}");
     }
 
 
