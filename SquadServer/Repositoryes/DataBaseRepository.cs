@@ -174,7 +174,7 @@ public class DataBaseRepository
 
     public async Task<List<EventsForAllCommandsModelDTO>> GetAllEventsForAllCommands()
     {
-        var listEvents = await _squadDbContext.EventsForAllCommands.Include(e=>e.Players).ToListAsync();
+        var listEvents = await _squadDbContext.EventsForAllCommands.Include(e => e.Players).ToListAsync();
 
         if(listEvents is null || listEvents.Count <= 0)
         {
@@ -198,23 +198,34 @@ public class DataBaseRepository
 
     public async Task<UserAllInfoStatisticDTO> GetAllInfoUser(int userId)
     {
-        var user = await _squadDbContext.Players.Include(s=>s.Statistic).FirstOrDefaultAsync(u=>u.Id==userId);
+        var user = await _squadDbContext.Players.Include(s => s.Statistic).FirstOrDefaultAsync(u => u.Id == userId);
 
-        var statistic = await _squadDbContext.PlayerStatistics.Include(u=>u.UserModel).FirstOrDefaultAsync(u=>u.Id==userId);
+        PlayerStatisticsModelEntity? statistic = await _squadDbContext.PlayerStatistics.Include(u => u.UserModel).FirstOrDefaultAsync(u => u.Id == userId);
+        if(statistic is null)
+        {
+            statistic = new PlayerStatisticsModelEntity()
+            {
+                NamePlayer = user._userName,
+                CallSingPlayer = user._callSing,
+                LastUpdateDataStatistics = DateTime.UtcNow
+            };
+            await _squadDbContext.PlayerStatistics.AddAsync(statistic);
+            await _squadDbContext.SaveChangesAsync();
+        }
 
         UserAllInfoStatisticDTO statisticDTO = new UserAllInfoStatisticDTO(
-            NamePlayer: user._userName ,
-            CallSingPlayer:user._callSing,
-            CountKill:statistic.CountKill,
-            CountDieds:statistic.CountDieds,
-            CountEvents:statistic.CountEvents,
-            CountFees:statistic.CountFees,
-            LastUpdateDataStatistics:statistic.LastUpdateDataStatistics,
-            OldDataJson:statistic.OldDataJson,
-            Achievements:statistic.Achievements
+            NamePlayer: user._userName,
+            CallSingPlayer: user._callSing,
+            CountKill: statistic.CountKill,
+            CountDieds: statistic.CountDieds,
+            CountEvents: statistic.CountEvents,
+            CountFees: statistic.CountFees,
+            LastUpdateDataStatistics: statistic.LastUpdateDataStatistics,
+            OldDataJson: statistic.OldDataJson,
+            Achievements: statistic.Achievements
             );
         return statisticDTO;
-    }  
+    }
 }
-            
-            
+
+

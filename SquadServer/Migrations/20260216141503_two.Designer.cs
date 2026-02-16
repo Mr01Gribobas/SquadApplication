@@ -12,8 +12,8 @@ using SquadServer.Models.DbContextDir;
 namespace SquadServer.Migrations
 {
     [DbContext(typeof(SquadDbContext))]
-    [Migration("20260216131643_one")]
-    partial class one
+    [Migration("20260216141503_two")]
+    partial class two
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -260,7 +260,6 @@ namespace SquadServer.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AchievementsJson")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CallSingPlayer")
@@ -290,7 +289,6 @@ namespace SquadServer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OldDataJson")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserModelId")

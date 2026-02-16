@@ -257,7 +257,6 @@ namespace SquadServer.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AchievementsJson")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CallSingPlayer")
@@ -287,7 +286,6 @@ namespace SquadServer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OldDataJson")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserModelId")

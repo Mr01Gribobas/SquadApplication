@@ -11,8 +11,10 @@ public class PlayerStatisticsModelEntity
 
     [JsonInclude]
     public string NamePlayer { get; set; }
+
     [JsonInclude]
     public string CallSingPlayer { get; set; }
+
     [JsonInclude]
     public int CountKill { get; set; } = 0;
     [JsonInclude]
@@ -28,11 +30,11 @@ public class PlayerStatisticsModelEntity
     public DateTime LastUpdateDataStatistics { get; set; }
 
     [JsonInclude]
-    public string OldDataJson { get; set; }
+    public string? OldDataJson { get; set; }
 
 
     [JsonInclude]
-    public string AchievementsJson { get; set; }
+    public string? AchievementsJson { get; set; }
 
     public List<Achievement>? Achievements
     {
@@ -40,8 +42,8 @@ public class PlayerStatisticsModelEntity
         {
             try
             {
-                List<Achievement?>? data = JsonSerializer.Deserialize<List<Achievement>>(AchievementsJson);
-                return data ?? throw new NullReferenceException() ;
+                List<Achievement>? data = JsonSerializer.Deserialize<List<Achievement>>(AchievementsJson);
+                return data ?? new() ;
             }
             catch(Exception)
             {

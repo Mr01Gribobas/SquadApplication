@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SquadServer.Migrations
 {
     /// <inheritdoc />
-    public partial class one : Migration
+    public partial class two : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -76,8 +76,8 @@ namespace SquadServer.Migrations
                     CountFees = table.Column<int>(type: "int", nullable: false),
                     CountEvents = table.Column<int>(type: "int", nullable: false),
                     LastUpdateDataStatistics = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OldDataJson = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AchievementsJson = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OldDataJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AchievementsJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsCommanderCheck = table.Column<bool>(type: "bit", nullable: false),
                     UserModelId = table.Column<int>(type: "int", nullable: false)
                 },

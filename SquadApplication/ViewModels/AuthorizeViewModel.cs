@@ -129,12 +129,12 @@ public partial class AuthorizeViewModel : ObservableObject
         if(data._phoneNumber[0] == '+')
         {
             string skipPlus = new String(data._phoneNumber?.Skip(1).ToArray());
-            if(!Int64.TryParse(skipPlus, out Int64 _))
+            if(!Int64.TryParse(skipPlus, out Int64 _)  )
             {
                 return false;
             }
         }
-        else if(!Int64.TryParse(data._phoneNumber, out Int64 _))
+        else if(!Int64.TryParse(data._phoneNumber, out Int64 _) )
         {
             return false;
         }
@@ -172,7 +172,7 @@ public partial class AuthorizeViewModel : ObservableObject
                 return false;
             if(_team is null)
                 return false;
-            if(_phoneNumber is null)
+            if(_phoneNumber is null || _phoneNumber.Length > 20)
                 return false;
             return true;
         }
