@@ -17,7 +17,7 @@ public class ManagerPostRequests<T> : IRequestManager<T>
 
     public void ResetUrlAndStatusCode()
     {
-        _urlNameForSend = "http://10.0.2.2:5213/MainPost/"; 
+        _urlNameForSend = "http://10.0.2.2:5213/MainPost/";
         _currentStatusCode = 0;
     }
     public void SetUrl(string controllAction)
@@ -33,9 +33,9 @@ public class ManagerPostRequests<T> : IRequestManager<T>
     {
         JsonContent jsonContent = JsonContent.Create(objectValue);
         var resultResponce = await _httpClient.PostAsJsonAsync<T>(_urlNameForSend, objectValue);
-        if((int)resultResponce.StatusCode == 200)
+        if((int)resultResponce.StatusCode == 200 || (int)resultResponce.StatusCode == 201)
         {
-            _currentStatusCode=200;
+            _currentStatusCode= (int)resultResponce.StatusCode;
             return true;
         }
         _currentStatusCode = (int)resultResponce.StatusCode;
@@ -73,7 +73,10 @@ public class ManagerPostRequests<T> : IRequestManager<T>
             case PostsRequests.UpdateEquip:
                 return await PostRequest(objectValue, "UpdateEquip");
                 break;
-
+            case PostsRequests.CreateEventForCommands:
+                return await PostRequest(objectValue, "CreateEventForCommands");
+                break;
+                
             default:
                 return false;
                 break;

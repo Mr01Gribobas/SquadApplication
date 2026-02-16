@@ -9,4 +9,5 @@ public enum PostsRequests
     UpdateReantilsById,
     AddPolygon,
     UpdateEquip,
+    CreateEventForCommands,
 }

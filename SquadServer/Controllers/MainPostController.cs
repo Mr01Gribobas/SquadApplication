@@ -1,4 +1,5 @@
-﻿using SquadServer.Models;
+﻿using SquadServer.DTO_Classes.DTO_AuxiliaryModels;
+using SquadServer.Models;
 using SquadServer.Services.Service_Notification;
 
 namespace SquadServer.Controllers;
@@ -9,7 +10,7 @@ public class MainPostController : Controller
     private readonly SquadDbContext _squadDbContext;
     private readonly EventNotificationDistributor _notificationDistributor;
 
-    public MainPostController(SquadDbContext squadDb,EventNotificationDistributor notificationDistributor)
+    public MainPostController(SquadDbContext squadDb, EventNotificationDistributor notificationDistributor)
     {
         _squadDbContext = squadDb;
         _notificationDistributor = notificationDistributor;
@@ -29,7 +30,7 @@ public class MainPostController : Controller
             return Unauthorized();
         }
 
-        var user = _squadDbContext.Players.Include(t=>t.Team).FirstOrDefault(u => u.Id == commanderId);
+        var user = _squadDbContext.Players.Include(t => t.Team).FirstOrDefault(u => u.Id == commanderId);
         if(
             user is not null &&
             user.TeamId is not null &
@@ -41,8 +42,8 @@ public class MainPostController : Controller
                 newEvent.Team = user.Team;
                 newEvent.TeamId = (int)user.TeamId == 0 ? throw new NullReferenceException() : (int)user.TeamId;
 
-                 await _squadDbContext.Events.AddAsync(newEvent);
-                 await _squadDbContext.SaveChangesAsync();
+                await _squadDbContext.Events.AddAsync(newEvent);
+                await _squadDbContext.SaveChangesAsync();
 
                 //var nottification = await _notificationDistributor.NotifyNewEventAsync(newEvent);
                 return Ok();
@@ -54,6 +55,27 @@ public class MainPostController : Controller
         }
         return Unauthorized();
     }
+
+
+    [HttpPost]
+    public async Task<IActionResult?> CreateEventForAllCommands(int commanderId)
+    {
+        EventsForAllCommandsModelDTO? result = await HttpContext.Request.ReadFromJsonAsync<EventsForAllCommandsModelDTO>();
+        
+        try
+        {
+            EventsForAllCommandsModelEntity eventsModel = EventsForAllCommandsModelEntity.CreateModel(result,commanderId);
+            await _squadDbContext.EventsForAllCommands.AddAsync(eventsModel);
+            await _squadDbContext.SaveChangesAsync();
+            return Ok(true);
+        }
+        catch(Exception)
+        {
+
+            return BadRequest();
+        }
+    }
+
 
 
 
