@@ -1,6 +1,4 @@
-﻿using SquadServer.DTO_Classes.DTO_AuxiliaryModels;
-using SquadServer.Models;
-using static SquadServer.Controllers.NotificationController;
+﻿using static SquadServer.Controllers.NotificationController;
 namespace SquadServer.Repositoryes;
 
 public class DataBaseRepository
@@ -198,7 +196,7 @@ public class DataBaseRepository
 
     public async Task<UserAllInfoStatisticDTO> GetAllInfoUser(int userId)
     {
-        var user = await _squadDbContext.Players.Include(s => s.Statistic).Include(e=>e.Equipment).FirstOrDefaultAsync(u => u.Id == userId);
+        var user = await _squadDbContext.Players.Include(s => s.Statistic).Include(e => e.Equipment).FirstOrDefaultAsync(u => u.Id == userId);
 
         PlayerStatisticsModelEntity? statistic = await _squadDbContext.PlayerStatistics.Include(u => u.UserModel).FirstOrDefaultAsync(u => u.UserModelId == userId);
         if(statistic is null)
@@ -210,14 +208,14 @@ public class DataBaseRepository
                 LastUpdateDataStatistics = DateTime.UtcNow,
                 UserModel = user,
                 UserModelId = userId
-                
+
             };
             await _squadDbContext.PlayerStatistics.AddAsync(statistic);
             await _squadDbContext.SaveChangesAsync();
         }
 
         UserAllInfoStatisticDTO statisticDTO = new UserAllInfoStatisticDTO(
-            LiveWeapon:user.Equipment?.NameMainWeapon??"Не найдено",
+            LiveWeapon: user.Equipment?.NameMainWeapon ?? "Не найдено",
             NamePlayer: user._userName,
             CallSingPlayer: user._callSing,
             CountKill: statistic.CountKill,
@@ -227,9 +225,45 @@ public class DataBaseRepository
             LastUpdateDataStatistics: statistic.LastUpdateDataStatistics,
             OldDataJson: statistic.OldDataJson,
             Achievements: statistic.Achievements,
-            CommanderIsCheck:statistic.IsCommanderCheck
+            CommanderIsCheck: statistic.IsCommanderCheck
             );
         return statisticDTO;
+    }
+
+    public async Task<bool> UpdateRankUser(int userId, bool rank)
+    {
+        var user = await _squadDbContext.Players.FindAsync(userId);
+        if(user is null || user._role == Role.Commander)
+            return false;
+
+        try
+        {
+            if(user._role == Role.AssistantCommander && rank)
+            {
+                var commander = await _squadDbContext.Players.
+                                              FirstOrDefaultAsync(u => u.TeamId == user.TeamId && u._role == Role.Commander);
+                if(commander is null || commander.TeamId != user.TeamId)
+                    return false;
+                commander.UpdateRank(false);
+            }
+
+            if(user._role == Role.Private && !rank)
+            {
+                _squadDbContext.Players.Remove(user);
+                await _squadDbContext.SaveChangesAsync();
+                return true;
+            }
+            await _squadDbContext.SaveChangesAsync();
+            user.UpdateRank(rank);
+            return true;
+
+
+        }
+        catch(Exception)
+        {
+            return false;
+        }
+
     }
 }
 

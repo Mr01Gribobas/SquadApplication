@@ -73,7 +73,37 @@ public class UserModelEntity
     }
 
     
-    
+    public bool UpdateRank(bool rank)
+    {
+        if(rank)
+        {
+            switch(this._role)
+            {
+                case Role.AssistantCommander:
+                    this._role = Role.Commander;
+                    break;
+                case Role.Private:
+                    this._role = Role.AssistantCommander;
+                    break;
+            }
+            return true;
+        }
+        else
+        {
+            switch(this._role)
+            {
+                case Role.Commander:
+                    this._role = Role.AssistantCommander;
+                    break;
+                case Role.AssistantCommander:
+                    this._role = Role.Private;
+                    break;
+            }
+            return true;
+        }
+
+    }
+
     public static void UpdateProfile(UserModelEntity userFromApp, UserModelEntity userEntity)
     {
         userEntity._userName = userFromApp._userName;

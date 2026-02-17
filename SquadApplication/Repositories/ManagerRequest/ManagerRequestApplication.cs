@@ -129,6 +129,17 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
         }
         return (flowControl: true, value: null);
     }
+    public async Task<bool> PutchRequestAsync(PutchRequest getType)
+    {
+        switch(getType)
+        {
+            case PutchRequest.UpdateRank:
+                 var responce = await _httpClient.GetFromJsonAsync<bool>(_urlNameForSend);
+                return responce;
+            default:
+                return false;
+        }
+    }
 
     public Task<bool> PostRequests(T objectValue, PostsRequests postRequests)
     {
@@ -158,8 +169,5 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
         }
     }
 
-    public Task<bool> PutchRequestAsync(PutchRequest getType)
-    {
-        throw new NotImplementedException();
-    }
+    
 }

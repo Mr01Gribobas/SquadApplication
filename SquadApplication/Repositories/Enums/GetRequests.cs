@@ -11,6 +11,6 @@ public enum GetRequests
     GameAttendance,
     EventsForCommands,
     AllInfoForProfile,
-    
+    UpdateRank
 }
 

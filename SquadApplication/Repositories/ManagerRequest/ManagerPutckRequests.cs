@@ -27,17 +27,11 @@ public class ManagerPutchRequests<T> : IRequestManager<T>
     {
         _urlNameForSend += controllAction;
     }
-    public async Task<bool> PutchRequestAsync<T>(PutchRequest getType,T obj )
+    public async Task<bool> PutchRequestAsync(PutchRequest getType)
     {
-        switch(getType)
-        {
-            case PutchRequest.UpdateRank:
-               var res =  await _httpClient.PatchAsJsonAsync(_urlNameForSend, obj);
-                break;
-            default:
-                break;
-        }
+        throw new NotImplementedException();
     }
+
 
 
 

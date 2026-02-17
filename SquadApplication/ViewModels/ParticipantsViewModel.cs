@@ -33,9 +33,9 @@ public partial class ParticipantsViewModel : ObservableObject
         if(!await ExamingOperation(user, true))
             return;
 
-        _requestsInServer.SetUrl($"PlayerUpdateRank?userId={user.Id}");
-
-        var respone  = await _requestsInServer.GetDataAsync(GetRequests.UpdateRank);
+        _requestsInServer.SetUrl($"PlayerUpdateRank?userId={user.Id}&rank={true}");
+        bool respone  = await _requestsInServer.PutchRequestAsync(PutchRequest.UpdateRank);
+        _requestsInServer.ResetUrlAndStatusCode();
 
     }
 

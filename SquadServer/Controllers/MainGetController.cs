@@ -12,9 +12,10 @@ public class MainGetController : Controller
     }
 
 
-    [HttpPatch]
+    [HttpGet]
     public IActionResult? PlayerUpdateRank(int userId , bool rank)
     {
+        _dataBaseRepository.UpdateRankUser(userId,rank);
         return default(IActionResult?);
     }
 
