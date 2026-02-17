@@ -127,17 +127,36 @@ public class DataBaseRepository
         }
     }
 
-    public List<ReantalEntity>? GetAllReantil(int teamId)
+    public async Task<List<RentailsDTO>>? GetAllReantilAsync(int teamId)
     {
-        var list = _squadDbContext.Reantils.
+        var list = await _squadDbContext.Reantils.
                            Where(r => r.TeamId == teamId).
-                           ToList();
-        return list;
+                           ToListAsync();
+        if(list is null)
+            return null;
+
+        List<RentailsDTO> rentails = new List<RentailsDTO>();
+        foreach(ReantalEntity item in list)
+        {
+            rentails.Add(new RentailsDTO()
+            {
+                NumderRental = item.Id,
+                Weapon = item.Weapon,
+                Mask = item.Mask,
+                Helmet = item.Helmet,
+                Balaclava = item.Balaclava,
+                SVMP = item.SVMP,
+                Outterwear = item.Outterwear,
+                Gloves = item.Gloves,
+                BulletproofVestOrUnloadingVest = item.BulletproofVestOrUnloadingVest,
+            });
+        }
+        return rentails;
     }
 
-    public List<PolygonEntity> GetAllPolygons()
+    public async Task<List<PolygonEntity>> GetAllPolygons()
     {
-        var list = _squadDbContext.Polygons.ToList();
+        var list = await _squadDbContext.Polygons.ToListAsync();
         return list;
     }
 

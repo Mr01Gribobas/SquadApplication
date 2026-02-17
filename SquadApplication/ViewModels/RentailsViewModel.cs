@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Controls.Shapes;
-using SquadApplication.DTO_Classes.DTO_AuxiliaryModels;
+﻿using SquadApplication.DTO_Classes.DTO_AuxiliaryModels;
 using SquadApplication.Repositories.ManagerRequest.Interfaces;
 
 namespace SquadApplication.ViewModels;
@@ -33,9 +32,22 @@ public partial class RentailsViewModel : ObservableObject
     [RelayCommand]
     public void DeleteRental()
     {
-
     }
 
+    [RelayCommand]
+    public async Task CreateRental()
+    {
+        await Shell.Current.GoToAsync($"/{nameof(CreateOrUpdateRentalPage)}/?IsUpdate={false}");
+    }
+
+    [RelayCommand]
+    public async Task UpdateRental(RentailsDTO rentail)
+    {
+        _rentalPage.SaveInCacheItem(rentail);
+        await Shell.Current.GoToAsync($"/{nameof(CreateOrUpdateRentalPage)}/?IsUpdate={true}");
+    }
+
+    
 
     private void GetRentalsFromDb()
     {

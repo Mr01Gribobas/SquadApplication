@@ -178,14 +178,18 @@ public class MainPostController : Controller
     }
 
     [HttpPost]
-    public IActionResult? AddReantils(int commanderId)
+    public async Task<IActionResult?> AddReantils(int commanderId)
     {
+        RentailsDTO? result = await HttpContext.Request.ReadFromJsonAsync<RentailsDTO>();
+
         return null;
     }
 
     [HttpPost]
-    public IActionResult? UpdateReantilsById(int reantilId, int userId)
+    public async Task<IActionResult?> UpdateReantilsById(int reantilId, int userId)
     {
+        RentailsDTO? result = await HttpContext.Request.ReadFromJsonAsync<RentailsDTO>();
+
         return null;
     }
 

@@ -15,7 +15,7 @@ public class ReantalEntity
     public bool Gloves { get; set; }//перчатки двойные
     public bool BulletproofVestOrUnloadingVest { get; set; }//плитник\разгруз
 
-
+    public bool IsStaffed { get; set; }
     public int TeamId { get; set; }
     [JsonIgnore]
     public virtual TeamEntity TeamEntity { get; set; } = null!;

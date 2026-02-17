@@ -55,21 +55,21 @@ public class MainGetController : Controller
     }
 
     [HttpGet]
-    public IActionResult? GetAllReantil(int teamId)
+    public async Task<IActionResult?> GetAllReantil(int teamId)
     {
         Controller.LogInformation("Start action : GetAllReantil");
 
-        var list = _dataBaseRepository.GetAllReantil(teamId);
-        return Json(list);
+        List<RentailsDTO> list = await _dataBaseRepository.GetAllReantilAsync(teamId);
+        return Ok(list);
     }
 
     [HttpGet]
-    public IActionResult? GetAllPolygons()
+    public async Task<IActionResult?> GetAllPolygons()
     {
         Controller.LogInformation("Start action : GetAllPolygons");
 
-        var list = _dataBaseRepository.GetAllPolygons();
-        return Json(list);
+        var list = await _dataBaseRepository.GetAllPolygons();
+        return Ok(list);
     }
 
     [HttpGet]

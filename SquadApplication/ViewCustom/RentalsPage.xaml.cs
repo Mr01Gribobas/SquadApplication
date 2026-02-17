@@ -1,17 +1,28 @@
+using SquadApplication.DTO_Classes.DTO_AuxiliaryModels;
+using SquadApplication.Services.CacheServiseDir;
+
 namespace SquadApplication.ViewCustom;
 
 public partial class RentalsPage : ContentPage
 {
+    private readonly ICacheServieseCust _cacheServiese;
     private readonly UserModelEntity _user;
     private readonly RentailsViewModel _rentalView;
 
-    public RentalsPage(IUserSession userSession)
+    public RentalsPage(IUserSession userSession,ICacheServieseCust cacheServiese)
     {
+        _cacheServiese = cacheServiese;
         _user = userSession.CurrentUser;
         _rentalView = new RentailsViewModel(this,_user);
         BindingContext = _rentalView;
         InitializeComponent();
     }
+
+    public void SaveInCacheItem(RentailsDTO rentail)
+    {
+        _cacheServiese.Set<RentailsDTO>("updateRental",rentail);
+    }
+
     private void CheckItems()
     {
         if(_rentalView._countPolygon <= 0)
