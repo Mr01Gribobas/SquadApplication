@@ -1,6 +1,4 @@
-﻿using Android.Hardware;
-using SquadApplication.DTO_Classes.DTO_AuxiliaryModels;
-using static Android.Telecom.Call;
+﻿using SquadApplication.DTO_Classes.DTO_AuxiliaryModels;
 
 namespace SquadApplication.ViewModels;
 

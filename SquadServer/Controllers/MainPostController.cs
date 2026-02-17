@@ -1,4 +1,5 @@
 ﻿using SquadServer.Services.Service_Notification;
+using System.ComponentModel.Design;
 
 namespace SquadServer.Controllers;
 
@@ -177,21 +178,88 @@ public class MainPostController : Controller
         }
     }
 
+
+
     [HttpPost]
     public async Task<IActionResult?> AddReantils(int commanderId)
     {
         RentailsDTO? result = await HttpContext.Request.ReadFromJsonAsync<RentailsDTO>();
+        if(result is null || commanderId <= 0)
+            return BadRequest();
+        try
+        {
+            var commander = await _squadDbContext.Players.Include(t => t.Team).FirstOrDefaultAsync(u => u.Id == commanderId);
 
-        return null;
+            await _squadDbContext.Reantils.AddAsync(new ReantalEntity()
+            {
+                TeamEntity = commander.Team,
+                TeamId = commander.TeamId ?? throw new ArgumentNullException(),
+                Weapon = result.Weapon,
+                Mask = result.Mask,
+                Helmet = result.Helmet,
+                Balaclava = result.Balaclava,
+                SVMP = result.SVMP,
+                Outterwear = result.Outterwear,
+                Gloves = result.Gloves,
+                BulletproofVestOrUnloadingVest = result.BulletproofVestOrUnloadingVest,
+                IsStaffed = result.Balaclava &&
+                            result.Outterwear &&
+                            result.BulletproofVestOrUnloadingVest &&
+                            result.Gloves &&
+                            result.SVMP &&
+                            result.Helmet &&
+                            result.Mask &&
+                            result.Weapon
+                            ? true : false,
+            });
+            await _squadDbContext.SaveChangesAsync();
+
+            return Ok();
+        }
+        catch(Exception)
+        {
+            return BadRequest();
+
+        }
     }
 
     [HttpPost]
-    public async Task<IActionResult?> UpdateReantilsById(int reantilId, int userId)
+    public async Task<IActionResult?> UpdateReantilsById(int reantilId)
     {
         RentailsDTO? result = await HttpContext.Request.ReadFromJsonAsync<RentailsDTO>();
+        if(result is null || reantilId <= 0)
+            return BadRequest();
 
-        return null;
+        try
+        {
+            var rentaFromDb = await _squadDbContext.Reantils.FirstOrDefaultAsync(u => u.Id == reantilId);
+                rentaFromDb.Weapon = result.Weapon;
+                rentaFromDb.Mask = result.Mask;
+                rentaFromDb.Helmet = result.Helmet;
+                rentaFromDb.Balaclava = result.Balaclava;
+                rentaFromDb.SVMP = result.SVMP;
+                rentaFromDb.Outterwear = result.Outterwear;
+                rentaFromDb.Gloves = result.Gloves;
+                rentaFromDb.BulletproofVestOrUnloadingVest = result.BulletproofVestOrUnloadingVest;
+                rentaFromDb.IsStaffed = result.Balaclava &&
+                            result.Outterwear &&
+                            result.BulletproofVestOrUnloadingVest &&
+                            result.Gloves &&
+                            result.SVMP &&
+                            result.Helmet &&
+                            result.Mask &&
+                            result.Weapon
+                            ? true : false;
+            await _squadDbContext.SaveChangesAsync();
+            return Ok();
+        }
+        catch(Exception)
+        {
+            return BadRequest();
+        }
     }
+
+
 
 
 }
