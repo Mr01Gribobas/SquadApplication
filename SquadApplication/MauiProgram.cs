@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using SquadApplication.Services.CacheServiseDir;
 
 namespace SquadApplication;
 public static class MauiProgram
@@ -19,6 +20,7 @@ public static class MauiProgram
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             return client;
         });
+        builder.Services.AddSingleton<ICacheServieseCust, CacheServieseCust>();
         builder.Services.AddSingleton<IConnectivity>(sp => Connectivity.Current);
         builder.Services.AddSingleton<IDeviceTokenManager, DeviceTokenManager>();
         builder.Services.AddSingleton<IDeviceManager, DeviceManager>();

@@ -1,6 +1,4 @@
-﻿using SquadServer.DTO_Classes.DTO_AuxiliaryModels;
-using SquadServer.Models;
-using SquadServer.Services.Service_Notification;
+﻿using SquadServer.Services.Service_Notification;
 
 namespace SquadServer.Controllers;
 
@@ -61,10 +59,10 @@ public class MainPostController : Controller
     public async Task<IActionResult?> CreateEventForAllCommands(int commanderId)
     {
         EventsForAllCommandsModelDTO? result = await HttpContext.Request.ReadFromJsonAsync<EventsForAllCommandsModelDTO>();
-        
+
         try
         {
-            EventsForAllCommandsModelEntity eventsModel = EventsForAllCommandsModelEntity.CreateModel(result,commanderId);
+            EventsForAllCommandsModelEntity eventsModel = EventsForAllCommandsModelEntity.CreateModel(result, commanderId);
             await _squadDbContext.EventsForAllCommands.AddAsync(eventsModel);
             await _squadDbContext.SaveChangesAsync();
             return Ok(true);
@@ -158,7 +156,26 @@ public class MainPostController : Controller
         }
     }
 
+    [HttpPost]
+    public async Task<IActionResult> AddPolygon(int userId)
+    {
+        PolygonEntity? result = await HttpContext.Request.ReadFromJsonAsync<PolygonEntity>();
+        if(result is null)
+            return NotFound();
+        try
+        {
+            if(!PolygonEntity.ValidateCoordinates(result.Coordinates))
+                return BadRequest();
 
+            await _squadDbContext.Polygons.AddAsync(result);
+            await _squadDbContext.SaveChangesAsync();
+            return Ok(result);
+        }
+        catch(Exception)
+        {
+            return BadRequest();
+        }
+    }
 
     [HttpPost]
     public IActionResult? AddReantils(int commanderId)
@@ -172,9 +189,5 @@ public class MainPostController : Controller
         return null;
     }
 
-    [HttpPost]
-    public IActionResult? AddPolygon(int userId)
-    {
-        return null;
-    }
+
 }

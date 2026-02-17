@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace SquadApplication.ViewCustom;
+﻿namespace SquadApplication.ViewCustom;
 
 public partial class PolygonsPage : ContentPage
 {
@@ -16,8 +14,14 @@ public partial class PolygonsPage : ContentPage
         InitializeComponent();
         _polygonsViewModel = new PolygonsViewModel(this, _user);
         BindingContext = _polygonsViewModel;
+        Loaded += PolygonsPage_Loaded;
+    }
+
+    private void PolygonsPage_Loaded(object? sender, EventArgs e)
+    {
         CheckItems();
     }
+
     private void CheckItems()
     {
         if(_polygonsViewModel._countPolygon <= 0)
@@ -29,12 +33,12 @@ public partial class PolygonsPage : ContentPage
                     TextColor = Colors.DarkGray,
                     FontSize = 30,
                     Text = "Not found !",
-                    Margin = new Thickness(0,200,0,0),
+                    Margin = new Thickness(0, 200, 0, 0),
                     HorizontalOptions = LayoutOptions.Center
                 }
                 );
         }
-        
+
     }
 
 }

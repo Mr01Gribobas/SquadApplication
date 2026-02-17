@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
+using SquadApplication.DTO_Classes.DTO_AuxiliaryModels;
 using SquadApplication.Repositories.ManagerRequest.Interfaces;
 
 namespace SquadApplication.ViewModels;
@@ -6,11 +7,17 @@ public partial class RentailsViewModel : ObservableObject
 {
     private readonly UserModelEntity _user;
     private readonly RentalsPage _rentalPage;
-    private readonly IRequestManager<RentailsViewModel> _requestManager;
+    private readonly IRequestManager<RentailsDTO> _requestManager;
     public Int32 _countPolygon => Rentals.Count;
 
     [ObservableProperty]
-    private ObservableCollection<ReantalEntity> rentals;
+    private ObservableCollection<RentailsDTO> rentals;
+
+
+   
+
+
+
 
 
 
@@ -18,7 +25,7 @@ public partial class RentailsViewModel : ObservableObject
     {
         _user = modelEntity;
         _rentalPage = rentalsPage;
-        _requestManager = new ManagerGetRequests<RentailsViewModel>();
+        _requestManager = new ManagerGetRequests<RentailsDTO>();
         GetRentalsFromDb();
     }
 
@@ -32,7 +39,7 @@ public partial class RentailsViewModel : ObservableObject
 
     private void GetRentalsFromDb()
     {
-        var request = (ManagerGetRequests<RentailsViewModel>)_requestManager;
+        var request = (ManagerGetRequests<RentailsDTO>)_requestManager;
         request.SetUrl("");
     }
 }
