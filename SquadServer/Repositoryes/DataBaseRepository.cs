@@ -284,6 +284,27 @@ public class DataBaseRepository
         }
 
     }
+
+    public async Task<bool> DeleteRentail(int rentailNymber)
+    {
+        var item = await _squadDbContext.Reantils.FirstAsync(u => u.Id == rentailNymber);
+        if(item is null)
+            return false;
+
+        _squadDbContext.Reantils.Remove(item);
+        await _squadDbContext.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<bool> DeletePoligon(int poligonId)
+    {
+       var result = await _squadDbContext.Polygons.FirstAsync(p=>p.Id == poligonId);
+        if(result is null)
+            return false;
+
+        _squadDbContext.Polygons.Remove(result);
+        return true;
+    }
 }
 
 

@@ -63,6 +63,16 @@ public class MainGetController : Controller
         return Ok(list);
     }
 
+
+    [HttpDelete]
+    public async Task<IActionResult?> DeleteReantilById(int rentailNymber)
+    {
+        Controller.LogInformation("Start action : GetAllReantil");
+
+        bool result = await _dataBaseRepository.DeleteRentail(rentailNymber);
+        return Ok(result);
+    }
+
     [HttpGet]
     public async Task<IActionResult?> GetAllPolygons()
     {
@@ -71,6 +81,16 @@ public class MainGetController : Controller
         var list = await _dataBaseRepository.GetAllPolygons();
         return Ok(list);
     }
+
+    [HttpDelete]
+    public async Task<IActionResult?> DeletePolygonsById(int poligonId)
+    {
+        Controller.LogInformation("Start action : GetAllReantil");
+
+        bool result = await _dataBaseRepository.DeletePoligon(poligonId);
+        return Ok(result);
+    }
+
 
     [HttpGet]
     public IActionResult? GetAllEventsHistory()

@@ -30,8 +30,9 @@ public partial class RentailsViewModel : ObservableObject
 
 
     [RelayCommand]
-    public void DeleteRental()
+    public void DeleteRental(RentailsDTO rentail)
     {
+        _requestManager.SetUrl("Delete");
     }
 
     [RelayCommand]
