@@ -8,6 +8,7 @@ public class ManagerPostRequests<T> : IRequestManager<T>
     public ManagerPostRequests()
     {
         _httpClient = new HttpClient();
+        _httpClient.Timeout = TimeSpan.FromSeconds(60);
     }
     private HttpClient _httpClient;
     public string _urlNameForSend { get; private set; } = "http://10.0.2.2:5213/MainPost/";

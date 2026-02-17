@@ -81,6 +81,7 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
                 }
                 break;
             case GetRequests.GetEvent:
+                _httpClient.Timeout = TimeSpan.FromSeconds(60);
                 (bool flowControlEvent, List<T>? valueEvent) = await RequestAction();
                 if(!flowControlEvent)
                 {
@@ -96,7 +97,7 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
                 }
                 break;
             case GetRequests.GameAttendance:
-
+                _httpClient.Timeout = TimeSpan.FromSeconds(60);
                 (bool flowControlGameAttendance, List<T>? objects) = await RequestAction();
                 if(!flowControlGameAttendance)
                 {
@@ -105,7 +106,7 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
                 break;                
 
              case GetRequests.AllInfoForProfile:
-
+                _httpClient.Timeout = TimeSpan.FromSeconds(60);
                 (bool flowAllInfo, List<T>? statistics)  = await RequestAction();
                 if(!flowAllInfo)
                 {

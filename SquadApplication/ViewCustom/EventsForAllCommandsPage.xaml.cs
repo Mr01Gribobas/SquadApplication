@@ -1,3 +1,4 @@
+
 namespace SquadApplication.ViewCustom;
 
 public partial class EventsForAllCommandsPage : ContentPage

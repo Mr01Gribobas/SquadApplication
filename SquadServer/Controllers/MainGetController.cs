@@ -77,10 +77,10 @@ public class MainGetController : Controller
     public async Task<IActionResult?> GetAllPolygons()
     {
         Controller.LogInformation("Start action : GetAllPolygons");
-
         var list = await _dataBaseRepository.GetAllPolygons();
         return Ok(list);
     }
+
 
     [HttpDelete]
     public async Task<IActionResult?> DeletePolygonsById(int poligonId)
