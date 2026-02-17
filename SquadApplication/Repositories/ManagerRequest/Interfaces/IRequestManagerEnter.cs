@@ -1,4 +1,4 @@
-﻿namespace SquadApplication.Repositories.ManagerRequest;
+﻿namespace SquadApplication.Repositories.ManagerRequest.Interfaces;
 
 public interface IRequestManagerForEnter
 {

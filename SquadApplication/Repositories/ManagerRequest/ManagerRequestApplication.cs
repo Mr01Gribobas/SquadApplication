@@ -1,4 +1,6 @@
-﻿namespace SquadApplication.Repositories.ManagerRequest;
+﻿using SquadApplication.Repositories.ManagerRequest.Interfaces;
+
+namespace SquadApplication.Repositories.ManagerRequest;
 
 public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
     where T : class
@@ -154,5 +156,10 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
             }
             _disposed = true;
         }
+    }
+
+    public Task<bool> PutchRequestAsync(PutchRequest getType)
+    {
+        throw new NotImplementedException();
     }
 }

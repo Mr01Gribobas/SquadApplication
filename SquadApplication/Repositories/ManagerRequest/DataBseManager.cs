@@ -1,4 +1,6 @@
-﻿namespace SquadApplication.Repositories;
+﻿using SquadApplication.Repositories.ManagerRequest.Interfaces;
+
+namespace SquadApplication.Repositories;
 
 public class DataBaseManager : IRequestManagerForEnter
 {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
+using SquadApplication.Repositories.ManagerRequest.Interfaces;
 
 namespace SquadApplication.ViewModels;
 public partial class RentailsViewModel : ObservableObject

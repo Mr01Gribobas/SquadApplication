@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using SquadApplication.Repositories.ManagerRequest.Interfaces;
+using System.Data;
 
 namespace SquadApplication.ViewModels;
 

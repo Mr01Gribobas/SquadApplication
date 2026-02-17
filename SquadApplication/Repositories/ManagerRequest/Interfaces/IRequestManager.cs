@@ -1,6 +1,6 @@
 ﻿using SquadApplication.Repositories.Enums;
 
-namespace SquadApplication.Repositories.ManagerRequest;
+namespace SquadApplication.Repositories.ManagerRequest.Interfaces;
 
 public interface IRequestManager<T>
 {
@@ -8,4 +8,6 @@ public interface IRequestManager<T>
     Task<bool> PostRequests(T objectValue, PostsRequests postRequests);
     public void SetUrl(string controllAction);
     public void ResetUrlAndStatusCode();
+    Task<bool> PutchRequestAsync(PutchRequest getType);
+
 }

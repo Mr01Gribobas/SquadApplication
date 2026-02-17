@@ -1,5 +1,4 @@
-﻿using SquadApplication.Repositories.Enums;
-using System.Net.Http.Json;
+﻿using SquadApplication.Repositories.ManagerRequest.Interfaces;
 
 namespace SquadApplication.Repositories.ManagerRequest;
 
@@ -35,7 +34,7 @@ public class ManagerPostRequests<T> : IRequestManager<T>
         var resultResponce = await _httpClient.PostAsJsonAsync<T>(_urlNameForSend, objectValue);
         if((int)resultResponce.StatusCode == 200 || (int)resultResponce.StatusCode == 201)
         {
-            _currentStatusCode= (int)resultResponce.StatusCode;
+            _currentStatusCode = (int)resultResponce.StatusCode;
             return true;
         }
         _currentStatusCode = (int)resultResponce.StatusCode;
@@ -76,11 +75,16 @@ public class ManagerPostRequests<T> : IRequestManager<T>
             case PostsRequests.CreateEventForCommands:
                 return await PostRequest(objectValue, "CreateEventForCommands");
                 break;
-                
+
             default:
                 return false;
                 break;
         }
+    }
+
+    public Task<bool> PutchRequestAsync(PutchRequest getType)
+    {
+        throw new NotImplementedException();
     }
 }
 

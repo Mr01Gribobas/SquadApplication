@@ -1,4 +1,6 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using SquadApplication.Repositories.ManagerRequest.Interfaces;
+
+namespace SquadApplication.ViewModels;
 
 public partial class ParticipantsViewModel : ObservableObject
 {
@@ -32,6 +34,9 @@ public partial class ParticipantsViewModel : ObservableObject
             return;
 
         _requestsInServer.SetUrl($"PlayerUpdateRank?userId={user.Id}");
+
+        var respone  = await _requestsInServer.GetDataAsync(GetRequests.UpdateRank);
+
     }
 
 
@@ -66,7 +71,8 @@ public partial class ParticipantsViewModel : ObservableObject
             return true;
         }
         catch(Exception ex)
-        {                                                     
+
+        {                                              
             await _participantsPage.DisplayAlertAsync("Error", $"{ex.Message}", "Ok");
             return false;
         }

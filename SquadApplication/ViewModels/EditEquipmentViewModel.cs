@@ -1,4 +1,6 @@
 ﻿
+using SquadApplication.Repositories.ManagerRequest.Interfaces;
+
 namespace SquadApplication.ViewModels;
 
 public partial class EditEquipmentViewModel : ObservableObject

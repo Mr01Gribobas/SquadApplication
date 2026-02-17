@@ -10,7 +10,7 @@ public enum GetRequests
     GetEquipById,
     GameAttendance,
     EventsForCommands,
-    AllInfoForProfile
-
+    AllInfoForProfile,
+    
 }
 
