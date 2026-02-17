@@ -13,10 +13,11 @@ public class MainGetController : Controller
 
 
     [HttpGet]
-    public IActionResult? PlayerUpdateRank(int userId , bool rank)
+    public async Task<IActionResult?> PlayerUpdateRank(int userId , bool rank)
     {
-        _dataBaseRepository.UpdateRankUser(userId,rank);
-        return default(IActionResult?);
+        var result = await _dataBaseRepository.UpdateRankUser(userId,rank);
+
+        return Ok(result);
     }
 
 

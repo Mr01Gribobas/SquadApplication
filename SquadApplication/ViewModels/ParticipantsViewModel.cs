@@ -32,10 +32,7 @@ public partial class ParticipantsViewModel : ObservableObject
     {
         if(!await ExamingOperation(user, true))
             return;
-
-        _requestsInServer.SetUrl($"PlayerUpdateRank?userId={user.Id}&rank={true}");
-        bool respone  = await _requestsInServer.PutchRequestAsync(PutchRequest.UpdateRank);
-        _requestsInServer.ResetUrlAndStatusCode();
+        await SendRequest(user, true);
 
     }
 
@@ -45,8 +42,19 @@ public partial class ParticipantsViewModel : ObservableObject
     {
         if(!await ExamingOperation(user, false))
             return;
-
+        await SendRequest(user, false);
     }
+
+    private async Task SendRequest(UserModelEntity user, bool rank)
+    {
+        _requestsInServer.SetUrl($"PlayerUpdateRank?userId={user.Id}&rank={rank}");
+        bool respone = await _requestsInServer.PutchRequestAsync(PutchRequest.UpdateRank);
+        _requestsInServer.ResetUrlAndStatusCode();
+
+        var message = respone ? "Операция прошла успешно" : "Во время операции возникла ошибка";
+        await _participantsPage.DisplayAlertAsync("Info", $"{message}", "Ok");
+    }
+
     private async Task<bool> ExamingOperation(UserModelEntity user, bool rank)
     {
         try
@@ -72,7 +80,7 @@ public partial class ParticipantsViewModel : ObservableObject
         }
         catch(Exception ex)
 
-        {                                              
+        {
             await _participantsPage.DisplayAlertAsync("Error", $"{ex.Message}", "Ok");
             return false;
         }
