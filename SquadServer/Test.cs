@@ -1,4 +1,5 @@
-﻿using SquadServer.Models;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using SquadServer.Models;
 using SquadServer.Repositoryes;
 
 namespace SquadServer;
@@ -11,13 +12,11 @@ public static class Test
         SquadDbContext db = new SquadDbContext();
         _dataBaseRepository = new DataBaseRepository(db);
     }
-    public static void TestMethodCreateCommanderAndTeam()
+    public static async Task TestMethodCreateCommanderAndTeam()
     {
         var user = UserModelEntity.CreateUserEntity("Falanga", "Roma", "Bezumie", "897383", Role.Private, 24,null);
 
-        UserModelEntity? newUser = _dataBaseRepository.CreateNewUser(user);
-
-
+        UserModelEntity? newUser = await _dataBaseRepository.CreateNewUser(user);
     }
     public static void TestMethodUser()
     {
@@ -68,29 +67,49 @@ public static class Test
 
         }
     }
-    public static void TestMethodTeam(int command)
+    public static void TestMethodTeam()
     {
-        if(command == 2)
+        using(SquadDbContext db = new SquadDbContext())
         {
-            using(SquadDbContext db = new SquadDbContext())
+            db.Teams.Add(new TeamEntity()
             {
-                db.Teams.Add(new TeamEntity()
-                {
-                    Name = "Falanga",
-                });
-                db.SaveChanges();
-
-            }
+                Name = "Falanga",
+            });
+            db.SaveChanges();
         }
-        else
-        {
-            using(SquadDbContext db = new SquadDbContext())
-            {
-                var humans = db.Teams.Include(t => t.Members).FirstOrDefault(t => t.Id == 1);
-
-
-            }
-        }
-
     }
-}
+    public async static void TestMethodRental()
+    {
+        using(SquadDbContext db = new SquadDbContext())
+        {
+            var team = await db.Teams.FirstOrDefaultAsync();
+            db.Reantils.Add(new ReantalEntity()
+            {
+                TeamId = team.Id,
+                Weapon = true,
+                Mask = true,
+                Helmet = true,
+                Balaclava = true,
+                SVMP = true,
+                Outterwear = true,
+                Gloves = true,
+                BulletproofVestOrUnloadingVest = true,
+                IsStaffed = true &&
+                            true &&
+                            true &&
+                            true &&
+                            true &&
+                            true &&
+                            true &&
+                            true
+                            ? true : false,
+            });
+            db.SaveChanges();
+            };
+
+
+
+
+        }
+    }
+

@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using SquadServer;
 using SquadServer.Models;
 using SquadServer.Services.Service_DeviceRegistration;
 using SquadServer.Services.Service_Notification;
@@ -48,13 +49,6 @@ if(!app.Environment.IsDevelopment())
 
 app.UseCors("CorsCustom");
 app.UseAuthorization();
-
-//app.Use( async (context,next) =>
-//{
-//    Console.WriteLine();
-//    await next.Invoke(context);
-//});
-
 
 
 

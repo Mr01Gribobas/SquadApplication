@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SquadServer.Migrations
 {
     /// <inheritdoc />
-    public partial class two : Migration
+    public partial class NewMigratuin : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -149,6 +149,7 @@ namespace SquadServer.Migrations
                     Outterwear = table.Column<bool>(type: "bit", nullable: false),
                     Gloves = table.Column<bool>(type: "bit", nullable: false),
                     BulletproofVestOrUnloadingVest = table.Column<bool>(type: "bit", nullable: false),
+                    IsStaffed = table.Column<bool>(type: "bit", nullable: false),
                     TeamId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

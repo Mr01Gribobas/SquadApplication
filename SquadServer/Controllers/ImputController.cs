@@ -54,7 +54,7 @@ public class ImputController : Controller
         }
 
 
-        UserModelEntity? newUser = _dataBaseRepository.CreateNewUser(userFromApp);
+        UserModelEntity? newUser = await _dataBaseRepository.CreateNewUser(userFromApp);
         if(newUser is null)
         {
             return StatusCode(201);
