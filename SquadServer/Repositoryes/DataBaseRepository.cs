@@ -54,23 +54,21 @@ public class DataBaseRepository
                   FirstOrDefault(u => u.Id == id);
     }
 
-    public UserModelEntity? CreateNewUser(UserModelEntity userFromApp)
+    public async Task<UserModelEntity?> CreateNewUser(UserModelEntity userFromApp)
     {
-        //if(userFromApp is null)
-        //    throw new ArgumentNullException(nameof(userFromApp));
+        
         ArgumentNullException.ThrowIfNull(userFromApp);
 
     RestartMethod:
-        var team = SearchTeamByName(userFromApp)?.
-                               FirstOrDefault(t => t.Name == userFromApp._teamName);
+        TeamEntity? team = await SearchTeamByName(userFromApp);
 
         if(team is null)
         {
             if(userFromApp._role == Role.Commander)
             {
                 TeamEntity newTeam = TeamEntity.CreateTeam(userFromApp);
-                _squadDbContext.Teams.Add(newTeam);
-                _squadDbContext.SaveChanges();
+                 await _squadDbContext.Teams.AddAsync(newTeam);
+                 await _squadDbContext.SaveChangesAsync();
                 goto RestartMethod;
             }
             return null;
@@ -86,28 +84,28 @@ public class DataBaseRepository
             _teamId: team.Id,
             _age: null
             );
-
-            _squadDbContext.Players.Add(user);
+            user.Team = team;
+            await _squadDbContext.Players.AddAsync(user);
             team.CountMembers += 1;
-            _squadDbContext.SaveChanges();
+            await _squadDbContext.SaveChangesAsync();
 
 
             return user;
         }
-        catch(Exception)
+        catch(Exception ex)
         {
-            throw new StackOverflowException();
+            Console.WriteLine($"Error : {ex.Message}");
+            return null;
         }
 
     }
 
 
 
-    private List<TeamEntity>? SearchTeamByName(UserModelEntity userFromApp)
+    private async Task<TeamEntity?> SearchTeamByName(UserModelEntity userFromApp)
     {
-        return _squadDbContext.Teams.
-                               Where(t => t.Name == userFromApp._teamName).
-                               ToList();
+        return await _squadDbContext.Teams.
+                               FirstOrDefaultAsync(t => t.Name == userFromApp._teamName);
     }
 
     public List<UserModelEntity>? GetAllMembers(int userId)

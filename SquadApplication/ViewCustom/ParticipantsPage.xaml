@@ -11,7 +11,31 @@
         Padding="5"
         HorizontalOptions="Center"
         VerticalOptions="Start">
-        <Label Text="Участники" FontSize="24" HorizontalOptions="Center" VerticalOptions="Start"/>
+        
+        <Border
+             BackgroundColor="#60907050"
+             Stroke="DarkSeaGreen"
+             StrokeShape="10"
+            
+             Padding="12"
+             Margin="13"
+             Opacity="0.8">
+            <Border.Shadow>
+                <Shadow Brush="red" 
+            Offset="34,34" 
+            Opacity="1.15"
+            Radius="45"/>
+            </Border.Shadow>
+            <Label 
+            Text="Твоя команда"
+            FontSize="24"
+            FontAttributes="Italic"
+            FontAutoScalingEnabled="True"
+            TextColor="AliceBlue"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"/>
+            
+        </Border>
         <ScrollView>     
             
         <CollectionView x:Name="ParticipantsLisyViewItem"  

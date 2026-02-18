@@ -35,7 +35,16 @@ public partial class ParticipantsViewModel : ObservableObject
         await SendRequest(user, true);
 
     }
+    /*
+     * [RelayCommand]
+    public async Task Profile(UserModelEntity user)
+    {
+        if(user is null)
+            return;
+        await Shell....
 
+    }
+    */
 
     [RelayCommand]
     public async Task DemoteAPlayer(UserModelEntity user)
