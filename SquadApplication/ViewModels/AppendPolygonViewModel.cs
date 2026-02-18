@@ -2,10 +2,11 @@
 
 namespace SquadApplication.ViewModels;
 
-public partial class AppendPolygonViewModel: ObservableObject 
+public partial class AppendPolygonViewModel : ObservableObject
 {
     private readonly IRequestManager<PolygonEntity> _requestManager;
     private readonly UserModelEntity _user;
+    private readonly AppendPolygonPage _plygonPage;
 
     [ObservableProperty]
     private string polygonName;
@@ -13,8 +14,9 @@ public partial class AppendPolygonViewModel: ObservableObject
     [ObservableProperty]
     private string polygonCoordinates;
 
-    public AppendPolygonViewModel(AppendPolygonPage polygonPage , UserModelEntity user)
+    public AppendPolygonViewModel(AppendPolygonPage polygonPage, UserModelEntity user)
     {
+        _plygonPage = polygonPage;
         _user = user;
         _requestManager = new ManagerPostRequests<PolygonEntity>();
     }
@@ -24,28 +26,25 @@ public partial class AppendPolygonViewModel: ObservableObject
     {
         if(!ValidatePropyrty(PolygonName, PolygonCoordinates))
         {
-            return;//error
+
+            await _plygonPage.DisplayAlertAsync("Error", "Invalud param", "Ok");
+            await Shell.Current.GoToAsync("..");
         }
         else
         {
-            PolygonEntity polygon = PolygonEntity.CreatePolygonModel(PolygonName,PolygonCoordinates);
+            PolygonEntity polygon = PolygonEntity.CreatePolygonModel(PolygonName, PolygonCoordinates);
             if(polygon is not null)
             {
                 var requestManager = (ManagerPostRequests<PolygonEntity>)_requestManager;
                 requestManager.SetUrl($"AddPolygon?userId={_user.Id}");
-                await requestManager.PostRequests(polygon,PostsRequests.AddPolygon);
-            }//
+                var result = await requestManager.PostRequests(polygon, PostsRequests.AddPolygon);
+                if(!result)
+                    await _plygonPage.DisplayAlertAsync("Error", "ошибка операции", "Ok");
+
+            }
         }
+        await Shell.Current.GoToAsync("..");
     }
-
-    [RelayCommand]
-    public void DeletePolygon()
-    {
-        //todo
-    }
-
-
-
 
     private bool ValidatePropyrty(string polygonName, string polygonCoordinates)
     {

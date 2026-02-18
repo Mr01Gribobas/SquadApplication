@@ -44,6 +44,7 @@ public partial class PolygonsViewModel : ObservableObject
     public async Task AppendPolygon()
     {
         await Shell.Current.GoToAsync($"{nameof(AppendPolygonPage)}");
+        await this.SetPolygons();
     }
 
     [RelayCommand]
@@ -61,6 +62,7 @@ public partial class PolygonsViewModel : ObservableObject
         }
         finally 
         {
+            Polygons.Remove(polygon);
             _polygonPage?.CheckItems();
         _managerGet.ResetUrlAndStatusCode();
         }

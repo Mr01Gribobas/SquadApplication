@@ -31,47 +31,92 @@
                 </CollectionView.EmptyView>                       
             <CollectionView.ItemTemplate>
                 <DataTemplate>                    
-                    <Border
-                        Stroke="DarkKhaki"
-                        StrokeShape="1"                        
+                    <Border                        
+                        BackgroundColor="#90508080"
+                        Stroke="Aquamarine"
+                        StrokeThickness="1"
+                        StrokeDashArray="22,12"
+                        StrokeShape="22"
+                        Padding="15"
+                        Opacity="0.9"
                         >
+                        
                         <HorizontalStackLayout
-                            VerticalOptions="Start"
-                            HorizontalOptions="Start"                      
                             >
                                 <VerticalStackLayout>
                                     
                                 <HorizontalStackLayout>
-                                    <Label Text="Name : " TextColor="AliceBlue" FontSize="20"/>
-                                        <Label Text="{Binding Path=_userName}" TextColor="White" FontSize="20"/>
+                                    <Label Text="Name : " TextColor="AliceBlue" FontSize="17"/>
+                                        <Label MaximumWidthRequest="150" Text="{Binding Path=_userName}" TextColor="White" FontSize="17"/>
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout>
-                                        <Label Text="Callsing : " TextColor="AliceBlue" FontSize="20"/>
-                                        <Label Text="{Binding Path=_callSing}" TextColor="White" FontSize="20"/>
+                                        <Label Text="Callsing : " TextColor="AliceBlue" FontSize="17"/>
+                                        <Label MaximumWidthRequest="150" Text="{Binding Path=_callSing}" TextColor="White" FontSize="17"/>
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout>
-                                        <Label Text="Role : " TextColor="AliceBlue" FontSize="20"/>
-                                        <Label Text="{Binding Path=_role}" TextColor="White" FontSize="20"/>
+                                        <Label Text="Role : " TextColor="AliceBlue" FontSize="17"/>
+                                        <Label MaximumWidthRequest="150" Text="{Binding Path=_role}" TextColor="White" FontSize="17"/>
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout>
-                                        <Label Text="Full Equip : " TextColor="AliceBlue" FontSize="20"/>
-                                        <Label x:Name="isStaffed" Text="{Binding Path=_isStaffed}" TextColor="White" FontSize="20"/>
+                                        <Label Text="Full Equip : " TextColor="AliceBlue" FontSize="17"/>
+                                        <Label MaximumWidthRequest="70" x:Name="isStaffed" Text="{Binding Path=_isStaffed}" TextColor="White" FontSize="17"/>
                                 </HorizontalStackLayout>
                                 </VerticalStackLayout>
+                                    
+                                <Grid Margin="45,0,0,0" ColumnDefinitions="*,*,*"  >
+                                    
+                                    <Border
+                                    StrokeThickness="2"
+                                    StrokeShape="100"
+                                    Padding="1"
+                                    Opacity="1.9"
+                                    Margin="1"
+                                    WidthRequest="35"
+                                    Grid.Column="0"
+                                                  >
+                                        <Button 
+                                           BackgroundColor="#90202020"
+                                           Text="i"
+                                           FontSize="35"></Button>
+                                    </Border>
+                                        
+                                    <Border
+                                   Grid.Column="1"
+                                   StrokeThickness="2"
+                                   StrokeShape="100"
+                                   Padding="1"
+                                   Opacity="1.9"
+                                   Margin="2"
+                                  >
+                                   
                                 <Button 
+                                    BackgroundColor="#90809040"
                                     Text="⟰"
-                                    Margin="100,10,0,10"
-                                    WidthRequest="50"
+                                    FontSize="30"
                                     Command="{Binding BindingContext.PromoteAPlayerCommand,Source={x:Reference ParticipantsLisyViewItem}}"
                                     CommandParameter="{Binding .}"/>
-                                  
-                                <Button 
+                              </Border>
+                                    
+
+                                <Border
+                                    StrokeThickness="2"
+                                    StrokeShape="100"
+                                    Padding="1"
+                                    Opacity="1.9"
+                                    Grid.Column="2"
+                                    Margin="2"
+                                    >
+                                        <Button 
+                                    BackgroundColor="#90803040"
                                     Text="⟱"
-                                    Margin="100,10,0,10"
-                                    WidthRequest="50"
+                                    FontSize="30"
                                     Command="{Binding BindingContext.DemoteAPlayerCommand, Source={x:Reference ParticipantsLisyViewItem}}"
                                     CommandParameter="{Binding .}" />
+                                </Border>
+                                </Grid>
+                                        
                             </HorizontalStackLayout>
+
                     </Border>                    
                 </DataTemplate>
             </CollectionView.ItemTemplate> 
