@@ -77,7 +77,14 @@
                                                     HorizontalOptions="Start"
                                                     Grid.Column="0"
                                                     >
-                                                    <Button Text="Delete" WidthRequest="150" Command="{Binding DeletePolygonCommand}" />
+                                            <Button
+                                                Text="Delete"
+                                                BackgroundColor="#90509010"
+                                                WidthRequest="150"
+                                                Command="{Binding BindingContext.DeletePolygonCommand, Source={x:Reference PolygonsListViewItem}}"  
+                                                CommandParameter="{Binding .}"
+                                                />
+                                                
                                                 </Border>
                                                 
                                                 <Border
@@ -86,7 +93,12 @@
                                                     Padding="2"
                                                     HorizontalOptions="End"
                                                     Grid.Column="1">
-                                                    <Button Text="Copy Coordinates" WidthRequest="150" Command="{Binding CopyCoordinatesCommand}" />
+                                            <Button 
+                                                Text="Copy Coordinates"
+                                                BackgroundColor="#90509010"
+                                                WidthRequest="150"
+                                                Command="{Binding  BindingContext.CopyCoordinatesCommand,Source={x:Reference PolygonsListViewItem} }"
+                                                CommandParameter="{Binding .}" />
                                                 </Border>
 
                                             </Grid>
@@ -103,6 +115,6 @@
                 </CollectionView>
             </StackLayout>
         </ScrollView>
-        
     </VerticalStackLayout>
+
 </ContentPage>

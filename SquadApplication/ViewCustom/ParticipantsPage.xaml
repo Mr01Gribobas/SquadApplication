@@ -58,8 +58,19 @@
                                         <Label x:Name="isStaffed" Text="{Binding Path=_isStaffed}" TextColor="White" FontSize="20"/>
                                 </HorizontalStackLayout>
                                 </VerticalStackLayout>
-                                <Button Text="⟰" Margin="100,10,0,10" WidthRequest="50" Command="{Binding PromoteAPlayerCommand}" CommandParameter="{Binding .}"/>
-                                <Button Text="⟱" Margin="100,10,0,10" WidthRequest="50" Command="{Binding DemoteAPlayerCommand}" CommandParameter="{Binding .}" />
+                                <Button 
+                                    Text="⟰"
+                                    Margin="100,10,0,10"
+                                    WidthRequest="50"
+                                    Command="{Binding BindingContext.PromoteAPlayerCommand,Source={x:Reference ParticipantsLisyViewItem}}"
+                                    CommandParameter="{Binding .}"/>
+                                  
+                                <Button 
+                                    Text="⟱"
+                                    Margin="100,10,0,10"
+                                    WidthRequest="50"
+                                    Command="{Binding BindingContext.DemoteAPlayerCommand, Source={x:Reference ParticipantsLisyViewItem}}"
+                                    CommandParameter="{Binding .}" />
                             </HorizontalStackLayout>
                     </Border>                    
                 </DataTemplate>

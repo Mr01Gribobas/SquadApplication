@@ -315,6 +315,7 @@ public class DataBaseRepository
             return false;
 
         _squadDbContext.Polygons.Remove(result);
+        await _squadDbContext.SaveChangesAsync() ;
         return true;
     }
 }

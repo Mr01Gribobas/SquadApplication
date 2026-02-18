@@ -11,18 +11,13 @@ public partial class PolygonsPage : ContentPage
         {
             //TODO
         }
-        InitializeComponent();
         _polygonsViewModel = new PolygonsViewModel(this, _user);
         BindingContext = _polygonsViewModel;
-        Loaded += PolygonsPage_Loaded;
+        InitializeComponent();
     }
 
-    private void PolygonsPage_Loaded(object? sender, EventArgs e)
-    {
-        CheckItems();
-    }
 
-    private void CheckItems()
+    public void CheckItems()
     {
         if(_polygonsViewModel._countPolygon <= 0)
         {
@@ -37,6 +32,15 @@ public partial class PolygonsPage : ContentPage
                     HorizontalOptions = LayoutOptions.Center
                 }
                 );
+        }
+        else 
+        {
+            foreach(var item in loyoutItem)
+            {
+                var label = item as Label;
+                if(label != null && label.Text == "Not found !")
+                    loyoutItem.Remove(item);
+            }
         }
 
     }

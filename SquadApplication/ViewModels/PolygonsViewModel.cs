@@ -1,6 +1,7 @@
 ﻿using SquadApplication.Repositories.ManagerRequest.Interfaces;
 
 namespace SquadApplication.ViewModels;
+
 public partial class PolygonsViewModel : ObservableObject
 {
     private IRequestManager<PolygonEntity> _managerGet;
@@ -12,7 +13,7 @@ public partial class PolygonsViewModel : ObservableObject
     private ObservableCollection<PolygonEntity> polygons;
 
     [ObservableProperty]
-    private string roleUser; 
+    private string roleUser;
 
     public PolygonsViewModel(PolygonsPage polygonsPage, UserModelEntity user)
     {
@@ -36,6 +37,7 @@ public partial class PolygonsViewModel : ObservableObject
                 Polygons.Add(item);
             }
         }
+        _polygonPage.CheckItems();
     }
 
     [RelayCommand]
@@ -47,13 +49,28 @@ public partial class PolygonsViewModel : ObservableObject
     [RelayCommand]
     public async Task DeletePolygon(PolygonEntity polygon)
     {
-        _managerGet.SetUrl($"DeletePolygonsById?poligonId={polygon.Id}");
-        var result =  await _managerGet.PutchRequestAsync(PutchRequest.DeletePolygon);
+        try
+        {
+            _managerGet.SetUrl($"DeletePolygonsById?poligonId={polygon.Id}");
+            var result = await _managerGet.PutchRequestAsync(PutchRequest.DeletePolygon);
+
+        }
+        catch(Exception ex)
+        {
+
+        }
+        finally 
+        {
+            _polygonPage?.CheckItems();
         _managerGet.ResetUrlAndStatusCode();
+        }
+        
     }
     [RelayCommand]
-    public async Task CopyPolygonCoordinates()
+    public async Task CopyPolygonCoordinates(PolygonEntity polygon)
     {
-        //copy
+        if(polygon is null || polygon.Coordinates is null)
+            return;
+        await Clipboard.Default.SetTextAsync(polygon.Coordinates);
     }
 }
