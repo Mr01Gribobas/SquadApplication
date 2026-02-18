@@ -1,4 +1,5 @@
-﻿using static SquadServer.Controllers.NotificationController;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using static SquadServer.Controllers.NotificationController;
 namespace SquadServer.Repositoryes;
 
 public class DataBaseRepository
@@ -264,14 +265,25 @@ public class DataBaseRepository
                 if(commander is null || commander.TeamId != user.TeamId)
                     return false;
                 commander.UpdateRank(false);
+            }else if(user._role ==Role.Private && rank)
+            {
+                var assistantCom = await _squadDbContext.Players.FirstOrDefaultAsync(u=>u._role==Role.Commander);
+                if(assistantCom is not null)
+                {
+                    assistantCom.UpdateRank(false);
+                    user.UpdateRank(true);
+                }
             }
-
+                
             if(user._role == Role.Private && !rank)
             {
                 _squadDbContext.Players.Remove(user);
                 await _squadDbContext.SaveChangesAsync();
                 return true;
             }
+
+
+
             await _squadDbContext.SaveChangesAsync();
             user.UpdateRank(rank);
             return true;
