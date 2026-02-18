@@ -138,12 +138,16 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
                  var resultUpdate = await _httpClient.GetFromJsonAsync<bool>(_urlNameForSend);
                 return resultUpdate;
             case PutchRequest.DeleteRental:
-                var resultDelete = await _httpClient.GetFromJsonAsync<bool>(_urlNameForSend);
-                return resultDelete;
+                var resultDeleteR = await _httpClient.GetFromJsonAsync<bool>(_urlNameForSend);
+                return resultDeleteR;
+            case PutchRequest.DeletePolygon:
+                var resultDeleteP = await _httpClient.GetFromJsonAsync<bool>(_urlNameForSend);
+                return resultDeleteP;
             default:
                 return false;
         }
     }
+                
 
     public Task<bool> PostRequests(T objectValue, PostsRequests postRequests)
     {

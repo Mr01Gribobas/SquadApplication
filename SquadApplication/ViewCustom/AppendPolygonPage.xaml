@@ -10,14 +10,27 @@
         HorizontalOptions="Center"
         Padding="10">
         <HorizontalStackLayout >
-        <Label Text="Name" TextColor="AliceBlue" FontSize="30"/>
-            <Entry Margin="10,-12,0,0" Placeholder="NamePolygon" FontSize="30" PlaceholderColor="Gray"/>
+        <Label Text="Name" TextColor="Gold" FontSize="30"/>
+            <Entry 
+                Margin="10,-12,0,0"
+                Placeholder="NamePolygon"
+                FontSize="30"
+                TextColor="AliceBlue"
+                Text="{Binding PolygonName}"
+                PlaceholderColor="Gray"/>
         </HorizontalStackLayout>
 
         <HorizontalStackLayout>
-            <Label Text="Coordinates" TextColor="AliceBlue" FontSize="20"/>
-            <Entry Margin="10,-12,0,0" PlaceholderColor="Grey" FontSize="20" Placeholder="60.043010, 30.104596"/>
+            <Label Text="Coordinates" TextColor="Gold" FontSize="20"/>
+            <Entry
+                Margin="10,-12,0,0" 
+                PlaceholderColor="Grey"
+                FontSize="20" 
+                TextColor="AliceBlue"
+                Text="{Binding PolygonCoordinates}"
+                Placeholder="60.043010, 30.104596"/>
+                
         </HorizontalStackLayout>
-        <Button VerticalOptions="End" Command="{Binding AppendPolygonCommand}"/>
+        <Button VerticalOptions="End" Text="Create" Command="{Binding AppendPolygonCommand}"/>
     </VerticalStackLayout>
 </ContentPage>

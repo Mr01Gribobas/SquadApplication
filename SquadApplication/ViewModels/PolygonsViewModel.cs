@@ -43,4 +43,17 @@ public partial class PolygonsViewModel : ObservableObject
     {
         await Shell.Current.GoToAsync($"{nameof(AppendPolygonPage)}");
     }
+
+    [RelayCommand]
+    public async Task DeletePolygon(PolygonEntity polygon)
+    {
+        _managerGet.SetUrl($"DeletePolygonsById?poligonId={polygon.Id}");
+        var result =  await _managerGet.PutchRequestAsync(PutchRequest.DeletePolygon);
+        _managerGet.ResetUrlAndStatusCode();
+    }
+    [RelayCommand]
+    public async Task CopyPolygonCoordinates()
+    {
+        //copy
+    }
 }

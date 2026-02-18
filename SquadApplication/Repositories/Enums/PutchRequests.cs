@@ -3,5 +3,6 @@
 public enum PutchRequest
 {
     UpdateRank,
-    DeleteRental
+    DeleteRental,
+    DeletePolygon
 }

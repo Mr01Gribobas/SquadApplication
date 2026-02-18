@@ -22,7 +22,7 @@ public partial class AppendPolygonViewModel: ObservableObject
     [RelayCommand]
     public async Task AppendPolygon()
     {
-        if(!ValidatePropyrty(polygonName, polygonCoordinates))
+        if(!ValidatePropyrty(PolygonName, PolygonCoordinates))
         {
             return;//error
         }
@@ -34,7 +34,7 @@ public partial class AppendPolygonViewModel: ObservableObject
                 var requestManager = (ManagerPostRequests<PolygonEntity>)_requestManager;
                 requestManager.SetUrl($"AddPolygon?userId={_user.Id}");
                 await requestManager.PostRequests(polygon,PostsRequests.AddPolygon);
-            }
+            }//
         }
     }
 

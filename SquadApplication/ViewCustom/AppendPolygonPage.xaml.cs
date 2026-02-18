@@ -10,6 +10,7 @@ public partial class AppendPolygonPage : ContentPage
 	{
 		_user = user.CurrentUser;
         _viewModel = new AppendPolygonViewModel(this,_user);
+        BindingContext = _viewModel;    
         InitializeComponent();
 	}
 }
