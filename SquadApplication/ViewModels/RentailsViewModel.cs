@@ -30,9 +30,13 @@ public partial class RentailsViewModel : ObservableObject
 
 
     [RelayCommand]
-    public void DeleteRental(RentailsDTO rentail)
+    public async Task DeleteRental(RentailsDTO rentail)
     {
-        _requestManager.SetUrl("Delete");
+        _requestManager.SetUrl($"DeleteReantilById?rentailNymber={rentail.NumderRental}");
+        var result = await _requestManager.PutchRequestAsync(PutchRequest.DeleteRental);
+        //result ok
+        _requestManager.ResetUrlAndStatusCode();
+
     }
 
     [RelayCommand]
@@ -50,9 +54,19 @@ public partial class RentailsViewModel : ObservableObject
 
     
 
-    private void GetRentalsFromDb()
+    private async Task GetRentalsFromDb()
     {
-        var request = (ManagerGetRequests<RentailsDTO>)_requestManager;
-        request.SetUrl("");
+        
+        _requestManager.SetUrl($"GetAllReantil?teamId={_user.TeamId}");
+         var resultList = await _requestManager.GetDataAsync(GetRequests.GetAllReantil);
+        if (resultList.Count > 0)
+        {
+            foreach(RentailsDTO item in resultList)
+            {
+                Rentals.Add(item);
+            }
+        }
+        _requestManager.ResetUrlAndStatusCode();
+
     }
 }

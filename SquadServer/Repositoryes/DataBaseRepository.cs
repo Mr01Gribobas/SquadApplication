@@ -33,7 +33,7 @@ public class DataBaseRepository
             throw new NullReferenceException();
         }
         userFromDb._goingToTheGame = isWill;
-        _squadDbContext.SaveChanges();
+        await _squadDbContext.SaveChangesAsync();
         return userFromDb;
     }
     public async Task<UserModelEntity?> GetCaptainByTeamIdAsync(int teamId)

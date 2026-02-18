@@ -135,8 +135,11 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
         switch(getType)
         {
             case PutchRequest.UpdateRank:
-                 var responce = await _httpClient.GetFromJsonAsync<bool>(_urlNameForSend);
-                return responce;
+                 var resultUpdate = await _httpClient.GetFromJsonAsync<bool>(_urlNameForSend);
+                return resultUpdate;
+            case PutchRequest.DeleteRental:
+                var resultDelete = await _httpClient.GetFromJsonAsync<bool>(_urlNameForSend);
+                return resultDelete;
             default:
                 return false;
         }
