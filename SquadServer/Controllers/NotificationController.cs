@@ -1,7 +1,4 @@
-﻿using SquadServer.Extension;
-using SquadServer.Repositoryes;
-
-namespace SquadServer.Controllers;
+﻿namespace SquadServer.Controllers;
 
 [Controller]
 public class NotificationController : Controller
@@ -20,12 +17,12 @@ public class NotificationController : Controller
     public async Task<IActionResult> CheckEventInDb(int teamId, int userId)
     {
         Controller.LogInformation("Start action : CheckEventInDb");
-        if(userId <=0 || teamId <= 0)
+        if(userId <= 0 || teamId <= 0)
         {
             return Ok(new EvenCheck(isGoTogame: false, availabilityEvent: false));
         }
-       EvenCheck event_chek =  await _dataBaseRepository.CheckEvent(teamId, userId);
-            return Ok(event_chek);
+        EvenCheck event_chek = await _dataBaseRepository.CheckEvent(teamId, userId);
+        return Ok(event_chek);
     }
     public record class EvenCheck(bool availabilityEvent, bool isGoTogame);
 }

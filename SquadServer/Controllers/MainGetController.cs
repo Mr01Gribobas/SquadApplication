@@ -82,7 +82,7 @@ public class MainGetController : Controller
     }
 
 
-    [HttpDelete]
+    [HttpGet]
     public async Task<IActionResult?> DeletePolygonsById(int poligonId)
     {
         Controller.LogInformation("Start action : GetAllReantil");
@@ -183,7 +183,7 @@ public class MainGetController : Controller
     [HttpGet]
     public async Task<IActionResult> GameAttendance(int userId, bool isWill)
     {
-        Controller.LogInformation("Start action : Login");
+        Controller.LogInformation("Start action : GameAttendance");
 
         try
         {

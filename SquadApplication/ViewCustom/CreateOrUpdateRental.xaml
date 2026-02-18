@@ -5,7 +5,8 @@
              Title="CreateOrUpdateRental">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to .NET MAUI!"
+            Text="&lt;  Welcome to .NET MAUI! &lt; "
+            TextType="Html"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
     </VerticalStackLayout>

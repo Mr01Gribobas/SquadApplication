@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SquadServer.Models.DbContextDir;
 
@@ -11,9 +12,11 @@ using SquadServer.Models.DbContextDir;
 namespace SquadServer.Migrations
 {
     [DbContext(typeof(SquadDbContext))]
-    partial class SquadDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260218114638_three")]
+    partial class three
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
