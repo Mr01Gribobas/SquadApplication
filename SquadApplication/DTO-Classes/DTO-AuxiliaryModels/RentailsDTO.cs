@@ -11,6 +11,7 @@ public class RentailsDTO
     public bool Outterwear { get; set; }//верхняя одежда
     public bool Gloves { get; set; }//перчатки двойные
     public bool BulletproofVestOrUnloadingVest { get; set; }//плитник\разгруз
+    public bool _isStafed { get; set; }//плитник\разгруз
     public int TeamId { get; set; }
 
 }

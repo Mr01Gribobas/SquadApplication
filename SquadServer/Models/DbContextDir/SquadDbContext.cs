@@ -21,7 +21,7 @@ public class SquadDbContext: DbContext
 
     public SquadDbContext(){ }
     public SquadDbContext(DbContextOptions<SquadDbContext> options) : base (options)
-    {
+    {        
         //Database.EnsureDeleted();
         //Database.EnsureCreated();
     }

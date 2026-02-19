@@ -1,3 +1,4 @@
+using Microsoft.SqlServer.Server;
 using SquadServer.Extension;
 using SquadServer.Models;
 using SquadServer.Repositoryes;
@@ -42,25 +43,34 @@ public class ImputController : Controller
     [HttpPost]
     public async Task<IActionResult>? Registration()
     {
-        Controller.LogInformation("Start action : Registration");
-
-        //HttpContext.Request.ContentType = "application/json";
-        UserModelEntity? userFromApp = await HttpContext.Request.
+        Controller.LogInformation("Start action : Registration");        
+        try
+        {
+            UserModelEntity? userFromApp = await HttpContext.Request.
                                       ReadFromJsonAsync<UserModelEntity>();
 
-        if(!Validate(userFromApp))
-        {
-            return Unauthorized();//401
-        }
+            if(!Validate(userFromApp))
+            {
+                return Unauthorized();//401
+            }
 
-
-        UserModelEntity? newUser = await _dataBaseRepository.CreateNewUser(userFromApp);
-        if(newUser is null)
-        {
-            return StatusCode(201);
-        }
-
+            UserModelEntity? newUser = await _dataBaseRepository.CreateNewUser(userFromApp);
+            if(newUser is null)
+            {
+                return StatusCode(201);
+            }
         return Ok(newUser);
+        }
+        catch(Exception ex)
+        {
+            if(ex.Message == "One of the identified items was in an invalid format")
+                return StatusCode(400);
+            return BadRequest(ex.Message);
+
+        }
+
+
+
 
     }
 

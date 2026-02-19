@@ -59,7 +59,11 @@ public partial class AuthorizeViewModel : ObservableObject
     {
 
         if(!ValidateData())
+        {
+
+            await _authorizedPage.DisplayAlertAsync("Error data", "Invalid data", "Ok");
             return;
+        }
 
         UserModelEntity newUser = UserModelEntity.CreateUserEntity(
             _teamName: Team,
@@ -164,7 +168,7 @@ public partial class AuthorizeViewModel : ObservableObject
                 return false;
             if(_team is null)
                 return false;
-            if(_phoneNumber is null || _phoneNumber.Length > 20)
+            if(_phoneNumber is null || _phoneNumber.Length > 20 || _phoneNumber.Length < 2)
                 return false;
             return true;
         }

@@ -94,8 +94,7 @@ public class DataBaseRepository
         }
         catch(Exception ex)
         {
-            Console.WriteLine($"Error : {ex.Message}");
-            return null;
+            throw new Exception(ex.Message);
         }
 
     }
@@ -147,6 +146,7 @@ public class DataBaseRepository
                 SVMP = item.SVMP,
                 Outterwear = item.Outterwear,
                 Gloves = item.Gloves,
+                _isStaffed = item.IsStaffed,
                 BulletproofVestOrUnloadingVest = item.BulletproofVestOrUnloadingVest,
             });
         }

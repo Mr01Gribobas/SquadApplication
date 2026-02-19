@@ -28,7 +28,7 @@ public class UserModelEntity
     public bool? _isStaffed { get; private set; }//укомплектованность\
 
     [JsonInclude]
-    public DateTime _dataRegistr {  get; private set; }
+    public DateTime _dataRegistr { get; private set; }
 
 
     public Int64 _enterCode { get; set; }
@@ -50,7 +50,7 @@ public class UserModelEntity
 
     [JsonIgnore]
     public virtual PlayerStatisticsModelEntity? Statistic { get; set; } = null!;
-    
+
 
     public static UserModelEntity CreateUserEntity(string _teamName, string _name, string _callSing, string _phone, Role _role, int? _age, int? _teamId)
     {
@@ -72,7 +72,7 @@ public class UserModelEntity
         return newUser;
     }
 
-    
+
     public bool UpdateRank(bool rank)
     {
         if(rank)
@@ -115,7 +115,7 @@ public class UserModelEntity
         userEntity.TeamId = userFromApp.TeamId;
     }
     public bool UpdateStaffed(EquipmentEntity equip)
-    {        
+    {
         if(
                 equip.BodyEquipment &
                 equip.HeadEquipment &
@@ -124,7 +124,7 @@ public class UserModelEntity
                 equip.NameMainWeapon != string.Empty
                 )
         {
-            this._isStaffed = true;            
+            this._isStaffed = true;
             return true;
         }
         this._isStaffed = false;
@@ -135,9 +135,20 @@ public class UserModelEntity
     {
         if(phuneNumber is null)
             throw new ArgumentNullException();
+        string newString = string.Empty ;
 
-        char[] skipsNumbers = phuneNumber.Skip(5).ToArray();
-        string newString = new string(skipsNumbers);
+        if(phuneNumber.Length > 6)
+        {
+            char[] skipsNumbers = phuneNumber.Skip(5).ToArray();
+            newString = new string(skipsNumbers);
+        }
+        else
+        {
+            newString = phuneNumber;
+        }
+
+
+
 
         if(!int.TryParse(newString, out int code))
             throw new FormatException();
