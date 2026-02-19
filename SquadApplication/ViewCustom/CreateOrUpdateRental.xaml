@@ -19,39 +19,55 @@
                 <VerticalStackLayout Grid.Column="0">
                <HorizontalStackLayout Padding="5" Margin="4" >
                      <Label Text="Оружие " FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
-                      <CheckBox/>
+                        <CheckBox IsChecked="{Binding Weapon}"/>
                </HorizontalStackLayout>
                    <HorizontalStackLayout Padding="5" Margin="4" >
                     <Label Text="Маска" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
-                          <CheckBox/>
+                        <CheckBox IsChecked="{Binding Mask}"/>
                </HorizontalStackLayout>
                 <HorizontalStackLayout Padding="5" Margin="4" >
                     <Label Text="Шлем" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
-                    <CheckBox/>
+                        <CheckBox IsChecked="{Binding Helmet}"/>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout Padding="5" Margin="4" >
                     <Label Text="Балаклава" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
-                    <CheckBox/>
+                        <CheckBox IsChecked="{Binding Balaclava}"/>
                 </HorizontalStackLayout>
                     <HorizontalStackLayout Padding="5" Margin="4" Grid.Column="1">
-                        <Label Text="нижний слой защиты" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
-                        <CheckBox/>
+                        <Label Text="Нижний слой защиты" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
+                        <CheckBox IsChecked="{Binding SVMP}" /> 
                     </HorizontalStackLayout>
                     <HorizontalStackLayout Padding="5" Margin="4" Grid.Column="1">
-                        <Label Text="верхняя одежда" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
-                        <CheckBox/>
+                        <Label Text="Верхняя одежда" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
+                        <CheckBox IsChecked="{Binding Outterwear}"/>
                     </HorizontalStackLayout>
                     <HorizontalStackLayout Padding="5" Margin="4" Grid.Column="1">
-                        <Label Text="перчатки двойные" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
-                        <CheckBox/>
+                        <Label Text="Перчатки двойные" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
+                        <CheckBox IsChecked="{Binding Gloves}"/>
                     </HorizontalStackLayout>
                     <HorizontalStackLayout Padding="5" Margin="4" Grid.Column="1">
-                        <Label Text="плитник\разгруз" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
-                        <CheckBox/>
+                        <Label Text="Плитник\разгруз" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
+                        <CheckBox  IsChecked="{Binding BulletproofVestOrUnloadingVest}"/>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Grid>
-            <Button/>
+            <Border
+                    Stroke="Transparent"
+                    BackgroundColor="#50808080"
+                    StrokeThickness="1"
+                    StrokeShape="10"
+                    Padding="15"
+                    Opacity="0.8">
+                <Border.Shadow>
+                    <Shadow Brush="#b3c96b" 
+                            Offset="0,5" 
+                            Opacity="0.5"
+                             Radius="10"/>
+                </Border.Shadow>
+
+                <Button Text="Ok" Background="#90308080"/>
+            </Border>
+                
         </VerticalStackLayout>
                 
 

@@ -9,6 +9,7 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
     public int TeamId { get; set; }
     public bool _isStaffed { get; set; }
 
+
     [ObservableProperty]
     public int numderRental;
 

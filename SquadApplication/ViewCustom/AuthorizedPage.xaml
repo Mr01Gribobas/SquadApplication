@@ -13,6 +13,7 @@
             <!-- Заголовок -->
             <Border Grid.Row="0"
                    BackgroundColor="Transparent"
+
                    Stroke="CadetBlue"                   
                    Padding="20"
                    Margin="0,20,0,30"
