@@ -7,7 +7,7 @@ public partial class RentailsViewModel : ObservableObject
     private readonly UserModelEntity _user;
     private readonly RentalsPage _rentalPage;
     private readonly IRequestManager<RentailsDTO> _requestManager;
-    public Int32 _countPolygon => Rentals.Count;
+    public Int32 _countRentals => Rentals.Count;
 
     [ObservableProperty]
     private ObservableCollection<RentailsDTO> rentals;
@@ -24,6 +24,7 @@ public partial class RentailsViewModel : ObservableObject
     {
         _user = modelEntity;
         _rentalPage = rentalsPage;
+        rentals = new ObservableCollection<RentailsDTO>();
         _requestManager = new ManagerGetRequests<RentailsDTO>();
         GetRentalsFromDb();
     }
@@ -67,6 +68,6 @@ public partial class RentailsViewModel : ObservableObject
             }
         }
         _requestManager.ResetUrlAndStatusCode();
-
+        _rentalPage.CheckItems();
     }
 }

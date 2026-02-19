@@ -13,7 +13,7 @@
             <StackLayout >
                 <Button 
                 BackgroundColor="DarkGreen"
-             Command="{Binding AppendRentailCommand}"
+                Command="{Binding AppendRentailCommand}"
                 Text="Add Rentail">
                     <Button.Triggers>
                         <DataTrigger

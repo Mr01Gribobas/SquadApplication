@@ -23,9 +23,9 @@ public partial class RentalsPage : ContentPage
         _cacheServiese.Set<RentailsDTO>("updateRental",rentail);
     }
 
-    private void CheckItems()
+    public void CheckItems()
     {
-        if(_rentalView._countPolygon <= 0)
+        if(_rentalView._countRentals <= 0)
         {
             loyoutItem.Add(
                 new Label()
@@ -38,6 +38,15 @@ public partial class RentalsPage : ContentPage
                     HorizontalOptions = LayoutOptions.Center
                 }
                 );
+        }
+        else
+        {
+            foreach(var item in loyoutItem)
+            {
+                var label = item as Label;
+                if(label != null && label.Text == "Not found !")
+                    loyoutItem.Remove(item);
+            }
         }
 
     }

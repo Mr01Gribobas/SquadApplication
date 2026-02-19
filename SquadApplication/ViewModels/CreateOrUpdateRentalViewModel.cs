@@ -7,7 +7,7 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
     private readonly IUserSession _user;
     public bool _isUpdate;
     public int TeamId { get; set; }
-
+    public bool _isStaffed { get; set; }
 
     [ObservableProperty]
     public int numderRental;
@@ -50,7 +50,7 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
             Balaclava = Balaclava,
             SVMP = SVMP,
             Outterwear = Outterwear,
-            Gloves = Gloves,
+            Gloves = Gloves,            
             BulletproofVestOrUnloadingVest = BulletproofVestOrUnloadingVest,
         };
 
