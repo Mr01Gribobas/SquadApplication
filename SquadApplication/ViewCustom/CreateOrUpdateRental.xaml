@@ -2,12 +2,59 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.CreateOrUpdateRentalPage"
+             BackgroundImageSource="aythorize3.jpg"
              Title="CreateOrUpdateRental">
-    <VerticalStackLayout>
-        <Label 
-            Text="&lt;  Welcome to .NET MAUI! &lt; "
-            TextType="Html"  
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Border
+    BackgroundColor="#10808080"
+    StrokeShape="12"
+    Stroke="#b3c96b" >
+        
+        
+
+
+        <VerticalStackLayout
+            BackgroundColor="#86208054">
+                
+            <Grid ColumnDefinitions="*,*">
+                <VerticalStackLayout Grid.Column="0">
+               <HorizontalStackLayout Padding="5" Margin="4" >
+                     <Label Text="Оружие " FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
+                      <CheckBox/>
+               </HorizontalStackLayout>
+                   <HorizontalStackLayout Padding="5" Margin="4" >
+                    <Label Text="Маска" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
+                          <CheckBox/>
+               </HorizontalStackLayout>
+                <HorizontalStackLayout Padding="5" Margin="4" >
+                    <Label Text="Шлем" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
+                    <CheckBox/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Padding="5" Margin="4" >
+                    <Label Text="Балаклава" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
+                    <CheckBox/>
+                </HorizontalStackLayout>
+                    <HorizontalStackLayout Padding="5" Margin="4" Grid.Column="1">
+                        <Label Text="нижний слой защиты" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
+                        <CheckBox/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Padding="5" Margin="4" Grid.Column="1">
+                        <Label Text="верхняя одежда" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
+                        <CheckBox/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Padding="5" Margin="4" Grid.Column="1">
+                        <Label Text="перчатки двойные" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
+                        <CheckBox/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Padding="5" Margin="4" Grid.Column="1">
+                        <Label Text="плитник\разгруз" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
+                        <CheckBox/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Grid>
+            <Button/>
+        </VerticalStackLayout>
+                
+
+        
+    </Border>
 </ContentPage>
