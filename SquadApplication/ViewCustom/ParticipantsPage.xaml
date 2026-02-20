@@ -16,10 +16,10 @@
              BackgroundColor="#60907050"
              Stroke="DarkSeaGreen"
              StrokeShape="10"
-            
              Padding="12"
              Margin="13"
              Opacity="0.8">
+            
             <Border.Shadow>
                 <Shadow Brush="red" 
             Offset="34,34" 

@@ -50,6 +50,14 @@
                         <CheckBox  IsChecked="{Binding BulletproofVestOrUnloadingVest}"/>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1">
+                    <HorizontalStackLayout>
+                    <Label Text="Номер проката :" FontSize="18" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
+                        <Label Text="{Binding NumderRental}" FontSize="18" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
+                    </HorizontalStackLayout>
+                        
+                </VerticalStackLayout>
+
             </Grid>
             <Border
                     Stroke="Transparent"

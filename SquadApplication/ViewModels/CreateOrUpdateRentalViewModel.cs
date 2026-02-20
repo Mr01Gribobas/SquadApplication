@@ -4,14 +4,18 @@ namespace SquadApplication.ViewModels;
 
 public partial class CreateOrUpdateRentalViewModel : ObservableObject
 {
+    private readonly CreateOrUpdateRentalPage _page;
     private readonly IUserSession _user;
     public bool _isUpdate;
     public int TeamId { get; set; }
     public bool _isStaffed { get; set; }
 
 
+
+
+
     [ObservableProperty]
-    public int numderRental;
+    public string? numderRental ;
 
     [ObservableProperty]
     public bool weapon;// оружие
@@ -33,29 +37,39 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
     public bool bulletproofVestOrUnloadingVest;//плитник\разгруз
 
 
-    public CreateOrUpdateRentalViewModel(IUserSession user, bool isUpdate)
+    public CreateOrUpdateRentalViewModel(CreateOrUpdateRentalPage page,IUserSession user, bool isUpdate)
     {
+        _page = page;
         _user = user;
         _isUpdate = isUpdate;
+        if(!isUpdate)
+            NumderRental = "-";
     }
 
     [RelayCommand]
-    private void UpdateData()
+    private async Task UpdateData()
     {
-        RentailsDTO newRentails = new RentailsDTO()
+        try
         {
-            NumderRental = NumderRental,
-            Weapon = Weapon,
-            Mask = Mask,
-            Helmet = Helmet,
-            Balaclava = Balaclava,
-            SVMP = SVMP,
-            Outterwear = Outterwear,
-            Gloves = Gloves,            
-            BulletproofVestOrUnloadingVest = BulletproofVestOrUnloadingVest,
-        };
-
+            RentailsDTO newRentails = new RentailsDTO()
+            {
+                NumderRental = int.Parse(NumderRental),
+                Weapon = Weapon,
+                Mask = Mask,
+                Helmet = Helmet,
+                Balaclava = Balaclava,
+                SVMP = SVMP,
+                Outterwear = Outterwear,
+                Gloves = Gloves,
+                BulletproofVestOrUnloadingVest = BulletproofVestOrUnloadingVest,
+            };
+        }
+        catch(Exception ex)
+        {
+            await _page.DisplayAlertAsync("Error", $"{ex.Message}","Ok");
+        }
     }
+
 
 
 
@@ -64,7 +78,7 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
         if(rentails is null)
             throw new ArgumentNullException(nameof(rentails));
 
-        NumderRental = rentails.NumderRental;
+        NumderRental =rentails.NumderRental.ToString();
         Weapon = rentails.Weapon;
         Mask = rentails.Mask;
         Helmet = rentails.Helmet;

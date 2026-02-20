@@ -15,7 +15,7 @@ public partial class CreateOrUpdateRentalPage : ContentPage
 	{
         _cacheServiese = cacheServiese;
         _user = user;
-        _createOrUpdateRentalViewModel = new CreateOrUpdateRentalViewModel(user,_isUpdate);
+        _createOrUpdateRentalViewModel = new CreateOrUpdateRentalViewModel(this,user,_isUpdate);
         BindingContext = _createOrUpdateRentalViewModel;
         InitializeComponent();
         Loaded += CreateOrUpdateRental_Loaded;

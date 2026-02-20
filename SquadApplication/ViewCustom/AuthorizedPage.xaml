@@ -12,12 +12,20 @@
 
             <!-- Заголовок -->
             <Border Grid.Row="0"
-                   BackgroundColor="Transparent"
 
-                   Stroke="CadetBlue"                   
-                   Padding="20"
-                   Margin="0,20,0,30"
-                   HorizontalOptions="Fill">
+     Stroke="Transparent"
+     BackgroundColor="#10508080"
+     StrokeShape="10"
+     Padding="44"
+     Opacity="0.8"
+     HorizontalOptions="Fill"               
+                    >
+                <Border.Shadow>
+                    <Shadow Brush="#b3c96b" 
+            Offset="12,25" 
+            Opacity="1.0"
+            Radius="10"/>
+                </Border.Shadow>
 
                 <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
                     <Label Text="⚔️" 
@@ -68,19 +76,31 @@
                                    
                         </Border>
                         <Border
-                            Stroke="White"
-                             StrokeThickness="1"
-                             StrokeShape="RoundRectangle 10"
-                             BackgroundColor="Transparent">
-                        <Button Text="ВОЙТИ В СИСТЕМУ"
+                                 Stroke="DarkCyan"
+                                 BackgroundColor="#50808080"
+                                 StrokeThickness="1"
+                                 StrokeDashArray="2,1"
+                                 StrokeShape="20"
+                                 Padding="15"
+                                 Opacity="0.8">
+                            <Border.Shadow>
+                                <Shadow Brush="#b3c96b" 
+                                        Offset="1,5" 
+                                        Opacity="1.0"
+                                        Radius="10"/>
+                            </Border.Shadow>
+
+
+
+
+                            <Button Text="ВОЙТИ В СИСТЕМУ"
                                 Command="{Binding LoginCommand}"
                                 Clicked="LoadedPage"
                                 BackgroundColor="Transparent"
                                 TextColor="White"
                                 FontAttributes="Bold"
-                                BorderColor="Black"
                                 CornerRadius="10"
-                                HeightRequest="50"
+                                HeightRequest="40"
                                 FontSize="16"/>
                         </Border>
                             
@@ -139,10 +159,20 @@
                          </Border>
 
                         
-                        <Border Stroke="DarkCyan"
-                                StrokeThickness="1"
-                                StrokeShape="RoundRectangle 10"
-                                BackgroundColor="Transparent">                        
+                        <Border 
+                                 Stroke="DarkCyan"
+                                 BackgroundColor="#50808080"
+                                 StrokeThickness="1"
+                                 StrokeDashArray="2,1"
+                                 StrokeShape="20"
+                                 Padding="15"
+                                 Opacity="0.8">
+                            <Border.Shadow>
+                                <Shadow Brush="#b3c96b" 
+                                       Offset="1,5" 
+                                       Opacity="1.0"
+                                       Radius="10"/>
+                            </Border.Shadow>
 
                             <Button Text="СОЗДАТЬ АККАУНТ"
                                 Command="{Binding RegistrationCommand}"
