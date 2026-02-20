@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace SquadServer.Models.ModelsEntity;
+﻿namespace SquadServer.Models.ModelsEntity;
 
 public class DeviceRegistartionModelEntity
 {

@@ -1,7 +1,4 @@
-﻿using CommunityToolkit.Maui;
-using SquadApplication.Services.CacheServiseDir;
-
-namespace SquadApplication;
+﻿namespace SquadApplication;
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()

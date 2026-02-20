@@ -1,6 +1,3 @@
-using SquadApplication.DTO_Classes.DTO_AuxiliaryModels;
-using SquadApplication.Services.CacheServiseDir;
-
 namespace SquadApplication.ViewCustom;
 
 [QueryProperty(nameof(_isUpdate), "IsUpdate")]

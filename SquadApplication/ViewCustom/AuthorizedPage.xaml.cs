@@ -1,6 +1,4 @@
-﻿using SquadApplication.AnimationCustom;
-
-namespace SquadApplication.ViewCustom;
+﻿namespace SquadApplication.ViewCustom;
 
 public partial class AuthorizedPage : ContentPage
 {

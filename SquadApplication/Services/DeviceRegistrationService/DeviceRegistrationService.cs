@@ -8,12 +8,14 @@ public class DeviceRegistrationService : IDeviceRegistrationService
     private readonly IConnectivity _connectivity;
     private readonly IUserSession _userSession;
     private const string DeviceRegistrationKey = "device_registered";
+    public bool IsDeviceRegistered { private set; get; }
+
+
     private UserModelEntity _user
     {
         get => _userSession.CurrentUser;
         set;
     }
-    public bool IsDeviceRegistered { private set; get; }
 
     public DeviceRegistrationService(
                       IDeviceTokenManager deviceTokenManager,

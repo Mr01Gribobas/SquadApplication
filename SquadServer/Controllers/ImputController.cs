@@ -1,7 +1,3 @@
-using Microsoft.SqlServer.Server;
-using SquadServer.Extension;
-using SquadServer.Models;
-using SquadServer.Repositoryes;
 namespace SquadServer.Controllers;
 
 [Controller]

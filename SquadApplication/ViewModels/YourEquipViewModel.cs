@@ -1,6 +1,4 @@
-﻿using SquadApplication.Repositories.ManagerRequest.Interfaces;
-
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 public partial class HomeViewModel : ObservableObject
 {
     private UserModelEntity _user;

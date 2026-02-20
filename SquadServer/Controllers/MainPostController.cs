@@ -1,7 +1,4 @@
-﻿using SquadServer.Services.Service_Notification;
-using System.ComponentModel.Design;
-
-namespace SquadServer.Controllers;
+﻿namespace SquadServer.Controllers;
 
 public class MainPostController : Controller
 {

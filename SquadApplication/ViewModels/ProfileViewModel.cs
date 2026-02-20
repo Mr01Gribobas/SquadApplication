@@ -1,7 +1,4 @@
-﻿using SquadServer.DTO_Classes.DTO_AuxiliaryModels;
-using SquadServer.Models.ModelsEntity.AuxiliaryModels;
-
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 
 public partial class ProfileViewModel : ObservableObject
 {

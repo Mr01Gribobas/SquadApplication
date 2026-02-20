@@ -1,6 +1,4 @@
 ﻿
-using System.Text.Json.Serialization;
-
 namespace SquadServer.Models.ModelsEntity;
 
 public class TeamEntity

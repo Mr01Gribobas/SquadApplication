@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-namespace SquadApplication.Services.NotificationService;
+﻿namespace SquadApplication.Services.NotificationService;
 
 public class NotificationLocalService
 {

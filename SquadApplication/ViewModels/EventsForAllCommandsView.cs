@@ -1,6 +1,4 @@
-﻿using SquadServer.DTO_Classes.DTO_AuxiliaryModels;
-
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 
 public partial class EventsForAllCommandsView : ObservableObject
 {

@@ -1,7 +1,4 @@
-﻿using SquadServer.DTO_Classes.DTO_Notifiation;
-using SquadServer.Repositoryes;
-
-namespace SquadServer.Services.Service_Notification;
+﻿namespace SquadServer.Services.Service_Notification;
 
 public class EventNotificationDistributor
 {

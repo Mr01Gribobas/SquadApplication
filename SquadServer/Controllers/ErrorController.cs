@@ -1,6 +1,4 @@
-﻿using SquadServer.Extension;
-
-namespace SquadServer.Controllers;
+﻿namespace SquadServer.Controllers;
 
 public class ErrorController:Controller
 {

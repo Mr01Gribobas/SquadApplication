@@ -1,6 +1,4 @@
-﻿using SquadServer.Services.Service_Notification;
-
-namespace SquadServer.DTO_Classes.DTO_DeviceModel;
+﻿namespace SquadServer.DTO_Classes.DTO_DeviceModel;
 
 public class  NotificationDTO
 {

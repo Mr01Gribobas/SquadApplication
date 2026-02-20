@@ -1,5 +1,4 @@
-﻿using SquadServer.DTO_Classes;
-namespace SquadServer.Services.Service_DeviceRegistration;
+﻿namespace SquadServer.Services.Service_DeviceRegistration;
 
 
 public interface IDeviceRegistrationService

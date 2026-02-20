@@ -4,14 +4,14 @@ public class CustomsAnimation
 {
     public async Task RadarScanAnimation(VisualElement element)
     {
-        // Пульсирующий эффект как радар
+        // Пульсирующий эффект 
         var pulseAnimation = new Animation
             {
                 { 0, 0.5, new Animation(v => element.Scale = v, 1, 1.05) },
                 { 0.5, 1, new Animation(v => element.Scale = v, 1.05, 1) }
             };
 
-        // Вращение как сканирование
+        // Вращение 
         var rotationAnimation = new Animation(v => element.Rotation = v, 0, 360);
 
         // Запускаем параллельно
@@ -22,14 +22,14 @@ public class CustomsAnimation
             (v, c) => element.Rotation = 0, () => true);
     }
 
-    // 2. Анимация "Целеуказатель" для кнопок
+    // 2. Анимация "Целеуказатель" 
     public async Task TargetLockAnimation(Button button)
     {
-        // Сохраняем оригинальные цвета
+        // Сохраняем  цвета
         var originalTextColor = button.TextColor;
         var originalBorderColor = button.BorderColor;
 
-        // Мигание красным как лазерный прицел
+        // Мигание красным 
         var blinkAnimation = new Animation
             {
                 { 0, 0.2, new Animation(v => button.TextColor =
@@ -43,7 +43,7 @@ public class CustomsAnimation
                 { 0.8, 1, new Animation(v => button.TextColor = originalTextColor, 0, 1) }
             };
 
-        // Вибрация кнопки
+        // Вибрация 
         await button.TranslateToAsync(-5, 0, 50, Easing.SpringOut);
         await button.TranslateToAsync(5, 0, 50, Easing.SpringOut);
         await button.TranslateToAsync(-3, 0, 50, Easing.SpringOut);
@@ -54,7 +54,7 @@ public class CustomsAnimation
         blinkAnimation.Commit(button, "TargetLockBlink", 16, 1000);
     }
 
-    // 3. Анимация "Взвод, приготовиться!" для формы входа
+    // 3. Анимация 
     public async Task SquadReadyAnimation(StackLayout form)
     {
         // Последовательное появление элементов как построение взвода

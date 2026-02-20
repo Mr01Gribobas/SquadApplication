@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using static SquadServer.Controllers.NotificationController;
-namespace SquadServer.Repositoryes;
+﻿namespace SquadServer.Repositoryes;
 
 public class DataBaseRepository
 {

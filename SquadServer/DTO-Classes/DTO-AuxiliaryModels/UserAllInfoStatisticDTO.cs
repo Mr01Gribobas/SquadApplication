@@ -1,7 +1,4 @@
-﻿using SquadServer.Models.ModelsEntity.AuxiliaryModels;
-using System.Text.Json.Serialization;
-
-namespace SquadServer.DTO_Classes.DTO_AuxiliaryModels;
+﻿namespace SquadServer.DTO_Classes.DTO_AuxiliaryModels;
 
 public record class UserAllInfoStatisticDTO
     (

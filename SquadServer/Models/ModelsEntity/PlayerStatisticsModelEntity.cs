@@ -1,8 +1,4 @@
-﻿using SquadServer.Models.ModelsEntity.AuxiliaryModels;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace SquadServer.Models.ModelsEntity;
+﻿namespace SquadServer.Models.ModelsEntity;
 
 public class PlayerStatisticsModelEntity
 {

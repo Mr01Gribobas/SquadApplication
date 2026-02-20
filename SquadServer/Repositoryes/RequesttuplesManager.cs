@@ -1,7 +1,4 @@
-﻿using SquadServer.Models;
-using System.Text.Json;
-
-namespace SquadServer.Repositoryes;
+﻿namespace SquadServer.Repositoryes;
 
 public class RequestTuplesManager
 {

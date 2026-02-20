@@ -1,9 +1,4 @@
-﻿using SquadServer.Services.Service_Notification;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json;
-
-namespace SquadServer.Models.ModelsEntity;
+﻿namespace SquadServer.Models.ModelsEntity;
 
 public class NotificationEntity
 {

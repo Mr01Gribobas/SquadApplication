@@ -1,9 +1,3 @@
-using Microsoft.Extensions.Options;
-using SquadServer;
-using SquadServer.Models;
-using SquadServer.Services.Service_DeviceRegistration;
-using SquadServer.Services.Service_Notification;
-using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();

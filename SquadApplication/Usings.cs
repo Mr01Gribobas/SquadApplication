@@ -17,6 +17,12 @@ global using SquadApplication.Services.DeviceTokenService;
 global using System.Net.Http.Headers;
 global using System.Security.Cryptography;
 global using System.Text;
-
-
+global using CommunityToolkit.Maui.Alerts;
+global using CommunityToolkit.Maui.Core;
+global using SquadApplication.AnimationCustom;
+global using SquadApplication.DTO_Classes.DTO_AuxiliaryModels;
+global using SquadApplication.Services.CacheServiseDir;
+global using SquadApplication.Repositories.ManagerRequest.Interfaces;
+global using SquadServer.DTO_Classes.DTO_AuxiliaryModels;
+global using CommunityToolkit.Maui;
 namespace SquadApplication ;

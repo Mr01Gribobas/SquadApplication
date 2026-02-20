@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace SquadServer.DTO_Classes;
+﻿namespace SquadServer.DTO_Classes;
 
 public class DeviceRegistrationDTO
 {

@@ -1,6 +1,4 @@
-﻿using SquadServer.DTO_Classes.DTO_DeviceModel;
-
-namespace SquadServer.DTO_Classes.DTO_Notifiation;
+﻿namespace SquadServer.DTO_Classes.DTO_Notifiation;
 
 //public class BulkNotificationDTO<TData>:NotificationDTO<TData>
 //    where TData : class,new()

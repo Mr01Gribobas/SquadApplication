@@ -1,7 +1,4 @@
-﻿using SquadApplication.Repositories.ManagerRequest.Interfaces;
-using System.Data;
-
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 
 public partial class EditYourProfileViewModel : ObservableObject
 {

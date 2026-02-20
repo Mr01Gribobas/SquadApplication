@@ -1,6 +1,4 @@
-﻿using SquadApplication.DTO_Classes.DTO_AuxiliaryModels;
-
-namespace SquadApplication.ViewModels;
+﻿namespace SquadApplication.ViewModels;
 
 public partial class CreateOrUpdateRentalViewModel : ObservableObject
 {

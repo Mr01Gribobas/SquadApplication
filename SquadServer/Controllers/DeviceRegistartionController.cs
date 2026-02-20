@@ -1,9 +1,4 @@
-﻿using SquadServer.DTO_Classes;
-using SquadServer.DTO_Classes.DTO_DeviceModel;
-using SquadServer.Extension;
-using SquadServer.Services.Service_DeviceRegistration;
-
-namespace SquadServer.Controllers;
+﻿namespace SquadServer.Controllers;
 
 [Controller]
 public class DeviceRegistartionController : Controller

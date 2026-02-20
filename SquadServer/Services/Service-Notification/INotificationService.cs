@@ -1,7 +1,4 @@
-﻿using SquadServer.DTO_Classes.DTO_DeviceModel;
-using SquadServer.DTO_Classes.DTO_Notifiation;
-
-namespace SquadServer.Services.Service_Notification;
+﻿namespace SquadServer.Services.Service_Notification;
 
 public interface INotificationService
 {
