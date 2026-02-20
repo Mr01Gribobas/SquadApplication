@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SquadServer.Migrations
 {
     /// <inheritdoc />
-    public partial class NewMigratuin : Migration
+    public partial class MSInew : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -1,6 +1,5 @@
 ﻿namespace SquadServer.Models.DbContextDir;
 
-
 public class SquadDbContext: DbContext
 {
     public DbSet<UserModelEntity> Players {  get; set; }

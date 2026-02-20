@@ -12,8 +12,8 @@ using SquadServer.Models.DbContextDir;
 namespace SquadServer.Migrations
 {
     [DbContext(typeof(SquadDbContext))]
-    [Migration("20260218172652_NewMigratuin")]
-    partial class NewMigratuin
+    [Migration("20260220122737_MSInew")]
+    partial class MSInew
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
