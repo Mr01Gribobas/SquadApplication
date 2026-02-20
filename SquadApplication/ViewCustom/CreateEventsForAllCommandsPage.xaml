@@ -2,11 +2,120 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.CreateEventsForAllCommandsPage"
+             BackgroundImageSource="updateprofileandequip.jpg"
              Title="NewPage1">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+        <Border
+            Stroke="#2a3c5a"
+            BackgroundColor="#98398080"
+            StrokeThickness="3"
+            StrokeDashArray="2,2"
+            StrokeShape="13"
+            Padding="5">
+    <VerticalStackLayout
+        Margin="5">
+        
+            <Border 
+                     Stroke="DarkCyan"
+                     Margin="5"                
+                     StrokeThickness="1"
+                     StrokeShape="10"
+                     BackgroundColor="#98399989" >
+                <Label
+                     Text="{Binding TeamNameOrganization}"
+                     TextColor="White"
+                     FontSize="20"
+                     BackgroundColor="Transparent"/>
+            </Border>
+        
+        
+            <Border 
+                    Margin="5"
+                    Stroke="DarkCyan"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 10"
+                    BackgroundColor="#98399989">
+                <Entry
+                     Placeholder="Укажите название игры"
+                     PlaceholderColor="LightGray"
+                     Text="{Binding NameGame}"
+                     TextColor="White"
+                     FontSize="20"
+                     BackgroundColor="Transparent"/>
+            </Border>
+            <Border 
+                 Margin="5"
+                 Stroke="DarkCyan"
+                 StrokeThickness="1"
+                 StrokeShape="RoundRectangle 10"
+                 BackgroundColor="#98399989">
+            <Editor
+                 Placeholder="Краткое содержание об игре"
+                 PlaceholderColor="LightGray"
+                 Text="{Binding DescriptionShort}"
+                 TextColor="White"
+                 FontSize="20"
+                 BackgroundColor="#98399989"/>
+            </Border>
+            <Border 
+                Margin="5"
+                Stroke="DarkCyan"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 10"
+                BackgroundColor="#98399989">
+            <Editor
+                Placeholder="Полное описание игры "
+                PlaceholderColor="LightGray"
+                Text="{Binding DescriptionFull}"
+                TextColor="White"
+                FontSize="20"
+                BackgroundColor="Transparent"/>
+            </Border>
+            <Border 
+                  Margin="5"
+                  Stroke="DarkCyan"
+                  StrokeThickness="1"
+                  StrokeShape="RoundRectangle 10"
+                  BackgroundColor="#98399989">
+            <Entry
+                  Placeholder="Координаты полигона"
+                  PlaceholderColor="LightGray"
+                  Text="{Binding CoordinatesPolygon}"
+                  TextColor="White"
+                  FontSize="20"
+                  BackgroundColor="Transparent"/>
+            </Border>
+            <Border 
+                  Margin="5"
+                  Stroke="DarkCyan"
+                  StrokeThickness="1"
+                  StrokeShape="RoundRectangle 10"
+                  BackgroundColor="#98399989">
+                <Entry
+                     Placeholder="Название полигона (опционально)"
+                     PlaceholderColor="LightGray"
+                     Text="{Binding PolygonName}"
+                     TextColor="White"
+                     FontSize="20"
+                     BackgroundColor="Transparent"/>
+            </Border>
+            <Border
+                    Margin="2"
+                    BackgroundColor="#40808080"
+                    Stroke="#b3c96b"
+                    StrokeThickness="1"
+                    StrokeDashArray="1,2"
+                    StrokeShape="1">
+                <Border.Shadow>
+                    <Shadow Brush="#707040" 
+                            Offset="0,5" 
+                            Opacity="1.0"
+                            Radius="20"/>
+                </Border.Shadow>
+                <Button BackgroundColor="#40808080" Text="Create" FontSize="20"/>
+            </Border>
+
+
+        </VerticalStackLayout>
+
+        </Border>
 </ContentPage>

@@ -7,7 +7,8 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
     private readonly IUserSession _user;
     private readonly CreateEventsForAllCommandsPage _createEventPage;
     private readonly ManagerPostRequests<EventsForAllCommandsModelDTO> _postManager;
-
+    //update
+    //name game
     [ObservableProperty]
     private string teamNameOrganization;
 

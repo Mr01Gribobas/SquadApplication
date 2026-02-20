@@ -13,9 +13,10 @@
                 <Border
                             Margin="10,5"
                             Stroke="#2a3c5a"
-                            StrokeThickness="1"
                             BackgroundColor="#1a2332"
-                            StrokeShape="12"
+                            StrokeThickness="3"
+                            StrokeDashArray="2,2"
+                            StrokeShape="13"
                             Padding="0"
                     >
                     
