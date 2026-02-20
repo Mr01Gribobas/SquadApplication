@@ -16,6 +16,7 @@
              BackgroundColor="#60907050"
              Stroke="DarkSeaGreen"
              StrokeShape="10"
+            StrokeDashArray="1,1"
              Padding="12"
              Margin="13"
              Opacity="0.8">

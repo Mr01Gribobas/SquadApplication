@@ -20,6 +20,8 @@
         <Border Grid.Row="0"
                BackgroundColor="Transparent"
                StrokeShape="23"
+               StrokeThickness="1"
+               StrokeDashArray="1,2"
                Padding="15"
                Margin="0,0,0,10">
 
@@ -59,7 +61,9 @@
                 <Border 
                                BackgroundColor="#90508080"
                                Stroke="Blue"
-                               StrokeShape="2"
+                               StrokeThickness="1"
+                               StrokeDashArray="1,2"
+                               StrokeShape="1"
                                Padding="0"
                                Margin="0,0,0,10"
                                >
@@ -83,7 +87,7 @@
                                 <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                                        Text=" ⚔ Игра против => "
                                        TextColor="White"
-                                       FontSize="12"                              
+                                       FontSize="15"                              
                                        Margin="0,0,0,5"/>
                                        
                                 <!-- Статус участия пользователя -->
@@ -93,7 +97,7 @@
                                         >
                             <Label Text="{Binding NameTeamEnemu}"
                                            TextColor="Red" 
-                                           FontSize="10"
+                                           FontSize="15"
                                            FontAttributes="Bold"
                                            HorizontalOptions="Center"/>
                                 </Border>
@@ -103,11 +107,13 @@
                                              Orientation="Horizontal"
                                              Spacing="5">
                                 <Label Text="📍 Название полигона =>"
-                                           FontSize="12"
+                                           FontSize="15"
+                                       
                                            TextColor="White"/>
                                 <Label
                                  Text="{Binding NamePolygon}"
                                  TextColor="Red"
+                                 FontSize="15"
                                  Grid.Column="1"
                                  Grid.ColumnSpan="2"
                                  
@@ -120,11 +126,12 @@
                                              Orientation="Horizontal"
                                              Spacing="5">
                                            <Label Text="🌐 Координаты полигона => "
-                                           FontSize="12"
+                                           FontSize="15"
                                            TextColor="White"/>
                         <Label
                             Text="{Binding CoordinatesPolygon}"
                             TextColor="Red"
+                            FontSize="15"
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
                             />
@@ -137,13 +144,14 @@
                                              Spacing="5">
                                               <Label 
                                            Text="📅 Дата сбора => "
-                                           FontSize="12"
+                                           FontSize="15"
                                            TextColor="White"/>
                         <Label
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
                             Text="{Binding DateAndTime}"
                             TextColor="Red"
+                            FontSize="15"
                             />
                     </StackLayout>
                                     
@@ -152,12 +160,13 @@
                               Spacing="5">
                         <Label
                             Text="👥 Колличество сокомандников => "
-                             FontSize="12"
+                             FontSize="15"
                              TextColor="White"/>
                         <Label
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
                             TextColor="Red"
+                            FontSize="15"
                             Text="{Binding CountMembers}"/>
 
                     </StackLayout>
@@ -166,12 +175,32 @@
                                
                       </Grid>
                     </Border>
-                <Button Margin="10" Text="Create" Command="{Binding CreateEventCommand}"></Button>
+                <Border
+                        BackgroundColor="#40808080"
+                        Stroke="#b3c96b"
+                        StrokeThickness="1"
+                        StrokeDashArray="1,2"
+                        StrokeShape="1">
+                    <Border.Shadow>
+                        <Shadow Brush="#707040" 
+                             Offset="0,5" 
+                             Opacity="1.0"
+                             Radius="20"/>
+                    </Border.Shadow>
+                    
+                    <Button
+                    BackgroundColor="#50808230"
+                    Margin="10"
+                    Text="Create"
+                    FontSize="15"
+                    Command="{Binding CreateEventCommand}"/>
+
+                </Border>
         </StackLayout>
                 
         <Grid
-            BackgroundColor="#50508080"
-            Grid.Row="2"
+              BackgroundColor="#50508080"
+              Grid.Row="2"
               ColumnDefinitions="*,*"
               ColumnSpacing="10"
               IsVisible="True">
@@ -199,12 +228,13 @@
         </Grid>
     </Grid>
     <StackLayout
-        BackgroundColor="#50508080"
-        >
+        BackgroundColor="#50508080">
                 
           <Border 
               Stroke="White"
-              StrokeThickness="2"
+               StrokeThickness="2"
+               StrokeDashArray="11,2"
+               StrokeShape="2"
               >
               
             <Grid

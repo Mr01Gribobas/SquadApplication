@@ -166,16 +166,19 @@
                         <CollectionView.ItemTemplate >
                             <DataTemplate>
                                 <Border
+                                     BackgroundColor="#30808080"
                                      Stroke="DarkGray"
-                                     StrokeThickness="2"
+                                     StrokeThickness="3"
                                      StrokeShape="22"
+                                     StrokeDashArray="2,1"
                                      Margin="5"
                                      Padding="1"
                                      >
                                     <Label 
                                       Text="{Binding}"
                                       TextColor="White"
-                                      FontSize="Medium"
+                                      FontSize="25"
+                                      FontAttributes="Italic"
                                       BackgroundColor="Transparent"
                                       Margin="1"
                                       WidthRequest="170"
