@@ -99,19 +99,22 @@
                      BackgroundColor="Transparent"/>
             </Border>
             <Border
-                    Margin="2"
+                    Margin="12"
                     BackgroundColor="#40808080"
                     Stroke="#b3c96b"
-                    StrokeThickness="1"
+                    StrokeThickness="2"
                     StrokeDashArray="1,2"
-                    StrokeShape="1">
+                    StrokeShape="11">
                 <Border.Shadow>
-                    <Shadow Brush="#707040" 
+                    <Shadow Brush="LightGray" 
                             Offset="0,5" 
                             Opacity="1.0"
                             Radius="20"/>
                 </Border.Shadow>
-                <Button BackgroundColor="#40808080" Text="Create" FontSize="20"/>
+                <Button
+                    BackgroundColor="#40808080"
+                    Text="Create"
+                    FontSize="20"/>
             </Border>
 
 

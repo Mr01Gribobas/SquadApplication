@@ -22,7 +22,7 @@ public partial class AppendPolygonViewModel : ObservableObject
     [RelayCommand]
     public async Task AppendPolygon()
     {
-        if(!ValidatePropyrty(PolygonName, PolygonCoordinates))
+        if( !await ValidatePropyrty(PolygonName, PolygonCoordinates))
         {
 
             await _plygonPage.DisplayAlertAsync("Error", "Invalud param", "Ok");
@@ -44,24 +44,33 @@ public partial class AppendPolygonViewModel : ObservableObject
         await Shell.Current.GoToAsync("..");
     }
 
-    private bool ValidatePropyrty(string polygonName, string polygonCoordinates)
+    private async Task<bool> ValidatePropyrty(string polygonName, string polygonCoordinates)
     {
-        string coordinates = polygonCoordinates.Replace(" ", "");
-        var coordinatesSplits = coordinates.Split(",");
-        for(int i = 0; i < coordinatesSplits.Length; i++)
+        try
         {
-            foreach(char item in coordinatesSplits[i])
+            string coordinates = polygonCoordinates.Replace(" ", "");
+            var coordinatesSplits = coordinates.Split(",");
+            for(int i = 0; i < coordinatesSplits.Length; i++)
             {
-                if(item is '.' | item is '-')
+                foreach(char item in coordinatesSplits[i])
                 {
-                    continue;
-                }
-                if(!int.TryParse(item.ToString(), out _))
-                {
-                    return false;
+                    if(item is '.' | item is '-')
+                    {
+                        continue;
+                    }
+                    if(!int.TryParse(item.ToString(), out _))
+                    {
+                        return false;
+                    }
                 }
             }
+            return true;
         }
-        return true;
+        catch(Exception ex)
+        {
+            await _plygonPage.DisplayAlertAsync("Error", $"Error is :{ex.Message}", "Ok");
+            return false;
+        }
     }
 }
+        

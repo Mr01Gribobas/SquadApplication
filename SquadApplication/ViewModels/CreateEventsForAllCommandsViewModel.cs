@@ -31,6 +31,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         _user = user;
         _createEventPage = createEventsPage;
         _postManager = new ManagerPostRequests<EventsForAllCommandsModelDTO>();
+        //teamNameOrganization = _user?.CurrentUser._nameUser
     }
 
     [RelayCommand]
