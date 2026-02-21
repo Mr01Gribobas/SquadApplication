@@ -64,6 +64,7 @@
                         StrokeShape="22"
                         Padding="15"
                         Opacity="0.9"
+                        Margin="10"
                         >
                         
                         <HorizontalStackLayout
@@ -147,6 +148,5 @@
             </CollectionView.ItemTemplate> 
         </CollectionView>
         </ScrollView>
-        <Button Text="GoBack"></Button>
     </StackLayout>
 </ContentPage>

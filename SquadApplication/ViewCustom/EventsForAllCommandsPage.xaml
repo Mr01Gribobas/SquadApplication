@@ -120,6 +120,7 @@
                                 Text="Create event"
                                 WidthRequest="360"
                                 HeightRequest="50"
+                                Background="#31113116"
                                 FontFamily="24"
                                 Command="{Binding CreateEventCommand}"/>
 
@@ -155,7 +156,7 @@
 
                                 <!-- Заголовок и дата -->
                                 <HorizontalStackLayout Spacing="10">
-                                    <Label Text="еуые еучеwadawdawdawd test"
+                                    <Label Text="wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
                                            FontSize="18"
                                            FontAttributes="Bold"
                                            TextColor="White"

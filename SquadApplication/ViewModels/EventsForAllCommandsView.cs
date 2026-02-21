@@ -6,6 +6,15 @@ public partial class EventsForAllCommandsView : ObservableObject
     private readonly IUserSession _user;
     private readonly ManagerGetRequests<EventsForAllCommandsModelDTO> _getRequestMansger;
 
+
+    //фильтры мероприятий 
+    // private FilterType  filterType =  MyEvent , OldEvent , UpComingEvent
+    // private string SearchByNameGame
+    // 
+    // 
+    //
+
+
     [ObservableProperty]
     private ObservableCollection<EventsForAllCommandsModelDTO> events;
 
