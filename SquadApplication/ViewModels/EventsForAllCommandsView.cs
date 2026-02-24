@@ -40,14 +40,17 @@ public partial class EventsForAllCommandsView : ObservableObject
     public void FilterMineFirst()
     {
         this.FilterType = FilterType.MyEvent;
-    }
+        SortEvents(FilterType.MyEvent);
 
+    }
     [RelayCommand]
     public void FilterFirstOldEvent()
     {
         this.FilterType = FilterType.OldEvent;
-
+        SortEvents(FilterType.OldEvent);
     }
+
+
     private void SortEvents(FilterType filter)
     {
         if(Events is null || Events.Count <= 0)
