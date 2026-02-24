@@ -10,12 +10,16 @@ public class EventsForAllCommandsModelEntity
     public string CoordinatesPolygon { get; set; } = null!;
     public string? PolygonName { get; set; }
 
+    public DateTime DateAndTimeGame { get; set; } 
+
+
     public int CountPlayers = 0!;
 
     public ICollection<UserModelEntity> Players { get; set; } = new List<UserModelEntity>();
 
     public static EventsForAllCommandsModelEntity CreateModel(EventsForAllCommandsModelDTO modelDTO, int commanderId)
     {
+        
         if(modelDTO is null || commanderId <= 0)
         {
             throw new ArgumentException();
@@ -29,7 +33,8 @@ public class EventsForAllCommandsModelEntity
             PolygonName = modelDTO.PolygonName,
             CountPlayers = 1,
             Players = modelDTO.Users,
-            TeamIdOrganization = commanderId
+            TeamIdOrganization = commanderId,
+            DateAndTimeGame = new DateTime(modelDTO.Date,modelDTO.Time),
         };
         return model;
     }

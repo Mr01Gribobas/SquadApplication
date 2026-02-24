@@ -65,10 +65,10 @@ public class MainPostController : Controller
             await _squadDbContext.SaveChangesAsync();
             return Ok(true);
         }
-        catch(Exception)
+        catch(Exception ex)
         {
 
-            return BadRequest();
+            return BadRequest(ex.Message);
         }
     }
 

@@ -27,6 +27,32 @@ public partial class EventsForAllCommandsView : ObservableObject
     }
 
 
+
+
+
+    [RelayCommand]
+    public void FilterByDate()
+    {
+        this.FilterType = FilterType.ByDate;
+    }
+    [RelayCommand]
+    public void FilterMineFirst()
+    {
+        this.FilterType = FilterType.MyEvent;
+    }
+
+    [RelayCommand]
+    public void FilterFirstOldEvent()
+    {
+        this.FilterType = FilterType.OldEvent;
+    }
+    private void SortEvents(FilterType filter)
+    {
+
+    }
+
+
+
     [RelayCommand]
     public async void CreateEvent()
     {

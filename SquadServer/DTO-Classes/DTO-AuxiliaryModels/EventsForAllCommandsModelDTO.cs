@@ -7,4 +7,6 @@ public record class EventsForAllCommandsModelDTO
      string? DescriptionFull,
      string CoordinatesPolygon,
      string? PolygonName,
-     List<UserModelEntity> Users);
+     List<UserModelEntity> Users,
+     DateOnly Date,
+     TimeOnly Time);
