@@ -1,19 +1,18 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using SquadApplication.ClassView;
+
+namespace SquadApplication.ViewModels;
 
 public partial class EventsForAllCommandsView : ObservableObject
 {
     private readonly EventsForAllCommandsPage _page;
     private readonly IUserSession _user;
     private readonly ManagerGetRequests<EventsForAllCommandsModelDTO> _getRequestMansger;
+    
+    [ObservableProperty]
+    private FilterType filterType ;
 
-
-    //фильтры мероприятий 
-    // private FilterType  filterType =  MyEvent , OldEvent , UpComingEvent
-    // private string SearchByNameGame
-    // 
-    // 
-    //
-
+    [ObservableProperty]
+    private string searchByNameGame;
 
     [ObservableProperty]
     private ObservableCollection<EventsForAllCommandsModelDTO> events;
@@ -24,7 +23,7 @@ public partial class EventsForAllCommandsView : ObservableObject
         _user = user;
         _getRequestMansger = new ManagerGetRequests<EventsForAllCommandsModelDTO>();
         events = new ObservableCollection<EventsForAllCommandsModelDTO>();
-
+        this.FilterType =  FilterType.ByDate;
     }
 
 

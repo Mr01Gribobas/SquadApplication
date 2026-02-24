@@ -116,7 +116,7 @@ public partial class HomeViewModel : ObservableObject
         TeamName = modelEntity._teamName;
         Age = modelEntity._age == null | modelEntity._age <= 0 ? "Не установоено" : modelEntity._age.ToString();
         IsStaffed = modelEntity._isStaffed == null | modelEntity._isStaffed is false ? " Не укомплектован " : " Укомплектован";
-        EquipmentId = modelEntity.EquipmentId is null | modelEntity.EquipmentId <= 0 ? "Нету зарегистрированных екипов" : modelEntity.EquipmentId.ToString();
+        EquipmentId = modelEntity.EquipmentId is null | modelEntity.EquipmentId <= 0 ? "Нету у тебя экипа " : modelEntity.EquipmentId.ToString();
     }
 
    

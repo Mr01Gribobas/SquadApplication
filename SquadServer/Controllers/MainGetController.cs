@@ -58,8 +58,12 @@ public class MainGetController : Controller
     public async Task<IActionResult?> GetAllReantil(int teamId)
     {
         Controller.LogInformation("Start action : GetAllReantil");
+        if(teamId <= 0)
+            return BadRequest();
 
-        List<RentailsDTO> list = await _dataBaseRepository.GetAllReantilAsync(teamId);
+        List<RentailsDTO> list = await _dataBaseRepository.GetAllReantilAsync(teamId) ;
+        if(list.Count ==0 || list is null)
+            return BadRequest();
         return Ok(list);
     }
 

@@ -41,7 +41,7 @@
                                        JustifyContent="SpaceBetween"
                                        Wrap="Wrap">
 
-                                <Button Text="Предстоящие"
+                                <Button Text="По дате"
                                         BackgroundColor="#1e90ff"
                                         TextColor="White"
                                         CornerRadius="8"
