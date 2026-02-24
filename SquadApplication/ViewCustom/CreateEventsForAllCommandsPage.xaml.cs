@@ -1,7 +1,7 @@
 namespace SquadApplication.ViewCustom;
 
 
-[QueryProperty(nameof(CommanderId), "CommanderId")]
+[QueryProperty(nameof(CommanderId), "CommanderId")]//
 public partial class CreateEventsForAllCommandsPage : ContentPage
 {
     private readonly IUserSession _user;
@@ -11,7 +11,7 @@ public partial class CreateEventsForAllCommandsPage : ContentPage
     public CreateEventsForAllCommandsPage(IUserSession user)
 	{
         _user = user;
-        _createEventsForAllCommandsView = new CreateEventsForAllCommandsViewModel(this,user) ;
+        _createEventsForAllCommandsView = new CreateEventsForAllCommandsViewModel(this,user,false) ;
         BindingContext = _createEventsForAllCommandsView;
 		InitializeComponent();
 	}

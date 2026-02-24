@@ -5,9 +5,11 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
     private readonly IUserSession _user;
     private readonly CreateEventsForAllCommandsPage _createEventPage;
     private readonly ManagerPostRequests<EventsForAllCommandsModelDTO> _postManager;
-    //update
-    //name game
-    //
+    private readonly bool _isUpdateThisGame;
+    
+    [ObservableProperty]
+    private string nameGame;
+
     [ObservableProperty]
     private string teamNameOrganization;
 
@@ -23,15 +25,19 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
     [ObservableProperty]
     private string polygonName;
 
+    [ObservableProperty]
+    private string timeGame;
 
+    [ObservableProperty]
+    private string dategame;
 
-
-    public CreateEventsForAllCommandsViewModel(CreateEventsForAllCommandsPage createEventsPage, IUserSession user)
+    public CreateEventsForAllCommandsViewModel(CreateEventsForAllCommandsPage createEventsPage, IUserSession user,bool isUpdateThisGame)
     {
         _user = user;
         _createEventPage = createEventsPage;
         _postManager = new ManagerPostRequests<EventsForAllCommandsModelDTO>();
-        //teamNameOrganization = _user?.CurrentUser._nameUser
+        teamNameOrganization = _user?.CurrentUser._userName ?? _user?.CurrentUser._callSing ?? throw new NullReferenceException()  ;
+        _isUpdateThisGame = isUpdateThisGame;
     }
 
     [RelayCommand]
@@ -78,6 +84,13 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             throw new Exception("Не коректное описание ");
         if(string.IsNullOrEmpty(DescriptionFull))
             throw new Exception("Не коректное описание ");
+        if(string.IsNullOrEmpty(TimeGame) || !TimeOnly.TryParse(TimeGame , out var _))
+            throw new Exception("Не верный формат времени");
+        if(string.IsNullOrEmpty(Dategame)|| !DateOnly.TryParse(Dategame, out var _))
+            throw new Exception("Не вурный формат даты ");
+
+
+
     }
 
     private void ExaminationCoordinates()
@@ -103,13 +116,17 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
     }
     private EventsForAllCommandsModelDTO CreateModel()
     {
+
         EventsForAllCommandsModelDTO newModel = new EventsForAllCommandsModelDTO(
             TeamNameOrganization: TeamNameOrganization,
             DescriptionShort: DescriptionShort,
             DescriptionFull: DescriptionFull,
             CoordinatesPolygon: CoordinatesPolygon,
             PolygonName: PolygonName ?? $"Not name polygon",
-            Users: new List<UserModelEntity>() { _user.CurrentUser }
+            Users: new List<UserModelEntity>() { _user.CurrentUser },
+            Date: DateOnly.Parse(Dategame),
+            Time: TimeOnly.Parse(TimeGame)
+
             );
         return newModel;
 
