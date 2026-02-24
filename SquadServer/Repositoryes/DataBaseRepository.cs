@@ -204,7 +204,9 @@ public class DataBaseRepository
                 DescriptionShort: ev.DescriptionShort,
                 CoordinatesPolygon: ev.CoordinatesPolygon,
                 PolygonName: ev.PolygonName,
-                Users: ev.Players.ToList()
+                Users: ev.Players.ToList(),
+                Date:DateOnly.FromDateTime(ev.DateAndTimeGame.Date),
+                Time:TimeOnly.FromDateTime(ev.DateAndTimeGame)
                 ));
         }
         return newList;
