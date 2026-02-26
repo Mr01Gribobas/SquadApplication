@@ -24,7 +24,7 @@ internal class RequestTuple
     {
         _urlNameForSend += url;
     }
-    public async Task<(UserModelEntity, TeamEntity, EquipmentEntity?)> GetAllInfoForUser(UserModelEntity userModel)
+    public async Task<(UserModelEntity, TeamEntity, EquipmentDTO?)> GetAllInfoForUser(UserModelEntity userModel)
     {
         if(userModel is null)
         {
@@ -37,8 +37,8 @@ internal class RequestTuple
             _currentStatusCode = 200; 
             try
             {
-                TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentEntity> resultJson = await responce.Content.ReadFromJsonAsync<TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentEntity>>();
-                (UserModelEntity, TeamEntity, EquipmentEntity) typle = (resultJson._itemOne,resultJson._itemTwo,resultJson._itemThree);
+                TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentDTO> resultJson = await responce.Content.ReadFromJsonAsync<TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentDTO>>();
+                (UserModelEntity, TeamEntity, EquipmentDTO) typle = (resultJson._itemOne,resultJson._itemTwo,resultJson._itemThree);
                 ResetUrlAndStatusCode();
                 return typle;
 

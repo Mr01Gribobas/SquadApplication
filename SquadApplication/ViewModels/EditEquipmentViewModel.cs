@@ -4,9 +4,9 @@ public partial class EditEquipmentViewModel : ObservableObject
 {
 
 
-    private IRequestManager<EquipmentEntity> _requestManager;
+    private IRequestManager<EquipmentDTO> _requestManager;
     private readonly EditEquipmentPage _page;
-    private EquipmentEntity _equipment;
+    private EquipmentDTO _equipment;
     private UserModelEntity _user;
 
 
@@ -34,7 +34,7 @@ public partial class EditEquipmentViewModel : ObservableObject
     public EditEquipmentViewModel(EditEquipmentPage page, UserModelEntity user)
     {
         _user = user;
-        _requestManager = new ManagerPostRequests<EquipmentEntity>();
+        _requestManager = new ManagerPostRequests<EquipmentDTO>();
         _page = page;
         GetEquipById(_user.Id);
     }
@@ -53,32 +53,32 @@ public partial class EditEquipmentViewModel : ObservableObject
             );
 
         if(!ValidateData(dataForm))
+            await _page.DisplayAlertAsync("Error","Invalid data","Ok");
+
+        var requestManager = (ManagerPostRequests<EquipmentDTO>)_requestManager;
+        var createdEquip = new EquipmentDTO()
         {
-            return;//error
-        }
-        var requestManager = (ManagerPostRequests<EquipmentEntity>)_requestManager;
-        var createdEquip = EquipmentEntity.CreateEquipment
-            (
-            mainWeapon: dataForm._inStokeMainWeapon,
-            secondaryWeapon: dataForm._inStokesecondaryWeapon,
-            headEq: dataForm._headEquipment,
-            bodyEq: dataForm._bodyEquipment,
-            unloudingEq: dataForm._unloudingWeapon,
-            nameMainWeapon: dataForm._mainWeapon,
-            secondaryNameWeapon: dataForm._secondaryWeapon,
-            owner: _user
-            );
+            MainWeapon = InStokeMainWeapon,
+            SecondaryWeapon = InStokesecondaryWeapon,
+
+            NameMainWeapon = MainWeapon,
+            NameSecondaryWeapon = SecondaryWeapon,
+
+            BodyEquipment = BodyEquipment,
+            HeadEquipment = HeadEquipment,
+            UnloudingEquipment = unloudingWeapon,
+
+        };
+
         if(requestManager is null)
-        {
             throw new NullReferenceException();
-        }
 
         if(_page.IsUpdate)
         {
             if(_equipment is null)
                 return;
 
-            requestManager.SetUrl($"UpdateEquip?equipId={_equipment.Id}");
+            requestManager.SetUrl($"UpdateEquip?equipId={_user.EquipmentId}");
             await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
         }
         else
@@ -118,13 +118,16 @@ public partial class EditEquipmentViewModel : ObservableObject
 
         try
         {
-            var getRequest = new ManagerGetRequests<EquipmentEntity>();
+            var getRequest = new ManagerGetRequests<EquipmentDTO>();
             getRequest.SetUrl($"GetEquipByUserId?userId={userId}");
             var responce = await getRequest.GetDataAsync(GetRequests.GetEquipById);
             var equip = responce.FirstOrDefault();
             if(equip is not null)
             {
+
                 _equipment = equip;
+                InStokeMainWeapon = equip.MainWeapon;
+                InStokesecondaryWeapon = equip.SecondaryWeapon ;
                 MainWeapon = equip.NameMainWeapon;
                 SecondaryWeapon = equip.NameSecondaryWeapon ?? "Не зарегано";
                 HeadEquipment = equip.HeadEquipment;

@@ -3,8 +3,8 @@
 public partial class HomeViewModel : ObservableObject
 {
     private UserModelEntity _user;
-    private IRequestManager<EquipmentEntity> _requestManager;
-    private EquipmentEntity _equipment;
+    private IRequestManager<EquipmentDTO> _requestManager;
+    private EquipmentDTO _equipment;
 
     //==============================
     [ObservableProperty]
@@ -62,15 +62,15 @@ public partial class HomeViewModel : ObservableObject
         _user = user;
         if(_user is not null)
             GetAllProfileById(_user.Id);
-        
-        
+
+
     }
     private async void GetAllProfileById(int userId)
     {
         var tupleMahager = new RequestTuple(_user);
         (UserModelEntity objectUser,
          TeamEntity objectTeam,
-         EquipmentEntity? objectEquipment) tuple = await tupleMahager.GetAllInfoForUser(_user);
+         EquipmentDTO? objectEquipment) tuple = await tupleMahager.GetAllInfoForUser(_user);
 
         if(tuple.objectUser is null && tuple.objectTeam is null)
             throw new NullReferenceException();
@@ -79,10 +79,10 @@ public partial class HomeViewModel : ObservableObject
         {
             InitialPropertyEquipmen(tuple.objectEquipment);
         }
-        
 
 
-        InitialPropertyUser(tuple.objectUser,equipment:tuple.objectEquipment);
+
+        InitialPropertyUser(tuple.objectUser, equipment: tuple.objectEquipment);
         InitialPropertyTeamInfo(tuple.objectTeam);
 
 
@@ -95,25 +95,23 @@ public partial class HomeViewModel : ObservableObject
         IsEvent = objectTeam.EventId is null || objectTeam.EventId == 0 ? "Нету события" : "Не пропусти событие!";
     }
 
-    private void InitialPropertyEquipmen(EquipmentEntity equipment)
+    private void InitialPropertyEquipmen(EquipmentDTO equipment)
     {
         if(equipment is null)
-        {
             return;
-        }
         else
         {
-            MainWeapon = equipment.NameMainWeapon;
+            MainWeapon = equipment.NameMainWeapon ?? "Не зарегано";
             SecondaryWeapon = equipment.NameSecondaryWeapon ?? "Не зарегано";
-            HeadEquipment = equipment.HeadEquipment == null ? "Не зарегано " : "Полная защита";
-            BodyEquipment = equipment.BodyEquipment == null ? "Не зарегано " : "Полная защита";
-            UnloudingWeapon = equipment.UnloudingEquipment == null ? "Не зарегано " : "Полная защита";
+            HeadEquipment = equipment.HeadEquipment == null || !equipment.HeadEquipment ? "Не зарегано " : "Полная защита";
+            BodyEquipment = equipment.BodyEquipment == null || !equipment.BodyEquipment ? "Не зарегано " : "Полная защита";
+            UnloudingWeapon = equipment.UnloudingEquipment == null || !equipment.UnloudingEquipment ? "Не зарегано " : "Полная защита";
             _equipment = equipment;
         }
     }
 
 
-    private void InitialPropertyUser(UserModelEntity modelEntity,EquipmentEntity equipment)
+    private void InitialPropertyUser(UserModelEntity modelEntity, EquipmentDTO equipment)
     {
         Name = modelEntity._userName;
         CallSing = modelEntity._callSing;
@@ -122,7 +120,7 @@ public partial class HomeViewModel : ObservableObject
         TeamName = modelEntity._teamName;
         Age = modelEntity._age == null | modelEntity._age <= 0 ? "Не установоено" : modelEntity._age.ToString();
         IsStaffed = modelEntity._isStaffed == null || modelEntity._isStaffed is false ? " Не укомплектован " : " Укомплектован";
-        EquipmentId = equipment is null || equipment.Id <= 0 ? "Нету у тебя экипа " : equipment.Id.ToString();
+        EquipmentId = equipment is null  ? "Нету у тебя экипа " : modelEntity.EquipmentId.ToString();
     }
 
 
@@ -130,7 +128,7 @@ public partial class HomeViewModel : ObservableObject
     [RelayCommand]
     private void UpdateEquipment()
     {
-        var equipIsUpdate = _equipment is not null ? true : false; 
+        var equipIsUpdate = _equipment is not null ? true : false;
         Shell.Current.GoToAsync($"/{nameof(EditEquipmentPage)}?_isUpdate={equipIsUpdate}");
     }
 

@@ -149,7 +149,14 @@ public class MainPostController : Controller
                 if(equipEntity == null)
                     return Unauthorized();
 
-                EquipmentEntity.UpdateEquip(equipFromApp, equipEntity);
+                {
+                    equipEntity.UnloudingEquipment = equipFromApp.UnloudingEquipment;
+                    equipEntity.HeadEquipment = equipFromApp.HeadEquipment;
+                    equipEntity.BodyEquipment = equipFromApp.BodyEquipment;
+                    equipEntity.MainWeapon = equipFromApp.MainWeapon;
+                    equipEntity.SecondaryWeapon = equipFromApp.SecondaryWeapon;
+                }
+
                 await _squadDbContext.SaveChangesAsync();
 
                 var userFromDb = await _squadDbContext.Players.FirstOrDefaultAsync(u=>u.EquipmentId == equipId);
