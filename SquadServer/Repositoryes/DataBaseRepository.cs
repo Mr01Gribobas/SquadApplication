@@ -48,7 +48,7 @@ public class DataBaseRepository
     public UserModelEntity? GetUserById(int id)
     {
         return _squadDbContext.Players.
-                  AsNoTracking().
+                  AsNoTracking().Include(e=>e.Equipment).
                   FirstOrDefault(u => u.Id == id);
     }
 
@@ -175,7 +175,7 @@ public class DataBaseRepository
     }
     public EquipmentEntity? GetEquipByUserId(int userId)
     {
-        var eqip = _squadDbContext.Equipments.FirstOrDefault(e => e.OwnerEquipmentId == userId);
+        var eqip = _squadDbContext.Equipments.Include(u => u.OwnerEquipment).FirstOrDefault(e => e.OwnerEquipmentId == userId);
         return eqip;
     }
 
