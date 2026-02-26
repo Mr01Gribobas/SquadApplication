@@ -61,9 +61,9 @@ public partial class HomeViewModel : ObservableObject
     {
         _user = user;
         if(_user is not null)
-        {
             GetAllProfileById(_user.Id);
-        }
+        
+        
     }
     private async void GetAllProfileById(int userId)
     {
@@ -75,11 +75,16 @@ public partial class HomeViewModel : ObservableObject
         if(tuple.objectUser is null && tuple.objectTeam is null)
             throw new NullReferenceException();
 
-        InitialPropertyUser(tuple.objectUser);
+        if(tuple.objectEquipment is not null)
+        {
+            InitialPropertyEquipmen(tuple.objectEquipment);
+        }
+        
+
+
+        InitialPropertyUser(tuple.objectUser,equipment:tuple.objectEquipment);
         InitialPropertyTeamInfo(tuple.objectTeam);
 
-        if(tuple.objectEquipment is not null)
-            InitialPropertyEquipmen(tuple.objectEquipment);
 
     }
 
@@ -103,11 +108,12 @@ public partial class HomeViewModel : ObservableObject
             HeadEquipment = equipment.HeadEquipment == null ? "Не зарегано " : "Полная защита";
             BodyEquipment = equipment.BodyEquipment == null ? "Не зарегано " : "Полная защита";
             UnloudingWeapon = equipment.UnloudingEquipment == null ? "Не зарегано " : "Полная защита";
+            _equipment = equipment;
         }
     }
 
 
-    private void InitialPropertyUser(UserModelEntity modelEntity)
+    private void InitialPropertyUser(UserModelEntity modelEntity,EquipmentEntity equipment)
     {
         Name = modelEntity._userName;
         CallSing = modelEntity._callSing;
@@ -116,7 +122,7 @@ public partial class HomeViewModel : ObservableObject
         TeamName = modelEntity._teamName;
         Age = modelEntity._age == null | modelEntity._age <= 0 ? "Не установоено" : modelEntity._age.ToString();
         IsStaffed = modelEntity._isStaffed == null || modelEntity._isStaffed is false ? " Не укомплектован " : " Укомплектован";
-        EquipmentId = modelEntity.EquipmentId is null || modelEntity.EquipmentId <= 0 ? "Нету у тебя экипа " : modelEntity.EquipmentId.ToString();
+        EquipmentId = equipment is null || equipment.Id <= 0 ? "Нету у тебя экипа " : equipment.Id.ToString();
     }
 
 
@@ -124,7 +130,8 @@ public partial class HomeViewModel : ObservableObject
     [RelayCommand]
     private void UpdateEquipment()
     {
-        Shell.Current.GoToAsync($"/{nameof(EditEquipmentPage)}");
+        var equipIsUpdate = _equipment is not null ? true : false; 
+        Shell.Current.GoToAsync($"/{nameof(EditEquipmentPage)}?_isUpdate={equipIsUpdate}");
     }
 
     [RelayCommand]

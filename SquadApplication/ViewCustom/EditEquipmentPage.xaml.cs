@@ -1,8 +1,10 @@
 namespace SquadApplication.ViewCustom;
 
+[QueryProperty(nameof(_isUpdate), "_isUpdate")]
 public partial class EditEquipmentPage : ContentPage
 {
-	public EditEquipmentViewModel _viewModel;
+    public  bool _isUpdate;
+    public EditEquipmentViewModel _viewModel;
 	private readonly UserModelEntity _user;
 
 	public EditEquipmentPage(IUserSession userSession)

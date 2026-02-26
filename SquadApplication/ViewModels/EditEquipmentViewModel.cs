@@ -5,6 +5,7 @@ public partial class EditEquipmentViewModel : ObservableObject
 
 
     private IRequestManager<EquipmentEntity> _requestManager;
+    private readonly EditEquipmentPage _page;
     private EquipmentEntity _equipment;
     private UserModelEntity _user;
 
@@ -34,6 +35,7 @@ public partial class EditEquipmentViewModel : ObservableObject
     {
         _user = user;
         _requestManager = new ManagerPostRequests<EquipmentEntity>();
+        _page = page;
         GetEquipById(_user.Id);
     }
 
@@ -70,17 +72,30 @@ public partial class EditEquipmentViewModel : ObservableObject
         {
             throw new NullReferenceException();
         }
+
+        if(_page._isUpdate)
+        {
+            requestManager.SetUrl($"UpdateEquip?equipId={_equipment.Id}");
+            await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
+        }
+        else
+        {
+            requestManager.SetUrl($"CreateEquip?userId={_user.Id}");
+            await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.CreateEquip);
+        }
+
+
         if(_user.EquipmentId is null || _user.EquipmentId <= 0)
         {
 
             requestManager.SetUrl($"CreateEquip?userId={_user.Id}");
             await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.CreateEquip);
         }
-        else if(_user.EquipmentId is not null && _equipment is not null)
-        {
-            requestManager.SetUrl($"UpdateEquip?equipId={_equipment.Id}");
-            await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
-        }
+        //else if(_user.EquipmentId is not null && _equipment is not null)
+        //{
+        //    requestManager.SetUrl($"UpdateEquip?equipId={_equipment.Id}");
+        //    await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
+        //}
         requestManager.ResetUrlAndStatusCode();
         await Shell.Current.GoToAsync($"/{nameof(HomePage)}");
     }
