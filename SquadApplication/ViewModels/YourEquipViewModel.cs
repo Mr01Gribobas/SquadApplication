@@ -2,7 +2,8 @@
 
 public partial class HomeViewModel : ObservableObject
 {
-    private UserModelEntity _user;
+    private IUserSession _user;
+    private readonly HomePage _page;
     private IRequestManager<EquipmentDTO> _requestManager;
     private EquipmentDTO _equipment;
 
@@ -57,28 +58,28 @@ public partial class HomeViewModel : ObservableObject
     private string isEvent;
 
 
-    public HomeViewModel(HomePage page, UserModelEntity user)
+    public HomeViewModel(HomePage page, IUserSession user)
     {
         _user = user;
+        _page = page;
         if(_user is not null)
-            GetAllProfileById(_user.Id);
+            GetAllProfileById(_user.CurrentUser.Id);
 
 
     }
     private async void GetAllProfileById(int userId)
     {
-        var tupleMahager = new RequestTuple(_user);
+        var tupleMahager = new RequestTuple(_user.CurrentUser);
         (UserModelEntity objectUser,
          TeamEntity objectTeam,
-         EquipmentDTO? objectEquipment) tuple = await tupleMahager.GetAllInfoForUser(_user);
+         EquipmentDTO? objectEquipment) tuple = await tupleMahager.GetAllInfoForUser(_user.CurrentUser);
 
         if(tuple.objectUser is null && tuple.objectTeam is null)
             throw new NullReferenceException();
 
         if(tuple.objectEquipment is not null)
-        {
             InitialPropertyEquipmen(tuple.objectEquipment);
-        }
+
 
 
 
@@ -111,8 +112,11 @@ public partial class HomeViewModel : ObservableObject
     }
 
 
-    private void InitialPropertyUser(UserModelEntity modelEntity, EquipmentDTO equipment)
+    private async Task InitialPropertyUser(UserModelEntity modelEntity, EquipmentDTO equipment)
     {
+        if(modelEntity is null)
+            await _page.DisplayAlertAsync("Error", "Error user null exception", "Ok");
+
         Name = modelEntity._userName;
         CallSing = modelEntity._callSing;
         Role = modelEntity._role.ToString();
@@ -120,7 +124,8 @@ public partial class HomeViewModel : ObservableObject
         TeamName = modelEntity._teamName;
         Age = modelEntity._age == null | modelEntity._age <= 0 ? "Не установоено" : modelEntity._age.ToString();
         IsStaffed = modelEntity._isStaffed == null || modelEntity._isStaffed is false ? " Не укомплектован " : " Укомплектован";
-        EquipmentId = equipment is null  ? "Нету у тебя экипа " : modelEntity.EquipmentId.ToString();
+        EquipmentId = equipment is null ? "Нету у тебя экипа " : modelEntity.EquipmentId.ToString();
+        _user.CurrentUser = modelEntity;
     }
 
 

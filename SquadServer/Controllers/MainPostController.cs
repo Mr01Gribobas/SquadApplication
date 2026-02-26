@@ -101,7 +101,8 @@ public class MainPostController : Controller
     [HttpPost]
     public async Task<IActionResult?> CreateEquip(int userId)//isCreate
     {
-        EquipmentEntity? equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentEntity>();
+        EquipmentDTO? equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentDTO>();
+
         try
         {
             if(equipFromApp == null | userId != equipFromApp?.OwnerEquipmentId)
@@ -111,19 +112,20 @@ public class MainPostController : Controller
             if(userFromDb is null)
                 throw new Exception("Ошибка при попытке достать юреза");
 
+            var newEquip =  EquipmentEntity.CreateModelEntity(equipFromApp);
+            newEquip.OwnerEquipment = userFromDb;
+            userFromDb.Equipment = newEquip;
 
-            equipFromApp.OwnerEquipment = userFromDb;
-            userFromDb.Equipment = equipFromApp;
-            await _squadDbContext.Equipments.AddAsync(equipFromApp);
+            await _squadDbContext.Equipments.AddAsync(newEquip);
             await _squadDbContext.SaveChangesAsync();
-            userFromDb.EquipmentId = equipFromApp.Id;
+            userFromDb.EquipmentId = newEquip.Id; //TODO ID
 
-
-            //userFromDb.EquipmentId = equipFromApp.Id;
-            userFromDb.UpdateStaffed(equipFromApp);
-
+            userFromDb.UpdateStaffed(newEquip);
             await _squadDbContext.SaveChangesAsync();
-            return Ok(equipFromApp);
+
+            return Ok(newEquip);
+
+
         }
         catch(Exception ex)
         {

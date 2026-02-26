@@ -133,8 +133,19 @@ public class MainGetController : Controller
         Controller.LogInformation("Start action : GetEquipByUserId");
 
         var equip = _dataBaseRepository.GetEquipByUserId(userId);
-        List<EquipmentEntity> equipments = new List<EquipmentEntity>();
-        equipments.Add(equip);
+        List<EquipmentDTO> equipments = new List<EquipmentDTO>();
+        equipments.Add(new EquipmentDTO () 
+        {
+            MainWeapon = equip.MainWeapon,
+            NameMainWeapon = equip.NameMainWeapon,
+
+            SecondaryWeapon = equip.SecondaryWeapon,
+            NameSecondaryWeapon = equip.NameSecondaryWeapon,
+
+            HeadEquipment = equip.HeadEquipment,
+            BodyEquipment = equip.BodyEquipment,
+            UnloudingEquipment = equip.UnloudingEquipment,
+        });
         return Ok(equipments);
     }
 

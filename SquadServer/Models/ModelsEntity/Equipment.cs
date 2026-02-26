@@ -19,7 +19,20 @@ public  class EquipmentEntity
     [JsonIgnore]
     public virtual UserModelEntity OwnerEquipment { get; set; } = null!;
 
+    public static EquipmentEntity CreateModelEntity(EquipmentDTO? equipFromApp)
+    {
+        EquipmentEntity equipment = new EquipmentEntity() 
+        {
+            MainWeapon = equipFromApp.MainWeapon,
+            NameMainWeapon = equipFromApp.NameMainWeapon,
 
+            SecondaryWeapon = equipFromApp.SecondaryWeapon,
+            NameSecondaryWeapon = equipFromApp.NameSecondaryWeapon,
 
-    
+            BodyEquipment = equipFromApp.BodyEquipment,
+            HeadEquipment = equipFromApp.HeadEquipment,
+            UnloudingEquipment = equipFromApp.UnloudingEquipment,
+        };
+        return equipment;
+    }
 }
