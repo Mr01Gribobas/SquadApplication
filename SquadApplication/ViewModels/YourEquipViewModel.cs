@@ -1,4 +1,5 @@
 ﻿namespace SquadApplication.ViewModels;
+
 public partial class HomeViewModel : ObservableObject
 {
     private UserModelEntity _user;
@@ -61,7 +62,7 @@ public partial class HomeViewModel : ObservableObject
         _user = user;
         if(_user is not null)
         {
-                GetAllProfileById(_user.Id);
+            GetAllProfileById(_user.Id);
         }
     }
     private async void GetAllProfileById(int userId)
@@ -70,16 +71,15 @@ public partial class HomeViewModel : ObservableObject
         (UserModelEntity objectUser,
          TeamEntity objectTeam,
          EquipmentEntity? objectEquipment) tuple = await tupleMahager.GetAllInfoForUser(_user);
+
         if(tuple.objectUser is null && tuple.objectTeam is null)
-        {
             throw new NullReferenceException();
-        }
+
         InitialPropertyUser(tuple.objectUser);
         InitialPropertyTeamInfo(tuple.objectTeam);
+
         if(tuple.objectEquipment is not null)
-        {
             InitialPropertyEquipmen(tuple.objectEquipment);
-        }
 
     }
 
@@ -119,7 +119,7 @@ public partial class HomeViewModel : ObservableObject
         EquipmentId = modelEntity.EquipmentId is null || modelEntity.EquipmentId <= 0 ? "Нету у тебя экипа " : modelEntity.EquipmentId.ToString();
     }
 
-   
+
 
     [RelayCommand]
     private void UpdateEquipment()

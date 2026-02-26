@@ -99,31 +99,39 @@ public class MainPostController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult?> CreateEquip(int userId)
+    public async Task<IActionResult?> CreateEquip(int userId , bool isCreate)//isCreate
     {
         EquipmentEntity? equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentEntity>();
-        if(equipFromApp == null | userId != equipFromApp?.OwnerEquipmentId)
+        try
         {
-            return Unauthorized();
-        }
-        else
-        {
-            _squadDbContext.Equipments.Add(equipFromApp);
-            _squadDbContext.SaveChanges();
-            var userFromDb = _squadDbContext.Players.FirstOrDefault(u => u.Id == userId);
+            if(equipFromApp == null | userId != equipFromApp?.OwnerEquipmentId)
+                throw new Exception("Ошибка при десериализации");
+            var userFromDb = await _squadDbContext.Players.FirstOrDefaultAsync(u => u.Id == userId);
             if(userFromDb is null)
+                throw new Exception("Ошибка при попытке достать юреза");
+
+            if(isCreate)
             {
-                return Unauthorized();
+                
             }
-            userFromDb.EquipmentId = equipFromApp.Id;
+
+            equipFromApp.OwnerEquipment = userFromDb;
+            await _squadDbContext.Equipments.AddAsync(equipFromApp);
+            await _squadDbContext.SaveChangesAsync();
             userFromDb.Equipment = equipFromApp;
-            if(!userFromDb.UpdateStaffed(equipFromApp))
-            {
-                return Unauthorized();
-            }
-            _squadDbContext.SaveChanges();
+
+
+            //userFromDb.EquipmentId = equipFromApp.Id;
+            userFromDb.UpdateStaffed(equipFromApp);
+
+            await _squadDbContext.SaveChangesAsync();
             return Ok(equipFromApp);
         }
+        catch(Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
 
 
     }
@@ -137,19 +145,14 @@ public class MainPostController : Controller
         }
         else
         {
-            EquipmentEntity? equipEntity = _squadDbContext.Equipments.Include(e => e.OwnerEquipment).FirstOrDefault(eq => eq.Id == equipId);
+            EquipmentEntity? equipEntity = await _squadDbContext.Equipments.Include(e => e.OwnerEquipment).FirstOrDefaultAsync(eq => eq.Id == equipId);
             if(equipEntity == null)
-            {
                 return Unauthorized();
-            }
 
             EquipmentEntity.UpdateEquip(equipFromApp, equipEntity);
-            if(!equipEntity.OwnerEquipment.UpdateStaffed(equipEntity))
-            {
-                return Unauthorized();
-            }
+            equipEntity.OwnerEquipment.UpdateStaffed(equipEntity);
 
-            _squadDbContext.SaveChanges();
+            await _squadDbContext.SaveChangesAsync();
             return Ok(equipEntity);
         }
     }
@@ -230,23 +233,23 @@ public class MainPostController : Controller
         try
         {
             var rentaFromDb = await _squadDbContext.Reantils.FirstOrDefaultAsync(u => u.Id == reantilId);
-                rentaFromDb.Weapon = result.Weapon;
-                rentaFromDb.Mask = result.Mask;
-                rentaFromDb.Helmet = result.Helmet;
-                rentaFromDb.Balaclava = result.Balaclava;
-                rentaFromDb.SVMP = result.SVMP;
-                rentaFromDb.Outterwear = result.Outterwear;
-                rentaFromDb.Gloves = result.Gloves;
-                rentaFromDb.BulletproofVestOrUnloadingVest = result.BulletproofVestOrUnloadingVest;
-                rentaFromDb.IsStaffed = result.Balaclava &&
-                            result.Outterwear &&
-                            result.BulletproofVestOrUnloadingVest &&
-                            result.Gloves &&
-                            result.SVMP &&
-                            result.Helmet &&
-                            result.Mask &&
-                            result.Weapon
-                            ? true : false;
+            rentaFromDb.Weapon = result.Weapon;
+            rentaFromDb.Mask = result.Mask;
+            rentaFromDb.Helmet = result.Helmet;
+            rentaFromDb.Balaclava = result.Balaclava;
+            rentaFromDb.SVMP = result.SVMP;
+            rentaFromDb.Outterwear = result.Outterwear;
+            rentaFromDb.Gloves = result.Gloves;
+            rentaFromDb.BulletproofVestOrUnloadingVest = result.BulletproofVestOrUnloadingVest;
+            rentaFromDb.IsStaffed = result.Balaclava &&
+                        result.Outterwear &&
+                        result.BulletproofVestOrUnloadingVest &&
+                        result.Gloves &&
+                        result.SVMP &&
+                        result.Helmet &&
+                        result.Mask &&
+                        result.Weapon
+                        ? true : false;
             await _squadDbContext.SaveChangesAsync();
             return Ok();
         }

@@ -112,7 +112,7 @@ public class UserModelEntity
         userEntity._age = userFromApp._age;
         userEntity.TeamId = userFromApp.TeamId;
     }
-    public bool UpdateStaffed(EquipmentEntity equip)
+    public void UpdateStaffed(EquipmentEntity equip)
     {
         if(
                 equip.BodyEquipment &
@@ -121,19 +121,15 @@ public class UserModelEntity
                 equip.MainWeapon &
                 equip.NameMainWeapon != string.Empty
                 )
-        {
             this._isStaffed = true;
-            return true;
-        }
-        this._isStaffed = false;
-        return false;
-
+        else
+            this._isStaffed = false;
     }
     private static Int64 GenerationCode(string phuneNumber)
     {
         if(phuneNumber is null)
             throw new ArgumentNullException();
-        string newString = string.Empty ;
+        string newString = string.Empty;
 
         if(phuneNumber.Length > 6)
         {
