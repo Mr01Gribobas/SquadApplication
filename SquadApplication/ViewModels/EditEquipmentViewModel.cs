@@ -45,10 +45,10 @@ public partial class EditEquipmentViewModel : ObservableObject
         var dataForm = new DataForm(
             _inStokeMainWeapon: InStokeMainWeapon,
             _inStokesecondaryWeapon: InStokesecondaryWeapon,
-            _secondaryWeapon:SecondaryWeapon,
-            _mainWeapon:MainWeapon,
-            _headEquipment:HeadEquipment,
-            _bodyEquipment:BodyEquipment,
+            _secondaryWeapon: SecondaryWeapon,
+            _mainWeapon: MainWeapon,
+            _headEquipment: HeadEquipment,
+            _bodyEquipment: BodyEquipment,
             _unloudingWeapon: UnloudingWeapon
             );
 
@@ -73,8 +73,11 @@ public partial class EditEquipmentViewModel : ObservableObject
             throw new NullReferenceException();
         }
 
-        if(_page._isUpdate)
+        if(_page.IsUpdate)
         {
+            if(_equipment is null)
+                return;
+
             requestManager.SetUrl($"UpdateEquip?equipId={_equipment.Id}");
             await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
         }
@@ -84,18 +87,6 @@ public partial class EditEquipmentViewModel : ObservableObject
             await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.CreateEquip);
         }
 
-
-        if(_user.EquipmentId is null || _user.EquipmentId <= 0)
-        {
-
-            requestManager.SetUrl($"CreateEquip?userId={_user.Id}");
-            await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.CreateEquip);
-        }
-        //else if(_user.EquipmentId is not null && _equipment is not null)
-        //{
-        //    requestManager.SetUrl($"UpdateEquip?equipId={_equipment.Id}");
-        //    await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
-        //}
         requestManager.ResetUrlAndStatusCode();
         await Shell.Current.GoToAsync($"/{nameof(HomePage)}");
     }
@@ -122,13 +113,9 @@ public partial class EditEquipmentViewModel : ObservableObject
 
     private async void GetEquipById(int userId)
     {
-        if(_user is null |
-            userId <= 0 |
-            _user.EquipmentId is null |
-            _user.EquipmentId <= 0)
-        {
+        if(_user is null)
             return;
-        }
+
         try
         {
             var getRequest = new ManagerGetRequests<EquipmentEntity>();

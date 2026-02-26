@@ -30,5 +30,6 @@ public  class EquipmentEntity
         equipEntity.BodyEquipment = equipFromApp.BodyEquipment;
         equipEntity.MainWeapon = equipFromApp.MainWeapon;
         equipEntity.SecondaryWeapon = equipFromApp.SecondaryWeapon;
+        
     }
 }

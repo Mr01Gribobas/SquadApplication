@@ -99,47 +99,30 @@ public class MainPostController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult?> CreateEquip(int userId, bool isCreate)//isCreate
+    public async Task<IActionResult?> CreateEquip(int userId)//isCreate
     {
         EquipmentEntity? equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentEntity>();
         try
         {
             if(equipFromApp == null | userId != equipFromApp?.OwnerEquipmentId)
                 throw new Exception("Ошибка при десериализации");
+
             var userFromDb = await _squadDbContext.Players.FirstOrDefaultAsync(u => u.Id == userId);
             if(userFromDb is null)
                 throw new Exception("Ошибка при попытке достать юреза");
 
-            if(isCreate)
-            {
-                equipFromApp.OwnerEquipment = userFromDb;
-                equipFromApp.OwnerEquipmentId = userId;
-                await _squadDbContext.Equipments.AddAsync(equipFromApp);
-                await _squadDbContext.SaveChangesAsync();
 
-                userFromDb.Equipment = equipFromApp;
-                //userFromDb.EquipmentId = equipFromApp.Id;
-                userFromDb.UpdateStaffed(equipFromApp);
-                await _squadDbContext.SaveChangesAsync();
-            }
-            else
-            {
-                var equip = await _squadDbContext.Equipments.FirstOrDefaultAsync(u => u.Id == userFromDb.EquipmentId);
-                equip.MainWeapon = equipFromApp.MainWeapon;
-                equip.NameMainWeapon = equipFromApp.NameMainWeapon;
-                equip.SecondaryWeapon = equipFromApp.SecondaryWeapon;
-                equip.NameSecondaryWeapon = equipFromApp.NameSecondaryWeapon;
-                equip.HeadEquipment = equipFromApp.HeadEquipment;
-                equip.BodyEquipment = equipFromApp.BodyEquipment;
-                equip.UnloudingEquipment = equipFromApp.UnloudingEquipment;                
-                await _squadDbContext.SaveChangesAsync();
-
-            }
+            equipFromApp.OwnerEquipment = userFromDb;
+            userFromDb.Equipment = equipFromApp;
+            await _squadDbContext.Equipments.AddAsync(equipFromApp);
+            await _squadDbContext.SaveChangesAsync();
+            userFromDb.EquipmentId = equipFromApp.Id;
 
 
+            //userFromDb.EquipmentId = equipFromApp.Id;
+            userFromDb.UpdateStaffed(equipFromApp);
 
-
-
+            await _squadDbContext.SaveChangesAsync();
             return Ok(equipFromApp);
         }
         catch(Exception ex)
@@ -153,22 +136,38 @@ public class MainPostController : Controller
     [HttpPost]
     public async Task<IActionResult?> UpdateEquip(int equipId)
     {
-        EquipmentEntity equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentEntity>();
+        EquipmentEntity? equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentEntity>();
         if(equipFromApp == null)
         {
             return Unauthorized();
         }
         else
         {
-            EquipmentEntity? equipEntity = await _squadDbContext.Equipments.Include(e => e.OwnerEquipment).FirstOrDefaultAsync(eq => eq.Id == equipId);
-            if(equipEntity == null)
-                return Unauthorized();
+            try
+            {
+                EquipmentEntity? equipEntity = await _squadDbContext.Equipments.Include(e => e.OwnerEquipment).FirstOrDefaultAsync(eq => eq.Id == equipId);
+                if(equipEntity == null)
+                    return Unauthorized();
 
-            EquipmentEntity.UpdateEquip(equipFromApp, equipEntity);
-            equipEntity.OwnerEquipment.UpdateStaffed(equipEntity);
+                EquipmentEntity.UpdateEquip(equipFromApp, equipEntity);
+                await _squadDbContext.SaveChangesAsync();
 
-            await _squadDbContext.SaveChangesAsync();
-            return Ok(equipEntity);
+                var userFromDb = await _squadDbContext.Players.FirstOrDefaultAsync(u=>u.EquipmentId == equipId);
+
+                if(userFromDb is not null)
+                {
+                    userFromDb.UpdateStaffed(equipEntity);
+                    await _squadDbContext.SaveChangesAsync();
+                }
+
+
+
+                return Ok(equipEntity);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 
