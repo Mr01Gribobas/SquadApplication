@@ -23,7 +23,7 @@ public partial class EventsForAllCommandsView : ObservableObject
         _user = user;
         _getRequestMansger = new ManagerGetRequests<EventsForAllCommandsModelDTO>();
         events = new ObservableCollection<EventsForAllCommandsModelDTO>();
-        this.FilterType = FilterType.ByDate;
+        this.FilterByDate();
     }
 
 
