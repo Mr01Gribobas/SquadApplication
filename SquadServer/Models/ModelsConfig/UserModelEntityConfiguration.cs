@@ -8,7 +8,7 @@ public class UserModelEntityConfiguration : IEntityTypeConfiguration<UserModelEn
         builder.
             HasOne(u=>u.Equipment).
             WithOne(e=>e.OwnerEquipment).
-            HasForeignKey<EquipmentEntity>(k=>k.OwnerEquipmentId).
+            HasForeignKey<UserModelEntity>(k=>k.EquipmentId).
             OnDelete(DeleteBehavior.Cascade);
         
 

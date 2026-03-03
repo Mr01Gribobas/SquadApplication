@@ -31,6 +31,46 @@ public static class Test
         }
     }
 
+    public static async Task TestCreqwteEquip()
+    {
+        using(SquadDbContext db = new SquadDbContext())
+        {
+                            
+            var user = db.Players.FirstOrDefault(u=>u.Id==2);
+
+            
+
+
+            var newEquip = new EquipmentEntity()
+            {
+                MainWeapon =true,
+                NameMainWeapon = "Ak",
+
+                SecondaryWeapon = false,
+                NameSecondaryWeapon = null,
+
+                BodyEquipment = true,
+                HeadEquipment = true,
+                UnloudingEquipment = true,
+                OwnerEquipment = user,
+                OwnerEquipmentId = user.Id
+                
+            };
+            user.Equipment = newEquip;
+            await  db.Equipments.AddAsync(newEquip);
+            await db.SaveChangesAsync();
+
+            user.UpdateStaffed(newEquip);
+            await db.SaveChangesAsync();
+
+
+
+        }
+
+
+    }
+
+
 
     public static void TestMethodEquip()
     {

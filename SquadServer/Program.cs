@@ -1,4 +1,6 @@
 
+using SquadServer;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddCors(build =>
@@ -44,6 +46,7 @@ if(!app.Environment.IsDevelopment())
 app.UseCors("CorsCustom");
 app.UseAuthorization();
 
+await Test.TestCreqwteEquip();
 
 
 app.MapStaticAssets();

@@ -110,12 +110,14 @@ public class MainPostController : Controller
             var userFromDb = await _squadDbContext.Players.FirstOrDefaultAsync(u => u.Id == userId);
             if(userFromDb is null)
                 throw new Exception("Ошибка при попытке достать юреза");
+
             var newEquip =  EquipmentEntity.CreateModelEntity(equipFromApp);
             newEquip.OwnerEquipment = userFromDb;
+            newEquip.OwnerEquipmentId = userFromDb.Id;
             userFromDb.Equipment = newEquip;
             await _squadDbContext.Equipments.AddAsync(newEquip);
             await _squadDbContext.SaveChangesAsync();
-            userFromDb.EquipmentId = newEquip.Id; //TODO ID
+
             userFromDb.UpdateStaffed(newEquip);
             await _squadDbContext.SaveChangesAsync();
             
