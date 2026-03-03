@@ -73,11 +73,8 @@ public partial class EditEquipmentViewModel : ObservableObject
         if(requestManager is null)
             throw new NullReferenceException();
 
-        if(_page.IsUpdate)
+        if(_page.IsUpdate &&  _equipment is not null)
         {
-            if(_equipment is null)
-                return;
-
             requestManager.SetUrl($"UpdateEquip?equipId={_user.EquipmentId}");
             await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
         }

@@ -13,9 +13,9 @@ public class MainGetController : Controller
 
 
     [HttpGet]
-    public async Task<IActionResult?> PlayerUpdateRank(int userId , bool rank)
+    public async Task<IActionResult?> PlayerUpdateRank(int userId, bool rank)
     {
-        var result = await _dataBaseRepository.UpdateRankUser(userId,rank);
+        var result = await _dataBaseRepository.UpdateRankUser(userId, rank);
 
         return Ok(result);
     }
@@ -61,8 +61,8 @@ public class MainGetController : Controller
         if(teamId <= 0)
             return BadRequest();
 
-        List<RentailsDTO> list = await _dataBaseRepository.GetAllReantilAsync(teamId) ;
-        if(list.Count ==0 || list is null)
+        List<RentailsDTO> list = await _dataBaseRepository.GetAllReantilAsync(teamId);
+        if(list.Count == 0 || list is null)
             return BadRequest();
         return Ok(list);
     }
@@ -134,18 +134,21 @@ public class MainGetController : Controller
 
         var equip = _dataBaseRepository.GetEquipByUserId(userId);
         List<EquipmentDTO> equipments = new List<EquipmentDTO>();
-        equipments.Add(new EquipmentDTO () 
+        if(equip is not null)
         {
-            MainWeapon = equip.MainWeapon,
-            NameMainWeapon = equip.NameMainWeapon,
+            equipments.Add(new EquipmentDTO()
+            {
+                MainWeapon = equip.MainWeapon,
+                NameMainWeapon = equip.NameMainWeapon,
 
-            SecondaryWeapon = equip.SecondaryWeapon,
-            NameSecondaryWeapon = equip.NameSecondaryWeapon,
+                SecondaryWeapon = equip.SecondaryWeapon,
+                NameSecondaryWeapon = equip.NameSecondaryWeapon,
 
-            HeadEquipment = equip.HeadEquipment,
-            BodyEquipment = equip.BodyEquipment,
-            UnloudingEquipment = equip.UnloudingEquipment,
-        });
+                HeadEquipment = equip.HeadEquipment,
+                BodyEquipment = equip.BodyEquipment,
+                UnloudingEquipment = equip.UnloudingEquipment,
+            });
+        }
         return Ok(equipments);
     }
 

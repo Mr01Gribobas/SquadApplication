@@ -23,15 +23,15 @@ public  class EquipmentEntity
     {
         EquipmentEntity equipment = new EquipmentEntity() 
         {
-            MainWeapon = equipFromApp.MainWeapon,
-            NameMainWeapon = equipFromApp.NameMainWeapon,
+            MainWeapon = equipFromApp?.MainWeapon ?? false,
+            NameMainWeapon = equipFromApp?.NameMainWeapon?? "нет" ,
 
-            SecondaryWeapon = equipFromApp.SecondaryWeapon,
-            NameSecondaryWeapon = equipFromApp.NameSecondaryWeapon,
+            SecondaryWeapon = equipFromApp?.SecondaryWeapon ?? false,
+            NameSecondaryWeapon = equipFromApp?.NameSecondaryWeapon ?? "нет",
 
-            BodyEquipment = equipFromApp.BodyEquipment,
-            HeadEquipment = equipFromApp.HeadEquipment,
-            UnloudingEquipment = equipFromApp.UnloudingEquipment,
+            BodyEquipment = equipFromApp?.BodyEquipment ?? false,
+            HeadEquipment = equipFromApp?.HeadEquipment ?? false,
+            UnloudingEquipment = equipFromApp?.UnloudingEquipment ?? false,
         };
         return equipment;
     }

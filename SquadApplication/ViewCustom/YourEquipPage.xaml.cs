@@ -5,7 +5,7 @@ public partial class HomePage : ContentPage
 	
 	public HomePage(IUserSession userSession)
 	{
-		_viewModel = new HomeViewModel(this,userSession.CurrentUser);
+		_viewModel = new HomeViewModel(this,userSession);
 		BindingContext = _viewModel;
 		InitializeComponent();
 

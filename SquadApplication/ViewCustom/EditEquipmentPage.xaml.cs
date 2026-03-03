@@ -20,7 +20,7 @@ public partial class EditEquipmentPage : ContentPage
 	public EditEquipmentPage(IUserSession userSession)
 	{
 		_user = userSession.CurrentUser;
-		var test = _isUpdate;
+		
         _viewModel = new EditEquipmentViewModel(this,_user);
 		BindingContext = _viewModel;
 		InitializeComponent();

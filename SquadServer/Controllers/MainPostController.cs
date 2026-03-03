@@ -105,24 +105,21 @@ public class MainPostController : Controller
 
         try
         {
-            if(equipFromApp == null | userId != equipFromApp?.OwnerEquipmentId)
+            if(equipFromApp == null )//
                 throw new Exception("Ошибка при десериализации");
-
             var userFromDb = await _squadDbContext.Players.FirstOrDefaultAsync(u => u.Id == userId);
             if(userFromDb is null)
                 throw new Exception("Ошибка при попытке достать юреза");
-
             var newEquip =  EquipmentEntity.CreateModelEntity(equipFromApp);
             newEquip.OwnerEquipment = userFromDb;
             userFromDb.Equipment = newEquip;
-
             await _squadDbContext.Equipments.AddAsync(newEquip);
             await _squadDbContext.SaveChangesAsync();
             userFromDb.EquipmentId = newEquip.Id; //TODO ID
-
             userFromDb.UpdateStaffed(newEquip);
             await _squadDbContext.SaveChangesAsync();
-
+            
+            
             return Ok(newEquip);
 
 
