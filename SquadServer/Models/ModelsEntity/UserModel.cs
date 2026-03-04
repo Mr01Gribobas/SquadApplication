@@ -114,16 +114,13 @@ public class UserModelEntity
     }
     public void UpdateStaffed(EquipmentEntity equip)
     {
-        if(
-                equip.BodyEquipment &
-                equip.HeadEquipment &
-                equip.UnloudingEquipment &
-                equip.MainWeapon &
-                equip.NameMainWeapon != string.Empty
-                )
-            this._isStaffed = true;
-        else
-            this._isStaffed = false;
+
+        this._isStaffed = equip.BodyEquipment &&
+                equip.HeadEquipment &&
+                equip.UnloudingEquipment &&
+                equip.MainWeapon &&
+                equip.NameMainWeapon != string.Empty ? true : false;                
+          
     }
     private static Int64 GenerationCode(string phuneNumber)
     {

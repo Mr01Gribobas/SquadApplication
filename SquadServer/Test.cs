@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using SquadServer.Models;
-using SquadServer.Repositoryes;
-
-namespace SquadServer;
+﻿namespace SquadServer;
 
 public static class Test
 {
@@ -14,7 +10,7 @@ public static class Test
     }
     public static async Task TestMethodCreateCommanderAndTeam()
     {
-        var user = UserModelEntity.CreateUserEntity("Falanga", "Roma", "Bezumie", "897383", Role.Private, 24,null);
+        var user = UserModelEntity.CreateUserEntity("Falanga", "Roma", "Bezumie", "897383", Role.Private, 24, null);
 
         UserModelEntity? newUser = await _dataBaseRepository.CreateNewUser(user);
     }
@@ -35,36 +31,113 @@ public static class Test
     {
         using(SquadDbContext db = new SquadDbContext())
         {
-                            
-            var user = db.Players.FirstOrDefault(u=>u.Id==2);
+            var equipId = 8; 
+            var equip = await db.Equipments.Include(u=>u.OwnerEquipment).FirstOrDefaultAsync(e=>e.Id == equipId);
 
-            
-
-
-            var newEquip = new EquipmentEntity()
+            if(equip is not null)
             {
-                MainWeapon =true,
-                NameMainWeapon = "Ak",
+                equip.UnloudingEquipment = true;
+                equip.HeadEquipment = true;
+                equip.BodyEquipment = false;
 
-                SecondaryWeapon = false,
-                NameSecondaryWeapon = null,
+                equip.MainWeapon = true;
+                equip.NameMainWeapon = "PPPPPPP";
 
-                BodyEquipment = true,
-                HeadEquipment = true,
-                UnloudingEquipment = true,
-                OwnerEquipment = user,
-                OwnerEquipmentId = user.Id
-                
-            };
-            user.Equipment = newEquip;
-            await  db.Equipments.AddAsync(newEquip);
-            await db.SaveChangesAsync();
+                equip.SecondaryWeapon = false;
+                equip.NameSecondaryWeapon = null; 
+                db.Equipments.Update(equip);
 
-            user.UpdateStaffed(newEquip);
-            await db.SaveChangesAsync();
+                if(equip.OwnerEquipment is not null)
+                    equip.OwnerEquipment.UpdateStaffed(equip);
+
+                await db.SaveChangesAsync();
+
+            }
+            else
+            {
+                var userFromDb = await db.Players.Include(u => u.Equipment).FirstOrDefaultAsync(u=>u.EquipmentId == 8);
+                if(userFromDb is not null)
+                {
+                    if(userFromDb.Equipment is not null)
+                    {
+                        //если у юзера найден екип
+                        userFromDb.Equipment.UnloudingEquipment = true;
+                        userFromDb.Equipment.HeadEquipment = true;
+                        userFromDb.Equipment.BodyEquipment = true;
+
+                        userFromDb.Equipment.MainWeapon = true;
+                        userFromDb.Equipment.NameMainWeapon = "M4A4";
+
+                        userFromDb.Equipment.SecondaryWeapon = false;
+                        userFromDb.Equipment.NameSecondaryWeapon = null;
+                        db.Equipments.Update(userFromDb.Equipment);
+                    }
+                    else
+                    {
+                        //если у юзера нету укипа
+                        var newEquip = EquipmentEntity.CreateModelEntity(new EquipmentDTO() 
+                        {
+                            BodyEquipment = true,
+                            HeadEquipment = true,
+                            UnloudingEquipment = true,
+
+                            SecondaryWeapon = false,
+                            NameSecondaryWeapon = null,
+
+                            NameMainWeapon = "Ak",
+                            MainWeapon = true,
+                        });
+                        newEquip.OwnerEquipment = userFromDb;
+                        newEquip.OwnerEquipmentId = userFromDb.Id;
+                        userFromDb.Equipment = newEquip;
+                        await db.Equipments.AddAsync(newEquip);
+                    }
+                    await db.SaveChangesAsync();
+                }                
+
+            }
+                            
 
 
+            //var user = db.Players.Include(eq => eq.Equipment).FirstOrDefault(u => u.Id == 1);
 
+            //if(user is not null)
+            //{
+            //    if(user.Equipment is not null)
+            //    {
+            //        user.Equipment.MainWeapon = true;
+            //        user.Equipment.NameMainWeapon = "M4A1";
+            //        user.Equipment.NameSecondaryWeapon = null;
+            //        user.Equipment.SecondaryWeapon = false;
+            //        user.Equipment.HeadEquipment = true;
+            //        user.Equipment.BodyEquipment = true;
+            //        user.Equipment.UnloudingEquipment = true;
+            //        db.Equipments.Update(user.Equipment);
+            //        //user.UpdateStaffed(user.Equipment);
+            //    }
+            //    else
+            //    {
+            //        var newEquip = new EquipmentEntity()
+            //        {
+            //            MainWeapon = true,
+            //            NameMainWeapon = "Ak",
+
+            //            SecondaryWeapon = false,
+            //            NameSecondaryWeapon = null,
+
+            //            BodyEquipment = true,
+            //            HeadEquipment = true,
+            //            UnloudingEquipment = true,
+            //            OwnerEquipment = user,
+            //            OwnerEquipmentId = user.Id
+
+            //        };
+            //        user.Equipment = newEquip;
+            //        await db.Equipments.AddAsync(newEquip);
+            //        user.UpdateStaffed(newEquip);
+            //    }
+            //    await db.SaveChangesAsync();
+            //}
         }
 
 
@@ -145,11 +218,12 @@ public static class Test
                             ? true : false,
             });
             db.SaveChanges();
-            };
-
-
-
-
         }
+        ;
+
+
+
+
     }
+}
 

@@ -99,32 +99,49 @@ public class MainPostController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult?> CreateEquip(int userId)//isCreate
+    public async Task<IActionResult?> CreateEquip(int userId)
     {
         EquipmentDTO? equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentDTO>();
 
         try
         {
-            if(equipFromApp == null )//
+            if(equipFromApp == null)
                 throw new Exception("Ошибка при десериализации");
-            var userFromDb = await _squadDbContext.Players.FirstOrDefaultAsync(u => u.Id == userId);
-            if(userFromDb is null)
+
+            var userFromDb = await _squadDbContext.Players.Include(eq => eq.Equipment).FirstOrDefaultAsync(u => u.Id == userId);
+            if(userFromDb is not null)
+            {
+
+                if(userFromDb.Equipment is not null)
+                {
+                    userFromDb.Equipment.MainWeapon = equipFromApp.MainWeapon;
+                    userFromDb.Equipment.NameMainWeapon = equipFromApp.NameMainWeapon;
+
+                    userFromDb.Equipment.SecondaryWeapon = equipFromApp.SecondaryWeapon;
+                    userFromDb.Equipment.NameSecondaryWeapon = equipFromApp.NameSecondaryWeapon;
+
+                    userFromDb.Equipment.HeadEquipment = equipFromApp.HeadEquipment;
+                    userFromDb.Equipment.BodyEquipment = equipFromApp.BodyEquipment;
+                    userFromDb.Equipment.UnloudingEquipment = equipFromApp.UnloudingEquipment;
+                    _squadDbContext.Equipments.Update(userFromDb.Equipment);
+                }
+                else
+                {
+                    var newEquip = EquipmentEntity.CreateModelEntity(equipFromApp);
+                    newEquip.OwnerEquipment = userFromDb;
+                    newEquip.OwnerEquipmentId = userFromDb.Id;
+                    userFromDb.Equipment = newEquip;
+                    await _squadDbContext.Equipments.AddAsync(newEquip);
+
+                }
+            }
+            else
                 throw new Exception("Ошибка при попытке достать юреза");
 
-            var newEquip =  EquipmentEntity.CreateModelEntity(equipFromApp);
-            newEquip.OwnerEquipment = userFromDb;
-            newEquip.OwnerEquipmentId = userFromDb.Id;
-            userFromDb.Equipment = newEquip;
-            await _squadDbContext.Equipments.AddAsync(newEquip);
+            userFromDb?.UpdateStaffed(userFromDb?.Equipment ?? throw new NullReferenceException());
             await _squadDbContext.SaveChangesAsync();
 
-            userFromDb.UpdateStaffed(newEquip);
-            await _squadDbContext.SaveChangesAsync();
-            
-            
-            return Ok(newEquip);
-
-
+            return Ok(equipFromApp);
         }
         catch(Exception ex)
         {
@@ -134,49 +151,85 @@ public class MainPostController : Controller
 
 
     }
+
     [HttpPost]
     public async Task<IActionResult?> UpdateEquip(int equipId)
     {
-        EquipmentEntity? equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentEntity>();
+        EquipmentDTO? equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentDTO>();
         if(equipFromApp == null)
-        {
             return Unauthorized();
-        }
-        else
-        {
-            try
-            {
-                EquipmentEntity? equipEntity = await _squadDbContext.Equipments.Include(e => e.OwnerEquipment).FirstOrDefaultAsync(eq => eq.Id == equipId);
-                if(equipEntity == null)
-                    return Unauthorized();
 
-                {
-                    equipEntity.UnloudingEquipment = equipFromApp.UnloudingEquipment;
-                    equipEntity.HeadEquipment = equipFromApp.HeadEquipment;
-                    equipEntity.BodyEquipment = equipFromApp.BodyEquipment;
-                    equipEntity.MainWeapon = equipFromApp.MainWeapon;
-                    equipEntity.SecondaryWeapon = equipFromApp.SecondaryWeapon;
-                }
+        EquipmentEntity? equipEntity = await _squadDbContext.Equipments.Include(e => e.OwnerEquipment).FirstOrDefaultAsync(eq => eq.Id == equipId);
+
+        try
+        {
+
+            if(equipEntity is not null)
+            {
+                equipEntity.MainWeapon = equipFromApp.MainWeapon;
+                equipEntity.NameMainWeapon = equipFromApp.NameMainWeapon;
+
+                equipEntity.SecondaryWeapon = equipFromApp.SecondaryWeapon;
+                equipEntity.NameSecondaryWeapon = equipFromApp.NameSecondaryWeapon;
+
+                equipEntity.UnloudingEquipment = equipFromApp.UnloudingEquipment;
+                equipEntity.HeadEquipment = equipFromApp.HeadEquipment;
+                equipEntity.BodyEquipment = equipFromApp.BodyEquipment;
+                _squadDbContext.Equipments.Update(equipEntity);
+
+                if(equipEntity.OwnerEquipment is not null)
+                    equipEntity.OwnerEquipment.UpdateStaffed(equipEntity);
 
                 await _squadDbContext.SaveChangesAsync();
-
-                var userFromDb = await _squadDbContext.Players.FirstOrDefaultAsync(u=>u.EquipmentId == equipId);
-
+            }
+            else
+            {
+                UserModelEntity? userFromDb = await _squadDbContext.Players.
+                                                                   Include(eq => eq.Equipment).
+                                                                   FirstOrDefaultAsync(u => u.EquipmentId == equipId);
                 if(userFromDb is not null)
                 {
-                    userFromDb.UpdateStaffed(equipEntity);
+                    if(userFromDb.Equipment is not null)
+                    {
+                        userFromDb.Equipment.MainWeapon = equipFromApp.MainWeapon;
+                        userFromDb.Equipment.NameMainWeapon = equipFromApp.NameMainWeapon;
+
+                        userFromDb.Equipment.SecondaryWeapon = equipFromApp.SecondaryWeapon;
+                        userFromDb.Equipment.NameSecondaryWeapon = equipFromApp.NameSecondaryWeapon;
+
+                        userFromDb.Equipment.UnloudingEquipment = equipFromApp.UnloudingEquipment;
+                        userFromDb.Equipment.HeadEquipment = equipFromApp.HeadEquipment;
+                        userFromDb.Equipment.BodyEquipment = equipFromApp.BodyEquipment;
+                        _squadDbContext.Equipments.Update(userFromDb.Equipment);
+                        userFromDb.UpdateStaffed(userFromDb.Equipment);
+
+                    }
+                    else
+                    {
+
+                        EquipmentEntity newEquip = EquipmentEntity.CreateModelEntity(equipFromApp);
+                        newEquip.OwnerEquipment = userFromDb;
+                        newEquip.OwnerEquipmentId = userFromDb.Id;
+                        userFromDb.Equipment = newEquip;
+                        await _squadDbContext.Equipments.AddAsync(newEquip);
+                        userFromDb.UpdateStaffed(newEquip);
+                    }
                     await _squadDbContext.SaveChangesAsync();
                 }
+                else
+                    throw new NullReferenceException();
 
-
-
-                return Ok(equipEntity);
             }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
+
+            return Ok(equipEntity);
         }
+        catch(Exception ex)
+        {
+            return Ok(null);
+        }
+
+
     }
 
     [HttpPost]
