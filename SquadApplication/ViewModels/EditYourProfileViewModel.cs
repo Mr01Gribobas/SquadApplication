@@ -52,26 +52,24 @@ public partial class EditYourProfileViewModel : ObservableObject
         Age = user?._age.ToString() ?? "Не указан";
     }
 
-   
+
 
 
 
     [RelayCommand]
     private async Task UpdateProfile()
     {
-        var dataForm =new DataForm(
-            _name:Name,
-            _callSing:CallSing,
-            _age: Age ,
-            _role:Role,
-            _phoneNumber:PhoneNumber,
-            _teamName:TeamName         
+        var dataForm = new DataForm(
+            _name: Name,
+            _callSing: CallSing,
+            _age: Age,
+            _role: Role,
+            _phoneNumber: PhoneNumber,
+            _teamName: TeamName
             );
 
         if(!ValidateDataUser(dataForm))
-        {
-            return;//error
-        }
+            await _editProfilePage.DisplayAlertAsync("Error", "Некоректные данные ", "Ok");
 
         UserModelEntity newUser = UserModelEntity.CreateUserEntity(
             _name: dataForm._name,
@@ -84,21 +82,25 @@ public partial class EditYourProfileViewModel : ObservableObject
             );
 
         var requestManager = (ManagerPostRequests<UserModelEntity>)_requestManager;
+        bool result = false;
 
         if(requestManager is null)
-        {
             throw new NullReferenceException();
-        }
+
         if(_user is not null)
         {
 
             requestManager.SetUrl($"UpdateProfile?userId={_user.Id}");
-            requestManager?.PostRequests(objectValue: newUser, PostsRequests.UpdateProfile);
+            result = await requestManager?.PostRequests(objectValue: newUser, PostsRequests.UpdateProfile);
         }
         requestManager.ResetUrlAndStatusCode();
-        await Shell.Current.GoToAsync($"/{nameof(HomePage)}");
 
+        if(!result)
+            await _editProfilePage.DisplayAlertAsync("Error", "Ошибка обновления профиля ", "Ok");
+
+        await Shell.Current.GoToAsync($"/{nameof(HomePage)}");
     }
+
     private bool ValidateDataUser(DataForm dataForm)
     {
         if(dataForm._phoneNumber is not null && dataForm._phoneNumber[0] == '+')
@@ -108,7 +110,7 @@ public partial class EditYourProfileViewModel : ObservableObject
             {
                 return false;
             }
-                
+
         }
         else if(dataForm._phoneNumber is null || !Int64.TryParse(dataForm._phoneNumber, out Int64 _))
         {
@@ -151,7 +153,7 @@ public partial class EditYourProfileViewModel : ObservableObject
     }
 
     private record DataForm(
-        
+
         string _name,
          string _callSing,
          string _teamName,

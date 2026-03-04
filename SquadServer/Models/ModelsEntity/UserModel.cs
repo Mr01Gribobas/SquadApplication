@@ -104,13 +104,11 @@ public class UserModelEntity
 
     public static void UpdateProfile(UserModelEntity userFromApp, UserModelEntity userEntity)
     {
-        userEntity._userName = userFromApp._userName;
-        userEntity._callSing = userFromApp._callSing;
-        userEntity._role = userFromApp._role;
-        userEntity._phoneNumber = userFromApp._phoneNumber;
-        userEntity._teamName = userFromApp._teamName;
-        userEntity._age = userFromApp._age;
-        userEntity.TeamId = userFromApp.TeamId;
+        userEntity._userName = userFromApp?._userName ?? userEntity._userName;
+        userEntity._callSing = userFromApp?._callSing ?? userEntity._callSing;
+        userEntity._phoneNumber = userFromApp?._phoneNumber ?? userEntity._phoneNumber;
+        userEntity._age = userFromApp?._age ?? userEntity._age;
+        //userEntity._teamName = userFromApp._teamName;
     }
     public void UpdateStaffed(EquipmentEntity equip)
     {

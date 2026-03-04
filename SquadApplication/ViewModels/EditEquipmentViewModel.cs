@@ -72,19 +72,22 @@ public partial class EditEquipmentViewModel : ObservableObject
 
         if(requestManager is null)
             throw new NullReferenceException();
-
+        bool result ;
         if(_page.IsUpdate &&  _equipment is not null)
         {
             requestManager.SetUrl($"UpdateEquip?equipId={_user.EquipmentId}");
-            await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
+            result =  await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
         }
         else
         {
             requestManager.SetUrl($"CreateEquip?userId={_user.Id}");
-            await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.CreateEquip);
+            result =  await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.CreateEquip);
         }
-
         requestManager.ResetUrlAndStatusCode();
+
+        if(!result)
+           await _page.DisplayAlertAsync("Error","Произошла ошибка при обновлении данных ","Ok");
+
         await Shell.Current.GoToAsync($"/{nameof(HomePage)}");
     }
 

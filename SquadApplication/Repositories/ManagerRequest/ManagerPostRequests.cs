@@ -50,36 +50,22 @@ public class ManagerPostRequests<T> : IRequestManager<T>
         {
             case PostsRequests.CreateEvent:
                 return await PostRequest(objectValue, "CreateEvent");
-                break;
             case PostsRequests.UpdateProfile:
                 return await PostRequest(objectValue, "UpdateProfile");
-                break;
-
             case PostsRequests.CreateEquip:
                 return await PostRequest(objectValue, "CreateEquip");
-                break;
-
             case PostsRequests.AddReantils:
                 return await PostRequest(objectValue, "AddReantils");
-                break;
-
             case PostsRequests.UpdateReantilsById:
                 return await PostRequest(objectValue, "UpdateReantilsById");
-                break;
-
             case PostsRequests.AddPolygon:
                 return await PostRequest(objectValue, "AddPolygon");
-                break;
             case PostsRequests.UpdateEquip:
                 return await PostRequest(objectValue, "UpdateEquip");
-                break;
             case PostsRequests.CreateEventForCommands:
                 return await PostRequest(objectValue, "CreateEventForCommands");
-                break;
-
             default:
                 return false;
-                break;
         }
     }
 

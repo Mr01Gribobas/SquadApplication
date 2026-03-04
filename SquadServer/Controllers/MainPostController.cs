@@ -78,22 +78,22 @@ public class MainPostController : Controller
     [HttpPost]
     public async Task<IActionResult?> UpdateProfile(int userId)
     {
-        UserModelEntity userFromApp = await HttpContext.Request.ReadFromJsonAsync<UserModelEntity>();
+        UserModelEntity? userFromApp = await HttpContext.Request.ReadFromJsonAsync<UserModelEntity>();
 
         if(userFromApp == null)
-        {
-            return Unauthorized();
-        }
+            return StatusCode(400);
         else
         {
-            UserModelEntity? userEntity = _squadDbContext.Players.FirstOrDefault(eq => eq.Id == userId);
-            if(userEntity == null)
+            UserModelEntity? userEntity = await _squadDbContext.Players.FirstOrDefaultAsync(eq => eq.Id == userId);
+            if(userEntity is not null)
             {
-                return Unauthorized();
+                UserModelEntity.UpdateProfile(userFromApp, userEntity);
+                _squadDbContext.Players.Update(userEntity);
             }
+            else
+                return StatusCode(400);
 
-            UserModelEntity.UpdateProfile(userFromApp, userEntity);
-            _squadDbContext.SaveChanges();
+            await _squadDbContext.SaveChangesAsync();
             return Ok(userEntity);
         }
     }
@@ -222,7 +222,7 @@ public class MainPostController : Controller
             }
 
 
-            return Ok(equipEntity);
+            return Ok(equipEntity);//status code ??
         }
         catch(Exception ex)
         {
