@@ -6,18 +6,14 @@ public partial class PolygonsPage : ContentPage
     private UserModelEntity? _user;
     public PolygonsPage(IUserSession userSession)
     {
-        _user = userSession.CurrentUser;
-        if(_user is null)
-        {
-            //TODO
-        }
+        _user = userSession.CurrentUser;        
         _polygonsViewModel = new PolygonsViewModel(this, _user);
         BindingContext = _polygonsViewModel;
         InitializeComponent();
     }
 
 
-    public void CheckItems()
+    public async Task CheckItems()
     {
         if(_polygonsViewModel._countPolygon <= 0)
         {

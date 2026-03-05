@@ -28,13 +28,22 @@ public partial class PolygonsViewModel : ObservableObject
     {
         _managerGet.SetUrl("GetAllPolygons");
         List<PolygonEntity> list = await _managerGet.GetDataAsync(GetRequests.GetAllPolygons);
-        if(list is not null)
+        try
         {
-            foreach(PolygonEntity item in list)
+
+            if(list is not null)
             {
-                Polygons.Add(item);
+                foreach(PolygonEntity item in list)
+                {
+                    Polygons.Add(item);
+                }
             }
         }
+        catch(Exception ex)
+        {
+
+        }
+        _managerGet.ResetUrlAndStatusCode();
         _polygonPage.CheckItems();
     }
 
@@ -42,7 +51,7 @@ public partial class PolygonsViewModel : ObservableObject
     public async Task AppendPolygon()
     {
         await Shell.Current.GoToAsync($"{nameof(AppendPolygonPage)}");
-        await this.SetPolygons();
+        //await this.SetPolygons();
     }
 
     [RelayCommand]
@@ -52,19 +61,17 @@ public partial class PolygonsViewModel : ObservableObject
         {
             _managerGet.SetUrl($"DeletePolygonsById?poligonId={polygon.Id}");
             var result = await _managerGet.PutchRequestAsync(PutchRequest.DeletePolygon);
-
+            if(result)
+            {
+                Polygons.Remove(polygon);
+                await _polygonPage?.CheckItems();
+                _managerGet.ResetUrlAndStatusCode();
+            }
         }
         catch(Exception ex)
         {
 
         }
-        finally 
-        {
-            Polygons.Remove(polygon);
-            _polygonPage?.CheckItems();
-        _managerGet.ResetUrlAndStatusCode();
-        }
-        
     }
     [RelayCommand]
     public async Task CopyPolygonCoordinates(PolygonEntity polygon)

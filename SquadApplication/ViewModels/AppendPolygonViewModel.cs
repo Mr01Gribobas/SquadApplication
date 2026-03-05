@@ -24,7 +24,6 @@ public partial class AppendPolygonViewModel : ObservableObject
     {
         if( !await ValidatePropyrty(PolygonName, PolygonCoordinates))
         {
-
             await _plygonPage.DisplayAlertAsync("Error", "Invalud param", "Ok");
             await Shell.Current.GoToAsync("..");
         }
