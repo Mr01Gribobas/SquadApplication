@@ -45,7 +45,7 @@ public partial class RentailsViewModel : ObservableObject
 
 
 
-    private async Task GetRentalsFromDb()
+    public async Task GetRentalsFromDb()
     {
         _requestManager.SetUrl($"GetAllReantil?teamId={_user.TeamId}");
         List<RentailsDTO>? resultList = await _requestManager.GetDataAsync(GetRequests.GetAllReantil);

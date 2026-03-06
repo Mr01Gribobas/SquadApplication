@@ -1,13 +1,27 @@
-using SquadApplication.DTO_Classes.DTO_AuxiliaryModels;
-using SquadApplication.Services.CacheServiseDir;
 
 namespace SquadApplication.ViewCustom;
 
+[QueryProperty(nameof(_refreshPage), "refresh")] 
 public partial class RentalsPage : ContentPage
 {
     private readonly ICacheServieseCust _cacheServiese;
     private readonly UserModelEntity _user;
     private readonly RentailsViewModel _rentalView;
+    public bool _refreshPage 
+    {
+        set
+        {
+            if(value is true)
+            {
+                RefreshData();
+            }
+        }
+    }
+
+    private async Task RefreshData()
+    {
+       await _rentalView.GetRentalsFromDb();
+    }
 
     public RentalsPage(IUserSession userSession,ICacheServieseCust cacheServiese)
     {

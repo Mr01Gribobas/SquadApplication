@@ -49,7 +49,7 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
         if(_user.CurrentUser._role != Role.Commander && _user.CurrentUser._role != Role.AssistantCommander)
         {
             await _page.DisplayAlertAsync("Error", $"У вас нет права к текущим действиям", "Ok");
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync($"..?refresh={false}");
             return;
         }
 
@@ -76,7 +76,7 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
         {
             await _page.DisplayAlertAsync("Error", $"{ex.Message}", "Ok");
         }
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync($"..?refresh={true}");
     }
 
     private RentailsDTO CreateModel()
