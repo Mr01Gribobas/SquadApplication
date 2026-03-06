@@ -63,8 +63,8 @@
                                                 <Label Text="{Binding _gloves}" TextColor="White" FontSize="15"/>
                                             </HorizontalStackLayout>
                                             <HorizontalStackLayout>
-                                                <Label Text="Статус проката\резерва : " TextColor="White" FontSize="15"/>
-                                                <Label Text="{Binding _isStaffed}" TextColor="White" FontSize="15"/>
+                                                <Label Text="Статус проката : " TextColor="White" FontSize="15"/>
+                                                <Label Text="{Binding _isStaffed}" TextColor="White" FontSize="14"/>
                                             </HorizontalStackLayout>
                                         </VerticalStackLayout>
                                     <VerticalStackLayout Grid.Column="0">

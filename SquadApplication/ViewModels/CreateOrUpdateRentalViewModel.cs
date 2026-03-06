@@ -56,9 +56,19 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
 
         try
         {
-             var modelDto =   CreateModel();
-            _managerPostRequests.SetUrl($"AddReantils?commanderId={_user.CurrentUser.Id}");
-            var result =  await _managerPostRequests.PostRequests(modelDto,PostsRequests.AddReantil);
+            var modelDto = CreateModel();
+            bool resultOperation;
+            if(!_page._isUpdate)
+            {
+                _managerPostRequests.SetUrl($"AddReantils?commanderId={_user.CurrentUser.Id}");
+                resultOperation = await _managerPostRequests.PostRequests(modelDto, PostsRequests.AddReantil);
+            }
+            else
+            {
+                _managerPostRequests.SetUrl($"UpdateReantilsById?reantilId={modelDto.NumderRental}");
+                resultOperation = await _managerPostRequests.PostRequests(modelDto, PostsRequests.UpdateReantilsById);
+            }
+
             //result
 
         }
@@ -72,7 +82,7 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
     private RentailsDTO CreateModel()
     {
         var number = _page._isUpdate && int.TryParse(NumderRental, out int _) ? int.Parse(NumderRental) : 0;
-        return  new RentailsDTO()
+        return new RentailsDTO()
         {
             NumderRental = number,
             Weapon = Weapon,

@@ -28,18 +28,6 @@ public partial class RentailsViewModel : ObservableObject
         GetRentalsFromDb();
     }
 
-
-    //[RelayCommand]
-    //public async Task DeleteRental(RentalDTOToString rentail)
-    //{
-    //    var number = rentail._numderRental;
-    //    _requestManager.SetUrl($"DeleteReantilById?rentailNymber={number}");
-    //    var result = await _requestManager.PutchRequestAsync(PutchRequest.DeleteRental);
-    //    //result ok
-    //    _requestManager.ResetUrlAndStatusCode();
-
-    //}
-
     [RelayCommand]
     public async Task CreateRental()
     {
