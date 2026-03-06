@@ -259,25 +259,30 @@ public class MainPostController : Controller
     public async Task<IActionResult?> AddReantils(int commanderId)
     {
         RentailsDTO? result = await HttpContext.Request.ReadFromJsonAsync<RentailsDTO>();
-        if(result is null || commanderId <= 0)
-            return BadRequest();
+
         try
         {
-            var commander = await _squadDbContext.Players.Include(t => t.Team).FirstOrDefaultAsync(u => u.Id == commanderId);
+            if(result is null || commanderId <= 0)
+                throw new NullReferenceException();
 
-            await _squadDbContext.Reantils.AddAsync(new ReantalEntity()
+            var commander = await _squadDbContext.Players.Include(t => t.Team).FirstOrDefaultAsync(u => u.Id == commanderId);
+            ReantalEntity model = null;
+
+            if(commander is not null && commander.Team is not null)
             {
-                TeamEntity = commander.Team,
-                TeamId = commander.TeamId ?? throw new ArgumentNullException(),
-                Weapon = result.Weapon,
-                Mask = result.Mask,
-                Helmet = result.Helmet,
-                Balaclava = result.Balaclava,
-                SVMP = result.SVMP,
-                Outterwear = result.Outterwear,
-                Gloves = result.Gloves,
-                BulletproofVestOrUnloadingVest = result.BulletproofVestOrUnloadingVest,
-                IsStaffed = result.Balaclava &&
+                model = new ReantalEntity()
+                {
+                    TeamEntity = commander.Team,
+                    TeamId = commander.TeamId ?? throw new ArgumentNullException(),
+                    Weapon = result.Weapon,
+                    Mask = result.Mask,
+                    Helmet = result.Helmet,
+                    Balaclava = result.Balaclava,
+                    SVMP = result.SVMP,
+                    Outterwear = result.Outterwear,
+                    Gloves = result.Gloves,
+                    BulletproofVestOrUnloadingVest = result.BulletproofVestOrUnloadingVest,
+                    IsStaffed = result.Balaclava &&
                             result.Outterwear &&
                             result.BulletproofVestOrUnloadingVest &&
                             result.Gloves &&
@@ -286,14 +291,20 @@ public class MainPostController : Controller
                             result.Mask &&
                             result.Weapon
                             ? true : false,
-            });
-            await _squadDbContext.SaveChangesAsync();
+                };
+                await _squadDbContext.Reantils.AddAsync(model);
+                await _squadDbContext.SaveChangesAsync();
+            }
 
-            return Ok();
+            if(model is null)
+                throw new NullReferenceException();
+
+            return Ok(model);
+
         }
-        catch(Exception)
+        catch(Exception ex)
         {
-            return BadRequest();
+            return BadRequest(ex.Message);
 
         }
     }
@@ -302,35 +313,42 @@ public class MainPostController : Controller
     public async Task<IActionResult?> UpdateReantilsById(int reantilId)
     {
         RentailsDTO? result = await HttpContext.Request.ReadFromJsonAsync<RentailsDTO>();
-        if(result is null || reantilId <= 0)
-            return BadRequest();
+
 
         try
         {
+            if(result is null || reantilId <= 0)
+                throw new NullReferenceException();
+
             var rentaFromDb = await _squadDbContext.Reantils.FirstOrDefaultAsync(u => u.Id == reantilId);
-            rentaFromDb.Weapon = result.Weapon;
-            rentaFromDb.Mask = result.Mask;
-            rentaFromDb.Helmet = result.Helmet;
-            rentaFromDb.Balaclava = result.Balaclava;
-            rentaFromDb.SVMP = result.SVMP;
-            rentaFromDb.Outterwear = result.Outterwear;
-            rentaFromDb.Gloves = result.Gloves;
-            rentaFromDb.BulletproofVestOrUnloadingVest = result.BulletproofVestOrUnloadingVest;
-            rentaFromDb.IsStaffed = result.Balaclava &&
-                        result.Outterwear &&
-                        result.BulletproofVestOrUnloadingVest &&
-                        result.Gloves &&
-                        result.SVMP &&
-                        result.Helmet &&
-                        result.Mask &&
-                        result.Weapon
-                        ? true : false;
+            if(rentaFromDb is not null )
+            {
+                rentaFromDb.Weapon = result.Weapon;
+                rentaFromDb.Mask = result.Mask;
+                rentaFromDb.Helmet = result.Helmet;
+                rentaFromDb.Balaclava = result.Balaclava;
+                rentaFromDb.SVMP = result.SVMP;
+                rentaFromDb.Outterwear = result.Outterwear;
+                rentaFromDb.Gloves = result.Gloves;
+                rentaFromDb.BulletproofVestOrUnloadingVest = result.BulletproofVestOrUnloadingVest;
+                rentaFromDb.IsStaffed = result.Balaclava &&
+                            result.Outterwear &&
+                            result.BulletproofVestOrUnloadingVest &&
+                            result.Gloves &&
+                            result.SVMP &&
+                            result.Helmet &&
+                            result.Mask &&
+                            result.Weapon
+                            ? true : false;
+                _squadDbContext.Reantils.Update(rentaFromDb);
+            }
+            
             await _squadDbContext.SaveChangesAsync();
-            return Ok();
+            return Ok(result);
         }
-        catch(Exception)
+        catch(Exception ex)
         {
-            return BadRequest();
+            return BadRequest(ex.Message);
         }
     }
 

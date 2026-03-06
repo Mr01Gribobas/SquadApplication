@@ -5,7 +5,7 @@ public enum PostsRequests
     CreateEvent,
     UpdateProfile,
     CreateEquip,
-    AddReantils,
+    AddReantil,
     UpdateReantilsById,
     AddPolygon,
     UpdateEquip,

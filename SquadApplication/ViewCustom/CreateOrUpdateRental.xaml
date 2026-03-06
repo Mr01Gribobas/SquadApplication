@@ -15,7 +15,7 @@
         <VerticalStackLayout
             BackgroundColor="#86208054">
                 
-            <Grid ColumnDefinitions="*,*">
+            <Grid ColumnDefinitions="auto,auto">
                 <VerticalStackLayout Grid.Column="0">
                <HorizontalStackLayout Padding="5" Margin="4" >
                      <Label Text="Оружие " FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
@@ -34,24 +34,28 @@
                         <CheckBox IsChecked="{Binding Balaclava}"/>
                 </HorizontalStackLayout>
                     <HorizontalStackLayout Padding="5" Margin="4" Grid.Column="1">
-                        <Label Text="Нижний слой защиты" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
+                        
+                        <Label Text="Нижний слой защиты" FontSize="20" Margin="8" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
                         <CheckBox IsChecked="{Binding SVMP}" /> 
                     </HorizontalStackLayout>
+                        
                     <HorizontalStackLayout Padding="5" Margin="4" Grid.Column="1">
                         <Label Text="Верхняя одежда" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
                         <CheckBox IsChecked="{Binding Outterwear}"/>
                     </HorizontalStackLayout>
+                        
                     <HorizontalStackLayout Padding="5" Margin="4" Grid.Column="1">
                         <Label Text="Перчатки двойные" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
                         <CheckBox IsChecked="{Binding Gloves}"/>
                     </HorizontalStackLayout>
+                        
                     <HorizontalStackLayout Padding="5" Margin="4" Grid.Column="1">
                         <Label Text="Плитник\разгруз" FontSize="20" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
                         <CheckBox  IsChecked="{Binding BulletproofVestOrUnloadingVest}"/>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Column="1">
-                    <HorizontalStackLayout>
+                    <HorizontalStackLayout Margin="-90,0,0,0">
                     <Label Text="Номер проката :" FontSize="18" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
                         <Label Text="{Binding NumderRental}" FontSize="18" Margin="7" TextColor="AliceBlue" FontAutoScalingEnabled="True" FontAttributes="Italic"/>
                     </HorizontalStackLayout>
@@ -73,7 +77,10 @@
                              Radius="10"/>
                 </Border.Shadow>
 
-                <Button Text="Ok" Background="#90308080"/>
+                <Button 
+                    Text="Ok"
+                    Command="{Binding UpdateDataCommand}"
+                    Background="#90308080"/>
             </Border>
                 
         </VerticalStackLayout>

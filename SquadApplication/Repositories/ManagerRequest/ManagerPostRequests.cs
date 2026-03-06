@@ -54,7 +54,7 @@ public class ManagerPostRequests<T> : IRequestManager<T>
                 return await PostRequest(objectValue, "UpdateProfile");
             case PostsRequests.CreateEquip:
                 return await PostRequest(objectValue, "CreateEquip");
-            case PostsRequests.AddReantils:
+            case PostsRequests.AddReantil:
                 return await PostRequest(objectValue, "AddReantils");
             case PostsRequests.UpdateReantilsById:
                 return await PostRequest(objectValue, "UpdateReantilsById");
