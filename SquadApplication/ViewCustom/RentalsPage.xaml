@@ -12,6 +12,7 @@
         <ScrollView>
             <StackLayout >
                 <Button 
+                    Margin="5"
                 BackgroundColor="DarkGreen"
                 Command="{Binding CreateRentalCommand}"
                 Text="Add Rentail">
@@ -25,26 +26,85 @@
                         </DataTrigger>
                     </Button.Triggers>
                 </Button>
-                <CollectionView x:Name="PolygonsListViewItem"  
-         Background="Transparent"
-         ItemsSource="{Binding Rentails}"
-         VerticalOptions="Fill"
-         HorizontalOptions="Fill"
-         >
+                <CollectionView x:Name="RentalListViewItem"  
+                                Background="Transparent"
+                                ItemsSource="{Binding Rentals}"
+                                VerticalOptions="Fill"
+                                HorizontalOptions="Fill"
+                                >
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Border
-                    Stroke="DarkKhaki"
-                    StrokeShape="1"
-                              >
-                                <StackLayout
-                                VerticalOptions="Center"
-                                HorizontalOptions="Center">
-                                    <Label Text="{Binding Path=Id}" TextColor="White"/>
-                                    <Label Text="Rentail info" TextColor="White"/>
-                                    <Label Text="Rentail info2" TextColor="White"/>
-                                    <Button Text="Delete" Command="{Binding DeleteRentailCommand}"/>
-                                </StackLayout>
+                                  BackgroundColor="#90909080"
+                                  Stroke="#b3c96b"
+                                  StrokeThickness="2"
+                                  StrokeDashArray="4,2"
+                                  StrokeShape="0"
+                                  Padding="10"
+                                  Opacity="0.8">
+                                <VerticalStackLayout>
+                                    
+                                <Grid ColumnDefinitions="auto,auto">
+                                        <VerticalStackLayout Grid.Column="1">
+                                            <HorizontalStackLayout>
+                                                <Label Text="Внутренняя защита  : " TextColor="White" FontSize="15"/>
+                                                <Label Text="{Binding _sVMP}" TextColor="White" FontSize="15"/>
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout>
+                                                <Label Text="Верхняя одежда : " TextColor="White" FontSize="15"/>
+                                                <Label Text="{Binding _outterwear}" TextColor="White" FontSize="15"/>
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout>
+                                                <Label Text="Плитник\Разгруз : " TextColor="White" FontSize="15"/>
+                                                <Label Text="{Binding _bulletproofVestOrUnloadingVest}" TextColor="White" FontSize="15"/>
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout>
+                                                <Label Text="Перчатки защитные : " TextColor="White" FontSize="15"/>
+                                                <Label Text="{Binding _gloves}" TextColor="White" FontSize="15"/>
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout>
+                                                <Label Text="Статус проката\резерва : " TextColor="White" FontSize="15"/>
+                                                <Label Text="{Binding _isStaffed}" TextColor="White" FontSize="15"/>
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                    <VerticalStackLayout Grid.Column="0">
+                                        <HorizontalStackLayout>
+                                            <Label Text="Номер проката : " TextColor="White" FontSize="15"/>
+                                            <Label Text="{Binding _numderRental}" TextColor="White" FontSize="15"/>
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout>
+                                            <Label Text="Оружие : " TextColor="White" FontSize="15"/>
+                                            <Label Text="{Binding _weapon}" TextColor="White" FontSize="15"/>
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout>
+                                            <Label Text="Защиткая маска : " TextColor="White" FontSize="15"/>
+                                            <Label Text="{Binding _mask}" TextColor="White" FontSize="15"/>
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout>
+                                            <Label Text="Шлем : " TextColor="White" FontSize="15"/>
+                                            <Label Text="{Binding _helmet}" TextColor="White" FontSize="15"/>
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout>
+                                            <Label Text="Балаклава : " TextColor="White" FontSize="15"/>
+                                            <Label Text="{Binding _balaclava}" TextColor="White" FontSize="15"/>
+                                        </HorizontalStackLayout>
+                                        
+                                    </VerticalStackLayout>
+
+                                </Grid>
+                                    <Border 
+                                            Stroke="GreenYellow"
+                                            StrokeThickness="1"
+                                            Padding="2"
+                                           HorizontalOptions="Center"
+                                          >
+                                        <Button 
+                                              Text="Обновить"
+                                              BackgroundColor="#90509010"
+                                              Command="{Binding BindingContext.UpdateRentalCommand, Source={x:Reference RentalListViewItem}}"  
+                                              CommandParameter="{Binding .}" />
+                                    </Border>
+                                </VerticalStackLayout>
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

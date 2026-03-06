@@ -1,4 +1,5 @@
 ﻿namespace SquadApplication.ViewModels;
+
 public partial class RentailsViewModel : ObservableObject
 {
     private readonly UserModelEntity _user;
@@ -6,36 +7,38 @@ public partial class RentailsViewModel : ObservableObject
     private readonly IRequestManager<RentailsDTO> _requestManager;
     public Int32 _countRentals => Rentals.Count;
 
+
     [ObservableProperty]
-    private ObservableCollection<RentailsDTO> rentals;
-
-
-   
+    private ObservableCollection<RentalDTOToString> rentals;
 
 
 
 
 
 
-    public RentailsViewModel(RentalsPage rentalsPage , UserModelEntity modelEntity)
+
+
+
+    public RentailsViewModel(RentalsPage rentalsPage, UserModelEntity modelEntity)
     {
         _user = modelEntity;
         _rentalPage = rentalsPage;
-        rentals = new ObservableCollection<RentailsDTO>();
+        rentals = new ObservableCollection<RentalDTOToString>();
         _requestManager = new ManagerGetRequests<RentailsDTO>();
         GetRentalsFromDb();
     }
 
 
-    [RelayCommand]
-    public async Task DeleteRental(RentailsDTO rentail)
-    {
-        _requestManager.SetUrl($"DeleteReantilById?rentailNymber={rentail.NumderRental}");
-        var result = await _requestManager.PutchRequestAsync(PutchRequest.DeleteRental);
-        //result ok
-        _requestManager.ResetUrlAndStatusCode();
+    //[RelayCommand]
+    //public async Task DeleteRental(RentalDTOToString rentail)
+    //{
+    //    var number = rentail._numderRental;
+    //    _requestManager.SetUrl($"DeleteReantilById?rentailNymber={number}");
+    //    var result = await _requestManager.PutchRequestAsync(PutchRequest.DeleteRental);
+    //    //result ok
+    //    _requestManager.ResetUrlAndStatusCode();
 
-    }
+    //}
 
     [RelayCommand]
     public async Task CreateRental()
@@ -44,27 +47,35 @@ public partial class RentailsViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public async Task UpdateRental(RentailsDTO rentail)
+    public async Task UpdateRental(RentalDTOToString rentail)
     {
-        _rentalPage.SaveInCacheItem(rentail);
+        var rentalConvert = RentalDTOToString.ConvertToRentailsDTO(rentail);
+        _rentalPage.SaveInCacheItem(rentalConvert);
         await Shell.Current.GoToAsync($"/{nameof(CreateOrUpdateRentalPage)}/?IsUpdate={true}");
     }
 
-    
+
+
 
     private async Task GetRentalsFromDb()
     {
-        
         _requestManager.SetUrl($"GetAllReantil?teamId={_user.TeamId}");
         List<RentailsDTO>? resultList = await _requestManager.GetDataAsync(GetRequests.GetAllReantil);
-        if (resultList is not null && resultList.Count > 0)
+        if(resultList is not null && resultList.Count > 0)
         {
             foreach(RentailsDTO item in resultList)
             {
-                Rentals.Add(item);
+                var modelRental = RentalDTOToString.ConvertToRentailsDTOString(item);
+                Rentals.Add(modelRental);
             }
+
         }
         _requestManager.ResetUrlAndStatusCode();
         _rentalPage.CheckItems();
     }
+
+
+
+
+
 }
