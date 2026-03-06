@@ -56,8 +56,8 @@ public partial class RentailsViewModel : ObservableObject
     {
         
         _requestManager.SetUrl($"GetAllReantil?teamId={_user.TeamId}");
-         var resultList = await _requestManager.GetDataAsync(GetRequests.GetAllReantil);
-        if (resultList.Count > 0)
+        List<RentailsDTO>? resultList = await _requestManager.GetDataAsync(GetRequests.GetAllReantil);
+        if (resultList is not null && resultList.Count <= 0)
         {
             foreach(RentailsDTO item in resultList)
             {

@@ -39,9 +39,6 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
     {
         _page = page;
         _user = user;
-        _isUpdate = isUpdate;
-        if(!isUpdate)
-            NumderRental = "-";
     }
 
     [RelayCommand]

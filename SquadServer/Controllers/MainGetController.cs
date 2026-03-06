@@ -62,8 +62,7 @@ public class MainGetController : Controller
             return BadRequest();
 
         List<RentailsDTO> list = await _dataBaseRepository.GetAllReantilAsync(teamId);
-        if(list.Count == 0 || list is null)
-            return BadRequest();
+        
         return Ok(list);
     }
 
