@@ -31,10 +31,11 @@ public class EventsForAllCommandsModelEntity
             CoordinatesPolygon = modelDTO.CoordinatesPolygon,
             PolygonName = modelDTO.PolygonName,
             CountPlayers = 1,
-            Players = modelDTO.Users,
             TeamIdOrganization = commander.Team.Id  ,
             DateAndTimeGame = new DateTime(modelDTO.Date,modelDTO.Time),
         };
+        model.Players.Add(commander);
+
         return model;
     }
 

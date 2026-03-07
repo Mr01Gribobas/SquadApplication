@@ -7,6 +7,6 @@ public record class EventsForAllCommandsModelDTO
      string? DescriptionFull,
      string CoordinatesPolygon,
      string? PolygonName,
-     List<UserModelEntity> Users,
+     Int64 UsersCount,
      DateOnly Date,
      TimeOnly Time);

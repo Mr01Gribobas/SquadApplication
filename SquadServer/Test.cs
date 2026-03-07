@@ -26,13 +26,42 @@ public static class Test
 
         }
     }
+    public static async Task TestCreateEvenForAllCommaa()
+    {
+
+        using(SquadDbContext db = new SquadDbContext())
+        {
+            var commander = await db.Players.Include(t => t.Team).FirstOrDefaultAsync(u => u._role == Role.Private);
+
+            var events = await db.EventsForAllCommands.Include(u=>u.Players) .FirstOrDefaultAsync();
+
+            events.Players.Add(commander);
+
+            db.EventsForAllCommands.Update(events);
+
+            //var model = new EventsForAllCommandsModelEntity()
+            //{
+            //    TeamNameOrganization = commander._teamName,
+            //    DescriptionFull = "modelDTO.DescriptionFull",
+            //    DescriptionShort = "modelDTO",
+            //CoordinatesPolygon = "234234.444,22.3",
+            //    PolygonName = "modelDTO.PolygonName",
+            //    CountPlayers = 1,
+            //    TeamIdOrganization = commander.Team.Id,
+            //    DateAndTimeGame = new DateTime(DateOnly.Parse("12.01.2002"),TimeOnly.Parse( "05:33")),
+            //};
+            //model.Players.Add(commander);
+            //await db.EventsForAllCommands.AddAsync(model);
+            await db.SaveChangesAsync();
+        }
+    }
 
     public static async Task TestCreqwteEquip()
     {
         using(SquadDbContext db = new SquadDbContext())
         {
-            var equipId = 8; 
-            var equip = await db.Equipments.Include(u=>u.OwnerEquipment).FirstOrDefaultAsync(e=>e.Id == equipId);
+            var equipId = 8;
+            var equip = await db.Equipments.Include(u => u.OwnerEquipment).FirstOrDefaultAsync(e => e.Id == equipId);
 
             if(equip is not null)
             {
@@ -44,7 +73,7 @@ public static class Test
                 equip.NameMainWeapon = "PPPPPPP";
 
                 equip.SecondaryWeapon = false;
-                equip.NameSecondaryWeapon = null; 
+                equip.NameSecondaryWeapon = null;
                 db.Equipments.Update(equip);
 
                 if(equip.OwnerEquipment is not null)
@@ -55,7 +84,7 @@ public static class Test
             }
             else
             {
-                var userFromDb = await db.Players.Include(u => u.Equipment).FirstOrDefaultAsync(u=>u.EquipmentId == 8);
+                var userFromDb = await db.Players.Include(u => u.Equipment).FirstOrDefaultAsync(u => u.EquipmentId == 8);
                 if(userFromDb is not null)
                 {
                     if(userFromDb.Equipment is not null)
@@ -75,7 +104,7 @@ public static class Test
                     else
                     {
                         //если у юзера нету укипа
-                        var newEquip = EquipmentEntity.CreateModelEntity(new EquipmentDTO() 
+                        var newEquip = EquipmentEntity.CreateModelEntity(new EquipmentDTO()
                         {
                             BodyEquipment = true,
                             HeadEquipment = true,
@@ -93,10 +122,10 @@ public static class Test
                         await db.Equipments.AddAsync(newEquip);
                     }
                     await db.SaveChangesAsync();
-                }                
+                }
 
             }
-                            
+
 
 
             //var user = db.Players.Include(eq => eq.Equipment).FirstOrDefault(u => u.Id == 1);

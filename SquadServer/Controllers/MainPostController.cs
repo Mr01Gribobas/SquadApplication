@@ -64,6 +64,7 @@ public class MainPostController : Controller
             if(commander is not null && result is not null)
             {
                 EventsForAllCommandsModelEntity eventsModel = EventsForAllCommandsModelEntity.CreateModel(result, commander);
+
                 await _squadDbContext.EventsForAllCommands.AddAsync(eventsModel);
                 await _squadDbContext.SaveChangesAsync();
                 return Ok(true);

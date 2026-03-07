@@ -196,12 +196,13 @@ public class DataBaseRepository
         var listEvents = await _squadDbContext.EventsForAllCommands.Include(e => e.Players).ToListAsync();
 
         if(listEvents is null || listEvents.Count <= 0)
-        {
             return null;
-        }
+        
         List<EventsForAllCommandsModelDTO> newList = new();
+        
         foreach(EventsForAllCommandsModelEntity ev in listEvents)
         {
+            
             newList.Add(new EventsForAllCommandsModelDTO
                 (
                 TeamNameOrganization: ev.TeamNameOrganization,
@@ -209,7 +210,7 @@ public class DataBaseRepository
                 DescriptionShort: ev.DescriptionShort,
                 CoordinatesPolygon: ev.CoordinatesPolygon,
                 PolygonName: ev.PolygonName,
-                Users: ev.Players.ToList(),
+                UsersCount: ev.Players.Count,
                 Date: DateOnly.FromDateTime(ev.DateAndTimeGame.Date),
                 Time: TimeOnly.FromDateTime(ev.DateAndTimeGame)
                 ));
