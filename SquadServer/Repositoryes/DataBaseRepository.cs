@@ -48,13 +48,13 @@ public class DataBaseRepository
     public UserModelEntity? GetUserById(int id)
     {
         return _squadDbContext.Players.
-                  AsNoTracking().Include(e=>e.Equipment).
+                  AsNoTracking().Include(e => e.Equipment).
                   FirstOrDefault(u => u.Id == id);
     }
 
     public async Task<UserModelEntity?> CreateNewUser(UserModelEntity userFromApp)
     {
-        
+
         ArgumentNullException.ThrowIfNull(userFromApp);
 
     RestartMethod:
@@ -65,8 +65,8 @@ public class DataBaseRepository
             if(userFromApp._role == Role.Commander)
             {
                 TeamEntity newTeam = TeamEntity.CreateTeam(userFromApp);
-                 await _squadDbContext.Teams.AddAsync(newTeam);
-                 await _squadDbContext.SaveChangesAsync();
+                await _squadDbContext.Teams.AddAsync(newTeam);
+                await _squadDbContext.SaveChangesAsync();
                 goto RestartMethod;
             }
             return null;
@@ -86,8 +86,7 @@ public class DataBaseRepository
             await _squadDbContext.Players.AddAsync(user);
             team.CountMembers += 1;
             await _squadDbContext.SaveChangesAsync();
-
-
+            
             return user;
         }
         catch(Exception ex)
@@ -205,8 +204,8 @@ public class DataBaseRepository
                 CoordinatesPolygon: ev.CoordinatesPolygon,
                 PolygonName: ev.PolygonName,
                 Users: ev.Players.ToList(),
-                Date:DateOnly.FromDateTime(ev.DateAndTimeGame.Date),
-                Time:TimeOnly.FromDateTime(ev.DateAndTimeGame)
+                Date: DateOnly.FromDateTime(ev.DateAndTimeGame.Date),
+                Time: TimeOnly.FromDateTime(ev.DateAndTimeGame)
                 ));
         }
         return newList;
@@ -215,27 +214,13 @@ public class DataBaseRepository
     public async Task<UserAllInfoStatisticDTO> GetAllInfoUser(int userId)
     {
         var user = await _squadDbContext.Players.Include(s => s.Statistic).Include(e => e.Equipment).FirstOrDefaultAsync(u => u.Id == userId);
+        if(user is null)
+            throw new NullReferenceException();                   
         var statistic = user.Statistic;
-
         if(statistic is null)
-        {
-            statistic = new PlayerStatisticsModelEntity()
-            {
-                NamePlayer = user._userName,
-                CallSingPlayer = user._callSing,
-                LastUpdateDataStatistics = DateTime.UtcNow,
+            statistic = await CreateStatisticForUSer(user);
 
-                UserModel = user,
-                UserModelId = userId,
 
-                DataRegistr = user._dataRegistr,
-                RoleUser = user._role
-            };
-            user.Statistic = statistic;
-            await _squadDbContext.PlayerStatistics.AddAsync(statistic);
-            _squadDbContext.Players.Update(user);
-            await _squadDbContext.SaveChangesAsync();
-        }
 
         UserAllInfoStatisticDTO statisticDTO = new UserAllInfoStatisticDTO(
             LiveWeapon: user.Equipment?.NameMainWeapon ?? "Не найдено",
@@ -249,13 +234,35 @@ public class DataBaseRepository
             OldDataJson: statistic.OldDataJson,
             Achievements: statistic.Achievements,
             CommanderIsCheck: statistic.IsCommanderCheck,
-            roleUser:user._role,
-            dateRegistrationUser:user._dataRegistr
+            roleUser: user._role,
+            dateRegistrationUser: user._dataRegistr
             );
 
         return statisticDTO;
     }
-    public async Task<bool> UpdateInfoUser(UserAllInfoStatisticDTO dataForUpdate,int userId)
+
+    private async Task<PlayerStatisticsModelEntity> CreateStatisticForUSer(UserModelEntity user)
+    {
+        PlayerStatisticsModelEntity statistic = new PlayerStatisticsModelEntity()
+        {
+            NamePlayer = user._userName,
+            CallSingPlayer = user._callSing,
+            LastUpdateDataStatistics = DateTime.UtcNow,
+
+            UserModel = user,
+            UserModelId = user.Id,
+
+            DataRegistr = user._dataRegistr,
+            RoleUser = user._role
+        };
+        user.Statistic = statistic;
+        await _squadDbContext.PlayerStatistics.AddAsync(statistic);
+        _squadDbContext.Players.Update(user);
+        await _squadDbContext.SaveChangesAsync();
+        return statistic;
+    }
+
+    public async Task<bool> UpdateInfoUser(UserAllInfoStatisticDTO dataForUpdate, int userId)
     {
         var user = await _squadDbContext.Players.Include(s => s.Statistic).Include(e => e.Equipment).FirstOrDefaultAsync(u => u.Id == userId);
         if(user is not null && user.Statistic is not null)
@@ -281,9 +288,10 @@ public class DataBaseRepository
 
                 commander.UpdateRank(false);
                 user.UpdateRank(true);
-                _squadDbContext.Players.UpdateRange(commander,user);
+                _squadDbContext.Players.UpdateRange(commander, user);
 
-            }else if(user._role == Role.AssistantCommander && !rank)
+            }
+            else if(user._role == Role.AssistantCommander && !rank)
             {
                 user.UpdateRank(false);
                 _squadDbContext.Players.Update(user);
@@ -309,7 +317,7 @@ public class DataBaseRepository
                 return true;
             }
 
-            
+
             await _squadDbContext.SaveChangesAsync();
             return true;
         }
@@ -332,13 +340,18 @@ public class DataBaseRepository
 
     public async Task<bool> DeletePoligon(int poligonId)
     {
-       var result = await _squadDbContext.Polygons.FirstAsync(p=>p.Id == poligonId);
+        var result = await _squadDbContext.Polygons.FirstAsync(p => p.Id == poligonId);
         if(result is null)
             return false;
 
         _squadDbContext.Polygons.Remove(result);
-        await _squadDbContext.SaveChangesAsync() ;
+        await _squadDbContext.SaveChangesAsync();
         return true;
+    }
+
+    public async void CreateStatistic(UserModelEntity newUser)
+    {
+        CreateStatisticForUSer(newUser);
     }
 }
 

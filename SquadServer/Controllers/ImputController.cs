@@ -39,23 +39,28 @@ public class ImputController : Controller
     [HttpPost]
     public async Task<IActionResult>? Registration()
     {
-        Controller.LogInformation("Start action : Registration");        
+        Controller.LogInformation("Start action : Registration");
         try
         {
             UserModelEntity? userFromApp = await HttpContext.Request.
                                       ReadFromJsonAsync<UserModelEntity>();
 
             if(!Validate(userFromApp))
-            {
                 return Unauthorized();//401
-            }
+            
+            
+
 
             UserModelEntity? newUser = await _dataBaseRepository.CreateNewUser(userFromApp);
             if(newUser is null)
-            {
                 return StatusCode(201);
-            }
-        return Ok(newUser);
+
+
+            _ = Task.Run(async () =>
+            {
+                _dataBaseRepository.CreateStatistic(newUser);
+            });
+            return Ok(newUser);
         }
         catch(Exception ex)
         {

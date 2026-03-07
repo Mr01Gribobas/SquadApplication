@@ -60,7 +60,7 @@ namespace SquadServer.Migrations
                     b.HasIndex("OwnerEquipmentId")
                         .IsUnique();
 
-                    b.ToTable("Equipments");
+                    b.ToTable("Equipments", (string)null);
                 });
 
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.DeviceRegistartionModelEntity", b =>
@@ -98,7 +98,7 @@ namespace SquadServer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DeviceRegistartionModelEntities");
+                    b.ToTable("DeviceRegistartionModelEntities", (string)null);
                 });
 
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.EventModelEntity", b =>
@@ -134,7 +134,7 @@ namespace SquadServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Events");
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.EventsForAllCommandsModelEntity", b =>
@@ -171,7 +171,7 @@ namespace SquadServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EventsForAllCommands");
+                    b.ToTable("EventsForAllCommands", (string)null);
                 });
 
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.HisoryEventsModelEntity", b =>
@@ -195,7 +195,7 @@ namespace SquadServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HistoryEvents");
+                    b.ToTable("HistoryEvents", (string)null);
                 });
 
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.NotificationEntity", b =>
@@ -248,7 +248,7 @@ namespace SquadServer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.PlayerStatisticsModelEntity", b =>
@@ -305,7 +305,7 @@ namespace SquadServer.Migrations
                     b.HasIndex("UserModelId")
                         .IsUnique();
 
-                    b.ToTable("PlayerStatistics");
+                    b.ToTable("PlayerStatistics", (string)null);
                 });
 
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.TeamEntity", b =>
@@ -332,7 +332,7 @@ namespace SquadServer.Migrations
                         .IsUnique()
                         .HasFilter("[EventId] IS NOT NULL");
 
-                    b.ToTable("Teams");
+                    b.ToTable("Teams", (string)null);
                 });
 
             modelBuilder.Entity("SquadServer.Models.PolygonEntity", b =>
@@ -353,7 +353,7 @@ namespace SquadServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Polygons");
+                    b.ToTable("Polygons", (string)null);
                 });
 
             modelBuilder.Entity("SquadServer.Models.ReantalEntity", b =>
@@ -398,7 +398,7 @@ namespace SquadServer.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Reantils");
+                    b.ToTable("Reantils", (string)null);
                 });
 
             modelBuilder.Entity("SquadServer.Models.UserModelEntity", b =>
@@ -464,7 +464,7 @@ namespace SquadServer.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Players");
+                    b.ToTable("Players", (string)null);
                 });
 
             modelBuilder.Entity("SquadServer.Models.ModelsEntity.DeviceRegistartionModelEntity", b =>

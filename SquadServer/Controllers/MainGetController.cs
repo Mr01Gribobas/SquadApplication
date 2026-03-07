@@ -62,7 +62,7 @@ public class MainGetController : Controller
             return BadRequest();
 
         List<RentailsDTO> list = await _dataBaseRepository.GetAllReantilAsync(teamId);
-        
+
         return Ok(list);
     }
 
@@ -154,11 +154,17 @@ public class MainGetController : Controller
     [HttpGet]
     public async Task<IActionResult?> GetAllInfoUser(int userId)
     {
-        List<UserAllInfoStatisticDTO> listInfo = new List<UserAllInfoStatisticDTO>();
-        UserAllInfoStatisticDTO? info = await _dataBaseRepository.GetAllInfoUser(userId);
-        listInfo.Add(info);
-
-        return Ok(listInfo);
+        try
+        {
+            UserAllInfoStatisticDTO? info = await _dataBaseRepository.GetAllInfoUser(userId);
+            List<UserAllInfoStatisticDTO> listInfo = new List<UserAllInfoStatisticDTO>();
+            listInfo.Add(info);
+            return Ok(listInfo);
+        }
+        catch(Exception ex)
+        {
+            return BadRequest();
+        }
     }
 
     [HttpGet]
