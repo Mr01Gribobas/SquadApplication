@@ -62,8 +62,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         }
         catch(Exception ex)
         {
-            await _createEventPage.DisplayAlertAsync("Errir", $"{ex.Message}", "Ok");
-            await Shell.Current.GoToAsync("..");
+            await _createEventPage.DisplayAlertAsync("Errir", $"{ex.Message}", "Ok");            
         }
         finally
         {
@@ -85,9 +84,9 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         if(string.IsNullOrEmpty(DescriptionFull))
             throw new Exception("Не коректное описание ");
         if(string.IsNullOrEmpty(TimeGame) || !TimeOnly.TryParse(TimeGame , out var _))
-            throw new Exception("Не верный формат времени");
+            throw new Exception("Не верный формат времени. Используйте (60:24)");
         if(string.IsNullOrEmpty(Dategame)|| !DateOnly.TryParse(Dategame, out var _))
-            throw new Exception("Не вурный формат даты ");
+            throw new Exception("Не вурный формат даты. Используйте (30:12:2000)");
 
 
 
@@ -109,7 +108,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
                     continue;
 
                 if(!int.TryParse(item.ToString(), out _))
-                    throw new Exception("Coordinates is null");
+                    throw new Exception("Неверный формат координат. Используйте (000000.00,0000,00) ");
 
             }
         }
