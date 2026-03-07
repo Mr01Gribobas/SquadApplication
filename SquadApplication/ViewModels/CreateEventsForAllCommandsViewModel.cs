@@ -36,7 +36,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         _user = user;
         _createEventPage = createEventsPage;
         _postManager = new ManagerPostRequests<EventsForAllCommandsModelDTO>();
-        teamNameOrganization = _user?.CurrentUser._userName ?? _user?.CurrentUser._callSing ?? throw new NullReferenceException()  ;
+        TeamNameOrganization = _user?.CurrentUser._userName ?? _user?.CurrentUser._callSing ?? throw new NullReferenceException()  ;
         _isUpdateThisGame = isUpdateThisGame;
     }
 
@@ -122,7 +122,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             DescriptionShort: DescriptionShort,
             DescriptionFull: DescriptionFull,
             CoordinatesPolygon: CoordinatesPolygon,
-            PolygonName: PolygonName ?? $"Not name polygon",
+            PolygonName: PolygonName ?? $"Имя не было указано",
             Users: new List<UserModelEntity>() { _user.CurrentUser },
             Date: DateOnly.Parse(Dategame),
             Time: TimeOnly.Parse(TimeGame)

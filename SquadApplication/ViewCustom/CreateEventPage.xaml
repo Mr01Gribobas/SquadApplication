@@ -5,13 +5,30 @@
              BackgroundImageSource="createevent.jpg"
              Title="CreateEventPage">
     <VerticalStackLayout
-         Background="#90808080"
-        >
+         Background="#90808080">
+
+        <Border
+            Stroke="Transparent"
+            BackgroundColor="#90808080"
+            StrokeThickness="1"
+            StrokeShape="10"
+            Padding="15"
+            Opacity="0.8">
+            <Border.Shadow>
+                <Shadow Brush="#b3c96b" 
+        Offset="2,5" 
+        Opacity="0.5"
+        Radius="102"/>
+            </Border.Shadow>
+            
         <Label 
             Text="Create Event"
             TextColor="White"
+            FontSize="20"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+            
+        </Border>
         <StackLayout
             VerticalOptions="Center"
             HorizontalOptions="Center"
@@ -63,9 +80,9 @@
             </Border>
             <Border WidthRequest="400" HeightRequest="100">
                 <StackLayout>
-                    <Label Text="Соперник" TextColor="AliceBlue"/>
+                    <Label Text="Соперник  (Опционально)" TextColor="AliceBlue"/>
                     <Entry
-                        Placeholder="Имя команды соперника либо своя игра"
+                        Placeholder="Имя команды соперника "
                         PlaceholderColor="Gray"
                         TextColor="White"
                         Text="{Binding NameTeamEnemy}"
@@ -73,7 +90,19 @@
                 </StackLayout>
             </Border>
         </StackLayout>
-        <Border WidthRequest="200" HeightRequest="100">
+        <Border
+        Stroke="Transparent"
+        BackgroundColor="#90808080"
+        StrokeThickness="1"
+        StrokeShape="10"
+        Padding="15"
+        Opacity="0.8">
+            <Border.Shadow>
+                <Shadow Brush="#b3c96b" 
+                Offset="0,5" 
+                Opacity="1.5"
+                Radius="10"/>
+            </Border.Shadow>
             <Button Text="Create" Command="{Binding CreateEventCommand}" BackgroundColor="Transparent"></Button>
         </Border>
             

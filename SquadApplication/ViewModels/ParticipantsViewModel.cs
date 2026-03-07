@@ -49,7 +49,7 @@ public partial class ParticipantsViewModel : ObservableObject
         if(user is null)
             return;
         await Shell.Current.GoToAsync($"/{nameof(ProfilePage)}/?userId={user.Id}&IsStanger={true}");
-        ///?userId={user.Id}/?IsStanger={true}
+       
 
     }
 
