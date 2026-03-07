@@ -67,7 +67,7 @@ public partial class ProfileViewModel : ObservableObject
         _managerGet.SetUrl($"GetAllInfoUser?userId={id}");
         List<UserAllInfoStatisticDTO>? responce = await _managerGet.GetDataAsync(GetRequests.AllInfoForProfile);
         if(responce.Count > 0 && responce.FirstOrDefault() is not null)
-            InitialProperty(responce.FirstOrDefault());
+            await InitialProperty(responce.FirstOrDefault());
         _managerGet.ResetUrlAndStatusCode();
     }
 
@@ -78,7 +78,8 @@ public partial class ProfileViewModel : ObservableObject
             UserAllInfoStatisticDTO? result = JsonSerializer.Deserialize<UserAllInfoStatisticDTO>(model.OldDataJson);
             _oldDataJson = result ??= new UserAllInfoStatisticDTO
                                                          ("??", "??", "??", 0, 0, 0, 0, default, "??",
-                                                         new List<Achievement>() { new Achievement() { NameAchievement = "??", Discription = "??" } }, false);
+                                                         new List<Achievement>() { new Achievement() { NameAchievement = "??", Discription = "??" } },
+                                                         false, Role.Private, default);
         }
         CallSingPlayer = model.CallSingPlayer;
         CountDieds = model.CountDieds;
@@ -88,10 +89,11 @@ public partial class ProfileViewModel : ObservableObject
         LastUpdateDataStatistics = model.LastUpdateDataStatistics.ToString();
         LiveWeapon = model.LiveWeapon;
         AchievementsCount = model.Achievements.Count;
-        PlayerRole = _user._role.ToString();
+        PlayerRole = model.roleUser.ToString();
         PlayerName = _user._userName;
-        DataRegistr = $"{_user._dataRegistr.ToString().Replace("/", ":")}";
+        DataRegistr = $"{model.dateRegistrationUser.ToString().Replace("/", ":")}";
         CommanderIsCheck = model.CommanderIsCheck;
+
         if(model.Achievements.Count > 0)
         {
             foreach(Achievement item in model.Achievements)
@@ -99,6 +101,11 @@ public partial class ProfileViewModel : ObservableObject
                 Achievements.Add(item);
             }
         }
+        if(_homePage._stanger)
+            await _homePage.DisplayAlertAsync("info","Была загружена все даныне кроме имени","Ok");
+        
+            
+        
     }
 
 

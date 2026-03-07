@@ -255,7 +255,15 @@ public class DataBaseRepository
 
         return statisticDTO;
     }
-
+    public async Task<bool> UpdateInfoUser(UserAllInfoStatisticDTO dataForUpdate,int userId)
+    {
+        var user = await _squadDbContext.Players.Include(s => s.Statistic).Include(e => e.Equipment).FirstOrDefaultAsync(u => u.Id == userId);
+        if(user is not null && user.Statistic is not null)
+        {
+            //TODO
+        }
+        throw new Exception();
+    }
     public async Task<bool> UpdateRankUser(int userId, bool rank)
     {
         var user = await _squadDbContext.Players.FindAsync(userId);
