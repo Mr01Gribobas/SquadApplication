@@ -64,13 +64,10 @@ public partial class ProfileViewModel : ObservableObject
 
     public async void GetFullInfoForProfile(int id)
     {
-        _managerGet.SetUrl($"GetAllInfoUser?userId={_user.Id}");
+        _managerGet.SetUrl($"GetAllInfoUser?userId={id}");
         List<UserAllInfoStatisticDTO>? responce = await _managerGet.GetDataAsync(GetRequests.AllInfoForProfile);
         if(responce.Count > 0 && responce.FirstOrDefault() is not null)
-        {
-
-             InitialProperty(responce.FirstOrDefault());
-        }
+            InitialProperty(responce.FirstOrDefault());
         _managerGet.ResetUrlAndStatusCode();
     }
 
@@ -80,8 +77,8 @@ public partial class ProfileViewModel : ObservableObject
         {
             UserAllInfoStatisticDTO? result = JsonSerializer.Deserialize<UserAllInfoStatisticDTO>(model.OldDataJson);
             _oldDataJson = result ??= new UserAllInfoStatisticDTO
-                                                         ("??","??", "??", 0, 0, 0, 0, default, "??",
-                                                         new List<Achievement>() { new Achievement() { NameAchievement = "??", Discription = "??" } },false);
+                                                         ("??", "??", "??", 0, 0, 0, 0, default, "??",
+                                                         new List<Achievement>() { new Achievement() { NameAchievement = "??", Discription = "??" } }, false);
         }
         CallSingPlayer = model.CallSingPlayer;
         CountDieds = model.CountDieds;
@@ -93,7 +90,7 @@ public partial class ProfileViewModel : ObservableObject
         AchievementsCount = model.Achievements.Count;
         PlayerRole = _user._role.ToString();
         PlayerName = _user._userName;
-        DataRegistr = $"{_user._dataRegistr.ToString().Replace("/",":")}";
+        DataRegistr = $"{_user._dataRegistr.ToString().Replace("/", ":")}";
         CommanderIsCheck = model.CommanderIsCheck;
         if(model.Achievements.Count > 0)
         {

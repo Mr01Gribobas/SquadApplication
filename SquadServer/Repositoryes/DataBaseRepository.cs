@@ -262,37 +262,45 @@ public class DataBaseRepository
                                               FirstOrDefaultAsync(u => u.TeamId == user.TeamId && u._role == Role.Commander);
                 if(commander is null || commander.TeamId != user.TeamId)
                     return false;
+
                 commander.UpdateRank(false);
-            }else if(user._role ==Role.Private && rank)
+                user.UpdateRank(true);
+                _squadDbContext.Players.UpdateRange(commander,user);
+
+            }else if(user._role == Role.AssistantCommander && !rank)
             {
-                var assistantCom = await _squadDbContext.Players.FirstOrDefaultAsync(u=>u._role==Role.Commander);
+                user.UpdateRank(false);
+                _squadDbContext.Players.Update(user);
+            }
+            else if(user._role == Role.Private && rank)
+            {
+                var assistantCom = await _squadDbContext.Players.FirstOrDefaultAsync(u => u._role == Role.AssistantCommander);
                 if(assistantCom is not null)
                 {
                     assistantCom.UpdateRank(false);
                     user.UpdateRank(true);
+                    _squadDbContext.Players.UpdateRange(assistantCom, user);
+                }
+                else
+                {
+                    user.UpdateRank(true);
+                    _squadDbContext.Players.Update(user);
                 }
             }
-                
-            if(user._role == Role.Private && !rank)
+            else if(user._role == Role.Private && !rank)
             {
                 _squadDbContext.Players.Remove(user);
-                await _squadDbContext.SaveChangesAsync();
                 return true;
             }
 
-
-
+            
             await _squadDbContext.SaveChangesAsync();
-            user.UpdateRank(rank);
             return true;
-
-
         }
-        catch(Exception)
+        catch(Exception ex)
         {
             return false;
         }
-
     }
 
     public async Task<bool> DeleteRentail(int rentailNymber)

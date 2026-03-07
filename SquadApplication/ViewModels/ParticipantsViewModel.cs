@@ -33,16 +33,7 @@ public partial class ParticipantsViewModel : ObservableObject
         await SendRequest(user, true);
 
     }
-    /*
-     * [RelayCommand]
-    public async Task Profile(UserModelEntity user)
-    {
-        if(user is null)
-            return;
-        await Shell....
 
-    }
-    */
 
     [RelayCommand]
     public async Task DemoteAPlayer(UserModelEntity user)
@@ -50,6 +41,16 @@ public partial class ParticipantsViewModel : ObservableObject
         if(!await ExamingOperation(user, false))
             return;
         await SendRequest(user, false);
+    }
+
+    [RelayCommand]
+    public async Task Profile(UserModelEntity user)
+    {
+        if(user is null)
+            return;
+        await Shell.Current.GoToAsync($"/{nameof(ProfilePage)}/?userId={user.Id}&IsStanger={true}");
+        ///?userId={user.Id}/?IsStanger={true}
+
     }
 
     private async Task SendRequest(UserModelEntity user, bool rank)

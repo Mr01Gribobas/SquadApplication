@@ -103,7 +103,9 @@
                                         <Button 
                                            BackgroundColor="#90202020"
                                            Text="i"
-                                           FontSize="35"></Button>
+                                           FontSize="30"
+                                           Command="{Binding BindingContext.ProfileCommand,Source={x:Reference ParticipantsLisyViewItem}}"
+                                           CommandParameter="{Binding .}"/>
                                     </Border>
                                         
                                     <Border
