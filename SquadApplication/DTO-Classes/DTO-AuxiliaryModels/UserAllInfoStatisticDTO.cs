@@ -13,4 +13,4 @@ public record class UserAllInfoStatisticDTO
     string OldDataJson,
     List<Achievement>? Achievements,
     bool CommanderIsCheck 
-    );
+    );//DateTime dateRegistrationUser //Role roleUser

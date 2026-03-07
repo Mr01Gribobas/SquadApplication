@@ -215,8 +215,8 @@ public class DataBaseRepository
     public async Task<UserAllInfoStatisticDTO> GetAllInfoUser(int userId)
     {
         var user = await _squadDbContext.Players.Include(s => s.Statistic).Include(e => e.Equipment).FirstOrDefaultAsync(u => u.Id == userId);
+        var statistic = user.Statistic;
 
-        PlayerStatisticsModelEntity? statistic = await _squadDbContext.PlayerStatistics.Include(u => u.UserModel).FirstOrDefaultAsync(u => u.UserModelId == userId);
         if(statistic is null)
         {
             statistic = new PlayerStatisticsModelEntity()
@@ -224,11 +224,16 @@ public class DataBaseRepository
                 NamePlayer = user._userName,
                 CallSingPlayer = user._callSing,
                 LastUpdateDataStatistics = DateTime.UtcNow,
-                UserModel = user,
-                UserModelId = userId
 
+                UserModel = user,
+                UserModelId = userId,
+
+                DataRegistr = user._dataRegistr,
+                RoleUser = user._role
             };
+            user.Statistic = statistic;
             await _squadDbContext.PlayerStatistics.AddAsync(statistic);
+            _squadDbContext.Players.Update(user);
             await _squadDbContext.SaveChangesAsync();
         }
 
@@ -243,8 +248,11 @@ public class DataBaseRepository
             LastUpdateDataStatistics: statistic.LastUpdateDataStatistics,
             OldDataJson: statistic.OldDataJson,
             Achievements: statistic.Achievements,
-            CommanderIsCheck: statistic.IsCommanderCheck
+            CommanderIsCheck: statistic.IsCommanderCheck,
+            roleUser:user._role,
+            dateRegistrationUser:user._dataRegistr
             );
+
         return statisticDTO;
     }
 

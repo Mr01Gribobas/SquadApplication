@@ -30,6 +30,16 @@ public class PlayerStatisticsModelEntity
 
 
     [JsonInclude]
+    public DateTime? DataRegistr { get; set; }
+
+    [JsonInclude]
+    public Role RoleUser { get; set; }
+
+
+
+
+
+    [JsonInclude]
     public string? AchievementsJson { get; set; }
 
     public List<Achievement>? Achievements
