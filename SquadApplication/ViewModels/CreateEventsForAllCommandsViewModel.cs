@@ -50,7 +50,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         {
             ExaminationCoordinates();
             Validation();
-            var commanderId =_createEventPage.CommanderId <= 0 ? _user.CurrentUser.Id : _createEventPage.CommanderId;
+            var commanderId =_createEventPage.CommanderId <= 0 ? _user.CurrentUser.Id : _createEventPage.CommanderId;//
             EventsForAllCommandsModelDTO modelEvnt = CreateModel();
             _postManager.SetUrl($"CreateEventForAllCommands?commanderId={commanderId}");
             var result = await _postManager.PostRequests(objectValue: modelEvnt, PostsRequests.CreateEventForCommands);
