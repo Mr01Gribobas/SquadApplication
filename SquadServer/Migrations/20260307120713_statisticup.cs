@@ -6,11 +6,31 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SquadServer.Migrations
 {
     /// <inheritdoc />
-    public partial class MSInew : Migration
+    public partial class statisticup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Equipments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MainWeapon = table.Column<bool>(type: "bit", nullable: false),
+                    NameMainWeapon = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    SecondaryWeapon = table.Column<bool>(type: "bit", nullable: false),
+                    NameSecondaryWeapon = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HeadEquipment = table.Column<bool>(type: "bit", nullable: false),
+                    BodyEquipment = table.Column<bool>(type: "bit", nullable: false),
+                    UnloudingEquipment = table.Column<bool>(type: "bit", nullable: false),
+                    OwnerEquipmentId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Equipments", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Events",
                 columns: table => new
@@ -41,7 +61,8 @@ namespace SquadServer.Migrations
                     DescriptionShort = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DescriptionFull = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CoordinatesPolygon = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PolygonName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    PolygonName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateAndTimeGame = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -123,6 +144,12 @@ namespace SquadServer.Migrations
                 {
                     table.PrimaryKey("PK_Players", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Players_Equipments_EquipmentId",
+                        column: x => x.EquipmentId,
+                        principalTable: "Equipments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Players_EventsForAllCommands_EventsForAllCommandsModelEntityId",
                         column: x => x.EventsForAllCommandsModelEntityId,
                         principalTable: "EventsForAllCommands",
@@ -187,32 +214,6 @@ namespace SquadServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Equipments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MainWeapon = table.Column<bool>(type: "bit", nullable: false),
-                    NameMainWeapon = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    SecondaryWeapon = table.Column<bool>(type: "bit", nullable: false),
-                    NameSecondaryWeapon = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HeadEquipment = table.Column<bool>(type: "bit", nullable: false),
-                    BodyEquipment = table.Column<bool>(type: "bit", nullable: false),
-                    UnloudingEquipment = table.Column<bool>(type: "bit", nullable: false),
-                    OwnerEquipmentId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Equipments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Equipments_Players_OwnerEquipmentId",
-                        column: x => x.OwnerEquipmentId,
-                        principalTable: "Players",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Notifications",
                 columns: table => new
                 {
@@ -259,6 +260,8 @@ namespace SquadServer.Migrations
                     CountEvents = table.Column<int>(type: "int", nullable: false),
                     LastUpdateDataStatistics = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OldDataJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DataRegistr = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RoleUser = table.Column<byte>(type: "tinyint", nullable: false),
                     AchievementsJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsCommanderCheck = table.Column<bool>(type: "bit", nullable: false),
                     UserModelId = table.Column<int>(type: "int", nullable: false)
@@ -296,6 +299,13 @@ namespace SquadServer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Players_EquipmentId",
+                table: "Players",
+                column: "EquipmentId",
+                unique: true,
+                filter: "[EquipmentId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Players_EventsForAllCommandsModelEntityId",
                 table: "Players",
                 column: "EventsForAllCommandsModelEntityId");
@@ -331,9 +341,6 @@ namespace SquadServer.Migrations
                 name: "DeviceRegistartionModelEntities");
 
             migrationBuilder.DropTable(
-                name: "Equipments");
-
-            migrationBuilder.DropTable(
                 name: "HistoryEvents");
 
             migrationBuilder.DropTable(
@@ -350,6 +357,9 @@ namespace SquadServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "Players");
+
+            migrationBuilder.DropTable(
+                name: "Equipments");
 
             migrationBuilder.DropTable(
                 name: "EventsForAllCommands");

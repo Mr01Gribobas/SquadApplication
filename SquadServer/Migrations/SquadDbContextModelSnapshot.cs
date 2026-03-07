@@ -278,6 +278,9 @@ namespace SquadServer.Migrations
                     b.Property<int>("CountKill")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("DataRegistr")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsCommanderCheck")
                         .HasColumnType("bit");
 
@@ -290,6 +293,9 @@ namespace SquadServer.Migrations
 
                     b.Property<string>("OldDataJson")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte>("RoleUser")
+                        .HasColumnType("tinyint");
 
                     b.Property<int>("UserModelId")
                         .HasColumnType("int");

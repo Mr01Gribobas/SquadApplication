@@ -12,8 +12,8 @@ using SquadServer.Models.DbContextDir;
 namespace SquadServer.Migrations
 {
     [DbContext(typeof(SquadDbContext))]
-    [Migration("20260303094651_newmig")]
-    partial class newmig
+    [Migration("20260307120713_statisticup")]
+    partial class statisticup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -281,6 +281,9 @@ namespace SquadServer.Migrations
                     b.Property<int>("CountKill")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("DataRegistr")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsCommanderCheck")
                         .HasColumnType("bit");
 
@@ -293,6 +296,9 @@ namespace SquadServer.Migrations
 
                     b.Property<string>("OldDataJson")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte>("RoleUser")
+                        .HasColumnType("tinyint");
 
                     b.Property<int>("UserModelId")
                         .HasColumnType("int");
