@@ -16,15 +16,8 @@ public partial class MainPage : ContentPage
         _userSession1 = userSession;
         _notificationLocal = new NotificationLocalService();
         StartCheckNotification();
-        Loaded += OnPageLoaded;
+        
     }
-
-    private async void OnPageLoaded(object? sender, EventArgs e)
-    {
-
-    }
-
-    
 
     private async Task StartCheckNotification()
     {

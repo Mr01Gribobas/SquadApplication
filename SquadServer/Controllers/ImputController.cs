@@ -23,16 +23,12 @@ public class ImputController : Controller
         Controller.LogInformation("Start action : Login");
 
         if(loginCode < 0)
-        {
             return Unauthorized();
-        }
         UserModelEntity? Player = _dataBaseRepository?.
                                               GetUserFromDb(loginCode) ?? null;
 
         if(Player is null)
-        {
             return Unauthorized();
-        }
         return Ok(Player);
     }
 

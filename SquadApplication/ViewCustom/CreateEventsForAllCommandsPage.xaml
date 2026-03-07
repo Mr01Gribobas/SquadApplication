@@ -91,12 +91,40 @@
                   StrokeShape="RoundRectangle 10"
                   BackgroundColor="#98399989">
                 <Entry
-                     Placeholder="Название полигона (опционально)"
+                     Placeholder="Дата дд.мм.гг"
                      PlaceholderColor="LightGray"
-                     Text="{Binding PolygonName}"
+                     Text="{Binding Dategame}"
                      TextColor="White"
                      FontSize="20"
                      BackgroundColor="Transparent"/>
+            </Border>
+            <Border 
+                  Margin="5"
+                  Stroke="DarkCyan"
+                  StrokeThickness="1"
+                  StrokeShape="RoundRectangle 10"
+                  BackgroundColor="#98399989">
+                <Entry
+                   Placeholder="Время 09:00"
+                   PlaceholderColor="LightGray"
+                   Text="{Binding TimeGame}"
+                   TextColor="White"
+                   FontSize="20"
+                   BackgroundColor="Transparent"/>
+            </Border>
+            <Border 
+       Margin="5"
+       Stroke="DarkCyan"
+       StrokeThickness="1"
+       StrokeShape="RoundRectangle 10"
+       BackgroundColor="#98399989">
+                <Entry
+          Placeholder="Название полигона (опционально)"
+          PlaceholderColor="LightGray"
+          Text="{Binding PolygonName}"
+          TextColor="White"
+          FontSize="20"
+          BackgroundColor="Transparent"/>
             </Border>
             <Border
                     Margin="12"

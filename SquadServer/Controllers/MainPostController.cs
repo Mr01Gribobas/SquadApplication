@@ -60,10 +60,17 @@ public class MainPostController : Controller
 
         try
         {
-            EventsForAllCommandsModelEntity eventsModel = EventsForAllCommandsModelEntity.CreateModel(result, commanderId);
-            await _squadDbContext.EventsForAllCommands.AddAsync(eventsModel);
-            await _squadDbContext.SaveChangesAsync();
-            return Ok(true);
+            var commander = await _squadDbContext.Players.Include(t=>t.Team).FirstOrDefaultAsync(u => u.Id == commanderId);
+            if(commander is not null && result is not null)
+            {
+                EventsForAllCommandsModelEntity eventsModel = EventsForAllCommandsModelEntity.CreateModel(result, commander);
+                await _squadDbContext.EventsForAllCommands.AddAsync(eventsModel);
+                await _squadDbContext.SaveChangesAsync();
+                return Ok(true);
+            }
+            else
+                throw new Exception();
+
         }
         catch(Exception ex)
         {
@@ -321,7 +328,7 @@ public class MainPostController : Controller
                 throw new NullReferenceException();
 
             var rentaFromDb = await _squadDbContext.Reantils.FirstOrDefaultAsync(u => u.Id == reantilId);
-            if(rentaFromDb is not null )
+            if(rentaFromDb is not null)
             {
                 rentaFromDb.Weapon = result.Weapon;
                 rentaFromDb.Mask = result.Mask;
@@ -342,7 +349,7 @@ public class MainPostController : Controller
                             ? true : false;
                 _squadDbContext.Reantils.Update(rentaFromDb);
             }
-            
+
             await _squadDbContext.SaveChangesAsync();
             return Ok(result);
         }

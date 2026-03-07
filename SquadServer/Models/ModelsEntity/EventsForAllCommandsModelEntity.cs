@@ -17,13 +17,12 @@ public class EventsForAllCommandsModelEntity
 
     public ICollection<UserModelEntity> Players { get; set; } = new List<UserModelEntity>();
 
-    public static EventsForAllCommandsModelEntity CreateModel(EventsForAllCommandsModelDTO modelDTO, int commanderId)
+    public static EventsForAllCommandsModelEntity CreateModel(EventsForAllCommandsModelDTO modelDTO, UserModelEntity commander)
     {
-        
-        if(modelDTO is null || commanderId <= 0)
-        {
+
+        if(modelDTO is null || commander is null)
             throw new ArgumentException();
-        }
+
         var model = new EventsForAllCommandsModelEntity() 
         {
             TeamNameOrganization = modelDTO.TeamNameOrganization,
@@ -33,7 +32,7 @@ public class EventsForAllCommandsModelEntity
             PolygonName = modelDTO.PolygonName,
             CountPlayers = 1,
             Players = modelDTO.Users,
-            TeamIdOrganization = commanderId,
+            TeamIdOrganization = commander.Team.Id  ,
             DateAndTimeGame = new DateTime(modelDTO.Date,modelDTO.Time),
         };
         return model;
