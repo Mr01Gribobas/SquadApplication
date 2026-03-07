@@ -114,6 +114,7 @@
                 <Button
                     BackgroundColor="#40808080"
                     Text="Create"
+                    Command="{Binding RequestFolCreateEventCommand}"
                     FontSize="20"/>
             </Border>
 

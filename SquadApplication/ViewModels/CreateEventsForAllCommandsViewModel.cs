@@ -36,7 +36,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         _user = user;
         _createEventPage = createEventsPage;
         _postManager = new ManagerPostRequests<EventsForAllCommandsModelDTO>();
-        TeamNameOrganization = _user?.CurrentUser._userName ?? _user?.CurrentUser._callSing ?? throw new NullReferenceException()  ;
+        TeamNameOrganization = _user?.CurrentUser._teamName ??  throw new NullReferenceException()  ;
         _isUpdateThisGame = isUpdateThisGame;
     }
 

@@ -1,4 +1,6 @@
-﻿namespace SquadServer.Repositoryes;
+﻿using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
+
+namespace SquadServer.Repositoryes;
 
 public class DataBaseRepository
 {
@@ -43,6 +45,9 @@ public class DataBaseRepository
     {
         return _squadDbContext.Players.
                   AsNoTracking().
+                  Include(eq=>eq.Equipment).
+                  Include(st=>st.Statistic).
+                  Include(t=>t.Team).
                   FirstOrDefault(u => u._enterCode == loginCode);
     }
     public UserModelEntity? GetUserById(int id)
@@ -86,7 +91,7 @@ public class DataBaseRepository
             await _squadDbContext.Players.AddAsync(user);
             team.CountMembers += 1;
             await _squadDbContext.SaveChangesAsync();
-            
+
             return user;
         }
         catch(Exception ex)
@@ -101,6 +106,7 @@ public class DataBaseRepository
     private async Task<TeamEntity?> SearchTeamByName(UserModelEntity userFromApp)
     {
         return await _squadDbContext.Teams.
+                                Include(u => u.Members).
                                FirstOrDefaultAsync(t => t.Name == userFromApp._teamName);
     }
 
@@ -215,7 +221,7 @@ public class DataBaseRepository
     {
         var user = await _squadDbContext.Players.Include(s => s.Statistic).Include(e => e.Equipment).FirstOrDefaultAsync(u => u.Id == userId);
         if(user is null)
-            throw new NullReferenceException();                   
+            throw new NullReferenceException();
         var statistic = user.Statistic;
         if(statistic is null)
             statistic = await CreateStatisticForUSer(user);
