@@ -152,22 +152,24 @@ public partial class EventsForAllCommandsView : ObservableObject
     }
 
     [RelayCommand]
-    public async void UserIsGoRheGame(EventsForAllCommandsModelDTO model )
+    public async void UserIsGoRheGame(EventsForAllCommandsModelDTO model)
     {
-        _getRequestMansger.SetUrl($"AppendOrDeleteFromTheMeeting?nameteamOrganization={model.TeamNameOrganization}&userId={_user.CurrentUser.Id}&turnout={true}");
-        SendRequest();
+        SendRequest(model, true);
     }
 
-    private async Task SendRequest()
+
+    private async Task SendRequest(EventsForAllCommandsModelDTO model, bool isGoing)
     {
-       await _getRequestMansger.GetDataAsync(GetRequests.TheMeeting);
+
+        _getRequestMansger.SetUrl($"AppendOrDeleteFromTheMeeting?nameteamOrganization={model.TeamNameOrganization}&userId={_user.CurrentUser.Id}&turnout={isGoing}");
+        await _getRequestMansger.GetDataAsync(GetRequests.TheMeeting);
+        _getRequestMansger.ResetUrlAndStatusCode();
     }
 
     [RelayCommand]
-    public async void UserIsNotGoRheGameCommand(EventsForAllCommandsModelDTO model) 
+    public async void UserIsNotGoRheGameCommand(EventsForAllCommandsModelDTO model)
     {
-        _getRequestMansger.SetUrl($"AppendOrDeleteFromTheMeeting?nameteamOrganization={model.TeamNameOrganization}&userId={_user.CurrentUser.Id}&turnout={false}");
-        SendRequest() ; 
+        SendRequest(model, true);
     }
 
 

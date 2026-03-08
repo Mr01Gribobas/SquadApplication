@@ -176,24 +176,30 @@ public class MainGetController : Controller
     [HttpGet]
     public async Task<IActionResult> AppendOrDeleteFromTheMeeting(string nameteamOrganization, int userId, bool turnout)
     {
-        var user = await _squadDbContext.Players.Include(t => t.Team).FirstOrDefaultAsync(u => u.Id == userId);
         var events = await _squadDbContext.EventsForAllCommands.Include(u => u.Players).FirstOrDefaultAsync(e => e.TeamNameOrganization == nameteamOrganization);
 
         try
         {
-            if(user is not null && events is not null)
-                events.Players.Add(user);
+            if(turnout)
+            {
+                var user = await _squadDbContext.Players.Include(t => t.Team).FirstOrDefaultAsync(u => u.Id == userId);
+                if(user is not null && events is not null)
+                    events.Players.Add(user);
+                else
+                    throw new NullReferenceException();
+            }
             else
-                throw new NullReferenceException();
-
-
+            {
+                var userFromList = events.Players.FirstOrDefault(u => u.Id == userId);
+                if(userFromList is not null)
+                    events.Players.Remove(userFromList);
+            }
             _squadDbContext.EventsForAllCommands.Update(events);
             await _squadDbContext.SaveChangesAsync();
             return Ok(true);
         }
         catch(Exception ex)
         {
-
             return BadRequest(ex.Message);
         }
 
