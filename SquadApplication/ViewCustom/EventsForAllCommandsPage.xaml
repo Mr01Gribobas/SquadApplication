@@ -46,6 +46,7 @@
                                         BackgroundColor="#1e90ff"
                                         TextColor="White"
                                         CornerRadius="8"
+                                        Command="{Binding FilterByDateCommand}"
                                         Padding="15,8"/>
 
                                 <Button Text="Прошедшие"
@@ -173,18 +174,29 @@
                                         <Label Text="Oрганизаторы :  "
                                                FontSize="10"
                                                TextColor="White"
+                                               VerticalOptions="Center"
                                                FontAttributes="Bold"/>
                                             <Label Text="{Binding TeamNameOrganization}"
                                                FontSize="10"
                                                TextColor="White"
+                                                   VerticalOptions="Center"
                                                FontAttributes="Bold"/>
                                         </HorizontalStackLayout>
                                     </Border>
+                                    <Border
+                                       BackgroundColor="Purple"
+                                                Stroke="Transparent"
+                                                HorizontalOptions="Start"
+                                                StrokeShape="13"
+                                                Padding="4,3" 
+                                        >
                                     <Button Text="обновить"
+                                            Background="DarkBlue"
                                             FontAttributes="Italic"
-                                            HeightRequest="30"
-                                            WidthRequest="50"
-                                            FontSize="7"/>
+                                            Opacity="0.9"
+                                            FontSize="11"/>
+                                    </Border>
+                                        
                                 </HorizontalStackLayout>
 
                                 <!-- Дата и время -->
@@ -274,6 +286,7 @@
                                                        TextColor="#8da6c9"/>
                                                 <Editor Text="{Binding DescriptionFull}"
                                                         FontSize="15"
+                                                        IsEnabled="False"
                                                         AutoSize="TextChanges"
                                                         MaximumWidthRequest="300"
                                                         MaximumHeightRequest="350"
@@ -282,22 +295,24 @@
                                         </VerticalStackLayout>
                                             
                                         <HorizontalStackLayout>
-                                        <Border BackgroundColor="Gray"
+                                        <Border BackgroundColor="DarkBlue"
                                             Stroke="Transparent"
                                             StrokeShape="13"
                                             Padding="4,3">
                                                 <Button Text="Отменить участие"
+                                                        Background="#1a2332"
                                                         Command="{Binding BindingContext.UserIsNotGoRheGameCommand,Source={x:Reference EventsList}}"
                                                         CommandParameter="{Binding .}"
                                                         />
                                         </Border>
-                                        <Border BackgroundColor="Gray"
+                                        <Border BackgroundColor="DarkGreen"
                                                 Stroke="Transparent"
                                                 HorizontalOptions="Start"
                                                 StrokeShape="13"
                                                 Margin="80,0,0,0"
                                                 Padding="4,3">
                                             <Button Text="Учавствую"
+                                                    Background="#1a2332"
                                                     Command="{Binding BindingContext.UserIsGoRheGameCommand,Source={x:Reference EventsList}}"
                                                     CommandParameter="{Binding .}"
                                                     />

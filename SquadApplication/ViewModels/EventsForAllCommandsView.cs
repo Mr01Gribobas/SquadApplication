@@ -167,9 +167,9 @@ public partial class EventsForAllCommandsView : ObservableObject
     }
 
     [RelayCommand]
-    public async void UserIsNotGoRheGameCommand(EventsForAllCommandsModelDTO model)
+    public async void UserIsNotGoRheGame(EventsForAllCommandsModelDTO model)
     {
-        SendRequest(model, true);
+        SendRequest(model, false);
     }
 
 

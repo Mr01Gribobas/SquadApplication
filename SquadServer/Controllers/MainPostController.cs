@@ -76,15 +76,13 @@ public class MainPostController : Controller
                         Coordinates = newEvent.Coordinates,
                         NamePolygon = newEvent.NamePolygon,
                         Date = newEvent.Date,
-                        Time    = newEvent.Time,
+                        Time = newEvent.Time,
 
                         TeamId = (int)user.TeamId,
                         Team = user?.Team ?? throw new InvalidOperationException()
                     });
-                        
+
                 }
-
-
                 await _squadDbContext.SaveChangesAsync();
                 return Ok();
             }
@@ -120,7 +118,6 @@ public class MainPostController : Controller
         }
         catch(Exception ex)
         {
-
             return BadRequest(ex.Message);
         }
     }
@@ -160,7 +157,6 @@ public class MainPostController : Controller
         }
         catch(Exception ex)
         {
-
             return BadRequest(ex.Message);
         }
     }

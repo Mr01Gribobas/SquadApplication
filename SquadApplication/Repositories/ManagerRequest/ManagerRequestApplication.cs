@@ -103,7 +103,6 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
                 break;
 
             case GetRequests.TheMeeting:
-                _httpClient.Timeout = TimeSpan.FromSeconds(60);
                 (bool flowTheGo, List<T>? emptyList) = await RequestAction();                
                 break;
             default:
