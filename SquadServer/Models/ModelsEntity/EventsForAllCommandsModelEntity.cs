@@ -3,6 +3,7 @@
 public class EventsForAllCommandsModelEntity
 {
     public int Id { get; set; }
+    public string NameGame { get; set; }
     public string TeamNameOrganization { get; set; } = null!;
     public int TeamIdOrganization { get; set; } = 0!;
     public string DescriptionShort { get; set; } = null!;
@@ -25,6 +26,7 @@ public class EventsForAllCommandsModelEntity
 
         var model = new EventsForAllCommandsModelEntity() 
         {
+            NameGame = modelDTO.NameGame,
             TeamNameOrganization = modelDTO.TeamNameOrganization,
             DescriptionFull = modelDTO.DescriptionFull,
             DescriptionShort = modelDTO.DescriptionShort,

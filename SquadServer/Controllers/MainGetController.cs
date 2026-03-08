@@ -189,6 +189,7 @@ public class MainGetController : Controller
 
             _squadDbContext.EventsForAllCommands.Update(events);
             await _squadDbContext.SaveChangesAsync();
+            return Ok(true);
         }
         catch(Exception ex)
         {

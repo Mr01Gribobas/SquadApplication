@@ -1,6 +1,4 @@
-﻿using SquadApplication.Repositories.ManagerRequest.Interfaces;
-
-namespace SquadApplication.Repositories.ManagerRequest;
+﻿namespace SquadApplication.Repositories.ManagerRequest;
 
 public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
     where T : class
@@ -55,68 +53,61 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
             case GetRequests.GetAllTeamMembers:
                 (bool flowControlAllTeam, List<T>? valueAllTeam) = await RequestAction();
                 if(!flowControlAllTeam)
-                {
                     return valueAllTeam;
-                }
                 break;
             case GetRequests.GetAllReantil:
                 (bool flowControlAllReantil, List<T>? valueAllReantil) = await RequestAction();
                 if(!flowControlAllReantil)
-                {
                     return valueAllReantil;
-                }
                 break;
             case GetRequests.GetAllPolygons:
                 (bool flowControlAllPolygons, List<T>? valueAllPolygons) = await RequestAction();
                 if(!flowControlAllPolygons)
-                {
                     return valueAllPolygons;
-                }
                 break;
             case GetRequests.GetAllEventsHistory:
                 (bool flowControlAllEventsHistory, List<T>? valueAllEventsHistory) = await RequestAction();
                 if(!flowControlAllEventsHistory)
-                {
                     return valueAllEventsHistory;
-                }
                 break;
             case GetRequests.GetEvent:
                 _httpClient.Timeout = TimeSpan.FromSeconds(60);
                 (bool flowControlEvent, List<T>? valueEvent) = await RequestAction();
                 if(!flowControlEvent)
-                {
                     return valueEvent;
-                }
                 break;
             case GetRequests.GetEquipById:
 
                 (bool flowControlEquipById, List<T>? valueEquipById) = await RequestAction();
                 if(!flowControlEquipById)
-                {
                     return valueEquipById;
-                }
                 break;
             case GetRequests.GameAttendance:
                 _httpClient.Timeout = TimeSpan.FromSeconds(60);
                 (bool flowControlGameAttendance, List<T>? objects) = await RequestAction();
                 if(!flowControlGameAttendance)
-                {
                     return objects;
-                }
-                break;                
+                break;
 
-             case GetRequests.AllInfoForProfile:
+            case GetRequests.AllInfoForProfile:
                 _httpClient.Timeout = TimeSpan.FromSeconds(60);
-                (bool flowAllInfo, List<T>? statistics)  = await RequestAction();
+                (bool flowAllInfo, List<T>? statistics) = await RequestAction();
                 if(!flowAllInfo)
-                {
                     return statistics;
-                }
+                break;
+            case GetRequests.EventsForCommands:
+                _httpClient.Timeout = TimeSpan.FromSeconds(60);
+                (bool flowEvents, List<T>? events) = await RequestAction();
+                if(!flowEvents)
+                    return events;
                 break;
             default:
                 return null;
         }
         return null;
+
+
+
     }
 
     private async Task<(bool flowControl, List<T>? value)> RequestAction()
@@ -135,7 +126,7 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
         switch(getType)
         {
             case PutchRequest.UpdateRank:
-                 var resultUpdate = await _httpClient.GetFromJsonAsync<bool>(_urlNameForSend);
+                var resultUpdate = await _httpClient.GetFromJsonAsync<bool>(_urlNameForSend);
                 return resultUpdate;
             case PutchRequest.DeleteRental:
                 var resultDeleteR = await _httpClient.GetFromJsonAsync<bool>(_urlNameForSend);
@@ -147,7 +138,7 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
                 return false;
         }
     }
-                
+
 
     public Task<bool> PostRequests(T objectValue, PostsRequests postRequests)
     {
@@ -177,5 +168,5 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
         }
     }
 
-    
+
 }

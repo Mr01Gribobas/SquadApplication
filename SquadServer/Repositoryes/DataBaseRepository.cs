@@ -205,6 +205,7 @@ public class DataBaseRepository
             
             newList.Add(new EventsForAllCommandsModelDTO
                 (
+                NameGame:ev.NameGame,
                 TeamNameOrganization: ev.TeamNameOrganization,
                 DescriptionFull: ev.DescriptionFull,
                 DescriptionShort: ev.DescriptionShort,

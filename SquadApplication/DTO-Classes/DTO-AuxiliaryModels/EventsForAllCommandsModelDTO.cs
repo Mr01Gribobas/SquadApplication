@@ -2,7 +2,9 @@
 
 
 public record class EventsForAllCommandsModelDTO
-    (string TeamNameOrganization,
+    (
+    string NameGame,
+    string TeamNameOrganization,
      string DescriptionShort,
      string? DescriptionFull,
      string CoordinatesPolygon,

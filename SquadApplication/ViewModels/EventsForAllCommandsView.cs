@@ -154,7 +154,7 @@ public partial class EventsForAllCommandsView : ObservableObject
     public async Task GetEventsAsync()
     {
         _getRequestMansger.SetUrl("GetAllEventsForAllCommands");
-        List<EventsForAllCommandsModelDTO> responce = await _getRequestMansger.GetDataAsync(GetRequests.EventsForCommands);
+        List<EventsForAllCommandsModelDTO>? responce = await _getRequestMansger.GetDataAsync(GetRequests.EventsForCommands);
         if(responce is not null && responce.Count > 0)
         {
             foreach(EventsForAllCommandsModelDTO item in responce)

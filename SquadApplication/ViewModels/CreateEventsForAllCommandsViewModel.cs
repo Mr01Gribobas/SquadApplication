@@ -117,6 +117,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
     {
 
         EventsForAllCommandsModelDTO newModel = new EventsForAllCommandsModelDTO(
+            NameGame:NameGame,
             TeamNameOrganization: TeamNameOrganization,
             DescriptionShort: DescriptionShort,
             DescriptionFull: DescriptionFull,

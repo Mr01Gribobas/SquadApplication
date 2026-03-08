@@ -86,6 +86,7 @@ public class MainPostController : Controller
                 var eventFromDb = await _squadDbContext.EventsForAllCommands.FirstOrDefaultAsync(e => e.TeamIdOrganization == commander.TeamId);
                 if(eventFromDb is not null)
                 {
+                    eventFromDb.NameGame = result.NameGame;
                     eventFromDb.DescriptionFull = result.DescriptionFull;
                     eventFromDb.DescriptionShort = result.DescriptionShort;
                     eventFromDb.PolygonName = result.PolygonName;
