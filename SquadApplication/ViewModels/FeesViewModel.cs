@@ -7,6 +7,7 @@ public partial class FeesViewModel : ObservableObject
     private readonly FeesPage _feesPage;
     private readonly IUserSession _user;
     private readonly IRequestManager<EventModelEntity> _requestManager;
+    private EventModelEntity _event;
 
 
     [ObservableProperty]
@@ -127,9 +128,9 @@ public partial class FeesViewModel : ObservableObject
     private async void InitialProperty(EventModelEntity? eventFromDb)
     {
         if(eventFromDb is null)
-        {
             return;
-        }
+
+        _event = eventFromDb;
         NamePolygon = eventFromDb.NamePolygon;
         CoordinatesPolygon = eventFromDb.Coordinates;
         DateAndTime = ConvertDateAndTime(eventFromDb.Date, eventFromDb.Time);

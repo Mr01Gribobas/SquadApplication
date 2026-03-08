@@ -50,12 +50,14 @@
                                         Padding="15,8"/>
 
                                 <Button Text="Прошедшие"
+                                        Command="{Binding FilterFirstOldEventCommand}"
                                         BackgroundColor="#2a3c5a"
                                         TextColor="#8da6c9"
                                         CornerRadius="8"
                                         Padding="15,8"/>
 
                                 <Button Text="Мои"
+                                        Command="{Binding FilterMineFirstCommand}"
                                         BackgroundColor="#2a3c5a"
                                         TextColor="#8da6c9"
                                         CornerRadius="8"
