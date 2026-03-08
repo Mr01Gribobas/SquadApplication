@@ -17,39 +17,32 @@ public class MainPostController : Controller
     {
         EventModelEntity? newEvent = await HttpContext.Request.ReadFromJsonAsync<EventModelEntity>();
         if(newEvent is null)
-        {
             return Unauthorized();
-        }
-
-        if(_squadDbContext.Events.FirstOrDefault() is not null)
-        {
-            return Unauthorized();
-        }
-
         var user = _squadDbContext.Players.Include(t => t.Team).FirstOrDefault(u => u.Id == commanderId);
-        if(
-            user is not null &&
-            user.TeamId is not null &
-            (user._role == Role.Commander |
-            user._role == Role.AssistantCommander))
+        try
         {
-            try
+            if(
+                user is not null &&
+                user.TeamId is not null &
+               (user._role == Role.Commander |
+                user._role == Role.AssistantCommander))
             {
+                if(_squadDbContext.Events.FirstOrDefault(e => e.TeamId == user.TeamId) is not null)
+                    return Unauthorized("Event is ok");
                 newEvent.Team = user.Team;
                 newEvent.TeamId = (int)user.TeamId == 0 ? throw new NullReferenceException() : (int)user.TeamId;
-
                 await _squadDbContext.Events.AddAsync(newEvent);
                 await _squadDbContext.SaveChangesAsync();
-
                 //var nottification = await _notificationDistributor.NotifyNewEventAsync(newEvent);
                 return Ok();
             }
-            catch(Exception ex)
-            {
-                return Unauthorized();
-            }
+            else
+                throw new NullReferenceException();
         }
-        return Unauthorized();
+        catch(Exception ex)
+        {
+            return Unauthorized();
+        }
     }
 
 
