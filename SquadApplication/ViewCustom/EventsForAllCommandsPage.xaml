@@ -156,7 +156,7 @@
 
                                 <!-- Заголовок и дата -->
                                 <HorizontalStackLayout Spacing="10">
-                                    <Label Text="wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+                                    <Label Text="{Binding NameGame}"
                                            FontSize="18"
                                            FontAttributes="Bold"
                                            TextColor="White"
@@ -167,10 +167,17 @@
                                             Stroke="Transparent"
                                             StrokeShape="6"
                                             Padding="8,3">
-                                        <Label Text="text test"
+                                        <HorizontalStackLayout>
+                                            
+                                        <Label Text="Oрганизаторы : "
                                                FontSize="10"
                                                TextColor="White"
                                                FontAttributes="Bold"/>
+                                            <Label Text="{Binding TeamNameOrganization}"
+                                               FontSize="10"
+                                               TextColor="White"
+                                               FontAttributes="Bold"/>
+                                        </HorizontalStackLayout>
                                     </Border>
                                 </HorizontalStackLayout>
 
@@ -180,7 +187,7 @@
                                         <Label Text="📅"
                                                FontSize="14"
                                                TextColor="#8da6c9"/>
-                                        <Label Text="text test"
+                                        <Label Text="{Binding Date}"
                                                FontSize="14"
                                                TextColor="#8da6c9"/>
                                     </HorizontalStackLayout>
@@ -189,7 +196,7 @@
                                         <Label Text="🕐"
                                                FontSize="14"
                                                TextColor="#8da6c9"/>
-                                        <Label Text="text test"
+                                        <Label Text="{Binding Time}"
                                                FontSize="14"
                                                TextColor="#8da6c9"/>
                                     </HorizontalStackLayout>
@@ -200,35 +207,51 @@
                                     <Label Text="📍"
                                            FontSize="14"
                                            TextColor="#8da6c9"/>
-                                    <Label Text="text test"
+                                    <Label Text="{Binding CoordinatesPolygon}"
                                            FontSize="14"
                                            TextColor="#8da6c9"/>
                                 </HorizontalStackLayout>
 
                                 <!-- Организатор -->
+
+                                
+                                <!-- Описание (если есть) -->
+                                <HorizontalStackLayout>
+                                    <Label Text="📍"
+                                       FontSize="17"
+                                       TextColor="#8da6c9"
+                                       MaxLines="2"
+                                       LineBreakMode="TailTruncation"
+                                       />
+                                    <Label Text="{Binding PolygonName}"
+                                           FontSize="17"
+                                           TextColor="#8da6c9"
+                                           MaxLines="2"
+                                           LineBreakMode="TailTruncation"
+                                           />
+                                </HorizontalStackLayout>
                                 <HorizontalStackLayout Spacing="5">
-                                    <Label Text="👤"
-                                           FontSize="14"
+                                    <Label Text="®  : "
+                                           FontSize="16"
                                            TextColor="#8da6c9"/>
-                                    <Label Text="text test"
+                                    <Editor Text="{Binding DescriptionShort}"
                                            FontSize="14"
+                                           MaximumWidthRequest="150"
                                            TextColor="#8da6c9"/>
                                 </HorizontalStackLayout>
-
-                                <!-- Участники -->
                                 <HorizontalStackLayout Spacing="10"
-                                                      VerticalOptions="End">
+                                                        VerticalOptions="End">
                                     <HorizontalStackLayout Spacing="5">
                                         <Label Text="👥"
-                                               FontSize="14"
+                                               FontSize="17"
                                                TextColor="#8da6c9"/>
-                                        <Label Text="text test"
-                                               FontSize="14"
+                                        <Label Text="Участники "
+                                               FontSize="17"
                                                TextColor="#8da6c9"/>
-                                        <Label Text="/"
-                                               FontSize="14"
+                                        <Label Text="="
+                                               FontSize="17"
                                                TextColor="#8da6c9"/>
-                                        <Label Text="text test"
+                                        <Label Text="{Binding UsersCount}"
                                                FontSize="14"
                                                TextColor="#8da6c9"/>
                                     </HorizontalStackLayout>
@@ -236,22 +259,14 @@
                                     <!-- Индикатор участия -->
                                     <Border BackgroundColor="Gray"
                                             Stroke="Transparent"
-                                            StrokeShape="6"
-                                            Padding="8,3"
+                                            StrokeShape="13"
+                                            Margin="50,0,0,0"
+                                            Padding="4,3"
+                                            
                                             >
-                                        <Label Text="Участвую"
-                                               FontSize="10"
-                                               TextColor="White"/>
+                                        <Button Text="Учавствую " />
                                     </Border>
                                 </HorizontalStackLayout>
-
-                                <!-- Описание (если есть) -->
-                                <Label Text="text test"
-                                       FontSize="12"
-                                       TextColor="#8da6c9"
-                                       MaxLines="2"
-                                       LineBreakMode="TailTruncation"
-                                       />
                             </VerticalStackLayout>
                         </Grid>
                     </Border>
