@@ -101,13 +101,15 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
                 if(!flowEvents)
                     return events;
                 break;
+
+            case GetRequests.TheMeeting:
+                _httpClient.Timeout = TimeSpan.FromSeconds(60);
+                (bool flowTheGo, List<T>? emptyList) = await RequestAction();                
+                break;
             default:
                 return null;
         }
         return null;
-
-
-
     }
 
     private async Task<(bool flowControl, List<T>? value)> RequestAction()

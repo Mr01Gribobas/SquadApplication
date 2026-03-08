@@ -176,7 +176,7 @@ public class MainGetController : Controller
     [HttpGet]
     public async Task<IActionResult> AppendOrDeleteFromTheMeeting(string nameteamOrganization, int userId, bool turnout)
     {
-        var user = await _squadDbContext.Players.Include(t => t.Team).FirstOrDefaultAsync(u => u._role == Role.Private);
+        var user = await _squadDbContext.Players.Include(t => t.Team).FirstOrDefaultAsync(u => u.Id == userId);
         var events = await _squadDbContext.EventsForAllCommands.Include(u => u.Players).FirstOrDefaultAsync(e => e.TeamNameOrganization == nameteamOrganization);
 
         try

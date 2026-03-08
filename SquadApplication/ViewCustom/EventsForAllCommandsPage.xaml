@@ -170,7 +170,7 @@
                                             Padding="8,3">
                                         <HorizontalStackLayout>
                                             
-                                        <Label Text="Oрганизаторы : "
+                                        <Label Text="Oрганизаторы :  "
                                                FontSize="10"
                                                TextColor="White"
                                                FontAttributes="Bold"/>
@@ -180,6 +180,11 @@
                                                FontAttributes="Bold"/>
                                         </HorizontalStackLayout>
                                     </Border>
+                                    <Button Text="обновить"
+                                            FontAttributes="Italic"
+                                            HeightRequest="30"
+                                            WidthRequest="50"
+                                            FontSize="7"/>
                                 </HorizontalStackLayout>
 
                                 <!-- Дата и время -->
@@ -281,7 +286,10 @@
                                             Stroke="Transparent"
                                             StrokeShape="13"
                                             Padding="4,3">
-                                                <Button Text="Отменить участие" />
+                                                <Button Text="Отменить участие"
+                                                        Command="{Binding BindingContext.UserIsNotGoRheGameCommand,Source={x:Reference EventsList}}"
+                                                        CommandParameter="{Binding .}"
+                                                        />
                                         </Border>
                                         <Border BackgroundColor="Gray"
                                                 Stroke="Transparent"
@@ -289,7 +297,10 @@
                                                 StrokeShape="13"
                                                 Margin="80,0,0,0"
                                                 Padding="4,3">
-                                            <Button Text="Учавствую" />
+                                            <Button Text="Учавствую"
+                                                    Command="{Binding BindingContext.UserIsGoRheGameCommand,Source={x:Reference EventsList}}"
+                                                    CommandParameter="{Binding .}"
+                                                    />
                                         </Border>
                                      </HorizontalStackLayout>
                                     </StackLayout>
