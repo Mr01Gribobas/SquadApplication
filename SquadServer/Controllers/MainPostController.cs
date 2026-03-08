@@ -45,6 +45,58 @@ public class MainPostController : Controller
         }
     }
 
+    [HttpPost]
+    public async Task<IActionResult?> UpdateEvent(int commanderId)
+    {
+        EventModelEntity? newEvent = await HttpContext.Request.ReadFromJsonAsync<EventModelEntity>();
+        if(newEvent is null)
+            return Unauthorized();
+
+        var user = _squadDbContext.Players.Include(t => t.Team).FirstOrDefault(u => u.Id == commanderId);
+
+        try
+        {
+            if(user is not null && user.TeamId is not null)
+            {
+                var oldEvent = await _squadDbContext.Events.Include(t => t.Team).FirstOrDefaultAsync(t => t.TeamId == user.TeamId);
+                if(oldEvent is not null)
+                {
+                    oldEvent.NameTeamEnemy = newEvent.NameTeamEnemy;
+                    oldEvent.NamePolygon = newEvent.NamePolygon;
+                    oldEvent.Coordinates = newEvent.Coordinates;
+                    oldEvent.Time = newEvent.Time;
+                    oldEvent.Date = newEvent.Date;
+                    _squadDbContext.Events.Update(oldEvent);
+                }
+                else
+                {
+                    await _squadDbContext.Events.AddAsync(new EventModelEntity
+                    {
+                        NameTeamEnemy = newEvent.NameTeamEnemy,
+                        Coordinates = newEvent.Coordinates,
+                        NamePolygon = newEvent.NamePolygon,
+                        Date = newEvent.Date,
+                        Time    = newEvent.Time,
+
+                        TeamId = (int)user.TeamId,
+                        Team = user?.Team ?? throw new InvalidOperationException()
+                    });
+                        
+                }
+
+
+                await _squadDbContext.SaveChangesAsync();
+                return Ok();
+            }
+            else
+                throw new NullReferenceException();
+        }
+        catch(Exception ex)
+        {
+            return Unauthorized();
+        }
+    }
+
 
     [HttpPost]
     public async Task<IActionResult?> CreateEventForAllCommands(int commanderId)
@@ -96,7 +148,6 @@ public class MainPostController : Controller
                 }
                 else
                 {
-
                     EventsForAllCommandsModelEntity eventsModel = EventsForAllCommandsModelEntity.CreateModel(result, commander);
                     await _squadDbContext.EventsForAllCommands.AddAsync(eventsModel);
                 }
