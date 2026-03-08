@@ -60,7 +60,7 @@ public class MainPostController : Controller
 
         try
         {
-            var commander = await _squadDbContext.Players.Include(t=>t.Team).FirstOrDefaultAsync(u => u.Id == commanderId);
+            var commander = await _squadDbContext.Players.Include(t => t.Team).FirstOrDefaultAsync(u => u.Id == commanderId);
             if(commander is not null && result is not null)
             {
                 EventsForAllCommandsModelEntity eventsModel = EventsForAllCommandsModelEntity.CreateModel(result, commander);
@@ -79,7 +79,46 @@ public class MainPostController : Controller
             return BadRequest(ex.Message);
         }
     }
+    [HttpPost]
+    public async Task<IActionResult?> UpdateEventForAllCommands(int commanderId)
+    {
+        EventsForAllCommandsModelDTO? result = await HttpContext.Request.ReadFromJsonAsync<EventsForAllCommandsModelDTO>();
 
+        try
+        {
+            var commander = await _squadDbContext.Players.Include(t => t.Team).FirstOrDefaultAsync(u => u.Id == commanderId);
+            if(commander is not null && result is not null && commander.Team is not null)
+            {
+
+                var eventFromDb = await _squadDbContext.EventsForAllCommands.FirstOrDefaultAsync(e => e.TeamIdOrganization == commander.TeamId);
+                if(eventFromDb is not null)
+                {
+                    eventFromDb.DescriptionFull = result.DescriptionFull;
+                    eventFromDb.DescriptionShort = result.DescriptionShort;
+                    eventFromDb.PolygonName = result.PolygonName;
+                    eventFromDb.CoordinatesPolygon = result.CoordinatesPolygon;
+                    eventFromDb.DateAndTimeGame = new DateTime(result.Date, result.Time);
+                    _squadDbContext.EventsForAllCommands.Update(eventFromDb);
+                }
+                else
+                {
+
+                    EventsForAllCommandsModelEntity eventsModel = EventsForAllCommandsModelEntity.CreateModel(result, commander);
+                    await _squadDbContext.EventsForAllCommands.AddAsync(eventsModel);
+                }
+                await _squadDbContext.SaveChangesAsync();
+
+                return Ok(true);
+            }
+            else
+                throw new Exception();
+        }
+        catch(Exception ex)
+        {
+
+            return BadRequest(ex.Message);
+        }
+    }
 
 
 
