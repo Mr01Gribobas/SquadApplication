@@ -151,6 +151,13 @@ public partial class EventsForAllCommandsView : ObservableObject
         //GetEventsAsync();
     }
 
+    [RelayCommand]
+    public async void UserIsGoRheGame()
+    {
+        Console.WriteLine("Create");
+        
+    }
+
     public async Task GetEventsAsync()
     {
         _getRequestMansger.SetUrl("GetAllEventsForAllCommands");

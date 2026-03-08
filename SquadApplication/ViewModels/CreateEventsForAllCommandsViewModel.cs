@@ -123,7 +123,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             DescriptionFull: DescriptionFull,
             CoordinatesPolygon: CoordinatesPolygon,
             PolygonName: PolygonName ?? $"Имя не было указано",
-            Users: new List<UserModelEntity>() { _user.CurrentUser },
+            UsersCount:1,
             Date: DateOnly.Parse(Dategame),
             Time: TimeOnly.Parse(TimeGame)
 
