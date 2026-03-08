@@ -172,6 +172,29 @@ public class MainGetController : Controller
     {
         List<EventsForAllCommandsModelDTO> events = await _dataBaseRepository.GetAllEventsForAllCommands();
         return Ok(events);
+    }
+    [HttpGet]
+    public async Task<IActionResult> AppendOrDeleteFromTheMeeting(string nameteamOrganization, int userId, bool turnout)
+    {
+        var user = await _squadDbContext.Players.Include(t => t.Team).FirstOrDefaultAsync(u => u._role == Role.Private);
+        var events = await _squadDbContext.EventsForAllCommands.Include(u => u.Players).FirstOrDefaultAsync(e => e.TeamNameOrganization == nameteamOrganization);
+
+        try
+        {
+            if(user is not null && events is not null)
+                events.Players.Add(user);
+            else
+                throw new NullReferenceException();
+
+
+            _squadDbContext.EventsForAllCommands.Update(events);
+            await _squadDbContext.SaveChangesAsync();
+        }
+        catch(Exception ex)
+        {
+
+            return BadRequest(ex.Message);
+        }
 
     }
 
