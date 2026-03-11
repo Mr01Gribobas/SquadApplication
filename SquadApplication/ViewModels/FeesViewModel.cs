@@ -131,6 +131,7 @@ public partial class FeesViewModel : ObservableObject
             return;
 
         _event = eventFromDb;
+        NameTeamEnemu = eventFromDb.NameTeamEnemy;
         NamePolygon = eventFromDb.NamePolygon;
         CoordinatesPolygon = eventFromDb.Coordinates;
         DateAndTime = ConvertDateAndTime(eventFromDb.Date, eventFromDb.Time);
@@ -148,20 +149,20 @@ public partial class FeesViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async void CreateEvent()
-    {
-        await Shell.Current.GoToAsync($"/{nameof(CreateEventPage)}");
-    }
+    private async void CreateEvent() => await Shell.Current.GoToAsync($"/{nameof(CreateEventPage)}");
+
+
+
 
     [RelayCommand]
     private async void CopyCoordinates()
     {
         if(CoordinatesPolygon is null)
-        {
             return;
-        }
         await Clipboard.Default.SetTextAsync(CoordinatesPolygon);
     }
+        
+        
 
 
     private async Task GetCurrentEvent()
@@ -176,30 +177,23 @@ public partial class FeesViewModel : ObservableObject
         if(responce is null ||
             responce.Count <= 0 ||
             responce.FirstOrDefault() is null)
-        {
             return;
-        }
         EventModelEntity? eventFromDb = responce.FirstOrDefault();
         request.ResetUrlAndStatusCode();
         InitialProperty(eventFromDb);
     }
+
     private async Task GetMembersTeam(int userId)
     {
         if(_user is null)
-        {
             return;
-        }
         var request = new ManagerGetRequests<UserModelEntity>();
         request.SetUrl($"GetAllTeamMembers?userId={userId}");
         var responce = await request.GetDataAsync(GetRequests.GetAllTeamMembers);
         if(responce != null)
         {
             foreach(var member in responce)
-            {
                 SortUsers(member);
-            }
         }
     }
-
-
 }
