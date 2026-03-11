@@ -105,20 +105,16 @@ public class MainGetController : Controller
     }
 
     [HttpGet]
-    public IActionResult? GetEvent(int teamId)
+    public async Task<IActionResult?> GetEvent(int teamId)
     {
         Controller.LogInformation("Start action : GetEvent");
+        var result = await _dataBaseRepository.GetEvent(teamId);
 
-        var result = _dataBaseRepository.GetEvent(teamId);
         if(result == null)
-        {
             return BadRequest();
-        }
-
 
         List<EventModelEntity> events = new List<EventModelEntity>();
         events.Add(result);
-
         HttpContext.Response.StatusCode = 200;
         return Ok(events);
     }
@@ -206,7 +202,7 @@ public class MainGetController : Controller
     }
 
     [HttpGet]
-    public IActionResult? GetAllInfoForHomeProfile(int userId)
+    public async Task<IActionResult?> GetAllInfoForHomeProfile(int userId)
     {
         Controller.LogInformation("Start action : GetAllInfoForProfile");
 
@@ -215,7 +211,7 @@ public class MainGetController : Controller
             RequestTuplesManager requestTuples = new RequestTuplesManager(_dataBaseRepository);
             (UserModelEntity objectUser,
              TeamEntity objectTeam,
-             EquipmentEntity? objectEquipment) infoForProfile = requestTuples.GetInfoForProfileById(userId);
+             EquipmentEntity? objectEquipment) infoForProfile = await  requestTuples.GetInfoForProfileById(userId);
 
             var container = new TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentEntity>()
             {

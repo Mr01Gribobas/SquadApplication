@@ -17,28 +17,16 @@ public class ManagerPutchRequests<T> : IRequestManager<T>
     }
 
     public void SetUrl(string controllAction)=> _urlNameForSend += controllAction;
-
     public async Task<bool> PutchRequestAsync(PutchRequest getType)
     {
         throw new NotImplementedException();
     }
-
-
-
-
-
-
-
     public Task<List<T>> GetDataAsync(GetRequests getType)
     {
         throw new NotImplementedException();
     }
-
     public Task<bool> PostRequests(T objectValue, PostsRequests postRequests)
     {
         throw new NotImplementedException();
     }
-
-
-    
 }

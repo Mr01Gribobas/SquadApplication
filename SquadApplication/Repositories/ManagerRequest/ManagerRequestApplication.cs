@@ -147,6 +147,4 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
             _disposed = true;
         }
     }
-
-
 }

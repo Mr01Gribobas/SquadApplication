@@ -64,13 +64,8 @@ public class DataBaseManager : IRequestManagerForEnter
             }
             return userFromServer;
         }
-        else if(_currentStatusCode == 401)
-        {
-            //Либо код не верный либо пользователя с таким кодом нету
-        }
         return null;
     }
-
     public async Task LogoutAsync()
     {
         try

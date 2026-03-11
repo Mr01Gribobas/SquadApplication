@@ -6,13 +6,13 @@ public class RequestTuplesManager
 
 
     public RequestTuplesManager(DataBaseRepository dataBaseRepository)=> _dataBaseRepository = dataBaseRepository;
-    public (UserModelEntity, TeamEntity, EquipmentEntity?) GetInfoForProfileById(int userId)
+    public async Task<(UserModelEntity, TeamEntity, EquipmentEntity?)> GetInfoForProfileById(int userId)
     {
         UserModelEntity? userFromDb = _dataBaseRepository.GetUserById(userId);
         if(userFromDb == null)
             throw new NullReferenceException();
 
-        TeamEntity teamFromDb = _dataBaseRepository.GetTeamByUserId(userFromDb);
+        TeamEntity?  teamFromDb = await  _dataBaseRepository.GetTeamByUserId(userFromDb);
         if(teamFromDb is null)
             throw new NullReferenceException();
 
