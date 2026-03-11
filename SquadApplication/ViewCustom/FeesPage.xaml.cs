@@ -8,8 +8,8 @@ public partial class FeesPage : ContentPage
 	{
         _cacheService = cache;  
 		_user = userSession.CurrentUser;
-        InitializeComponent();
 		_feesViewModel = new FeesViewModel(this, userSession);
 		BindingContext = _feesViewModel;
+        InitializeComponent();
     }
 }

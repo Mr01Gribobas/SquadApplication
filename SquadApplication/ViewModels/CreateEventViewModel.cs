@@ -56,8 +56,6 @@ public partial class CreateEventViewModel : ObservableObject
           )
             return;//error
 
-
-
         var newEvent = EventModelEntity.CreateEventModel(
             nameTeamEnemy: NameTeamEnemy,
             namePolygon: NamePolygon,
@@ -81,7 +79,6 @@ public partial class CreateEventViewModel : ObservableObject
             await _eventPage.DisplayAlertAsync("Error", "Problems create event", "Ok");
             await Shell.Current.GoToAsync("..");
         }
-
         await _eventPage.DisplayAlertAsync("Ok", "Event create ok", "Ok");
         await Shell.Current.GoToAsync("..");
     }
