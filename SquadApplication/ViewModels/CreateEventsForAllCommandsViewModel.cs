@@ -5,8 +5,10 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
     private readonly IUserSession _user;
     private readonly CreateEventsForAllCommandsPage _createEventPage;
     private readonly ManagerPostRequests<EventsForAllCommandsModelDTO> _postManager;
-    private readonly bool _isUpdateThisGame;
-    
+    private  bool _isUpdateThisGame;
+    private  EventsForAllCommandsModelDTO _modelEventsForCommand;
+
+
     [ObservableProperty]
     private string nameGame;
 
@@ -31,25 +33,61 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
     [ObservableProperty]
     private string dategame;
 
-    public CreateEventsForAllCommandsViewModel(CreateEventsForAllCommandsPage createEventsPage, IUserSession user,bool isUpdateThisGame)
+    public CreateEventsForAllCommandsViewModel(CreateEventsForAllCommandsPage createEventsPage, IUserSession user)
     {
         _user = user;
         _createEventPage = createEventsPage;
         _postManager = new ManagerPostRequests<EventsForAllCommandsModelDTO>();
-        TeamNameOrganization = _user?.CurrentUser._teamName ??  throw new NullReferenceException()  ;
-        _isUpdateThisGame = isUpdateThisGame;
+        TeamNameOrganization = _user?.CurrentUser._teamName ??  throw new NullReferenceException();
+        if(_createEventPage._cache.GetItemByKey<EventsForAllCommandsModelDTO>("EventForCommands") is EventsForAllCommandsModelDTO model)
+            InitialProperty(model);
+        _createEventPage.DisplayAlertAsync("Info","При заполнении полного описания к игре -  Крайне рекомендуется описать данные для возможности связаться с вами(к примеру телефон ,ссылку ВК или ТГ) ","OK");
     }
+
+    private void InitialProperty(EventsForAllCommandsModelDTO model)
+    {
+        if(model is null)
+            return;
+
+        NameGame = model.NameGame;
+        TeamNameOrganization = model.TeamNameOrganization;
+        DescriptionFull = model.DescriptionFull;
+        DescriptionShort = model.DescriptionShort;
+        CoordinatesPolygon = model.CoordinatesPolygon;
+        PolygonName = model.PolygonName;
+        TimeGame = model.Time.ToString();
+        Dategame = model.Date.ToString();
+        _modelEventsForCommand = model;
+        _isUpdateThisGame = true; 
+    }
+
+    private async void BaseFullExamination()
+    {
+        try
+        {
+            if(_user.CurrentUser._role != Role.Commander)
+                throw new Exception("You not commander");
+            ExaminationCoordinates();
+            Validation();
+        }
+        catch(Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
+    [RelayCommand]
+    private async Task RequestFolUpdateEvent()
+    {
+
+    }
+
 
     [RelayCommand]
     private async Task RequestFolCreateEvent()
     {
-        if(_user.CurrentUser._role != Role.Commander)
-            await _createEventPage.DisplayAlertAsync("Error", "You not commander", "Ok");
-
         try
         {
-            ExaminationCoordinates();
-            Validation();
+            BaseFullExamination();
             var commanderId =_createEventPage.CommanderId <= 0 ? _user.CurrentUser.Id : _createEventPage.CommanderId;//
             EventsForAllCommandsModelDTO modelEvnt = CreateModel();
             _postManager.SetUrl($"CreateEventForAllCommands?commanderId={commanderId}");

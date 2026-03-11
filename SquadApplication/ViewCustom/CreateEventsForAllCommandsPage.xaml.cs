@@ -13,7 +13,7 @@ public partial class CreateEventsForAllCommandsPage : ContentPage
     {
         _cache = cache;
         _user = user;
-        _createEventsForAllCommandsView = new CreateEventsForAllCommandsViewModel(this, user, false);
+        _createEventsForAllCommandsView = new CreateEventsForAllCommandsViewModel(this, user);
         BindingContext = _createEventsForAllCommandsView;
         InitializeComponent();
     }

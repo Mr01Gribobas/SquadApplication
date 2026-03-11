@@ -141,10 +141,10 @@ public partial class EventsForAllCommandsView : ObservableObject
     [RelayCommand]
     public async void EditEvent(EventsForAllCommandsModelDTO model)
     {
-        if(_user.CurrentUser._role != Role.Commander)
+        if(_user.CurrentUser._role != Role.Commander && _user.CurrentUser is null)
             return;
+        _page._cache.Set<EventsForAllCommandsModelDTO>("EventForCommands",model); 
         await Shell.Current.GoToAsync($"/{nameof(CreateEventsForAllCommandsPage)}/?CommanderId={_user.CurrentUser.Id}");
-        //GetEventsAsync();
     }
 
     [RelayCommand]
