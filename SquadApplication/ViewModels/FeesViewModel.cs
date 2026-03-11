@@ -40,9 +40,8 @@ public partial class FeesViewModel : ObservableObject
         _user = user;
         _requestManager = new ManagerGetRequests<EventModelEntity>();
         GetCurrentEvent();
-
     }
-    
+
 
     [RelayCommand]
     public async void CurrentHumanWillBe()
@@ -51,11 +50,8 @@ public partial class FeesViewModel : ObservableObject
         ManagerGetRequests<UserModelEntity> request = CreateGetRequestUserModel(isWill);
         var responce = await request.GetDataAsync(GetRequests.GameAttendance);
         if(request._currentStatusCode == 200 | request._currentStatusCode == 204)
-        {
             UpdateLists(responce.FirstOrDefault());
-        }
         request.ResetUrlAndStatusCode();
-
     }
 
     [RelayCommand]
@@ -65,10 +61,7 @@ public partial class FeesViewModel : ObservableObject
         ManagerGetRequests<UserModelEntity> request = CreateGetRequestUserModel(isWill);
         List<UserModelEntity?> responce = await request.GetDataAsync(GetRequests.GameAttendance) as List<UserModelEntity>;//getUser
         if(request._currentStatusCode == 200 | request._currentStatusCode == 204)
-        {
             UpdateLists(responce.FirstOrDefault());
-        }
-
         request.ResetUrlAndStatusCode();
     }
 
@@ -141,7 +134,6 @@ public partial class FeesViewModel : ObservableObject
 
     private string? ConvertDateAndTime(DateOnly? date, TimeOnly? time)
     {
-
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.Append(date?.ToString() ?? "Not found");
         stringBuilder.Append(time?.ToString() ?? "Not found");
@@ -161,8 +153,8 @@ public partial class FeesViewModel : ObservableObject
             return;
         await Clipboard.Default.SetTextAsync(CoordinatesPolygon);
     }
-        
-        
+
+
 
 
     private async Task GetCurrentEvent()
