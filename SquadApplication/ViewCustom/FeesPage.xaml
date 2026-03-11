@@ -191,7 +191,7 @@
                     <Button
                     BackgroundColor="#50808230"
                     Margin="10"
-                    Text="Create"
+                    Text="CreateOrUpdate"
                     FontSize="15"
                     Command="{Binding CreateEventCommand}"/>
 

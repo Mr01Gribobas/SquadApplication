@@ -141,7 +141,21 @@ public partial class FeesViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async void CreateEvent() => await Shell.Current.GoToAsync($"/{nameof(CreateEventPage)}");
+    private async void CreateEvent()
+    {
+        if(_feesPage is null)
+            await Shell.Current.GoToAsync($"/{nameof(CreateEventPage)}");
+        else
+        {
+            _feesPage._cacheService.Set<EventModelEntity>("EventForUpdate", _event);
+            await Shell.Current.GoToAsync($"/{nameof(CreateEventPage)}");
+        }
+
+
+
+
+    }
+
 
 
 

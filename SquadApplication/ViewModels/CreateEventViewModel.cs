@@ -6,6 +6,8 @@ public partial class CreateEventViewModel : ObservableObject
     private IRequestManager<EventModelEntity> _requestManager;
     private readonly UserModelEntity _user;
     private readonly CreateEventPage _eventPage;
+    private bool _isUpdate;
+    private EventModelEntity _modelFees;
 
     [ObservableProperty]
     private string? date;    //Parse("20.12.2025:09:00:00:00").ToString();
@@ -27,10 +29,23 @@ public partial class CreateEventViewModel : ObservableObject
         _user = user;
         _eventPage = eventPage;
         _requestManager = new ManagerPostRequests<EventModelEntity>();
+        if(_eventPage._cache.GetItemByKey<EventModelEntity>("EventForUpdate") is EventModelEntity fees)
+            InitialProperty(fees);
     }
 
-
-    
+    private void InitialProperty(EventModelEntity fees)
+    {
+        if(fees is null)
+            return;
+        _modelFees = fees;
+        this.CoordinatesPolygon = fees.Coordinates;
+        this.NameTeamEnemy = fees.NameTeamEnemy;
+        this.NamePolygon = fees.NamePolygon;
+        this.Date = fees.Date.ToString();
+        this.Time = fees.Time.ToString();
+        _isUpdate = true;
+        _eventPage._cache.Remove("EventForUpdate");
+    }
 
     [RelayCommand]
     public async Task CreateEvent()
@@ -39,9 +54,9 @@ public partial class CreateEventViewModel : ObservableObject
             _user is null ||
             _user._role != Role.Commander
           )
-        {
             return;//error
-        }
+
+
 
         var newEvent = EventModelEntity.CreateEventModel(
             nameTeamEnemy: NameTeamEnemy,
@@ -51,10 +66,13 @@ public partial class CreateEventViewModel : ObservableObject
             date: DateOnly.Parse(Date),
             user: _user
             );
-
+        if(_isUpdate && _modelFees is not null)
+            newEvent.Id = _modelFees.Id;
         var requestPost = (ManagerPostRequests<EventModelEntity>)_requestManager;
-        requestPost.SetUrl($"CreateEvent?commanderId={_user.Id}");
+        requestPost.SetUrl($"CreateEvent?commanderId={_user.Id}&isUpdate={_isUpdate}");
         bool resultCreated = await requestPost.PostRequests(newEvent, PostsRequests.CreateEvent);
+
+
         if(!resultCreated)
         {
             await _eventPage.DisplayAlertAsync("Error", "Problems create event", "Ok");
