@@ -1,5 +1,4 @@
 ﻿namespace SquadApplication.ViewModels;
-
 public partial class AppendPolygonViewModel : ObservableObject
 {
     private readonly IRequestManager<PolygonEntity> _requestManager;
@@ -37,7 +36,6 @@ public partial class AppendPolygonViewModel : ObservableObject
                 var result = await requestManager.PostRequests(polygon, PostsRequests.AddPolygon);
                 if(!result)
                     await _plygonPage.DisplayAlertAsync("Error", "ошибка операции", "Ok");
-
             }
         }
         await Shell.Current.GoToAsync("..");
@@ -54,13 +52,9 @@ public partial class AppendPolygonViewModel : ObservableObject
                 foreach(char item in coordinatesSplits[i])
                 {
                     if(item is '.' | item is '-')
-                    {
                         continue;
-                    }
                     if(!int.TryParse(item.ToString(), out _))
-                    {
                         return false;
-                    }
                 }
             }
             return true;

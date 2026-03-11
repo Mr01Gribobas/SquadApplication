@@ -23,17 +23,13 @@ public partial class ParticipantsViewModel : ObservableObject
         _userModelEntity = userModel;
     }
 
-
-
     [RelayCommand]
     public async Task PromoteAPlayer(UserModelEntity user)
     {
         if(!await ExamingOperation(user, true))
             return;
         await SendRequest(user, true);
-
     }
-
 
     [RelayCommand]
     public async Task DemoteAPlayer(UserModelEntity user)
@@ -49,8 +45,6 @@ public partial class ParticipantsViewModel : ObservableObject
         if(user is null)
             return;
         await Shell.Current.GoToAsync($"/{nameof(ProfilePage)}/?userId={user.Id}&IsStanger={true}");
-       
-
     }
 
     private async Task SendRequest(UserModelEntity user, bool rank)
@@ -107,9 +101,7 @@ public partial class ParticipantsViewModel : ObservableObject
         if(responce != null)
         {
             foreach(var member in responce)
-            {
                 Users.Add(member);
-            }
         }
         request.ResetUrlAndStatusCode();
     }

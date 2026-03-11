@@ -22,8 +22,6 @@ public partial class PolygonsViewModel : ObservableObject
         Polygons = new ObservableCollection<PolygonEntity>();
         SetPolygons();
     }
-
-
     private async Task SetPolygons()
     {
         _managerGet.SetUrl("GetAllPolygons");
@@ -34,17 +32,18 @@ public partial class PolygonsViewModel : ObservableObject
             if(list is not null)
             {
                 foreach(PolygonEntity item in list)
-                {
                     Polygons.Add(item);
-                }
             }
         }
         catch(Exception ex)
         {
 
         }
-        _managerGet.ResetUrlAndStatusCode();
-        _polygonPage.CheckItems();
+        finally
+        {
+            _managerGet.ResetUrlAndStatusCode();
+            _polygonPage.CheckItems();
+        }
     }
 
     [RelayCommand]

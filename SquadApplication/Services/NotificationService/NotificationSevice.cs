@@ -6,8 +6,5 @@ public partial class NotificationSevice : ILocalNotificationService
     {
         _userSession = user;
     }
-
     private readonly IUserSession _userSession;
-
-
 }

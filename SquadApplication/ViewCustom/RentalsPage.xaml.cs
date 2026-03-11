@@ -1,41 +1,34 @@
 
 namespace SquadApplication.ViewCustom;
 
-[QueryProperty(nameof(_refreshPage), "refresh")] 
+[QueryProperty(nameof(_refreshPage), "refresh")]
 public partial class RentalsPage : ContentPage
 {
     private readonly ICacheServieseCust _cacheServiese;
     private readonly UserModelEntity _user;
     private readonly RentailsViewModel _rentalView;
-    public bool _refreshPage 
+    public bool _refreshPage
     {
         set
         {
             if(value is true)
-            {
                 RefreshData();
-            }
         }
     }
 
-    private async Task RefreshData()
-    {
-       await _rentalView.GetRentalsFromDb();
-    }
+    private async Task RefreshData()=> await _rentalView.GetRentalsFromDb();
 
-    public RentalsPage(IUserSession userSession,ICacheServieseCust cacheServiese)
+
+    public RentalsPage(IUserSession userSession, ICacheServieseCust cacheServiese)
     {
         _cacheServiese = cacheServiese;
         _user = userSession.CurrentUser;
-        _rentalView = new RentailsViewModel(this,_user);
+        _rentalView = new RentailsViewModel(this, _user);
         BindingContext = _rentalView;
         InitializeComponent();
     }
 
-    public void SaveInCacheItem(RentailsDTO rentail)
-    {
-        _cacheServiese.Set<RentailsDTO>("updateRental",rentail);
-    }
+    public void SaveInCacheItem(RentailsDTO rentail) => _cacheServiese.Set<RentailsDTO>("updateRental", rentail);
 
     public void CheckItems()
     {

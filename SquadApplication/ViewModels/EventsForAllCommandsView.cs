@@ -25,11 +25,6 @@ public partial class EventsForAllCommandsView : ObservableObject
         events = new ObservableCollection<EventsForAllCommandsModelDTO>();
         this.FilterByDate();
     }
-
-
-
-
-
     [RelayCommand]
     public void FilterByDate()
     {
@@ -41,7 +36,6 @@ public partial class EventsForAllCommandsView : ObservableObject
     {
         this.FilterType = FilterType.MyEvent;
         SortEvents(FilterType.MyEvent);
-
     }
     [RelayCommand]
     public void FilterFirstOldEvent()
@@ -49,8 +43,6 @@ public partial class EventsForAllCommandsView : ObservableObject
         this.FilterType = FilterType.OldEvent;
         SortEvents(FilterType.OldEvent);
     }
-
-
     private void SortEvents(FilterType filter)
     {
         if(Events is null || Events.Count <= 0)
@@ -68,7 +60,6 @@ public partial class EventsForAllCommandsView : ObservableObject
                 break;
         }
     }
-
     private void SortByOldEvent(ObservableCollection<EventsForAllCommandsModelDTO> events)
     {
         int left = 0;
@@ -88,8 +79,7 @@ public partial class EventsForAllCommandsView : ObservableObject
             else
                 left++;
         }
-    }//todo algoritm
-
+    }
 
     private void MineMySort(ObservableCollection<EventsForAllCommandsModelDTO> events)
     {
@@ -143,10 +133,8 @@ public partial class EventsForAllCommandsView : ObservableObject
     public async void CreateEvent()
     {
         Console.WriteLine("Create");
-
         if(_user.CurrentUser._role != Role.Commander)
             return;
-
         await Shell.Current.GoToAsync($"/{nameof(CreateEventsForAllCommandsPage)}/?CommanderId={_user.CurrentUser.Id}");
         //GetEventsAsync();
     }
@@ -156,7 +144,6 @@ public partial class EventsForAllCommandsView : ObservableObject
     {
         SendRequest(model, true);
     }
-
 
     private async Task SendRequest(EventsForAllCommandsModelDTO model, bool isGoing)
     {
@@ -171,8 +158,6 @@ public partial class EventsForAllCommandsView : ObservableObject
     {
         SendRequest(model, false);
     }
-
-
     public async Task GetEventsAsync()
     {
         _getRequestMansger.SetUrl("GetAllEventsForAllCommands");
@@ -180,9 +165,7 @@ public partial class EventsForAllCommandsView : ObservableObject
         if(responce is not null && responce.Count > 0)
         {
             foreach(EventsForAllCommandsModelDTO item in responce)
-            {
                 Events.Add(item);
-            }
         }
         _getRequestMansger.ResetUrlAndStatusCode();
     }

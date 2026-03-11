@@ -2,14 +2,10 @@
 
 public partial class EditEquipmentViewModel : ObservableObject
 {
-
-
     private IRequestManager<EquipmentDTO> _requestManager;
     private readonly EditEquipmentPage _page;
     private EquipmentDTO _equipment;
     private UserModelEntity _user;
-
-
 
     [ObservableProperty]
     private bool inStokeMainWeapon = false;
@@ -87,7 +83,6 @@ public partial class EditEquipmentViewModel : ObservableObject
 
         if(!result)
            await _page.DisplayAlertAsync("Error","Произошла ошибка при обновлении данных ","Ok");
-
         await Shell.Current.GoToAsync($"/{nameof(HomePage)}");
     }
 
@@ -96,18 +91,13 @@ public partial class EditEquipmentViewModel : ObservableObject
         if(formData._inStokeMainWeapon)
         {
             if(formData._mainWeapon.Length <= 0 | formData._mainWeapon.Length > 100)
-            {
                 return false;
-            }
         }
         if(formData._inStokesecondaryWeapon)
         {
             if(formData._secondaryWeapon.Length <= 0 | formData._secondaryWeapon.Length > 100)
-            {
                 return false;
-            }
         }
-
         return true;
     }
 
@@ -135,7 +125,6 @@ public partial class EditEquipmentViewModel : ObservableObject
                 UnloudingWeapon = equip.UnloudingEquipment;
             }
             getRequest.ResetUrlAndStatusCode();
-
         }
         catch(Exception ex)
         {
@@ -144,7 +133,6 @@ public partial class EditEquipmentViewModel : ObservableObject
         }
 
     }
-
     private record DataForm(
        bool _inStokeMainWeapon,
        string _mainWeapon,

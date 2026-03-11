@@ -4,6 +4,7 @@ public class NotificationLocalService
 {
     private readonly HttpClient _httpClient;
     private const string staticUrl = "http://10.0.2.2:5213";
+    private record class EvenCheck(bool availabilityEvent, bool isGoTogame);
 
     public NotificationLocalService()
     {
@@ -18,12 +19,7 @@ public class NotificationLocalService
     {
         EvenCheck? responce = await _httpClient.GetFromJsonAsync<EvenCheck>($"{staticUrl}/Notification/CheckEventInDb?teamId={teamId}&userId={userId}");
         if(!responce.isGoTogame && responce.availabilityEvent)
-        {
             await ShowLocalNotification("Event", $"ЕСТЬ АКТИВНОЕ СОБЫТИЕ");
-        }
     }
-    private record class EvenCheck(bool availabilityEvent, bool isGoTogame);
-
-
 
 }

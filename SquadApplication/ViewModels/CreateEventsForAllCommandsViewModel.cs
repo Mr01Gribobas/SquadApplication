@@ -56,9 +56,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             var result = await _postManager.PostRequests(objectValue: modelEvnt, PostsRequests.CreateEventForCommands);
             if(result)
                 await _createEventPage.DisplayAlertAsync("Ok", "Create is ok", "Ok");
-
             await Shell.Current.GoToAsync("..");
-
         }
         catch(Exception ex)
         {
@@ -69,11 +67,6 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             _postManager.ResetUrlAndStatusCode();
         }
     }
-
-
-
-
-
     private void Validation()
     {
 
@@ -87,17 +80,12 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             throw new Exception("Не верный формат времени. Используйте (60:24)");
         if(string.IsNullOrEmpty(Dategame)|| !DateOnly.TryParse(Dategame, out var _))
             throw new Exception("Не вурный формат даты. Используйте (30:12:2000)");
-
-
-
     }
 
     private void ExaminationCoordinates()
     {
         if(CoordinatesPolygon is null)
             throw new Exception("Coordinates is null");
-
-
         string coordinates = CoordinatesPolygon.Replace(" ", "");
         var coordinatesSplits = coordinates.Split(",");
         for(int i = 0; i < coordinatesSplits.Length; i++)
@@ -106,16 +94,13 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             {
                 if(item is '.' | item is '-')
                     continue;
-
                 if(!int.TryParse(item.ToString(), out _))
                     throw new Exception("Неверный формат координат. Используйте (000000.00,0000,00) ");
-
             }
         }
     }
     private EventsForAllCommandsModelDTO CreateModel()
     {
-
         EventsForAllCommandsModelDTO newModel = new EventsForAllCommandsModelDTO(
             NameGame:NameGame,
             TeamNameOrganization: TeamNameOrganization,
@@ -126,9 +111,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             UsersCount:1,
             Date: DateOnly.Parse(Dategame),
             Time: TimeOnly.Parse(TimeGame)
-
             );
         return newModel;
-
     }
 }

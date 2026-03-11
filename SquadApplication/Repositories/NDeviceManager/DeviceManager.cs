@@ -1,6 +1,4 @@
 ﻿using SquadApplication.Models.DeviceRegistrationModel;
-using SquadApplication.Services.DeviceTokenService;
-using System.Net.Http.Headers;
 
 namespace SquadApplication.Repositories.NDeviceManager;
 
@@ -24,14 +22,11 @@ public class DeviceManager : IDeviceManager
                IDeviceTokenManager tokenManager,
                IUserSession userSession
                )
-
     {
         _httpClient = httpClient;
         _userSession = userSession;
         _deviceTokenService = tokenManager;
         _connectivity = connectivity;
-
-
     }
     public bool SetUserFromSession(UserModelEntity user)
     {
@@ -50,37 +45,18 @@ public class DeviceManager : IDeviceManager
         var saveToken = await SecureStorage.GetAsync(DeviceTokenKey);
 
         if(!string.IsNullOrEmpty(saveToken))
-        {
             return saveToken;
-        }
-
         var newToken = await _deviceTokenService.GenerateDeviceToken();
-
         await SecureStorage.SetAsync(DeviceTokenKey, newToken);
         return newToken;
     }
-
-
-
-    public async Task<string> GetInstallationId()
-    {
-        return await _deviceTokenService.GetOrCreateInstallationId();
-    }
-
-
+    public async Task<string> GetInstallationId() => await _deviceTokenService.GetOrCreateInstallationId();
     public async Task<bool> RegisterDeviceForCurrentUserAsync()
     {
         if(_userSession.CurrentUser == null)
-        {
-            Console.WriteLine("User is null!!");
             return false;
-        }
         if(_connectivity.NetworkAccess != NetworkAccess.Internet)
-        {
-            Console.WriteLine("Network is not acces");
             return false;
-        }
-
         try
         {
             await AddAuthorizationHeaderAsync();
@@ -97,7 +73,7 @@ public class DeviceManager : IDeviceManager
                 InstallationId = installationId
             };//
             var content = JsonContent.Create(request);
-            var responce = await _httpClient.PostAsync(_urlRegistrationDevice+$"RegistartionDevice?userId={_user.Id}", content);
+            var responce = await _httpClient.PostAsync(_urlRegistrationDevice + $"RegistartionDevice?userId={_user.Id}", content);
             if(responce.IsSuccessStatusCode)
             {
                 await SecureStorage.SetAsync(DeviceRegistrationKey, "true");
@@ -117,47 +93,28 @@ public class DeviceManager : IDeviceManager
         {
             return false;
         }
-
     }
-
     private async Task AddAuthorizationHeaderAsync()
     {
         var token = await GetAuthTokenAsync();
 
         if(!string.IsNullOrEmpty(token))
-        {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        }
     }
-
-
-    private async Task<string?> GetAuthTokenAsync()
-    {
-        return await SecureStorage.GetAsync("ayth_token");
-    }
-
+    private async Task<string?> GetAuthTokenAsync() => await SecureStorage.GetAsync("ayth_token");
     public async Task<bool> IsDeviceRegisteredAsync()
     {
         var status = await SecureStorage.GetAsync(DeviceRegistrationKey);
         var isRegistoryLocal = status == "true";
 
-
         if(!isRegistoryLocal)
-        {
             return false;
-        }
-
         return true;
     }
-
-
     public async Task<bool> UpdateDeviceTokenAsync()
     {
         if(_userSession.CurrentUser is null)
-        {
             return false;
-        }
-
         try
         {
             await AddAuthorizationHeaderAsync();
@@ -181,14 +138,9 @@ public class DeviceManager : IDeviceManager
     public async Task<bool> UnregisterDeviceForCurrentUserAsync()
     {
         if(_userSession.CurrentUser == null)
-        {
             return false;
-        }
         if(_connectivity.NetworkAccess != NetworkAccess.Internet)
-        {
             return false;
-        }
-
         try
         {
             await AddAuthorizationHeaderAsync();
@@ -207,6 +159,5 @@ public class DeviceManager : IDeviceManager
         {
             return false;
         }
-
     }
 }

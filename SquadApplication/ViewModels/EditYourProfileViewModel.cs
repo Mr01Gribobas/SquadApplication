@@ -2,11 +2,9 @@
 
 public partial class EditYourProfileViewModel : ObservableObject
 {
-
     private IRequestManager<UserModelEntity> _requestManager;
     public EditUserProfilePage _editProfilePage;
     private UserModelEntity _user;
-
 
     [ObservableProperty]
     private string name;
@@ -41,9 +39,7 @@ public partial class EditYourProfileViewModel : ObservableObject
     private void InitalProperty(UserModelEntity user)
     {
         if(user is null)
-        {
             return;
-        }
         Name = user._userName;
         CallSing = user._callSing;
         Role = user._role.ToString();
@@ -51,10 +47,6 @@ public partial class EditYourProfileViewModel : ObservableObject
         TeamName = user._teamName;
         Age = user?._age.ToString() ?? "Не указан";
     }
-
-
-
-
 
     [RelayCommand]
     private async Task UpdateProfile()
@@ -89,7 +81,6 @@ public partial class EditYourProfileViewModel : ObservableObject
 
         if(_user is not null)
         {
-
             requestManager.SetUrl($"UpdateProfile?userId={_user.Id}");
             result = await requestManager?.PostRequests(objectValue: newUser, PostsRequests.UpdateProfile);
         }
@@ -97,7 +88,6 @@ public partial class EditYourProfileViewModel : ObservableObject
 
         if(!result)
             await _editProfilePage.DisplayAlertAsync("Error", "Ошибка обновления профиля ", "Ok");
-
         await Shell.Current.GoToAsync($"/{nameof(HomePage)}");
     }
 
@@ -107,30 +97,19 @@ public partial class EditYourProfileViewModel : ObservableObject
         {
             string skipPlus = new String(dataForm._phoneNumber?.Skip(1).ToArray());
             if(dataForm._phoneNumber is null || !Int64.TryParse(skipPlus, out Int64 _))
-            {
                 return false;
-            }
-
         }
         else if(dataForm._phoneNumber is null || !Int64.TryParse(dataForm._phoneNumber, out Int64 _))
-        {
             return false;
-        }
         if(!int.TryParse(dataForm._age, out int _))
-        {
             return false;
-        }
         else if(int.TryParse(dataForm._age, out int age))
         {
             if(age > 200 || age <= 0)
-            {
                 return false;
-            }
         }
         if(dataForm._teamName is null | dataForm._teamName.Length > 100 | dataForm._teamName.Length <= 0)
-        {
             return false;
-        }
         switch(dataForm._role)
         {
             case "Командир":

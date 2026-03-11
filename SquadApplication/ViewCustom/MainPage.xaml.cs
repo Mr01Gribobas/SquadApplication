@@ -8,13 +8,12 @@ public partial class MainPage : ContentPage
     private IUserSession _userSession1;
     private readonly NotificationLocalService _notificationLocal;
     private IDispatcherTimer _timer;
-    private int sum = 0;
     public MainPage(IUserSession userSession)
     {
-        InitializeComponent();
         BindingContext = new MainViewModel();
         _userSession1 = userSession;
         _notificationLocal = new NotificationLocalService();
+        InitializeComponent();
         StartCheckNotification();
         
     }
@@ -22,15 +21,12 @@ public partial class MainPage : ContentPage
     private async Task StartCheckNotification()
     {
         if(_userSession1 is null || _userSession1.CurrentUser is null)
-        {
             return;
-        }
         _timer = Dispatcher.CreateTimer();
         _timer.Interval = TimeSpan.FromSeconds(10);
         _timer.Tick += async (sender, e) =>
         {
             await _notificationLocal.CheckForEventNotification((int)_userSession1.CurrentUser.TeamId, _userSession1.CurrentUser.Id);
-            sum += 1;
         };
         _timer.Start();
     }
@@ -42,27 +38,16 @@ public partial class MainPage : ContentPage
     public int UserId
     {
         get => User.Id;
-        set
-        {
-            GetAndSetUserAsync(value);
-        }
+        set=> GetAndSetUserAsync(value);
     }
     private async Task GetAndSetUserAsync(int value)
     {
         UserModelEntity? user = await ManagerGetRequests<UserModelEntity>.GetUserById(value);
         if(user == null)
-        {
             await Shell.Current.GoToAsync($"..");
-
-        }
         _userSession1.CurrentUser = user;
         User = user;
     }
-
-
-
-
-
     private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var result = e?.CurrentSelection.FirstOrDefault();
@@ -78,8 +63,6 @@ public partial class MainPage : ContentPage
     //{
     //    await ListItems.RotateToAsync(360, 1000);
     //}
-
-
 
     private async Task GoNextPage(object? result)
     {

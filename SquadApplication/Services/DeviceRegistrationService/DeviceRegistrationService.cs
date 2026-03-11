@@ -9,8 +9,6 @@ public class DeviceRegistrationService : IDeviceRegistrationService
     private readonly IUserSession _userSession;
     private const string DeviceRegistrationKey = "device_registered";
     public bool IsDeviceRegistered { private set; get; }
-
-
     private UserModelEntity _user
     {
         get => _userSession.CurrentUser;
@@ -39,9 +37,7 @@ public class DeviceRegistrationService : IDeviceRegistrationService
     public async Task<bool> RegisterDeviceAsync()
     {
         if(_connectivity.NetworkAccess != NetworkAccess.Internet)
-        {
             return false;
-        }
         try
         {
             var installationId = _deviceTokenManager.GetOrCreateInstallationId();
@@ -61,13 +57,10 @@ public class DeviceRegistrationService : IDeviceRegistrationService
             {
                 await SecureStorage.SetAsync(DeviceRegistrationKey, "true");
                 IsDeviceRegistered = true;
-
                 return true;
             }
             else
-            {
                 return false;
-            }
         }
         catch(Exception)
         {
@@ -78,9 +71,7 @@ public class DeviceRegistrationService : IDeviceRegistrationService
     public async Task<bool> UnregisterDeviceAsync()
     {
         if(_connectivity.NetworkAccess != NetworkAccess.Internet)
-        {
             return false;
-        }
         try
         {
             var installationId = _deviceTokenManager.GetOrCreateInstallationId();
@@ -100,16 +91,13 @@ public class DeviceRegistrationService : IDeviceRegistrationService
         {
             Console.WriteLine("Device not unregistered");
             return false;
-
         }
     }
 
     public async Task<bool> UpdateDeviceTokenAsync(string newToken)
     {
         if(_connectivity.NetworkAccess != NetworkAccess.Internet)
-        {
             return false;
-        }
         try
         {
             var instalationId = _deviceTokenManager.GetOrCreateInstallationId();

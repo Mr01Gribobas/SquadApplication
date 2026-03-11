@@ -12,13 +12,9 @@ public class UserSession : IUserSession
         {
             _currentUser = value; 
             if(value is not null)
-            {
                 _ = SaveUserAsync();
-            }
             else
-            {
                 _ = ClearUserAsync();
-            }
         }
     }
         
@@ -26,22 +22,15 @@ public class UserSession : IUserSession
     public int? UserId => _currentUser.Id;
     public Role? UserRole =>_currentUser._role;
 
-
-
     public async Task LoadUserAsync()
     {
         try
         {
             var userJson = Preferences.Get(UserStorageKey,null);
             if(!string.IsNullOrEmpty(userJson))
-            {
                 _currentUser = JsonSerializer.Deserialize<UserModelEntity>(userJson);
-                Console.WriteLine(_currentUser);
-            }
             else
-            {
                 Console.WriteLine();//not user
-            }
         }
         catch(Exception ex)
         {
@@ -80,11 +69,5 @@ public class UserSession : IUserSession
             Console.WriteLine(ex.Message);
         }
     }
-
-    public bool HasRole(Role role)
-    {
-        return UserRole == role;
-    }
+    public bool HasRole(Role role)=> UserRole == role;
 }
-
-   

@@ -1,8 +1,6 @@
 ﻿using SquadApplication.DTO_Classes;
 using System.Text.Json;
-
 namespace SquadApplication.Repositories.ManagerRequest;
-
 internal class RequestTuple
 {
     public RequestTuple(UserModelEntity userSession)
@@ -20,16 +18,11 @@ internal class RequestTuple
         _urlNameForSend = "http://10.0.2.2:5213/MainGet/"; 
         _currentStatusCode = 0;
     }
-    public void UpdateUrl(string url)
-    {
-        _urlNameForSend += url;
-    }
+    public void UpdateUrl(string url)=> _urlNameForSend += url;
     public async Task<(UserModelEntity, TeamEntity, EquipmentDTO?)> GetAllInfoForUser(UserModelEntity userModel)
     {
         if(userModel is null)
-        {
             throw new ArgumentNullException();
-        }
         UpdateUrl($"GetAllInfoForHomeProfile?userId={userModel.Id}");
         var responce = await _httpClient.GetAsync(_urlNameForSend);
         if(responce != null && (int)responce.StatusCode == 200)
@@ -52,6 +45,4 @@ internal class RequestTuple
         ResetUrlAndStatusCode();
         return (default, default, default);
     }
-
-
 }

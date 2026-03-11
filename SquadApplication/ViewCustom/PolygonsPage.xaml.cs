@@ -6,13 +6,11 @@ public partial class PolygonsPage : ContentPage
     private UserModelEntity? _user;
     public PolygonsPage(IUserSession userSession)
     {
-        _user = userSession.CurrentUser;        
+        _user = userSession.CurrentUser;
         _polygonsViewModel = new PolygonsViewModel(this, _user);
         BindingContext = _polygonsViewModel;
         InitializeComponent();
     }
-
-
     public async Task CheckItems()
     {
         if(_polygonsViewModel._countPolygon <= 0)
@@ -29,7 +27,7 @@ public partial class PolygonsPage : ContentPage
                 }
                 );
         }
-        else 
+        else
         {
             foreach(var item in loyoutItem)
             {
@@ -38,8 +36,5 @@ public partial class PolygonsPage : ContentPage
                     loyoutItem.Remove(item);
             }
         }
-
     }
-
 }
-

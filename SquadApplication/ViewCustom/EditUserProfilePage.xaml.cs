@@ -10,7 +10,5 @@ public partial class EditUserProfilePage : ContentPage
 		_editProfileViewModel = new EditYourProfileViewModel(this,userSession.CurrentUser);
 		InitializeComponent();
         BindingContext = _editProfileViewModel;
-        
-
     }
 }

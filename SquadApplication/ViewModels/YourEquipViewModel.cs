@@ -56,8 +56,6 @@ public partial class HomeViewModel : ObservableObject
 
     [ObservableProperty]
     private string isEvent;
-
-
     public HomeViewModel(HomePage page, IUserSession user)
     {
         _user = user;
@@ -76,12 +74,8 @@ public partial class HomeViewModel : ObservableObject
 
         if(tuple.objectUser is null && tuple.objectTeam is null)
             throw new NullReferenceException();
-
         if(tuple.objectEquipment is not null)
             InitialPropertyEquipmen(tuple.objectEquipment);
-
-
-
 
         InitialPropertyUser(tuple.objectUser, equipment: tuple.objectEquipment);
         InitialPropertyTeamInfo(tuple.objectTeam);

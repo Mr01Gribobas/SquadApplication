@@ -3,35 +3,26 @@
 public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
     where T : class
 {
-    public ManagerGetRequests()
-    {
-        _httpClient = new HttpClient();
-    }
+
     private HttpClient _httpClient;
     public string _urlNameForSend { get; private set; } = "http://10.0.2.2:5213/MainGet/";
     public int _currentStatusCode { get; private set; }
     private bool _disposed = false;
-
+    public ManagerGetRequests()=> _httpClient = new HttpClient();
     public void ResetUrlAndStatusCode()
     {
         _urlNameForSend = "http://10.0.2.2:5213/MainGet/";
         _currentStatusCode = 0;
     }
 
-
-    public void SetUrl(string controllAction)
-    {
-        _urlNameForSend += controllAction;
-    }
+    public void SetUrl(string controllAction)=> _urlNameForSend += controllAction;
     public static async Task<UserModelEntity?> GetUserById(int id)
     {
         var client = new HttpClient();
         client.BaseAddress = new Uri("http://10.0.2.2:5213");
         var responce = await client.GetAsync($"/MainGet/GetUserById?Id={id}");
         if((int)responce.StatusCode == 401)
-        {
             return null;
-        }
         try
         {
             return await responce.Content.ReadFromJsonAsync<UserModelEntity>();
@@ -41,11 +32,6 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
             return null;
         }
     }
-
-
-
-
-
     public async Task<List<T>?> GetDataAsync(GetRequests getRequessts)
     {
         switch(getRequessts)
@@ -139,15 +125,10 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
                 return false;
         }
     }
-
-
     public Task<bool> PostRequests(T objectValue, PostsRequests postRequests)
     {
         throw new NotImplementedException();
     }
-
-
-
     ~ManagerGetRequests()
     {
         Dispose(false);
@@ -162,9 +143,7 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
         if(!_disposed)
         {
             if(disposing)
-            {
                 _httpClient?.Dispose();
-            }
             _disposed = true;
         }
     }

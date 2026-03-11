@@ -5,18 +5,13 @@ public class DeviceTokenManager : IDeviceTokenManager
 {
     private const string InstallationIdKey = "installation_id";
     private const string DeviceTokenKey = "device_token";
-    
+
     public async Task<string> GenerateDeviceToken()
     {
         var existingToken = await SecureStorage.GetAsync(DeviceTokenKey);
         if(!string.IsNullOrEmpty(existingToken))
-        {
             return existingToken;
-        }
-
         var newToken = await GenerateDeviceTokenInternal();
-
-
         if(newToken is not null)
         {
             await SecureStorage.SetAsync(DeviceTokenKey, newToken);
@@ -50,16 +45,11 @@ public class DeviceTokenManager : IDeviceTokenManager
         var exitstingId = await SecureStorage.GetAsync(InstallationIdKey);
 
         if(!string.IsNullOrEmpty(exitstingId))
-        {
             return exitstingId;
-        }
 
         var newId = GenerateInstallationId();
-
         await SecureStorage.SetAsync(InstallationIdKey, newId);
-
         return newId;
-
     }
     private string GenerateInstallationId()
     {//TODO
@@ -91,9 +81,9 @@ public class DeviceTokenManager : IDeviceTokenManager
                          Secure.
                          GetString(context.ContentResolver, Android.Provider.Settings.Secure.AndroidId);
             if(!string.IsNullOrEmpty(deviceId) & deviceId != "9774d56d682e549c")
-            {
                 return $"android_{deviceId}";
-            }//TODO
+            //TODO
+
 #endif
 
 #if IOS
@@ -112,15 +102,7 @@ public class DeviceTokenManager : IDeviceTokenManager
             return Guid.NewGuid().ToString();
         }
     }
+    public string GetDeviceInfo()=> $"{DeviceInfo.Model} ({DeviceInfo.Platform} {DeviceInfo.Version})";
+    public async Task<string> GetPlatformAsync()=> DeviceInfo.Platform.ToString().ToLower();
 
-    public string GetDeviceInfo()
-    {
-        return $"{DeviceInfo.Model} ({DeviceInfo.Platform} {DeviceInfo.Version})";
-    }
-
-
-    public async Task<string> GetPlatformAsync()
-    {
-        return DeviceInfo.Platform.ToString().ToLower();
-    }
 }

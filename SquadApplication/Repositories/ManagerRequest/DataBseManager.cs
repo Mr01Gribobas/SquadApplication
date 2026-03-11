@@ -1,25 +1,20 @@
-﻿using SquadApplication.Repositories.ManagerRequest.Interfaces;
-
-namespace SquadApplication.Repositories;
-
+﻿namespace SquadApplication.Repositories;
 public class DataBaseManager : IRequestManagerForEnter
 {
+    private readonly IUserSession _userSession;
+    private readonly HttpClient _httpClient;
+    private readonly IDeviceManager _deviceManager;
+
+    private string _urlNameForSend = "http://10.0.2.2:5213/Imput/";
+    public int _currentStatusCode { get; private set; }
+    public int GetStatusCode() => _currentStatusCode;
+
     public DataBaseManager(IUserSession userSession, IDeviceManager deviceManager)
     {
         _httpClient = new HttpClient();
         _userSession = userSession;
         _deviceManager = deviceManager;
     }
-    private readonly IUserSession _userSession;
-    private readonly HttpClient _httpClient;
-    private readonly IDeviceManager _deviceManager;
-
-
-    private string _urlNameForSend = "http://10.0.2.2:5213/Imput/";
-    public int _currentStatusCode { get; private set; }
-    public int GetStatusCode() => _currentStatusCode;
-
-
     public async Task<UserModelEntity> SendDataForRegistration(UserModelEntity user)
     {
         if(user is null)
@@ -35,28 +30,18 @@ public class DataBaseManager : IRequestManagerForEnter
             {
                 UserModelEntity? createdUser = await responce.Content.ReadFromJsonAsync<UserModelEntity>();
                 _userSession.CurrentUser = createdUser;
-
-
                 await _deviceManager.RegisterDeviceForCurrentUserAsync();//TODO WORK
-
                 return createdUser;
-
             }
             catch(Exception ex)
             {
-
-                throw;
+                return null;
             }
         }
         else if(_currentStatusCode == 201)
-        {
             return null;
-        }
         else if(_currentStatusCode == 401)
-        {
             return null;
-
-        }
         return null;
     }
 

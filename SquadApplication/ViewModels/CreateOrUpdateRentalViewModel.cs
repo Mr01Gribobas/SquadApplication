@@ -52,8 +52,6 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
             await Shell.Current.GoToAsync($"..?refresh={false}");
             return;
         }
-
-
         try
         {
             var modelDto = CreateModel();
@@ -68,9 +66,7 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
                 _managerPostRequests.SetUrl($"UpdateReantilsById?reantilId={modelDto.NumderRental}");
                 resultOperation = await _managerPostRequests.PostRequests(modelDto, PostsRequests.UpdateReantilsById);
             }
-
             //result
-
         }
         catch(Exception ex)
         {
@@ -100,7 +96,6 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
     {
         if(rentails is null)
             throw new ArgumentNullException(nameof(rentails));
-
         NumderRental = rentails.NumderRental.ToString();
         Weapon = rentails.Weapon;
         Mask = rentails.Mask;
@@ -111,12 +106,4 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
         Gloves = rentails.Gloves;
         BulletproofVestOrUnloadingVest = rentails.BulletproofVestOrUnloadingVest;
     }
-
-
-
-
-
-
-
-
 }

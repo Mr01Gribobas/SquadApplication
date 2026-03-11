@@ -1,51 +1,42 @@
-﻿using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
-namespace SquadServer.Repositoryes;
+﻿namespace SquadServer.Repositoryes;
+
 public class DataBaseRepository
 {
     private SquadDbContext _squadDbContext { get; set; }
-    public DataBaseRepository(SquadDbContext _squadDbContext)
-    {
-        this._squadDbContext = _squadDbContext;
-    }
+
+
+
     public SquadDbContext GetCurrentContextDb() => _squadDbContext;
-
-
+    public DataBaseRepository(SquadDbContext _squadDbContext) => this._squadDbContext = _squadDbContext;
 
     public async Task<EvenCheck> CheckEvent(int teamId, int userID)
     {
         var eventFromDb = await _squadDbContext.Events.FirstOrDefaultAsync(e => e.TeamId == teamId);
         var userIsgoing = await _squadDbContext.Players.FirstOrDefaultAsync(u => u.Id == userID);
         if(eventFromDb is not null && userIsgoing is not null)
-        {
             return new EvenCheck(isGoTogame: userIsgoing._goingToTheGame ?? false, availabilityEvent: true);
-        }
         return new EvenCheck(isGoTogame: false, availabilityEvent: false);
     }
-
 
     public async Task<UserModelEntity> GameAttendance(int userId, bool isWill)//TODO
     {
         var userFromDb = await _squadDbContext.Players.FirstOrDefaultAsync(u => u.Id == userId);
         if(userFromDb == null)
-        {
             throw new NullReferenceException();
-        }
         userFromDb._goingToTheGame = isWill;
         await _squadDbContext.SaveChangesAsync();
         return userFromDb;
     }
-    public async Task<UserModelEntity?> GetCaptainByTeamIdAsync(int teamId)
-    {
-        return await _squadDbContext.Players.FirstOrDefaultAsync(p => p.TeamId == teamId & p._role == Role.Commander);
-    }
-
+    public async Task<UserModelEntity?> GetCaptainByTeamIdAsync(int teamId) =>
+                                                    await _squadDbContext.Players.
+                                                    FirstOrDefaultAsync(p => p.TeamId == teamId & p._role == Role.Commander);
     public UserModelEntity? GetUserFromDb(int loginCode)
     {
         return _squadDbContext.Players.
                   AsNoTracking().
-                  Include(eq=>eq.Equipment).
-                  Include(st=>st.Statistic).
-                  Include(t=>t.Team).
+                  Include(eq => eq.Equipment).
+                  Include(st => st.Statistic).
+                  Include(t => t.Team).
                   FirstOrDefault(u => u._enterCode == loginCode);
     }
     public UserModelEntity? GetUserById(int id)
@@ -54,10 +45,8 @@ public class DataBaseRepository
                   AsNoTracking().Include(e => e.Equipment).
                   FirstOrDefault(u => u.Id == id);
     }
-
     public async Task<UserModelEntity?> CreateNewUser(UserModelEntity userFromApp)
     {
-
         ArgumentNullException.ThrowIfNull(userFromApp);
 
     RestartMethod:
@@ -121,7 +110,6 @@ public class DataBaseRepository
         }
         catch(Exception ex)
         {
-
             throw new ArgumentNullException(ex.Message);
         }
     }
@@ -154,56 +142,26 @@ public class DataBaseRepository
         return rentails;
     }
 
-    public async Task<List<PolygonEntity>> GetAllPolygons()
-    {
-        var list = await _squadDbContext.Polygons.ToListAsync();
-        return list;
-    }
+    public async Task<List<PolygonEntity>> GetAllPolygons() => await _squadDbContext.Polygons.ToListAsync();
+    public async Task<List<HisoryEventsModelEntity>> GetEventHistory() => await _squadDbContext.HistoryEvents.ToListAsync();
+    public async Task<EventModelEntity?> GetEvent(int teamId) => await _squadDbContext.Events.Include(e => e.Team).FirstOrDefaultAsync(t => t.TeamId == teamId);
+    public async Task<EquipmentEntity?> GetEquipById(int id) => await _squadDbContext.Equipments.FirstOrDefaultAsync(e => e.Id == id);
+    public EquipmentEntity? GetEquipByUserId(int userId) => _squadDbContext.Equipments.Include(u => u.OwnerEquipment).FirstOrDefault(e => e.OwnerEquipmentId == userId);
+    public async Task<TeamEntity?> GetTeamByUserId(UserModelEntity userFromDb) => await _squadDbContext.Teams.Include(t => t.Members).FirstOrDefaultAsync(t => t.Id == userFromDb.TeamId);
 
-    public List<HisoryEventsModelEntity> GetEventHistory()
-    {
-        var list = _squadDbContext.HistoryEvents.ToList();
-        return list;
-    }
-
-    public EventModelEntity? GetEvent(int teamId)
-    {
-        return _squadDbContext.Events.Include(e => e.Team).FirstOrDefault(t => t.TeamId == teamId);
-    }
-
-    public EquipmentEntity? GetEquipById(int id)
-    {
-        var eqip = _squadDbContext.Equipments.FirstOrDefault(e => e.Id == id);
-        return eqip;
-    }
-    public EquipmentEntity? GetEquipByUserId(int userId)
-    {
-        var eqip = _squadDbContext.Equipments.Include(u => u.OwnerEquipment).FirstOrDefault(e => e.OwnerEquipmentId == userId);
-        return eqip;
-    }
-
-    public TeamEntity GetTeamByUserId(UserModelEntity userFromDb)
-    {
-        TeamEntity? resultSearch = _squadDbContext.Teams.Include(t => t.Members).FirstOrDefault(t => t.Id == userFromDb.TeamId);
-
-        return resultSearch;
-    }
 
     public async Task<List<EventsForAllCommandsModelDTO>> GetAllEventsForAllCommands()
     {
         var listEvents = await _squadDbContext.EventsForAllCommands.Include(e => e.Players).ToListAsync();
-
         if(listEvents is null || listEvents.Count <= 0)
             return null;
-        
         List<EventsForAllCommandsModelDTO> newList = new();
-        
         foreach(EventsForAllCommandsModelEntity ev in listEvents)
         {
-            
+
             newList.Add(new EventsForAllCommandsModelDTO
                 (
-                NameGame:ev.NameGame,
+                NameGame: ev.NameGame,
                 TeamNameOrganization: ev.TeamNameOrganization,
                 DescriptionFull: ev.DescriptionFull,
                 DescriptionShort: ev.DescriptionShort,
@@ -225,9 +183,6 @@ public class DataBaseRepository
         var statistic = user.Statistic;
         if(statistic is null)
             statistic = await CreateStatisticForUSer(user);
-
-
-
         UserAllInfoStatisticDTO statisticDTO = new UserAllInfoStatisticDTO(
             LiveWeapon: user.Equipment?.NameMainWeapon ?? "Не найдено",
             NamePlayer: user._userName,
@@ -322,8 +277,6 @@ public class DataBaseRepository
                 _squadDbContext.Players.Remove(user);
                 return true;
             }
-
-
             await _squadDbContext.SaveChangesAsync();
             return true;
         }
@@ -354,11 +307,9 @@ public class DataBaseRepository
         await _squadDbContext.SaveChangesAsync();
         return true;
     }
+    public async void CreateStatistic(UserModelEntity newUser) => CreateStatisticForUSer(newUser);
 
-    public async void CreateStatistic(UserModelEntity newUser)
-    {
-        CreateStatisticForUSer(newUser);
-    }
+
 }
 
 

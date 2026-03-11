@@ -35,9 +35,7 @@ public partial class AuthorizeViewModel : ObservableObject
     private async Task Login()
     {
         if(AccesCode is null || AccesCode.Length <= 0)
-        {
             return;
-        }
         DataBaseManager requestManager = (DataBaseManager)_requestManager;
         UserModelEntity? userFromResponce = await requestManager.SendDataForEnter(AccesCode);
         if(userFromResponce is null | userFromResponce?.Id <= 0)
@@ -48,7 +46,7 @@ public partial class AuthorizeViewModel : ObservableObject
         await Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId={userFromResponce.Id}");
     }
 
-    
+
 
 
     [RelayCommand]
@@ -57,7 +55,6 @@ public partial class AuthorizeViewModel : ObservableObject
 
         if(!ValidateData())
         {
-
             await _authorizedPage.DisplayAlertAsync("Error data", "Invalid data", "Ok");
             return;
         }
@@ -92,16 +89,13 @@ public partial class AuthorizeViewModel : ObservableObject
                   );
                 }
                 else
-                {
                     return;
-                }
                 goto SendUserData;
             }
-            await _authorizedPage.DisplayAlertAsync("Error data","Invalid data", "Ok");
+            await _authorizedPage.DisplayAlertAsync("Error data", "Invalid data", "Ok");
             return;
         }
-
-        await _authorizedPage.DisplayAlertAsync("Kode",$"Ваш код доступа {userFromResponce._enterCode}", "Ok");
+        await _authorizedPage.DisplayAlertAsync("Kode", $"Ваш код доступа {userFromResponce._enterCode}", "Ok");
         await Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId = {userFromResponce.Id}");
     }
 
@@ -122,28 +116,17 @@ public partial class AuthorizeViewModel : ObservableObject
         if(data._phoneNumber[0] == '+')
         {
             string skipPlus = new String(data._phoneNumber?.Skip(1).ToArray());
-            if(!Int64.TryParse(skipPlus, out Int64 _)  )
-            {
+            if(!Int64.TryParse(skipPlus, out Int64 _))
                 return false;
-            }
         }
-        else if(!Int64.TryParse(data._phoneNumber, out Int64 _) )
-        {
+        else if(!Int64.TryParse(data._phoneNumber, out Int64 _))
             return false;
-        }
-
         if(data._name.Length > 50 | data._name.Length < 2)
-        {
             return false;
-        }
         if(data._callSing.Length > 50 | data._callSing.Length < 2)
-        {
             return false;
-        }
         if(data._team.Length > 100 | data._team.Length < 2)
-        {
             return false;
-        }
         return true;
     }
     private record DataForm

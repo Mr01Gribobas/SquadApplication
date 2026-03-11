@@ -20,10 +20,8 @@ public class ManagerPostRequests<T> : IRequestManager<T>
         _urlNameForSend = "http://10.0.2.2:5213/MainPost/";
         _currentStatusCode = 0;
     }
-    public void SetUrl(string controllAction)
-    {
-        _urlNameForSend += controllAction;
-    }
+    public void SetUrl(string controllAction)=> _urlNameForSend += controllAction;
+
     public Task<List<T>> GetDataAsync(GetRequests getType)
     {
         throw new NotImplementedException();
@@ -68,7 +66,6 @@ public class ManagerPostRequests<T> : IRequestManager<T>
                 return false;
         }
     }
-
     public Task<bool> PutchRequestAsync(PutchRequest getType)
     {
         throw new NotImplementedException();

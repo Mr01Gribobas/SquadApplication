@@ -1,8 +1,9 @@
 ﻿namespace SquadApplication.ViewModels;
+
 public partial class OrderViewModel : ObservableObject
 {
     private OrderPage _orderPage;
-   
+
     [ObservableProperty]
     private string name;
 
@@ -18,7 +19,6 @@ public partial class OrderViewModel : ObservableObject
     [ObservableProperty]
     private string totalSum;
 
-
     public OrderViewModel(OrderPage orderPage)
     {
         _orderPage = orderPage;
@@ -32,13 +32,9 @@ public partial class OrderViewModel : ObservableObject
         {
             newValue++;
             Count = newValue.ToString();
-
         }
         else
-        {
             _orderPage.DisplayAlertAsync("info", "errorFormat", "Ok");
-        }
-
     }
     [RelayCommand]
     public void ReduceProduct()
@@ -47,12 +43,10 @@ public partial class OrderViewModel : ObservableObject
         {
             newValue--;
             Count = newValue.ToString();
-
         }
         else
-        {
             _orderPage.DisplayAlertAsync("info", "errorFormat", "Ok");
-        }
+
     }
 
     [RelayCommand]
@@ -63,13 +57,10 @@ public partial class OrderViewModel : ObservableObject
             Order newOrder = new Order(Name, int.Parse(Price), int.Parse(Count));
             Orders.Add(newOrder);
             UpdateTotalSum();
-
         }
         catch(Exception)
         {
-
             _orderPage.DisplayAlertAsync("info", "errorFormat", "Ok");
-
         }
     }
 
@@ -84,6 +75,5 @@ public partial class OrderViewModel : ObservableObject
     {
         UpdateTotalSum();
         Orders.Clear();
-
     }
 }
