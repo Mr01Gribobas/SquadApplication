@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
-
 namespace SquadServer.Repositoryes;
-
 public class DataBaseRepository
 {
     private SquadDbContext _squadDbContext { get; set; }

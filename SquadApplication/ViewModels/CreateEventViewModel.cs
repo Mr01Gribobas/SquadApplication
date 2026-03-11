@@ -69,9 +69,12 @@ public partial class CreateEventViewModel : ObservableObject
         if(_isUpdate && _modelFees is not null)
             newEvent.Id = _modelFees.Id;
         var requestPost = (ManagerPostRequests<EventModelEntity>)_requestManager;
-        requestPost.SetUrl($"CreateEvent?commanderId={_user.Id}&isUpdate={_isUpdate}");
-        bool resultCreated = await requestPost.PostRequests(newEvent, PostsRequests.CreateEvent);
 
+        if(_isUpdate)
+            requestPost.SetUrl($"UpdateEvent?commanderId={_user.Id}");
+        else
+            requestPost.SetUrl($"CreateEvent?commanderId={_user.Id}");
+        bool resultCreated = await requestPost.PostRequests(newEvent, PostsRequests.CreateEvent);
 
         if(!resultCreated)
         {

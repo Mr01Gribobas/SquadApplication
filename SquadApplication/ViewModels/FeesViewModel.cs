@@ -150,10 +150,6 @@ public partial class FeesViewModel : ObservableObject
             _feesPage._cacheService.Set<EventModelEntity>("EventForUpdate", _event);
             await Shell.Current.GoToAsync($"/{nameof(CreateEventPage)}");
         }
-
-
-
-
     }
 
 
