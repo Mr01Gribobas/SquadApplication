@@ -87,7 +87,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             BaseFullExamination();
             var commanderId = _createEventPage.CommanderId <= 0 ? _user.CurrentUser.Id : _createEventPage.CommanderId;
             EventsForAllCommandsModelDTO modelEvnt = CreateModel(_modelEventsForCommand);
-            _postManager.SetUrl($"CreateEventForAllCommands?commanderId={commanderId}");
+            _postManager.SetUrl($"UpdateEventForAllCommands?commanderId={commanderId}");
             var result = await _postManager.PostRequests(objectValue: modelEvnt, PostsRequests.CreateEventForCommands);
             if(result)
                 await _createEventPage.DisplayAlertAsync("Ok", "Create is ok", "Ok");
