@@ -5,7 +5,10 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
     private readonly IUserSession _user;
     private readonly CreateEventsForAllCommandsPage _createEventPage;
     private readonly ManagerPostRequests<EventsForAllCommandsModelDTO> _postManager;
-    private  bool _isUpdateThisGame;
+
+    [ObservableProperty]
+    private  bool isUpdateThisGame;
+
     private  EventsForAllCommandsModelDTO _modelEventsForCommand;
 
 
@@ -58,7 +61,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         TimeGame = model.Time.ToString();
         Dategame = model.Date.ToString();
         _modelEventsForCommand = model;
-        _isUpdateThisGame = true; 
+        isUpdateThisGame = true; 
     }
 
     private async void BaseFullExamination()

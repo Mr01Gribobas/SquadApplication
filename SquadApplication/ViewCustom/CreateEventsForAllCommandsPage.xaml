@@ -3,7 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SquadApplication.ViewCustom.CreateEventsForAllCommandsPage"
              BackgroundImageSource="updateprofileandequip.jpg"
-             Title="NewPage1">
+             Title="NewPage1">    
+    <ContentPage.Resources>
+        <Style TargetType="Border" x:Key="BorderStylesCust">
+            <Setter Property="Margin" Value="12"/>
+            <Setter Property="BackgroundColor" Value="#40808080"/>
+            <Setter Property="Stroke" Value="#b3c96b"/>
+            <Setter Property="StrokeThickness" Value="2"/>
+            <Setter Property="StrokeDashArray" Value="1,2"/>
+            <Setter Property="StrokeShape" Value="11"/>
+        </Style>
+    </ContentPage.Resources>
+    
         <Border
             Stroke="#2a3c5a"
             BackgroundColor="#98398080"
@@ -126,13 +137,10 @@
           FontSize="20"
           BackgroundColor="Transparent"/>
             </Border>
+        
+       
             <Border
-                    Margin="12"
-                    BackgroundColor="#40808080"
-                    Stroke="#b3c96b"
-                    StrokeThickness="2"
-                    StrokeDashArray="1,2"
-                    StrokeShape="11">
+                    Style="{StaticResource Key=BorderStylesCust}">
                 <Border.Shadow>
                     <Shadow Brush="LightGray" 
                             Offset="0,5" 
@@ -145,7 +153,50 @@
                     Command="{Binding RequestFolCreateEventCommand}"
                     FontSize="20"/>
             </Border>
-
+        
+        
+            <Border
+                  Style="{StaticResource Key=BorderStylesCust}" >
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border" Binding="{Binding IsUpdateThisGame}" Value="false">
+                        <Setter Property="Opacity" Value="0"/>
+                        <Setter Property="IsEnabled" Value="false"/>
+                    </DataTrigger>
+                </Border.Triggers>
+                <Border.Shadow>
+                    <Shadow Brush="LightGray" 
+                 Offset="0,5" 
+                 Opacity="1.0"
+                 Radius="20"/>
+                </Border.Shadow>
+                <Button
+         BackgroundColor="#40808080"
+         Text="Update"
+         Command="{Binding RequestFolUpdateEventCommand}"
+         FontSize="20"/>
+            </Border>
+        
+        
+            <Border
+                 Style="{StaticResource Key=BorderStylesCust}">
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border" Binding="{Binding IsUpdateThisGame}" Value="false">
+                        <Setter Property="Opacity" Value="0"/>
+                        <Setter Property="IsEnabled" Value="False"/>
+                    </DataTrigger>
+                </Border.Triggers>
+                <Border.Shadow>
+                    <Shadow Brush="LightGray" 
+                 Offset="0,5" 
+                 Opacity="1.0"
+                 Radius="20"/>
+                </Border.Shadow>
+                <Button
+         BackgroundColor="#40808080"
+         Text="Delete"
+         Command="{Binding RequestFolCreateEventCommand}"
+         FontSize="20"/>
+            </Border>
 
         </VerticalStackLayout>
 

@@ -194,6 +194,8 @@
                                         >
                                     <Button Text="обновить"
                                             Background="DarkBlue"
+                                            Command="{Binding BindingContext.EditEventCommand,Source={x:Reference EventsList }}"
+                                            CommandParameter="{Binding .}"
                                             FontAttributes="Italic"
                                             Opacity="0.9"
                                             FontSize="11"/>
