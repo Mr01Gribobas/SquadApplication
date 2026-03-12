@@ -75,12 +75,30 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             throw new Exception(ex.Message);
         }
     }
+
     [RelayCommand]
     private async Task RequestFolUpdateEvent()
     {
-
+        try
+        {
+            BaseFullExamination();
+            var commanderId = _createEventPage.CommanderId <= 0 ? _user.CurrentUser.Id : _createEventPage.CommanderId;
+            EventsForAllCommandsModelDTO modelEvnt = CreateModel(_modelEventsForCommand);
+            _postManager.SetUrl($"CreateEventForAllCommands?commanderId={commanderId}");
+            var result = await _postManager.PostRequests(objectValue: modelEvnt, PostsRequests.CreateEventForCommands);
+            if(result)
+                await _createEventPage.DisplayAlertAsync("Ok", "Create is ok", "Ok");
+            await Shell.Current.GoToAsync("..");
+        }
+        catch(Exception ex)
+        {
+            await _createEventPage.DisplayAlertAsync("Errir", $"{ex.Message}", "Ok");
+        }
+        finally
+        {
+            _postManager.ResetUrlAndStatusCode();
+        }
     }
-
 
     [RelayCommand]
     private async Task RequestFolCreateEvent()
@@ -137,16 +155,19 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             }
         }
     }
-    private EventsForAllCommandsModelDTO CreateModel()
+    private EventsForAllCommandsModelDTO CreateModel(EventsForAllCommandsModelDTO? modelDTO = null)
     {
+
+
         EventsForAllCommandsModelDTO newModel = new EventsForAllCommandsModelDTO(
-            NameGame:NameGame,
+            numberEvent: modelDTO is null ? 0 : modelDTO.numberEvent,
+            NameGame: NameGame,
             TeamNameOrganization: TeamNameOrganization,
             DescriptionShort: DescriptionShort,
             DescriptionFull: DescriptionFull,
             CoordinatesPolygon: CoordinatesPolygon,
             PolygonName: PolygonName ?? $"Имя не было указано",
-            UsersCount:1,
+            UsersCount: 1,
             Date: DateOnly.Parse(Dategame),
             Time: TimeOnly.Parse(TimeGame)
             );

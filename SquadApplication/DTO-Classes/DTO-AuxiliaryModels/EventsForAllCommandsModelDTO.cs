@@ -3,6 +3,7 @@
 
 public record class EventsForAllCommandsModelDTO
     (
+    int numberEvent,
     string NameGame,
     string TeamNameOrganization,
      string DescriptionShort,
