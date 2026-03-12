@@ -64,18 +64,20 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         isUpdateThisGame = true; 
     }
 
-    private async void BaseFullExamination()
+    private async  Task<bool> BaseFullExamination()
     {
         try
         {
             if(_user.CurrentUser._role != Role.Commander)
-                throw new Exception("You not commander");
+                throw new Exception("Вы не являетесь командиром !!!!");
             ExaminationCoordinates();
             Validation();
+            return true;
         }
         catch(Exception ex)
         {
-            throw new Exception(ex.Message);
+            await _createEventPage.DisplayAlertAsync("Error",$"{ex.Message}","OK");
+            return false;
         }
     }
 
@@ -84,7 +86,10 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
     {
         try
         {
-            BaseFullExamination();
+
+            if(!await BaseFullExamination())
+                return;
+                        
             var commanderId = _createEventPage.CommanderId <= 0 ? _user.CurrentUser.Id : _createEventPage.CommanderId;
             EventsForAllCommandsModelDTO modelEvnt = CreateModel(_modelEventsForCommand);
             _postManager.SetUrl($"UpdateEventForAllCommands?commanderId={commanderId}");
@@ -108,7 +113,8 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
     {
         try
         {
-            BaseFullExamination();
+            if(!await BaseFullExamination())
+                return;
             var commanderId =_createEventPage.CommanderId <= 0 ? _user.CurrentUser.Id : _createEventPage.CommanderId;//
             EventsForAllCommandsModelDTO modelEvnt = CreateModel();
             _postManager.SetUrl($"CreateEventForAllCommands?commanderId={commanderId}");
@@ -136,9 +142,9 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         if(string.IsNullOrEmpty(DescriptionFull))
             throw new Exception("Не коректное описание ");
         if(string.IsNullOrEmpty(TimeGame) || !TimeOnly.TryParse(TimeGame , out var _))
-            throw new Exception("Не верный формат времени. Используйте (60:24)");
+            throw new Exception("Не верный формат времени. Используйте (23:59)");
         if(string.IsNullOrEmpty(Dategame)|| !DateOnly.TryParse(Dategame, out var _))
-            throw new Exception("Не вурный формат даты. Используйте (30:12:2000)");
+            throw new Exception("Не вeрный формат даты. Используйте (12.30.2000)");
     }
 
     private void ExaminationCoordinates()

@@ -132,7 +132,7 @@ public class MainPostController : Controller
             if(commander is not null && result is not null && commander.Team is not null)
             {
 
-                var eventFromDb = await _squadDbContext.EventsForAllCommands.FirstOrDefaultAsync(e => e.TeamIdOrganization == commander.TeamId);
+                var eventFromDb = await _squadDbContext.EventsForAllCommands.FirstOrDefaultAsync(e => e.Id == result.numberEvent);
                 if(eventFromDb is not null)
                 {
                     eventFromDb.NameGame = result.NameGame;

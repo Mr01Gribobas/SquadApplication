@@ -102,7 +102,7 @@
                   StrokeShape="RoundRectangle 10"
                   BackgroundColor="#98399989">
                 <Entry
-                     Placeholder="Дата дд.мм.гг"
+                     Placeholder="Дата (12.30.2026)"
                      PlaceholderColor="LightGray"
                      Text="{Binding Dategame}"
                      TextColor="White"
@@ -116,7 +116,7 @@
                   StrokeShape="RoundRectangle 10"
                   BackgroundColor="#98399989">
                 <Entry
-                   Placeholder="Время 09:00"
+                   Placeholder="Время (09:30)"
                    PlaceholderColor="LightGray"
                    Text="{Binding TimeGame}"
                    TextColor="White"
