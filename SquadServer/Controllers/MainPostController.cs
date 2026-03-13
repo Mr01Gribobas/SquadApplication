@@ -94,8 +94,7 @@ public class MainPostController : Controller
             return Unauthorized();
         }
     }
-    [HttpDelete]
-    public IActionResult 
+    
 
     [HttpPost]
     public async Task<IActionResult?> CreateEventForAllCommands(int commanderId)
@@ -441,7 +440,21 @@ public class MainPostController : Controller
         }
     }
 
+    [HttpDelete]
+    public async Task<IActionResult> DeleteEventById(int commanderId, int numberEvent)
+    {
+        EventsForAllCommandsModelEntity? result = await _squadDbContext.EventsForAllCommands.Include(p=>p.Players).FirstOrDefaultAsync(ev => ev.Id == numberEvent);
+        if(result is not null)
+        {
+            result.Players.Clear();
+            _squadDbContext.EventsForAllCommands.Remove(result);
+            await _squadDbContext.SaveChangesAsync();
+            return Ok(true);
+        }
+        else
+            return Ok(false);
 
+    }
 
 
 }

@@ -86,10 +86,18 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         if(_modelEventsForCommand is null)
             return;
         var commanderId = _createEventPage.CommanderId <= 0 ? _user.CurrentUser.Id : _createEventPage.CommanderId;
-        _postManager.SetUrl($"DeleteEventForAllCommands?commanderId={commanderId}&numberEvent={_modelEventsForCommand.numberEvent}");
-        var result = await _postManager.PostRequests(objectValue: null, PostsRequests.CreateEventForCommands);
+        _postManager.SetUrl($"DeleteEventById?commanderId={commanderId}&numberEvent={_modelEventsForCommand.numberEvent}");
+        try
+        {
+        var result = await _postManager.PostRequests(objectValue: _modelEventsForCommand, PostsRequests.DeleteEventForCommand);
         if(result)
             await _createEventPage.DisplayAlertAsync("Ok", "Create is ok", "Ok");
+
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine( ex.Message);
+        }
         _postManager.ResetUrlAndStatusCode();
         await Shell.Current.GoToAsync("..");
     }

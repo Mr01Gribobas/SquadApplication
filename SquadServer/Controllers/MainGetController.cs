@@ -252,10 +252,5 @@ public class MainGetController : Controller
         }
     }
 
-    [HttpDelete]
-    public IActionResult DeleteEventById(int commanderId , int numberEvent)
-    {
-        _squadDbContext.
-        return Ok(true); 
-    }
+    
 }

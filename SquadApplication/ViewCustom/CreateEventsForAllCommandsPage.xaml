@@ -194,7 +194,7 @@
                 <Button
          BackgroundColor="#40808080"
          Text="Delete"
-         Command="{Binding RequestFolCreateEventCommand}"
+         Command="{Binding DeleteEventCommand}"
          FontSize="20"/>
             </Border>
 
