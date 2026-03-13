@@ -20,7 +20,6 @@ public class MainGetController : Controller
         return Ok(result);
     }
 
-
     [HttpGet]
     public IActionResult? GetUserById(int Id)
     {
@@ -201,6 +200,7 @@ public class MainGetController : Controller
 
     }
 
+
     [HttpGet]
     public async Task<IActionResult?> GetAllInfoForHomeProfile(int userId)
     {
@@ -211,7 +211,7 @@ public class MainGetController : Controller
             RequestTuplesManager requestTuples = new RequestTuplesManager(_dataBaseRepository);
             (UserModelEntity objectUser,
              TeamEntity objectTeam,
-             EquipmentEntity? objectEquipment) infoForProfile = await  requestTuples.GetInfoForProfileById(userId);
+             EquipmentEntity? objectEquipment) infoForProfile = await requestTuples.GetInfoForProfileById(userId);
 
             var container = new TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentEntity>()
             {
@@ -252,5 +252,10 @@ public class MainGetController : Controller
         }
     }
 
-
+    [HttpDelete]
+    public IActionResult DeleteEventById(int commanderId , int numberEvent)
+    {
+        _squadDbContext.
+        return Ok(true); 
+    }
 }

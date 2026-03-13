@@ -94,7 +94,8 @@ public class MainPostController : Controller
             return Unauthorized();
         }
     }
-
+    [HttpDelete]
+    public IActionResult 
 
     [HttpPost]
     public async Task<IActionResult?> CreateEventForAllCommands(int commanderId)

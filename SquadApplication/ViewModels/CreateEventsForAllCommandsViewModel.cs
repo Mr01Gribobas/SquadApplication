@@ -80,6 +80,19 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             return false;
         }
     }
+    [RelayCommand]
+    private async Task DeleteEvent()
+    {
+        if(_modelEventsForCommand is null)
+            return;
+        var commanderId = _createEventPage.CommanderId <= 0 ? _user.CurrentUser.Id : _createEventPage.CommanderId;
+        _postManager.SetUrl($"DeleteEventForAllCommands?commanderId={commanderId}&numberEvent={_modelEventsForCommand.numberEvent}");
+        var result = await _postManager.PostRequests(objectValue: null, PostsRequests.CreateEventForCommands);
+        if(result)
+            await _createEventPage.DisplayAlertAsync("Ok", "Create is ok", "Ok");
+        _postManager.ResetUrlAndStatusCode();
+        await Shell.Current.GoToAsync("..");
+    }
 
     [RelayCommand]
     private async Task RequestFolUpdateEvent()
@@ -89,7 +102,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
 
             if(!await BaseFullExamination())
                 return;
-                        
+
             var commanderId = _createEventPage.CommanderId <= 0 ? _user.CurrentUser.Id : _createEventPage.CommanderId;
             EventsForAllCommandsModelDTO modelEvnt = CreateModel(_modelEventsForCommand);
             _postManager.SetUrl($"UpdateEventForAllCommands?commanderId={commanderId}");

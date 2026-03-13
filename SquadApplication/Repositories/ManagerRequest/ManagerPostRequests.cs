@@ -62,6 +62,8 @@ public class ManagerPostRequests<T> : IRequestManager<T>
                 return await PostRequest(objectValue, "UpdateEquip");
             case PostsRequests.CreateEventForCommands:
                 return await PostRequest(objectValue, "CreateEventForCommands");
+            case PostsRequests.DeleteEventForCommand:
+                return await _httpClient.DeleteFromJsonAsync<bool>(_urlNameForSend);
             default:
                 return false;
         }

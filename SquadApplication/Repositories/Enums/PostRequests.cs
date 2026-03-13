@@ -10,4 +10,5 @@ public enum PostsRequests
     AddPolygon,
     UpdateEquip,
     CreateEventForCommands,
+    DeleteEventForCommand,
 }
