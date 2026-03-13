@@ -11,4 +11,5 @@ public enum PostsRequests
     UpdateEquip,
     CreateEventForCommands,
     DeleteEventForCommand,
+    UpdateInfoForUser,
 }

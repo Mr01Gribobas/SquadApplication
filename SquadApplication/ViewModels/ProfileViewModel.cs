@@ -1,4 +1,6 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using System.Text.RegularExpressions;
+
+namespace SquadApplication.ViewModels;
 
 public partial class ProfileViewModel : ObservableObject
 {
@@ -12,7 +14,7 @@ public partial class ProfileViewModel : ObservableObject
 
     [ObservableProperty]
     private string editData = "Редакт.";
-    private bool _updateMode; 
+    private bool _updateMode;
 
 
     [ObservableProperty]
@@ -82,7 +84,7 @@ public partial class ProfileViewModel : ObservableObject
         {
             UserAllInfoStatisticDTO? result = JsonSerializer.Deserialize<UserAllInfoStatisticDTO>(model.OldDataJson);
             _oldDataJson = result ??= new UserAllInfoStatisticDTO
-                                                         (0,"??", "??", "??", 0, 0, 0, 0, default, "??",
+                                                         (0, "??", "??", "??", 0, 0, 0, 0, default, "??",
                                                          new List<Achievement>() { new Achievement() { NameAchievement = "??", Discription = "??" } },
                                                          false, Role.Private, default);
         }
@@ -115,25 +117,90 @@ public partial class ProfileViewModel : ObservableObject
     {
         if(_user is null || _user._role != Role.Commander)
         {
-           await _homePage.DisplayAlertAsync("Info","Вы не командир!!!","Ok");
+            await _homePage.DisplayAlertAsync("Info", "Вы не командир!!!", "Ok");
             return;
         }
         if(_updateMode)
         {
-            if(UpdateModel(_userCurrentInfo))
+            if(await UpdateModel())
             {
-                
+                await RequestForUpdateData();
             }
+            _updateMode = false;
+            EditData = "Редакт.";
         }
         EditData = "OK";
         _updateMode = true;
-        
+
         //
         //
     }
 
-    private bool UpdateModel(UserAllInfoStatisticDTO userCurrentInfo)
+    private async Task RequestForUpdateData()
     {
+        try
+        {
+            if(_user._role != Role.Commander)
+                throw new Exception("Вы не командир !!");
+            ManagerPostRequests<UserAllInfoStatisticDTO> manager = new ManagerPostRequests<UserAllInfoStatisticDTO>();
+            manager.SetUrl("");
+            var result = await manager.PostRequests(_userCurrentInfo, PostsRequests.UpdateInfoForUser);
+            if(result)
+            {
+
+            }
+            manager.ResetUrlAndStatusCode();
+        }
+        catch(Exception ex)
+        {
+            await _homePage.DisplayAlertAsync("Error", $"{ex.Message}", "Ok");
+        }
+
+
+    }
+
+    private async Task<bool> UpdateModel()
+    {
+
+        if(!ExaminationProperty())
+            return false;
+
+
+        try
+        {
+            UserAllInfoStatisticDTO updateModel = _userCurrentInfo with
+            {
+                CountKill = CountKill,
+                CountDieds = CountDieds,
+                CountEvents = CountEvents,
+                CountFees = CountFees,
+                CommanderIsCheck = true,
+                OldDataJson = JsonSerializer.Serialize(_userCurrentInfo),
+                Achievements = Achievements.ToList()
+            };
+            _userCurrentInfo = updateModel;
+            return true;
+        }
+        catch(Exception ex)
+        {
+            await _homePage.DisplayAlertAsync("error", $"{ex.Message}", "ok");
+            return false;
+        }
+
+    }
+
+    private bool ExaminationProperty()
+    {
+        string patternPropyrty = @"^\d+$";
+        if(
+            Regex.IsMatch(CountDieds.ToString().Replace(" ", ""), patternPropyrty) &&
+            Regex.IsMatch(CountEvents.ToString().Replace(" ", ""), patternPropyrty) &&
+            Regex.IsMatch(CountKill.ToString().Replace(" ", ""), patternPropyrty) &&
+            Regex.IsMatch(CountFees.ToString().Replace(" ", ""), patternPropyrty) &&
+            Regex.IsMatch(CountDieds.ToString().Replace(" ", ""), patternPropyrty)
+            )
+            return true;
+        _homePage.DisplayAlertAsync("error", "Данные должны содержать только цифры", "Ok");
         return false;
     }
 }
