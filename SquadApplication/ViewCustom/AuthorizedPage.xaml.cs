@@ -8,11 +8,11 @@ public partial class AuthorizedPage : ContentPage
     public AuthorizedPage(IUserSession userSession, IDeviceManager deviceManager)
     {
         _customsAnimation = new CustomsAnimation();
-        InitializeComponent();
-        this.Loaded += LoadedPage;
         this._deviceManager = deviceManager;
         _viewModel = new AuthorizeViewModel(this, userSession, _deviceManager);
         BindingContext = _viewModel;
+        InitializeComponent();
+        this.Loaded += LoadedPage;
 
     }
 

@@ -135,6 +135,33 @@ public partial class ProfileViewModel : ObservableObject
         //
         //
     }
+    [RelayCommand]
+    private async Task AppendAchievements()
+    {
+        var nameAch = await _homePage.DisplayPromptAsync("Достижение", "Введите название достижения",
+            accept: "Ок",
+            cancel: "Отмена",
+            placeholder: "Название",
+            maxLength: 30,
+            keyboard: default
+            );
+        var discription = await _homePage.DisplayPromptAsync("Описание", "Опишите кратко достижение",
+            accept: "Ок",
+            cancel: "Отмена",
+            placeholder: "Описание",
+            maxLength: 200,
+            keyboard: default
+            );
+        if(nameAch is not null && discription is not null)
+        {
+            Achievements.Add(new Achievement()
+            {
+                Discription = discription,
+                NameAchievement = nameAch
+            });
+        }
+
+    }
 
     private async Task RequestForUpdateData()
     {
