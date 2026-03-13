@@ -86,7 +86,7 @@
                                     StrokeShape="13">
                                        <Button 
                                           BackgroundColor="Transparent"
-                                          Text="Редакт."
+                                          Text="{Binding EditData}"
                                           />
                                 </Border>
                             </HorizontalStackLayout>

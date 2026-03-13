@@ -11,6 +11,11 @@ public partial class ProfileViewModel : ObservableObject
 
 
     [ObservableProperty]
+    private string editData = "Редакт.";
+    private bool _updateMode; 
+
+
+    [ObservableProperty]
     private bool commanderIsCheck;
 
     [ObservableProperty]
@@ -71,9 +76,9 @@ public partial class ProfileViewModel : ObservableObject
         _managerGet.ResetUrlAndStatusCode();
     }
 
-    private async Task InitialProperty(UserAllInfoStatisticDTO model)
+    private async Task InitialProperty(UserAllInfoStatisticDTO? model)
     {
-        if(model.OldDataJson is not null)
+        if(model?.OldDataJson is not null)
         {
             UserAllInfoStatisticDTO? result = JsonSerializer.Deserialize<UserAllInfoStatisticDTO>(model.OldDataJson);
             _oldDataJson = result ??= new UserAllInfoStatisticDTO
@@ -81,6 +86,8 @@ public partial class ProfileViewModel : ObservableObject
                                                          new List<Achievement>() { new Achievement() { NameAchievement = "??", Discription = "??" } },
                                                          false, Role.Private, default);
         }
+        if(model is null)
+            return;
         CallSingPlayer = model.CallSingPlayer;
         CountDieds = model.CountDieds;
         CountKill = model.CountKill;
@@ -103,8 +110,30 @@ public partial class ProfileViewModel : ObservableObject
         //if(_homePage._stanger)
         //    await _homePage.DisplayAlertAsync("info","Была загружена все даныне кроме имени","Ok");
     }
+    [RelayCommand]
+    private async Task EditInfoUser()
+    {
+        if(_user is null || _user._role != Role.Commander)
+        {
+           await _homePage.DisplayAlertAsync("Info","Вы не командир!!!","Ok");
+            return;
+        }
+        if(_updateMode)
+        {
+            if(UpdateModel(_userCurrentInfo))
+            {
+                
+            }
+        }
+        EditData = "OK";
+        _updateMode = true;
+        
+        //
+        //
+    }
 
-
-
-
+    private bool UpdateModel(UserAllInfoStatisticDTO userCurrentInfo)
+    {
+        return false;
+    }
 }
