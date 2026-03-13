@@ -2,6 +2,7 @@
 
 public record class UserAllInfoStatisticDTO
     (
+    int userId,
     string LiveWeapon,
     string NamePlayer,
     string CallSingPlayer,

@@ -137,8 +137,6 @@
           FontSize="20"
           BackgroundColor="Transparent"/>
             </Border>
-        
-       
             <Border
                     Style="{StaticResource Key=BorderStylesCust}">
                 <Border.Shadow>

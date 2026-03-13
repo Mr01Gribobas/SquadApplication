@@ -5,7 +5,7 @@ public partial class ProfileViewModel : ObservableObject
     private readonly ManagerGetRequests<UserAllInfoStatisticDTO> _managerGet;
     private readonly ProfilePage _homePage;
     private UserModelEntity _user;
-    private UserAllInfoStatisticDTO _userInfo;
+    private UserAllInfoStatisticDTO _userCurrentInfo;
     private UserAllInfoStatisticDTO _oldDataJson;
 
 
@@ -66,7 +66,7 @@ public partial class ProfileViewModel : ObservableObject
     {
         _managerGet.SetUrl($"GetAllInfoUser?userId={id}");
         List<UserAllInfoStatisticDTO>? responce = await _managerGet.GetDataAsync(GetRequests.AllInfoForProfile);
-        if(responce.Count > 0 && responce.FirstOrDefault() is not null)
+        if(responce is not null && responce.Count > 0 && responce.FirstOrDefault() is not null)
             await InitialProperty(responce.FirstOrDefault());
         _managerGet.ResetUrlAndStatusCode();
     }
@@ -77,7 +77,7 @@ public partial class ProfileViewModel : ObservableObject
         {
             UserAllInfoStatisticDTO? result = JsonSerializer.Deserialize<UserAllInfoStatisticDTO>(model.OldDataJson);
             _oldDataJson = result ??= new UserAllInfoStatisticDTO
-                                                         ("??", "??", "??", 0, 0, 0, 0, default, "??",
+                                                         (0,"??", "??", "??", 0, 0, 0, 0, default, "??",
                                                          new List<Achievement>() { new Achievement() { NameAchievement = "??", Discription = "??" } },
                                                          false, Role.Private, default);
         }
@@ -90,22 +90,18 @@ public partial class ProfileViewModel : ObservableObject
         LiveWeapon = model.LiveWeapon;
         AchievementsCount = model.Achievements.Count;
         PlayerRole = model.roleUser.ToString();
-        PlayerName = _user._userName;
+        PlayerName = model.NamePlayer;
         DataRegistr = $"{model.dateRegistrationUser.ToString().Replace("/", ":")}";
         CommanderIsCheck = model.CommanderIsCheck;
+        _userCurrentInfo = model;
 
         if(model.Achievements.Count > 0)
         {
             foreach(Achievement item in model.Achievements)
-            {
                 Achievements.Add(item);
-            }
         }
-        if(_homePage._stanger)
-            await _homePage.DisplayAlertAsync("info","Была загружена все даныне кроме имени","Ok");
-        
-            
-        
+        //if(_homePage._stanger)
+        //    await _homePage.DisplayAlertAsync("info","Была загружена все даныне кроме имени","Ok");
     }
 
 

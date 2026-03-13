@@ -185,6 +185,7 @@ public class DataBaseRepository
         if(statistic is null)
             statistic = await CreateStatisticForUSer(user);
         UserAllInfoStatisticDTO statisticDTO = new UserAllInfoStatisticDTO(
+            userId:user.Id,
             LiveWeapon: user.Equipment?.NameMainWeapon ?? "Не найдено",
             NamePlayer: user._userName,
             CallSingPlayer: user._callSing,
