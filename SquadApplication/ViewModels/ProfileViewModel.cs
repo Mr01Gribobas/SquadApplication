@@ -14,7 +14,10 @@ public partial class ProfileViewModel : ObservableObject
 
     [ObservableProperty]
     private string editData = "Редакт.";
-    private bool _updateMode;
+    [ObservableProperty]
+    private bool updateMode;
+
+
 
 
     [ObservableProperty]
@@ -120,17 +123,17 @@ public partial class ProfileViewModel : ObservableObject
             await _homePage.DisplayAlertAsync("Info", "Вы не командир!!!", "Ok");
             return;
         }
-        if(_updateMode)
+        if(UpdateMode)
         {
+            UpdateMode = false;
+            EditData = "Редакт.";
             if(await UpdateModel())
             {
                 await RequestForUpdateData();
             }
-            _updateMode = false;
-            EditData = "Редакт.";
         }
         EditData = "OK";
-        _updateMode = true;
+        UpdateMode = true;
 
         //
         //
@@ -170,7 +173,7 @@ public partial class ProfileViewModel : ObservableObject
             if(_user._role != Role.Commander)
                 throw new Exception("Вы не командир !!");
             ManagerPostRequests<UserAllInfoStatisticDTO> manager = new ManagerPostRequests<UserAllInfoStatisticDTO>();
-            manager.SetUrl("");
+            manager.SetUrl($"UpdateStatistickForUser?commanderId={_user.Id}&userId={_userCurrentInfo.userId}");
             var result = await manager.PostRequests(_userCurrentInfo, PostsRequests.UpdateInfoForUser);
             if(result)
             {

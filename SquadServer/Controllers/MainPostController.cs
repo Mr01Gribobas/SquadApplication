@@ -458,14 +458,14 @@ public class MainPostController : Controller
     [HttpPost]
     public async Task<IActionResult> UpdateStatistickForUser(int commanderId, int userId)
     {
-        UserAllInfoStatisticDTO? resultReader = await HttpContext.Request.ReadFromJsonAsync<UserAllInfoStatisticDTO>();
-        if(resultReader is not null)
+        try
         {
-            try
+            UserAllInfoStatisticDTO? resultReader = await HttpContext.Request.ReadFromJsonAsync<UserAllInfoStatisticDTO>();
+            if(resultReader is not null)
             {
                 var commander = await _squadDbContext.Players.FirstOrDefaultAsync(com => com.Id == commanderId);
                 var user = await _squadDbContext.Players.Include(s => s.Statistic).FirstOrDefaultAsync(u => u.Id == userId);
-                if(commander is not null && user is not null)
+                if(commander is not null && user is not null && commander._role == Role.Commander)
                 {
                     if(user.Statistic is not null)
                     {
@@ -481,7 +481,7 @@ public class MainPostController : Controller
                     }
                     else
                     {
-                        PlayerStatisticsModelEntity newStatistick = new PlayerStatisticsModelEntity() 
+                        PlayerStatisticsModelEntity newStatistick = new PlayerStatisticsModelEntity()
                         {
                             OldDataJson = resultReader.OldDataJson,
                             CountDieds = resultReader.CountDieds,
@@ -494,13 +494,16 @@ public class MainPostController : Controller
                         await newStatistick.UpdateAchievements(resultReader.Achievements);
                         await _squadDbContext.PlayerStatistics.AddAsync(newStatistick);
                     }
+                    await _squadDbContext.SaveChangesAsync();
+                    return Ok(true);
                 }
             }
-            catch(Exception)
-            {
-
-                throw;
-            }
+            throw new NotImplementedException();
+        }
+        catch(Exception ex)
+        {
+            return Ok(false);
         }
     }
 }
+
