@@ -55,8 +55,6 @@ public class PlayerStatisticsModelEntity
             {
                 return new();
             }
-
-
         }
         private set;
     }
@@ -73,17 +71,17 @@ public class PlayerStatisticsModelEntity
 
 
 
-    public void UpdateAchievements(Achievement achievement)
+    public async Task UpdateAchievements(List<Achievement> achievements)
     {
+        if(achievements is null)
+            return;
         List<Achievement>? currentAchivement = Achievements;
         if(currentAchivement is not null)
         {
-            currentAchivement.Add(achievement);
+            foreach(Achievement item in achievements)
+                currentAchivement.Add(item);
             AchievementsJson =  JsonSerializer.Serialize<List<Achievement>>(currentAchivement);
         }
-
-        currentAchivement.Add(achievement);
         AchievementsJson = JsonSerializer.Serialize<List<Achievement>>(currentAchivement);
-
     }
 }

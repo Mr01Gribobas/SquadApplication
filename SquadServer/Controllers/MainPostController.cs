@@ -94,7 +94,7 @@ public class MainPostController : Controller
             return Unauthorized();
         }
     }
-    
+
 
     [HttpPost]
     public async Task<IActionResult?> CreateEventForAllCommands(int commanderId)
@@ -443,7 +443,7 @@ public class MainPostController : Controller
     [HttpDelete]
     public async Task<IActionResult> DeleteEventById(int commanderId, int numberEvent)
     {
-        EventsForAllCommandsModelEntity? result = await _squadDbContext.EventsForAllCommands.Include(p=>p.Players).FirstOrDefaultAsync(ev => ev.Id == numberEvent);
+        EventsForAllCommandsModelEntity? result = await _squadDbContext.EventsForAllCommands.Include(p => p.Players).FirstOrDefaultAsync(ev => ev.Id == numberEvent);
         if(result is not null)
         {
             result.Players.Clear();
@@ -455,6 +455,52 @@ public class MainPostController : Controller
             return Ok(false);
 
     }
+    [HttpPost]
+    public async Task<IActionResult> UpdateStatistickForUser(int commanderId, int userId)
+    {
+        UserAllInfoStatisticDTO? resultReader = await HttpContext.Request.ReadFromJsonAsync<UserAllInfoStatisticDTO>();
+        if(resultReader is not null)
+        {
+            try
+            {
+                var commander = await _squadDbContext.Players.FirstOrDefaultAsync(com => com.Id == commanderId);
+                var user = await _squadDbContext.Players.Include(s => s.Statistic).FirstOrDefaultAsync(u => u.Id == userId);
+                if(commander is not null && user is not null)
+                {
+                    if(user.Statistic is not null)
+                    {
+                        await user.Statistic.UpdateAchievements(resultReader.Achievements);
+                        user.Statistic.OldDataJson = resultReader.OldDataJson;
+                        user.Statistic.CountFees = resultReader.CountFees;
+                        user.Statistic.CountDieds = resultReader.CountDieds;
+                        user.Statistic.CountKill = resultReader.CountKill;
+                        user.Statistic.CountEvents = resultReader.CountEvents;
+                        user.Statistic.IsCommanderCheck = resultReader.CommanderIsCheck;
+                        user.Statistic.LastUpdateDataStatistics = DateTime.UtcNow;
+                        _squadDbContext.PlayerStatistics.Update(user.Statistic);
+                    }
+                    else
+                    {
+                        PlayerStatisticsModelEntity newStatistick = new PlayerStatisticsModelEntity() 
+                        {
+                            OldDataJson = resultReader.OldDataJson,
+                            CountDieds = resultReader.CountDieds,
+                            CountEvents = resultReader.CountEvents,
+                            CountFees = resultReader.CountFees,
+                            CountKill = resultReader.CountKill,
+                            IsCommanderCheck = resultReader.CommanderIsCheck,
+                            LastUpdateDataStatistics = DateTime.UtcNow
+                        };
+                        await newStatistick.UpdateAchievements(resultReader.Achievements);
+                        await _squadDbContext.PlayerStatistics.AddAsync(newStatistick);
+                    }
+                }
+            }
+            catch(Exception)
+            {
 
-
+                throw;
+            }
+        }
+    }
 }

@@ -86,7 +86,8 @@
                                     StrokeShape="13">
                                        <Button 
                                           BackgroundColor="Transparent"
-                                          Text="{Binding EditData}"
+                                           Command="{Binding EditInfoUserCommand}"
+                                           Text="{Binding EditData}"
                                           />
                                 </Border>
                             </HorizontalStackLayout>
