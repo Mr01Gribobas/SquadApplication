@@ -62,8 +62,6 @@ public partial class HomeViewModel : ObservableObject
         _page = page;
         if(_user is not null)
             GetAllProfileById(_user.CurrentUser.Id);
-
-
     }
     private async void GetAllProfileById(int userId)
     {

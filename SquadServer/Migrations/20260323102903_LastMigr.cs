@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SquadServer.Migrations
 {
     /// <inheritdoc />
-    public partial class statisticup : Migration
+    public partial class LastMigr : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,6 +56,7 @@ namespace SquadServer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    NameGame = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TeamNameOrganization = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TeamIdOrganization = table.Column<int>(type: "int", nullable: false),
                     DescriptionShort = table.Column<string>(type: "nvarchar(max)", nullable: false),
