@@ -59,6 +59,15 @@ public partial class EditYourProfileViewModel : ObservableObject
             _phoneNumber: PhoneNumber,
             _teamName: TeamName
             );
+        
+        if(dataForm._teamName != _user._teamName )
+        {
+            bool resultFromUser = await _editProfilePage.DisplayAlertAsync("Предупреждение ", "Вы действительно желаете сменить команду  ??", "Да", "Нет");
+            if(!resultFromUser)
+                return;
+        }
+
+
 
         if(!ValidateDataUser(dataForm))
             await _editProfilePage.DisplayAlertAsync("Error", "Некоректные данные ", "Ok");
