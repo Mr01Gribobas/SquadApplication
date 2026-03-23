@@ -108,7 +108,7 @@ public class UserModelEntity
         userEntity._callSing = userFromApp?._callSing ?? userEntity._callSing;
         userEntity._phoneNumber = userFromApp?._phoneNumber ?? userEntity._phoneNumber;
         userEntity._age = userFromApp?._age ?? userEntity._age;
-        //userEntity._teamName = userFromApp._teamName;
+        userEntity._teamName = userFromApp?._teamName ?? userEntity._teamName;
     }
     public void UpdateStaffed(EquipmentEntity equip)
     {

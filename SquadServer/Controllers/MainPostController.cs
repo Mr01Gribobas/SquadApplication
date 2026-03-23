@@ -173,6 +173,8 @@ public class MainPostController : Controller
         else
         {
             UserModelEntity? userEntity = await _squadDbContext.Players.FirstOrDefaultAsync(eq => eq.Id == userId);
+            
+
             if(userEntity is not null)
             {
                 UserModelEntity.UpdateProfile(userFromApp, userEntity);
