@@ -46,7 +46,7 @@ if(!app.Environment.IsDevelopment())
 app.UseCors("CorsCustom");
 app.UseAuthorization();
 
-//await Test.TestCreateEvenForAllCommaa();
+//await Test.TestGetStatistic();
 
 
 app.MapStaticAssets();

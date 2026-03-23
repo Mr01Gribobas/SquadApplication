@@ -130,13 +130,12 @@ public partial class ProfileViewModel : ObservableObject
             if(await UpdateModel())
             {
                 await RequestForUpdateData();
+                return;
             }
         }
         EditData = "OK";
         UpdateMode = true;
 
-        //
-        //
     }
     [RelayCommand]
     private async Task AppendAchievements()
@@ -177,7 +176,7 @@ public partial class ProfileViewModel : ObservableObject
             var result = await manager.PostRequests(_userCurrentInfo, PostsRequests.UpdateInfoForUser);
             if(result)
             {
-
+               await _homePage.DisplayAlertAsync("Ok", $"Operation it`s ok", "Ok");
             }
             manager.ResetUrlAndStatusCode();
         }

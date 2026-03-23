@@ -55,6 +55,14 @@ public static class Test
             await db.SaveChangesAsync();
         }
     }
+    public static async Task TestGetStatistic()
+    {
+        using(SquadDbContext db = new SquadDbContext())
+        {
+            var res = await db.PlayerStatistics.FirstOrDefaultAsync(s => s.UserModelId == 1);
+            var res2 = await db.Players.Include(s => s.Statistic).FirstOrDefaultAsync(u=>u.Id == 1);
+        }
+    }
 
     public static async Task TestCreqwteEquip()
     {

@@ -220,8 +220,12 @@ public class DataBaseRepository
         };
         user.Statistic = statistic;
         await _squadDbContext.PlayerStatistics.AddAsync(statistic);
+        await _squadDbContext.SaveChangesAsync();
+        user.StatisticId = statistic.Id;
         _squadDbContext.Players.Update(user);
         await _squadDbContext.SaveChangesAsync();
+
+
         return statistic;
     }
 
