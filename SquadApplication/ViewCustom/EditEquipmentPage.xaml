@@ -5,7 +5,7 @@
              BackgroundImageSource="updateprofileandequip.jpg"
              Title="EditEquipmentPage">
     <VerticalStackLayout
-        BackgroundColor="#50808080"
+        BackgroundColor="#70808080"
         Padding="10"
         Margin="10">
             <Border>
@@ -49,7 +49,7 @@
             </HorizontalStackLayout>
         </Border>
         <Border>
-            <Entry                 
+            <Entry
                 Placeholder="Введите name weapon"
                 TextColor="AliceBlue"
                 Text="{Binding SecondaryWeapon}"
@@ -60,9 +60,9 @@
                              Binding="{Binding  
                              Source={x:Reference isEnabledWeaponSecndary},
                              Path=IsToggled}"
-                             Value="True"
+                             Value="false"
                              >
-                        <Setter Property="IsEnabled" Value="True"/>
+                        <Setter Property="IsEnabled" Value="False"/>
                     </DataTrigger>
                 </Entry.Triggers>
             </Entry>
@@ -83,9 +83,22 @@
                 </HorizontalStackLayout>
             </VerticalStackLayout>
         </Border>
-        <Border>
-            <Button Text="Update" Command="{Binding UpdateEquipmentCommand}"/>
+        <Border
+        Stroke="Transparent"
+        BackgroundColor="#70808080"
+        StrokeThickness="3"
+        StrokeShape="10"
+        Padding="10">
+            <Border.Shadow>
+                <Shadow 
+                Brush="#b3c96b" 
+                Offset="0,5" 
+                Opacity="1.5"
+                Radius="9"/>
+            </Border.Shadow>
+            <Button Text="Update" BackgroundColor="Transparent" Command="{Binding UpdateEquipmentCommand}"/>
         </Border>
+        
 
     </VerticalStackLayout>
         
