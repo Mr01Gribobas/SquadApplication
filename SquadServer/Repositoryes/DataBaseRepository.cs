@@ -3,9 +3,6 @@
 public class DataBaseRepository
 {
     private SquadDbContext _squadDbContext { get; set; }
-
-
-
     public SquadDbContext GetCurrentContextDb() => _squadDbContext;
     public DataBaseRepository(SquadDbContext _squadDbContext) => this._squadDbContext = _squadDbContext;
 
@@ -29,7 +26,7 @@ public class DataBaseRepository
     }
     public async Task<UserModelEntity?> GetCaptainByTeamIdAsync(int teamId) =>
                                                     await _squadDbContext.Players.
-                                                    FirstOrDefaultAsync(p => p.TeamId == teamId & p._role == Role.Commander);
+                                                    FirstOrDefaultAsync(p => p.TeamId == teamId & p._role == Role.Commander);//Ok
     public UserModelEntity? GetUserFromDb(int loginCode)
     {
         return _squadDbContext.Players.
@@ -38,7 +35,7 @@ public class DataBaseRepository
                   Include(st => st.Statistic).
                   Include(t => t.Team).
                   FirstOrDefault(u => u._enterCode == loginCode);
-    }
+    }//ok
     public UserModelEntity? GetUserById(int id)
     {
         return _squadDbContext.Players.
