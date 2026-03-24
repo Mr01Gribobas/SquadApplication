@@ -2,7 +2,7 @@
 
 public class StatisticForUserDbService : BaseDbService
 {
-    public StatisticForUserDbService(SquadDbContext squadDb) : base(squadDb){}
+    public StatisticForUserDbService(SquadDbContext squadDb) : base(squadDb) { }
     public async Task<UserAllInfoStatisticDTO> GetAllInfoUser(int userId)
     {
         var user = await _context.Players.Include(s => s.Statistic).Include(e => e.Equipment).FirstOrDefaultAsync(u => u.Id == userId);
@@ -53,6 +53,54 @@ public class StatisticForUserDbService : BaseDbService
         return statistic;
 
 
+    }
+    public async Task UpdateStatisticForUser(int commanderId, int userId, UserAllInfoStatisticDTO? statisticModel)
+    {
+        try
+        {
+            if(statisticModel is not null)
+            {
+                var commander = await _context.Players.FirstOrDefaultAsync(com => com.Id == commanderId);
+                var user = await _context.Players.Include(s => s.Statistic).FirstOrDefaultAsync(u => u.Id == userId);
+                if(commander is not null && user is not null && commander._role == Role.Commander)
+                {
+                    if(user.Statistic is not null)
+                    {
+                        await user.Statistic.UpdateAchievements(statisticModel.Achievements);
+                        user.Statistic.OldDataJson = statisticModel.OldDataJson;
+                        user.Statistic.CountFees = statisticModel.CountFees;
+                        user.Statistic.CountDieds = statisticModel.CountDieds;
+                        user.Statistic.CountKill = statisticModel.CountKill;
+                        user.Statistic.CountEvents = statisticModel.CountEvents;
+                        user.Statistic.IsCommanderCheck = statisticModel.CommanderIsCheck;
+                        user.Statistic.LastUpdateDataStatistics = DateTime.UtcNow;
+                        _context.PlayerStatistics.Update(user.Statistic);
+                    }
+                    else
+                    {
+                        PlayerStatisticsModelEntity newStatistick = new PlayerStatisticsModelEntity()
+                        {
+                            OldDataJson = statisticModel.OldDataJson,
+                            CountDieds = statisticModel.CountDieds,
+                            CountEvents = statisticModel.CountEvents,
+                            CountFees = statisticModel.CountFees,
+                            CountKill = statisticModel.CountKill,
+                            IsCommanderCheck = statisticModel.CommanderIsCheck,
+                            LastUpdateDataStatistics = DateTime.UtcNow
+                        };
+                        await newStatistick.UpdateAchievements(statisticModel.Achievements);
+                        await _context.PlayerStatistics.AddAsync(newStatistick);
+                    }
+                    await _context.SaveChangesAsync();
+                    return Ok(true);
+                }
+            }
+            throw new NotImplementedException();
+        }
+        catch(Exception ex)
+        {
+            return Ok(false);
+        }
     }
     public async void CreateStatistic(UserModelEntity newUser) => CreateStatisticForUSer(newUser);
 }

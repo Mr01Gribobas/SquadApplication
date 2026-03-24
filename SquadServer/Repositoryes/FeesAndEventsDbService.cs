@@ -2,7 +2,7 @@
 
 public class FeesAndEventsDbService : BaseDbService
 {
-    public FeesAndEventsDbService(SquadDbContext squadDb) : base(squadDb){}
+    public FeesAndEventsDbService(SquadDbContext squadDb) : base(squadDb) { }
     public async Task<EvenCheck> CheckEvent(int teamId, int userID)
     {
         var eventFromDb = await _context.Events.FirstOrDefaultAsync(e => e.TeamId == teamId);
@@ -43,7 +43,7 @@ public class FeesAndEventsDbService : BaseDbService
     }
 
 
-    public async Task<bool>  AppendOrDeleteFromTheMeeting(string nameteamOrganization, int userId, bool turnout)
+    public async Task<bool> AppendOrDeleteFromTheMeeting(string nameteamOrganization, int userId, bool turnout)
     {
         var events = await _context.EventsForAllCommands.Include(u => u.Players).FirstOrDefaultAsync(e => e.TeamNameOrganization == nameteamOrganization);
 
@@ -73,6 +73,150 @@ public class FeesAndEventsDbService : BaseDbService
         }
     }//TODO test
 
+    public async Task<bool> CreateFees(int commanderId, EventModelEntity? newEvent)
+    {
+        var user = _context.Players.Include(t => t.Team).FirstOrDefault(u => u.Id == commanderId);
+        try
+        {
+            if(
+                user is not null &&
+                user.TeamId is not null &
+               (user._role == Role.Commander |
+                user._role == Role.AssistantCommander))
+            {
+                if(_context.Events.FirstOrDefault(e => e.TeamId == user.TeamId) is not null)
+                    return true;
 
+                newEvent.Team = user.Team;
+                newEvent.TeamId = (int)user.TeamId == 0 ? throw new NullReferenceException() : (int)user.TeamId;
+                await _context.Events.AddAsync(newEvent);
+                await _context.SaveChangesAsync();
+                //var nottification = await _notificationDistributor.NotifyNewEventAsync(newEvent);
+                return true;
+            }
+            else
+                throw new NullReferenceException();
+        }
+        catch(Exception ex)
+        {
+            return false;
+        }
+    }
 
+    public async Task<bool> UpdateFees(int commanderId, EventModelEntity? newEvent)
+    {
+        var user = _context.Players.Include(t => t.Team).FirstOrDefault(u => u.Id == commanderId);
+
+        try
+        {
+            if(user is not null && user.TeamId is not null)
+            {
+                var oldEvent = await _context.Events.Include(t => t.Team).FirstOrDefaultAsync(t => t.TeamId == user.TeamId);
+                if(oldEvent is not null)
+                {
+                    oldEvent.NameTeamEnemy = newEvent.NameTeamEnemy;
+                    oldEvent.NamePolygon = newEvent.NamePolygon;
+                    oldEvent.Coordinates = newEvent.Coordinates;
+                    oldEvent.Time = newEvent.Time;
+                    oldEvent.Date = newEvent.Date;
+                    _context.Events.Update(oldEvent);
+                }
+                else
+                {
+                    await _context.Events.AddAsync(new EventModelEntity
+                    {
+                        NameTeamEnemy = newEvent.NameTeamEnemy,
+                        Coordinates = newEvent.Coordinates,
+                        NamePolygon = newEvent.NamePolygon,
+                        Date = newEvent.Date,
+                        Time = newEvent.Time,
+
+                        TeamId = (int)user.TeamId,
+                        Team = user?.Team ?? throw new InvalidOperationException()
+                    });
+
+                }
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            else
+                throw new NullReferenceException();
+        }
+        catch(Exception ex)
+        {
+            return false;
+        }
+    }
+    public async Task<bool> CreateEventForAllCommands(int commanderId, EventsForAllCommandsModelDTO newModel)
+    {
+        try
+        {
+            var commander = await _context.Players.Include(t => t.Team).FirstOrDefaultAsync(u => u.Id == commanderId);
+            if(commander is not null && newModel is not null)
+            {
+                EventsForAllCommandsModelEntity eventsModel = EventsForAllCommandsModelEntity.CreateModel(newModel, commander);
+
+                await _context.EventsForAllCommands.AddAsync(eventsModel);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            else
+                throw new Exception();
+
+        }
+        catch(Exception ex)
+        {
+            return false;
+        }
+    }
+    public async Task<bool> UpdateEventsForAllCommands(int commanderId, EventsForAllCommandsModelDTO? modelForUpdate)
+    {
+        try
+        {
+            var commander = await _context.Players.Include(t => t.Team).FirstOrDefaultAsync(u => u.Id == commanderId);
+            if(commander is not null && modelForUpdate is not null && commander.Team is not null)
+            {
+                var eventFromDb = await _context.EventsForAllCommands.FirstOrDefaultAsync(e => e.Id == modelForUpdate.numberEvent);
+                if(eventFromDb is not null)
+                {
+                    eventFromDb.NameGame = modelForUpdate.NameGame;
+                    eventFromDb.DescriptionFull = modelForUpdate.DescriptionFull;
+                    eventFromDb.DescriptionShort = modelForUpdate.DescriptionShort;
+                    eventFromDb.PolygonName = modelForUpdate.PolygonName;
+                    eventFromDb.CoordinatesPolygon = modelForUpdate.CoordinatesPolygon;
+                    eventFromDb.DateAndTimeGame = new DateTime(modelForUpdate.Date, modelForUpdate.Time);
+                    _context.EventsForAllCommands.Update(eventFromDb);
+                }
+                else
+                {
+                    EventsForAllCommandsModelEntity eventsModel = EventsForAllCommandsModelEntity.CreateModel(modelForUpdate, commander);
+                    await _context.EventsForAllCommands.AddAsync(eventsModel);
+                }
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            else
+                throw new Exception();
+        }
+        catch(Exception ex)
+        {
+            return false;
+        }
+    }
+    public async Task<bool> DeleteEventById(int numberEvent, int commanderId)
+    {
+        EventsForAllCommandsModelEntity? result = await _context.EventsForAllCommands.Include(p => p.Players).FirstOrDefaultAsync(ev => ev.Id == numberEvent);
+        if(result is not null)
+        {
+            result.Players.Clear();
+            _context.EventsForAllCommands.Remove(result);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        else
+            return false;
+    }
 }
+
+

@@ -2,7 +2,7 @@
 
 public class PolygonDbService : BaseDbService
 {
-    public PolygonDbService(SquadDbContext squadDb) : base(squadDb){}
+    public PolygonDbService(SquadDbContext squadDb) : base(squadDb) { }
     public async Task<List<PolygonEntity>> GetAllPolygons() => await _context.Polygons.ToListAsync();
     public async Task<bool> DeletePoligon(int poligonId)
     {
@@ -13,5 +13,21 @@ public class PolygonDbService : BaseDbService
         _context.Polygons.Remove(result);
         await _context.SaveChangesAsync();
         return true;
+    }
+    public async Task<bool> AppendPolygon(PolygonEntity polygonModel)
+    {
+        try
+        {
+            if(!PolygonEntity.ValidateCoordinates(polygonModel.Coordinates))
+                return false;
+
+            await _context.Polygons.AddAsync(polygonModel);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch(Exception ex)
+        {
+            return false;
+        }
     }
 }

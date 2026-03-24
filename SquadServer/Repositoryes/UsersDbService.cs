@@ -156,13 +156,13 @@ public class UsersDbService : BaseDbService
             UserModelEntity? userFromDb = await _context.Players.FirstOrDefaultAsync(u => u.Id == userId);
             if(userFromDb is null)
                 throw new NullReferenceException(nameof(userFromDb));
-            TeamEntity? teamEntity = await _context.Teams.Include(u=>u.Members).FirstOrDefaultAsync(t=>t.Id == userFromDb.TeamId);
-            EquipmentEntity? equipment = await _context.Equipments.Include(o=>o.OwnerEquipment).FirstOrDefaultAsync(e=>e.Id == userFromDb.EquipmentId);
+            TeamEntity? teamEntity = await _context.Teams.Include(u => u.Members).FirstOrDefaultAsync(t => t.Id == userFromDb.TeamId);
+            EquipmentEntity? equipment = await _context.Equipments.Include(o => o.OwnerEquipment).FirstOrDefaultAsync(e => e.Id == userFromDb.EquipmentId);
 
 
             (UserModelEntity objectUser,
              TeamEntity objectTeam,
-             EquipmentEntity? objectEquipment) infoForProfile =  (userFromDb,teamEntity,equipment);
+             EquipmentEntity? objectEquipment) infoForProfile = (userFromDb, teamEntity, equipment);
 
             var container = new TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentEntity>()
             {
@@ -179,10 +179,45 @@ public class UsersDbService : BaseDbService
         }
     }
 
+
+    public async Task<bool> UpdateProfileById(int userId, UserModelEntity? userFromApp)
+    {
+        try
+        {
+            if(userFromApp == null)
+                throw new NullReferenceException(nameof(userFromApp));
+            else
+            {
+                UserModelEntity? userEntity = await _context.Players.FirstOrDefaultAsync(eq => eq.Id == userId);
+                if(userEntity is not null)
+                {
+                    if(userEntity._teamName != userFromApp._teamName)
+                    {
+                        var newTeam = await _context.Teams.FirstOrDefaultAsync(t => t.Name == userFromApp._teamName);
+                        if(newTeam is null)
+                            throw new NullReferenceException(nameof(newTeam));
+                    }
+                    UserModelEntity.UpdateProfile(userFromApp, userEntity);
+                    _context.Players.Update(userEntity);
+                }
+                else
+                    throw new NullReferenceException(nameof(userEntity));
+                await _context.SaveChangesAsync();
+                return true;
+            }
+        }
+        catch(Exception ex)
+        {
+            return false;
+        }
+    }
+
     private async Task<TeamEntity?> SearchTeamByName(UserModelEntity userFromApp)
     {
         return await _context.Teams.
                                 Include(u => u.Members).
                                FirstOrDefaultAsync(t => t.Name == userFromApp._teamName);
     }
+
+
 }

@@ -15,7 +15,8 @@ public class MainPostController : Controller
     [HttpPost]
     public async Task<IActionResult?> CreateEvent(int commanderId)
     {
-        EventModelEntity? newEvent = await HttpContext.Request.ReadFromJsonAsync<EventModelEntity>();
+        EventModelEntity? newEvent = await HttpContext.Request.ReadFromJsonAsync<EventModelEntity>();//
+
         if(newEvent is null)
             return Unauthorized();
         var user = _squadDbContext.Players.Include(t => t.Team).FirstOrDefault(u => u.Id == commanderId);
@@ -43,7 +44,7 @@ public class MainPostController : Controller
         {
             return Unauthorized();
         }
-    }
+    }//ok
 
     [HttpPost]
     public async Task<IActionResult?> UpdateEvent(int commanderId)
@@ -93,7 +94,7 @@ public class MainPostController : Controller
         {
             return Unauthorized();
         }
-    }
+    }//ok
 
 
     [HttpPost]
@@ -120,7 +121,8 @@ public class MainPostController : Controller
         {
             return BadRequest(ex.Message);
         }
-    }
+    }//ok
+
     [HttpPost]
     public async Task<IActionResult?> UpdateEventForAllCommands(int commanderId)
     {
@@ -159,17 +161,17 @@ public class MainPostController : Controller
         {
             return BadRequest(ex.Message);
         }
-    }
+    }//ok
 
 
 
     [HttpPost]
     public async Task<IActionResult?> UpdateProfile(int userId)
     {
+            UserModelEntity? userFromApp = await HttpContext.Request.ReadFromJsonAsync<UserModelEntity>();
 
         try
         {
-            UserModelEntity? userFromApp = await HttpContext.Request.ReadFromJsonAsync<UserModelEntity>();
             if(userFromApp == null)
                 throw new NullReferenceException(nameof(userFromApp));
             else
@@ -197,7 +199,7 @@ public class MainPostController : Controller
             return BadRequest(ex.Message);
         }
 
-    }
+    }//ok
 
 
     [HttpPost]
@@ -249,10 +251,10 @@ public class MainPostController : Controller
         {
             return BadRequest(ex.Message);
         }
+    }//ok
 
 
 
-    }
 
     [HttpPost]
     public async Task<IActionResult?> UpdateEquip(int equipId)
@@ -332,7 +334,7 @@ public class MainPostController : Controller
         }
 
 
-    }
+    }//ok
 
     [HttpPost]
     public async Task<IActionResult> AddPolygon(int userId)
@@ -353,7 +355,7 @@ public class MainPostController : Controller
         {
             return BadRequest();
         }
-    }
+    }//ok
 
 
 
@@ -409,7 +411,7 @@ public class MainPostController : Controller
             return BadRequest(ex.Message);
 
         }
-    }
+    }//ok
 
     [HttpPost]
     public async Task<IActionResult?> UpdateReantilsById(int reantilId)
@@ -452,7 +454,7 @@ public class MainPostController : Controller
         {
             return BadRequest(ex.Message);
         }
-    }
+    }//ok
 
     [HttpDelete]
     public async Task<IActionResult> DeleteEventById(int commanderId, int numberEvent)
@@ -468,7 +470,8 @@ public class MainPostController : Controller
         else
             return Ok(false);
 
-    }
+    }//ok
+
     [HttpPost]
     public async Task<IActionResult> UpdateStatistickForUser(int commanderId, int userId)
     {
@@ -518,6 +521,6 @@ public class MainPostController : Controller
         {
             return Ok(false);
         }
-    }
+    }//ok
 }
 
