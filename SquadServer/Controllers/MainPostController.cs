@@ -166,27 +166,39 @@ public class MainPostController : Controller
     [HttpPost]
     public async Task<IActionResult?> UpdateProfile(int userId)
     {
-        UserModelEntity? userFromApp = await HttpContext.Request.ReadFromJsonAsync<UserModelEntity>();
 
-        if(userFromApp == null)
-            return StatusCode(400);
-        else
+        try
         {
-            UserModelEntity? userEntity = await _squadDbContext.Players.FirstOrDefaultAsync(eq => eq.Id == userId);
-            
-
-            if(userEntity is not null)
-            {
-                UserModelEntity.UpdateProfile(userFromApp, userEntity);
-                _squadDbContext.Players.Update(userEntity);
-            }
+            UserModelEntity? userFromApp = await HttpContext.Request.ReadFromJsonAsync<UserModelEntity>();
+            if(userFromApp == null)
+                throw new NullReferenceException(nameof(userFromApp));
             else
-                return StatusCode(400);
-
-            await _squadDbContext.SaveChangesAsync();
-            return Ok(userEntity);
+            {
+                UserModelEntity? userEntity = await _squadDbContext.Players.FirstOrDefaultAsync(eq => eq.Id == userId);
+                if(userEntity is not null)
+                {
+                    if(userEntity._teamName != userFromApp._teamName)
+                    {
+                        var newTeam = await _squadDbContext.Teams.FirstOrDefaultAsync(t => t.Name == userFromApp._teamName);
+                        if(newTeam is null)
+                            throw new NullReferenceException(nameof(newTeam));
+                    }
+                    UserModelEntity.UpdateProfile(userFromApp, userEntity);
+                    _squadDbContext.Players.Update(userEntity);
+                }
+                else
+                    throw new NullReferenceException(nameof(userEntity));
+                await _squadDbContext.SaveChangesAsync();
+                return Ok(userEntity);
+            }
         }
+        catch(Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
     }
+
 
     [HttpPost]
     public async Task<IActionResult?> CreateEquip(int userId)

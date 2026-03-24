@@ -48,6 +48,7 @@ public partial class EditYourProfileViewModel : ObservableObject
         Age = user?._age.ToString() ?? "Не указан";
     }
 
+
     [RelayCommand]
     private async Task UpdateProfile()
     {
@@ -66,8 +67,6 @@ public partial class EditYourProfileViewModel : ObservableObject
             if(!resultFromUser)
                 return;
         }
-
-
 
         if(!ValidateDataUser(dataForm))
             await _editProfilePage.DisplayAlertAsync("Error", "Некоректные данные ", "Ok");
