@@ -5,22 +5,27 @@
 public class UsersController:ControllerBase
 {
     private readonly SquadDbContext _squadDbContext;
+    private readonly UsersDbService _dbService;
 
     public UsersController(SquadDbContext squadDbContext)
     {
         _squadDbContext = squadDbContext;
-        _dataBaseRepository = new UserDbService(_squadDbContext);
+        _dbService = new UsersDbService(_squadDbContext);
     }
 
-    [HttpGet("get")]
-    public IActionResult GetUsers() 
+
+    public async Task<IActionResult> GetUsers(int userId) 
     {
-        return default(IActionResult);
+        if(userId <=0)
+            return BadRequest(400);
+        List<UserModelEntity>? result = await _dbService.GetAllMembersAsync(userId);
+        return Ok(result);
     }
-    [HttpGet("{id}")]
-    public IActionResult GetUserById(int id)
-    {
-        Console.WriteLine(id);
-        return default(IActionResult);
-    }
+        
+
+    //[HttpGet("{id}")]
+    //public async Task<IActionResult> GetUserById(int id)
+    //{
+    //   var userFromDb = await _dbService.GetUserById(id);
+    //}
 }

@@ -65,15 +65,15 @@ public class UsersDbService : BaseDbService
         }
 
     }
-    public List<UserModelEntity>? GetAllMembers(int userId)
+    public async Task<List<UserModelEntity>?> GetAllMembersAsync(int userId)
     {
         try
         {
-            UserModelEntity userById = _context.Players.First(u => u.Id == userId);
-            var list = _context.Players.
+            UserModelEntity userById = await _context.Players.FirstAsync(u => u.Id == userId);
+            var list = await _context.Players.
                               Where(u => u.TeamId == userById.TeamId).
                               OrderBy(u => u._role).
-                              ToList();
+                              ToListAsync();
             return list;
         }
         catch(Exception ex)
