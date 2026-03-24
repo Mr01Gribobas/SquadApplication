@@ -13,7 +13,7 @@ public class DataBaseRepository
         if(eventFromDb is not null && userIsgoing is not null)
             return new EvenCheck(isGoTogame: userIsgoing._goingToTheGame ?? false, availabilityEvent: true);
         return new EvenCheck(isGoTogame: false, availabilityEvent: false);
-    }
+    }//ok
 
     public async Task<UserModelEntity> GameAttendance(int userId, bool isWill)//TODO
     {
@@ -41,7 +41,7 @@ public class DataBaseRepository
         return _squadDbContext.Players.
                   AsNoTracking().Include(e => e.Equipment).
                   FirstOrDefault(u => u.Id == id);
-    }
+    }//ok
     public async Task<UserModelEntity?> CreateNewUser(UserModelEntity userFromApp)
     {
         ArgumentNullException.ThrowIfNull(userFromApp);
@@ -83,7 +83,7 @@ public class DataBaseRepository
             throw new Exception(ex.Message);
         }
 
-    }
+    }//ok
 
 
 
@@ -92,7 +92,7 @@ public class DataBaseRepository
         return await _squadDbContext.Teams.
                                 Include(u => u.Members).
                                FirstOrDefaultAsync(t => t.Name == userFromApp._teamName);
-    }
+    }//ok
 
     public List<UserModelEntity>? GetAllMembers(int userId)
     {
@@ -109,7 +109,7 @@ public class DataBaseRepository
         {
             throw new ArgumentNullException(ex.Message);
         }
-    }
+    }//ok
 
     public async Task<List<RentailsDTO>>? GetAllReantilAsync(int teamId)
     {
@@ -137,14 +137,14 @@ public class DataBaseRepository
             });
         }
         return rentails;
-    }
+    }//ok
 
-    public async Task<List<PolygonEntity>> GetAllPolygons() => await _squadDbContext.Polygons.ToListAsync();
-    public async Task<List<HisoryEventsModelEntity>> GetEventHistory() => await _squadDbContext.HistoryEvents.ToListAsync();
-    public async Task<EventModelEntity?> GetEvent(int teamId) => await _squadDbContext.Events.Include(e => e.Team).FirstOrDefaultAsync(t => t.TeamId == teamId);
-    public async Task<EquipmentEntity?> GetEquipById(int id) => await _squadDbContext.Equipments.FirstOrDefaultAsync(e => e.Id == id);
-    public EquipmentEntity? GetEquipByUserId(int userId) => _squadDbContext.Equipments.Include(u => u.OwnerEquipment).FirstOrDefault(e => e.OwnerEquipmentId == userId);
-    public async Task<TeamEntity?> GetTeamByUserId(UserModelEntity userFromDb) => await _squadDbContext.Teams.Include(t => t.Members).FirstOrDefaultAsync(t => t.Id == userFromDb.TeamId);
+    public async Task<List<PolygonEntity>> GetAllPolygons() => await _squadDbContext.Polygons.ToListAsync();//ok
+    public async Task<List<HisoryEventsModelEntity>> GetEventHistory() => await _squadDbContext.HistoryEvents.ToListAsync();//ok
+    public async Task<EventModelEntity?> GetEvent(int teamId) => await _squadDbContext.Events.Include(e => e.Team).FirstOrDefaultAsync(t => t.TeamId == teamId);//ok
+    public async Task<EquipmentEntity?> GetEquipById(int id) => await _squadDbContext.Equipments.FirstOrDefaultAsync(e => e.Id == id);//ok
+    public EquipmentEntity? GetEquipByUserId(int userId) => _squadDbContext.Equipments.Include(u => u.OwnerEquipment).FirstOrDefault(e => e.OwnerEquipmentId == userId);//ok
+    public async Task<TeamEntity?> GetTeamByUserId(UserModelEntity userFromDb) => await _squadDbContext.Teams.Include(t => t.Members).FirstOrDefaultAsync(t => t.Id == userFromDb.TeamId);//ok
 
 
     public async Task<List<EventsForAllCommandsModelDTO>> GetAllEventsForAllCommands()
@@ -171,7 +171,7 @@ public class DataBaseRepository
                 ));
         }
         return newList;
-    }
+    }//ok
 
     public async Task<UserAllInfoStatisticDTO> GetAllInfoUser(int userId)
     {
@@ -199,7 +199,7 @@ public class DataBaseRepository
             );
 
         return statisticDTO;
-    }
+    }//ok
 
     private async Task<PlayerStatisticsModelEntity> CreateStatisticForUSer(UserModelEntity user)
     {
@@ -224,7 +224,7 @@ public class DataBaseRepository
 
 
         return statistic;
-    }
+    }//ok
 
     public async Task<bool> UpdateInfoUser(UserAllInfoStatisticDTO dataForUpdate, int userId)
     {
@@ -287,7 +287,7 @@ public class DataBaseRepository
         {
             return false;
         }
-    }
+    }//ok
 
     public async Task<bool> DeleteRentail(int rentailNymber)
     {
@@ -298,7 +298,7 @@ public class DataBaseRepository
         _squadDbContext.Reantils.Remove(item);
         await _squadDbContext.SaveChangesAsync();
         return true;
-    }
+    }//ok
 
     public async Task<bool> DeletePoligon(int poligonId)
     {
@@ -309,8 +309,8 @@ public class DataBaseRepository
         _squadDbContext.Polygons.Remove(result);
         await _squadDbContext.SaveChangesAsync();
         return true;
-    }
-    public async void CreateStatistic(UserModelEntity newUser) => CreateStatisticForUSer(newUser);
+    }//ok
+    public async void CreateStatistic(UserModelEntity newUser) => CreateStatisticForUSer(newUser);//ok
 
 
 }

@@ -228,7 +228,8 @@ public class MainGetController : Controller
         {
             return Unauthorized();
         }
-    }
+    }//ok
+
     [HttpGet]
     public async Task<IActionResult> GameAttendance(int userId, bool isWill)
     {
