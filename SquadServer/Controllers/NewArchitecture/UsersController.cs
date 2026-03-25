@@ -1,6 +1,5 @@
 ﻿namespace SquadServer.Controllers.NewArchitecture;
 
-
 [Route("api/users")]
 public class UsersController:ControllerBase
 {
