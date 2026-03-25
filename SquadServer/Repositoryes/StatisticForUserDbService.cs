@@ -6,8 +6,9 @@ public class StatisticForUserDbService : BaseDbService
     public async Task<UserAllInfoStatisticDTO> GetAllInfoUser(int userId)
     {
         var user = await _context.Players.Include(s => s.Statistic).Include(e => e.Equipment).FirstOrDefaultAsync(u => u.Id == userId);
+
         if(user is null)
-            throw new NullReferenceException();
+            throw new NullReferenceException("Errorrrr");
         var statistic = user.Statistic;
         if(statistic is null)
             statistic = await CreateStatisticForUSer(user);
@@ -54,7 +55,7 @@ public class StatisticForUserDbService : BaseDbService
 
 
     }
-    public async Task UpdateStatisticForUser(int commanderId, int userId, UserAllInfoStatisticDTO? statisticModel)
+    public async Task<bool> UpdateStatisticForUser(int commanderId, int userId, UserAllInfoStatisticDTO? statisticModel)
     {
         try
         {
@@ -92,14 +93,14 @@ public class StatisticForUserDbService : BaseDbService
                         await _context.PlayerStatistics.AddAsync(newStatistick);
                     }
                     await _context.SaveChangesAsync();
-                    return Ok(true);
+                    return true;
                 }
             }
             throw new NotImplementedException();
         }
         catch(Exception ex)
         {
-            return Ok(false);
+            return false;
         }
     }
     public async void CreateStatistic(UserModelEntity newUser) => CreateStatisticForUSer(newUser);

@@ -1,30 +1,42 @@
 ﻿namespace SquadServer.Controllers.NewArchitecture;
 
 [Route("api/users")]
-public class UsersController:ControllerBase
+public class UsersController : ControllerBase
 {
     private readonly SquadDbContext _squadDbContext;
-    private readonly UsersDbService _dbService;
+    private readonly UsersDbService _usersDbService;
 
     public UsersController(SquadDbContext squadDbContext)
     {
         _squadDbContext = squadDbContext;
-        _dbService = new UsersDbService(_squadDbContext);
+        _usersDbService = new UsersDbService(_squadDbContext);
     }
 
-
-    public async Task<IActionResult> GetUsers(int userId) 
+    [HttpGet]
+    public async Task<IActionResult> GetAllUsers(int userId)
     {
-        if(userId <=0)
+        if(userId <= 0)
             return BadRequest(400);
-        List<UserModelEntity>? result = await _dbService.GetAllMembersAsync(userId);
+        List<UserModelEntity>? result = await _usersDbService.GetAllMembersAsync(userId);
         return Ok(result);
     }
-        
 
-    //[HttpGet("{id}")]
-    //public async Task<IActionResult> GetUserById(int id)
-    //{
-    //   var userFromDb = await _dbService.GetUserById(id);
-    //}
+    [HttpGet]
+    public async Task<IActionResult?> PlayerUpdateRank(int userId, bool rank)
+    {
+        var result = await _usersDbService.UpdateRankUser(userId, rank);
+
+        return Ok(result);
+    }
+
+    [HttpGet("userId")]
+    public IActionResult? GetUserById(int userId)
+    {
+        Controller.LogInformation("Start action : GetUserById");
+
+        var user = _usersDbService.GetUserById(userId);
+        if(user is null)
+            return NotFound();
+        return Ok(user);
+    }    
 }

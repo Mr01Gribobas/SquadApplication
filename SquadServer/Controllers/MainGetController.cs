@@ -18,7 +18,7 @@ public class MainGetController : Controller
         var result = await _dataBaseRepository.UpdateRankUser(userId, rank);
 
         return Ok(result);
-    }
+    }//user ok
 
     [HttpGet]
     public IActionResult? GetUserById(int Id)
@@ -33,7 +33,7 @@ public class MainGetController : Controller
 
         }
         return Json(user);
-    }
+    }//user ok
 
 
     [HttpGet]
@@ -51,7 +51,7 @@ public class MainGetController : Controller
 
             return BadRequest(ex.Message);
         }
-    }
+    }//????????
 
     [HttpGet]
     public async Task<IActionResult?> GetAllReantil(int teamId)
@@ -63,7 +63,7 @@ public class MainGetController : Controller
         List<RentailsDTO> list = await _dataBaseRepository.GetAllReantilAsync(teamId);
 
         return Ok(list);
-    }
+    }//rentale Ok
 
 
     [HttpDelete]
@@ -73,7 +73,7 @@ public class MainGetController : Controller
 
         bool result = await _dataBaseRepository.DeleteRentail(rentailNymber);
         return Ok(result);
-    }
+    }//rental ok
 
     [HttpGet]
     public async Task<IActionResult?> GetAllPolygons()
@@ -81,7 +81,7 @@ public class MainGetController : Controller
         Controller.LogInformation("Start action : GetAllPolygons");
         var list = await _dataBaseRepository.GetAllPolygons();
         return Ok(list);
-    }
+    }//polygon ok
 
 
     [HttpGet]
@@ -91,7 +91,7 @@ public class MainGetController : Controller
 
         bool result = await _dataBaseRepository.DeletePoligon(poligonId);
         return Ok(result);
-    }
+    }//polygon ok
 
 
     [HttpGet]
@@ -101,7 +101,7 @@ public class MainGetController : Controller
 
         var list = _dataBaseRepository.GetEventHistory();
         return Json(list);
-    }
+    }//evets ok
 
     [HttpGet]
     public async Task<IActionResult?> GetEvent(int teamId)
@@ -116,7 +116,7 @@ public class MainGetController : Controller
         events.Add(result);
         HttpContext.Response.StatusCode = 200;
         return Ok(events);
-    }
+    }//event ok
 
 
 
@@ -144,7 +144,7 @@ public class MainGetController : Controller
             });
         }
         return Ok(equipments);
-    }
+    }//equip ok
 
     [HttpGet]
     public async Task<IActionResult?> GetAllInfoUser(int userId)
@@ -160,14 +160,15 @@ public class MainGetController : Controller
         {
             return BadRequest();
         }
-    }
+    }//statistic ok
 
     [HttpGet]
     public async Task<IActionResult?> GetAllEventsForAllCommands()
     {
         List<EventsForAllCommandsModelDTO> events = await _dataBaseRepository.GetAllEventsForAllCommands();
         return Ok(events);
-    }
+    }//Events ok 
+
     [HttpGet]
     public async Task<IActionResult> AppendOrDeleteFromTheMeeting(string nameteamOrganization, int userId, bool turnout)
     {
@@ -198,7 +199,7 @@ public class MainGetController : Controller
             return BadRequest(ex.Message);
         }
 
-    }
+    }//fees ok
 
 
     [HttpGet]
