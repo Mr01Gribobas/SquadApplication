@@ -45,10 +45,10 @@ public class FeesAndEventsDbService : BaseDbService
 
     public async Task<bool> AppendOrDeleteFromTheMeeting(string nameteamOrganization, int userId, bool turnout)
     {
-        var events = await _context.EventsForAllCommands.Include(u => u.Players).FirstOrDefaultAsync(e => e.TeamNameOrganization == nameteamOrganization);
 
         try
         {
+            var events = await _context.EventsForAllCommands.Include(u => u.Players).FirstOrDefaultAsync(e => e.TeamNameOrganization == nameteamOrganization);
             if(turnout)
             {
                 var user = await _context.Players.Include(t => t.Team).FirstOrDefaultAsync(u => u.Id == userId);

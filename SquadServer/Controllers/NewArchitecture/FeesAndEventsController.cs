@@ -46,10 +46,11 @@ public class FeesAndEventsController : ControllerBase
     {
         if(nameTeamOrganization is null || userId <= 0)
             return BadRequest();
-        var resultOperation = _EventsDbService.AppendOrDeleteFromTheMeeting(nameTeamOrganization, userId, turnout);
+        var resultOperation = await _EventsDbService.AppendOrDeleteFromTheMeeting(nameTeamOrganization, userId, turnout);
         return Ok(resultOperation);
     }
-    [HttpPost]
+
+    [HttpPost("CreatedFees")]
     public async Task<IActionResult> CreateFees(int commanderId)
     {
         EventModelEntity? newEvent = await HttpContext.Request.ReadFromJsonAsync<EventModelEntity>();
@@ -65,7 +66,7 @@ public class FeesAndEventsController : ControllerBase
 
     }
 
-    [HttpPatch]//not full update
+    [HttpPatch("updateFees")]//not full update
     public async Task<IActionResult?> UpdateEvent(int commanderId)
     {
         try
@@ -80,7 +81,7 @@ public class FeesAndEventsController : ControllerBase
         }
     }
 
-    [HttpPost]
+    [HttpPost("createdEvent")]
     public async Task<IActionResult?> CreateEventForAllCommands(int commanderId)
     {
         EventsForAllCommandsModelDTO? modelResult = await HttpContext.Request.ReadFromJsonAsync<EventsForAllCommandsModelDTO>();
@@ -96,7 +97,7 @@ public class FeesAndEventsController : ControllerBase
         }
     }
 
-    [HttpPatch]
+    [HttpPatch("updateEvent")]
     public async Task<IActionResult?> UpdateEventForAllCommands(int commanderId)
     {
         EventsForAllCommandsModelDTO? resultReading = await HttpContext.Request.ReadFromJsonAsync<EventsForAllCommandsModelDTO>();
@@ -110,7 +111,8 @@ public class FeesAndEventsController : ControllerBase
             return BadRequest();
         }
     }
-    [HttpDelete]
+
+    [HttpDelete("deleteEvent")]
     public async Task<IActionResult> DeleteEventById(int commanderId, int numberEvent)
     {
         var result = await _EventsDbService.DeleteEventById(commanderId, numberEvent);

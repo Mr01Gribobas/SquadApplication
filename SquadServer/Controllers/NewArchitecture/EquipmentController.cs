@@ -12,7 +12,7 @@ public class EquipmentsController : ControllerBase
     }
 
 
-    [HttpGet("equipByUser/{userId}")]
+    [HttpGet("equipByUser")]
     public IActionResult? GetEquipByUserId(int userId)
     {
         Controller.LogInformation("Start action : GetEquipByUserId");
@@ -37,7 +37,7 @@ public class EquipmentsController : ControllerBase
         return Ok(equipments);
     }
 
-    [HttpPost]
+    [HttpPost("createById")]
     public async Task<IActionResult?> CreateEquip(int userId)
     {
         EquipmentDTO? equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentDTO>();
@@ -46,7 +46,7 @@ public class EquipmentsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPatch]
+    [HttpPatch("updateById")]
     public async Task<IActionResult?> UpdateEquip(int equipId)
     {
         EquipmentDTO? equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentDTO>();

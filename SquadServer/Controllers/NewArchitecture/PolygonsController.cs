@@ -20,7 +20,7 @@ public class PolygonsController : ControllerBase
         return Ok(list);
     }
 
-    [HttpPost]
+    [HttpPost("createPolygon")]
     public async Task<IActionResult> AddPolygon(int userId)
     {
         PolygonEntity? resultReqding = await HttpContext.Request.ReadFromJsonAsync<PolygonEntity>();
