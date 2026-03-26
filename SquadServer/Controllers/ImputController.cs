@@ -12,11 +12,6 @@ public class ImputController : Controller
         _dataBaseRepository = new DataBaseRepository(squadDb);
         _logger = logger;
     }
-
-
-
-
-
     [HttpGet]
     public IActionResult Login(int loginCode)
     {
@@ -65,14 +60,7 @@ public class ImputController : Controller
             return BadRequest(ex.Message);
 
         }
-
-
-
-
     }
-
-
-
     private bool Validate(UserModelEntity userFromApp)
     {
         Controller.LogInformation("Start validation");
