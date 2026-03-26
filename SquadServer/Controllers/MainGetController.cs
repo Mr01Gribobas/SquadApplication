@@ -229,7 +229,7 @@ public class MainGetController : Controller
         {
             return Unauthorized();
         }
-    }//ok
+    }//user ok
 
     [HttpGet]
     public async Task<IActionResult> GameAttendance(int userId, bool isWill)
@@ -252,7 +252,7 @@ public class MainGetController : Controller
         {
             return Unauthorized();
         }
-    }
+    }//user ok
 
     
 }//ok

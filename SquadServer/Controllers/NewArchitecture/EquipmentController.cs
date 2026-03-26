@@ -36,4 +36,23 @@ public class EquipmentsController : ControllerBase
         }
         return Ok(equipments);
     }
+
+    [HttpPost]
+    public async Task<IActionResult?> CreateEquip(int userId)
+    {
+        EquipmentDTO? equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentDTO>();
+
+        var result = await _equipmentDbService.CreateEquipment(userId, equipFromApp);
+        return Ok(result);
+    }
+
+    [HttpPatch]
+    public async Task<IActionResult?> UpdateEquip(int equipId)
+    {
+        EquipmentDTO? equipFromApp = await HttpContext.Request.ReadFromJsonAsync<EquipmentDTO>();
+        if(equipFromApp == null)
+            return Unauthorized();
+        var result = await _equipmentDbService.UpdateEquipment(equipId, equipFromApp);
+        return Ok(result);
+    }
 }

@@ -44,7 +44,7 @@ public class MainPostController : Controller
         {
             return Unauthorized();
         }
-    }//ok
+    }// fees ok
 
     [HttpPost]
     public async Task<IActionResult?> UpdateEvent(int commanderId)
@@ -94,7 +94,7 @@ public class MainPostController : Controller
         {
             return Unauthorized();
         }
-    }//ok
+    }// fees ok
 
 
     [HttpPost]
@@ -121,7 +121,7 @@ public class MainPostController : Controller
         {
             return BadRequest(ex.Message);
         }
-    }//ok
+    }// events ok
 
     [HttpPost]
     public async Task<IActionResult?> UpdateEventForAllCommands(int commanderId)
@@ -161,7 +161,7 @@ public class MainPostController : Controller
         {
             return BadRequest(ex.Message);
         }
-    }//ok
+    }// event ok
 
 
 
@@ -199,7 +199,7 @@ public class MainPostController : Controller
             return BadRequest(ex.Message);
         }
 
-    }//ok
+    }//user ok
 
 
     [HttpPost]
@@ -251,7 +251,7 @@ public class MainPostController : Controller
         {
             return BadRequest(ex.Message);
         }
-    }//ok
+    }// equip ok
 
 
 
@@ -334,7 +334,7 @@ public class MainPostController : Controller
         }
 
 
-    }//ok
+    }//equip ok
 
     [HttpPost]
     public async Task<IActionResult> AddPolygon(int userId)
@@ -355,7 +355,7 @@ public class MainPostController : Controller
         {
             return BadRequest();
         }
-    }//ok
+    }// polygon ok
 
 
 
@@ -411,7 +411,7 @@ public class MainPostController : Controller
             return BadRequest(ex.Message);
 
         }
-    }//ok
+    }//rental ok
 
     [HttpPost]
     public async Task<IActionResult?> UpdateReantilsById(int reantilId)
@@ -454,7 +454,7 @@ public class MainPostController : Controller
         {
             return BadRequest(ex.Message);
         }
-    }//ok
+    }// rental ok
 
     [HttpDelete]
     public async Task<IActionResult> DeleteEventById(int commanderId, int numberEvent)
@@ -470,7 +470,7 @@ public class MainPostController : Controller
         else
             return Ok(false);
 
-    }//ok
+    }//fees ok
 
     [HttpPost]
     public async Task<IActionResult> UpdateStatistickForUser(int commanderId, int userId)
@@ -521,6 +521,6 @@ public class MainPostController : Controller
         {
             return Ok(false);
         }
-    }//ok
+    }// statistic ok
 }
 

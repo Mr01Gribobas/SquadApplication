@@ -38,5 +38,49 @@ public class UsersController : ControllerBase
         if(user is null)
             return NotFound();
         return Ok(user);
-    }    
+    }
+
+    [HttpGet("GetAllInfoForHome")]
+    public async Task<IActionResult?> GetAllInfoForHomeProfile(int userId)
+    {
+        Controller.LogInformation("Start action : GetAllInfoForProfile");
+
+        try
+        {
+            if(userId <= 0)
+                throw new Exception();
+            var resultJson = _usersDbService.GetAllInfoForHomeProfile(userId);
+            if(resultJson is null)
+                return BadRequest();
+            return Ok(resultJson);
+        }
+        catch(Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GameAttendance(int userId, bool isWill)
+    {
+        Controller.LogInformation("Start action : GameAttendance");
+        try
+        {
+            var result = await _usersDbService.GameAttendance(userId, isWill);
+            return Ok(result);
+
+        }
+        catch(Exception ex)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpPatch]
+    public async Task<IActionResult?> UpdateProfile(int userId)
+    {
+        UserModelEntity? userFromApp = await HttpContext.Request.ReadFromJsonAsync<UserModelEntity>();
+        var result = _usersDbService.UpdateProfileById(userId, userFromApp);
+        return Ok(result);
+    }
 }

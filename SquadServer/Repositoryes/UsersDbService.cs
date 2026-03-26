@@ -142,6 +142,7 @@ public class UsersDbService : BaseDbService
         if(userFromDb == null)
             throw new NullReferenceException();
         userFromDb._goingToTheGame = isWill;
+        _context.Players.Update(userFromDb);
         await _context.SaveChangesAsync();
         return userFromDb;
     }

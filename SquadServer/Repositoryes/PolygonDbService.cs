@@ -18,8 +18,10 @@ public class PolygonDbService : BaseDbService
     {
         try
         {
+            if(polygonModel is null)
+                throw new NullReferenceException();
             if(!PolygonEntity.ValidateCoordinates(polygonModel.Coordinates))
-                return false;
+                throw new ArgumentException();
 
             await _context.Polygons.AddAsync(polygonModel);
             await _context.SaveChangesAsync();

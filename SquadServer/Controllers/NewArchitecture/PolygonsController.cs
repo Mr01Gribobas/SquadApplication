@@ -1,7 +1,7 @@
 ﻿namespace SquadServer.Controllers.NewArchitecture;
 
 [Route("api/polygons")]
-public class PolygonsController:ControllerBase
+public class PolygonsController : ControllerBase
 {
     private readonly SquadDbContext _context;
     private readonly PolygonDbService _polygonDbService;
@@ -18,6 +18,14 @@ public class PolygonsController:ControllerBase
         Controller.LogInformation("Start action : GetAllPolygons");
         var list = await _polygonDbService.GetAllPolygons();
         return Ok(list);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddPolygon(int userId)
+    {
+        PolygonEntity? resultReqding = await HttpContext.Request.ReadFromJsonAsync<PolygonEntity>();
+        var resultoperation = await  _polygonDbService.AppendPolygon(resultReqding);
+        return Ok(resultoperation);
     }
 
     [HttpDelete("deletePoligon")]
