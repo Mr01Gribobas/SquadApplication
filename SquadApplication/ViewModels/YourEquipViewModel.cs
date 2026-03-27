@@ -65,7 +65,8 @@ public partial class HomeViewModel : ObservableObject
     }
     private async void GetAllProfileById(int userId)
     {
-        var tupleMahager = new RequestTuple(_user.CurrentUser);
+        var httpClient = _page.GetHttpClientFactory().CreateClient();
+        var tupleMahager = new RequestTuple(_user.CurrentUser,httpClient);
         (UserModelEntity objectUser,
          TeamEntity objectTeam,
          EquipmentDTO? objectEquipment) tuple = await tupleMahager.GetAllInfoForUser(_user.CurrentUser);

@@ -3,12 +3,12 @@
 public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
     where T : class
 {
-
     private HttpClient _httpClient;
     public string _urlNameForSend { get; private set; } = "http://10.0.2.2:5213/MainGet/";
-    public int _currentStatusCode { get; private set; }
+    public int _currentStatusCode { get; private set; } // not 
     private bool _disposed = false;
     public ManagerGetRequests()=> _httpClient = new HttpClient();
+
     public void ResetUrlAndStatusCode()
     {
         _urlNameForSend = "http://10.0.2.2:5213/MainGet/";
@@ -87,7 +87,6 @@ public class ManagerGetRequests<T> : IRequestManager<T>, IDisposable
                 if(!flowEvents)
                     return events;
                 break;
-
             case GetRequests.TheMeeting:
                 (bool flowTheGo, List<T>? emptyList) = await RequestAction();                
                 break;

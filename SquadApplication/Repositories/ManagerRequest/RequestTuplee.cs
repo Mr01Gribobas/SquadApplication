@@ -1,48 +1,46 @@
 ﻿using SquadApplication.DTO_Classes;
-using System.Text.Json;
 namespace SquadApplication.Repositories.ManagerRequest;
+
 internal class RequestTuple
 {
-    public RequestTuple(UserModelEntity userSession)
+    public RequestTuple(UserModelEntity userSession, HttpClient httpClient)
     {
-        _httpClient = new HttpClient();
+        _httpClient = httpClient;
         _userSession = userSession;
     }
     private readonly UserModelEntity _userSession;
     private readonly HttpClient _httpClient;
-    private string _urlNameForSend = "http://10.0.2.2:5213/MainGet/";
+    private string _urlNameForSend = "http://10.0.2.2:5213/";
     public int _currentStatusCode { get; private set; }
     public int GetStatusCode() => _currentStatusCode;
-    public void ResetUrlAndStatusCode() 
+    public void ResetUrlAndStatusCode()
     {
-        _urlNameForSend = "http://10.0.2.2:5213/MainGet/"; 
+        _urlNameForSend = "http://10.0.2.2:5213/";
         _currentStatusCode = 0;
     }
-    public void UpdateUrl(string url)=> _urlNameForSend += url;
+    public void UpdateUrl(string url) => _urlNameForSend += url;
     public async Task<(UserModelEntity, TeamEntity, EquipmentDTO?)> GetAllInfoForUser(UserModelEntity userModel)
     {
-        if(userModel is null)
-            throw new ArgumentNullException();
-        UpdateUrl($"GetAllInfoForHomeProfile?userId={userModel.Id}");
-        var responce = await _httpClient.GetAsync(_urlNameForSend);
-        if(responce != null && (int)responce.StatusCode == 200)
+        try
         {
-            _currentStatusCode = 200; 
-            try
+            if(userModel is null)
+                throw new ArgumentNullException();
+            UpdateUrl($"api/users/GetAllInfoForHome?userId={userModel.Id}");
+            var responce = await _httpClient.GetAsync(_urlNameForSend);
+            if(responce != null && (int)responce.StatusCode == 200)
             {
-                TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentDTO> resultJson = await responce.Content.ReadFromJsonAsync<TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentDTO>>();
-                (UserModelEntity, TeamEntity, EquipmentDTO) typle = (resultJson._itemOne,resultJson._itemTwo,resultJson._itemThree);
+                TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentDTO>? resultJson = await responce.Content.ReadFromJsonAsync<TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentDTO>>();
+                (UserModelEntity, TeamEntity, EquipmentDTO) typle = (resultJson._itemOne, resultJson._itemTwo, resultJson._itemThree);
                 ResetUrlAndStatusCode();
                 return typle;
-
             }
-            catch(Exception ex)
-            {
-                ResetUrlAndStatusCode();
-                return (default, default, default);
-            }
+            else
+                throw new Exception("null responce");
         }
-        ResetUrlAndStatusCode();
-        return (default, default, default);
+        catch(Exception ex)
+        {
+            ResetUrlAndStatusCode();
+            return (default, default, default);
+        }
     }
 }

@@ -38,9 +38,7 @@ public class DataBaseManager : IRequestManagerForEnter
                 return null;
             }
         }
-        else if(_currentStatusCode == 201)
-            return null;
-        else if(_currentStatusCode == 401)
+        else if(_currentStatusCode == 201|| _currentStatusCode == 401)
             return null;
         return null;
     }

@@ -49,7 +49,7 @@ public class UsersController : ControllerBase
         {
             if(userId <= 0)
                 throw new Exception();
-            var resultJson = _usersDbService.GetAllInfoForHomeProfile(userId);
+            var resultJson = await _usersDbService.GetAllInfoForHomeProfile(userId);
             if(resultJson is null)
                 return BadRequest();
             return Ok(resultJson);

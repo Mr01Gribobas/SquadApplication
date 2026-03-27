@@ -47,6 +47,8 @@ public partial class ParticipantsViewModel : ObservableObject
         await Shell.Current.GoToAsync($"/{nameof(ProfilePage)}/?userId={user.Id}&IsStanger={true}");
     }
 
+
+
     private async Task SendRequest(UserModelEntity user, bool rank)
     {
         _requestsInServer.SetUrl($"PlayerUpdateRank?userId={user.Id}&rank={rank}");
