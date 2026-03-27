@@ -1,7 +1,7 @@
 ﻿using System.Net;
 
 namespace SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
-public class BaseRequestsManager<T> : IGetRequestManager<T>
+public class BaseRequestsManager : IGetRequestManager,IPostRequestManager,IPutRequestManager,IPatchRequestManager,IDeleteRequestManager
 {
     private readonly HttpClient _httpClient;
     private  string _baseUrl = "http://10.0.2.2:5213/";
@@ -18,33 +18,66 @@ public class BaseRequestsManager<T> : IGetRequestManager<T>
         _baseUrl = "http://10.0.2.2:5213/";
     }
 
-    public async Task<T> GetDateAsync()
+    public async Task<T?> GetDateAsync<T>()
     {
-        HttpResponseMessage response =    await _httpClient.GetAsync(_baseUrl);
-        if(response.StatusCode is HttpStatusCode.OK)
+        try
         {
-            var res = await response.Content.ReadFromJsonAsync<T>()   ; 
+            HttpResponseMessage response = await _httpClient.GetAsync(_baseUrl);
+            T? resultFromServer = default(T?);
+            if(response.StatusCode is HttpStatusCode.OK)
+                resultFromServer = await response.Content.ReadFromJsonAsync<T>();
+            return resultFromServer;
         }
+        catch(Exception ex)
+        {
+            return default(T?);
+        }
+    }
+
+    public async Task<bool> PostDateAsync<T>(T data) where T : class
+    {
+        var result = await _httpClient.PostAsJsonAsync(_baseUrl,data);
+        bool readingResult = await result.Content.ReadFromJsonAsync<bool>();
+        return readingResult;
+    }
+
+    public async Task<bool> PatchDateAsync<T>(T data) where T : class
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<bool> PutDateAsync<T>(T data) where T : class
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<bool> DeleteDateAsync()
+    {
+        throw new NotImplementedException();
     }
 }
 
-public interface IGetRequestManager<T> 
+public interface IGetRequestManager
 {
-    Task<T> GetDateAsync();
+    Task<T> GetDateAsync<T>();
 }
-public interface IPostRequestManager<T>
+
+public interface IPostRequestManager
 {
-    T PostDateAsync();
+    Task<bool> PostDateAsync<T>(T data)where T:class ;
 }
-public interface IPutRequestManager<T>
+
+public interface IPutRequestManager
 {
-    T GetDateAsync();
+    Task<bool> PutDateAsync<T>(T data) where T : class;
 }
-public interface IPatchRequestManager<T>
+
+public interface IPatchRequestManager
 {
-    T GetDateAsync();
+    Task<bool> PatchDateAsync<T>(T data) where T : class;
 }
-public interface IDeleteRequestManager<T>
+
+public interface IDeleteRequestManager
 {
-    T GetDateAsync();
+    Task<bool> DeleteDateAsync();
 }

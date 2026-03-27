@@ -12,7 +12,7 @@ public class UsersController : ControllerBase
         _usersDbService = new UsersDbService(_squadDbContext);
     }
 
-    [HttpGet]
+    [HttpGet("allUsers")]
     public async Task<IActionResult> GetAllUsers(int userId)
     {
         if(userId <= 0)
@@ -21,7 +21,7 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet]
+    [HttpPut]
     public async Task<IActionResult?> PlayerUpdateRank(int userId, bool rank)
     {
         var result = await _usersDbService.UpdateRankUser(userId, rank);

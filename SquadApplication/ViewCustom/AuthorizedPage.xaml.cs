@@ -1,4 +1,6 @@
-﻿namespace SquadApplication.ViewCustom;
+﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+
+namespace SquadApplication.ViewCustom;
 
 public partial class AuthorizedPage : ContentPage
 {
@@ -20,6 +22,9 @@ public partial class AuthorizedPage : ContentPage
 
     private async void LoadedPage(object? sender, EventArgs e)
     {
+        var request = new BaseRequestsManager(_httpClientFactory.CreateClient());
+        request.SetAddress("api/polygons/createPolygon?userId=8");
+        var res = await request.PostDateAsync<PolygonEntity>(new PolygonEntity() { Coordinates="2222.2,111.23",Name="Gruzino"});
         await _customsAnimation.RadarScanAnimation(mainLabelTest);
         await _customsAnimation.SquadReadyAnimation(RegisterForm);
         await _customsAnimation.SquadReadyAnimation(LoginForm);
