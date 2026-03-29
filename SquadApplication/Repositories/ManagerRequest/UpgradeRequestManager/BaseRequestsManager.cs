@@ -2,7 +2,7 @@
 
 namespace SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
 
-public class BaseRequestsManager : IGetRequestManager, IPostRequestManager, IPutRequestManager, IPatchRequestManager, IDeleteRequestManager
+public class BaseRequestsManager : IRequestManager
 {
     private readonly HttpClient _httpClient;
     private string _baseUrl = "http://10.0.2.2:5213/";
@@ -76,27 +76,11 @@ public class BaseRequestsManager : IGetRequestManager, IPostRequestManager, IPut
     }
 }
 
-public interface IGetRequestManager
+public interface IRequestManager
 {
     Task<T> GetDateAsync<T>();
-}
-
-public interface IPostRequestManager
-{
     Task<bool> PostDateAsync<T>(T data) where T : class;
-}
-
-public interface IPutRequestManager
-{
     Task<bool> PutDateAsync<T>(T data) where T : class;
-}
-
-public interface IPatchRequestManager
-{
     Task<bool> PatchDateAsync<T>(T data) where T : class;
-}
-
-public interface IDeleteRequestManager
-{
     Task<bool> DeleteDateAsync();
 }
