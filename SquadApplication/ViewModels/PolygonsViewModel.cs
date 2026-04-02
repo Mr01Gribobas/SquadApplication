@@ -1,8 +1,10 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+
+namespace SquadApplication.ViewModels;
 
 public partial class PolygonsViewModel : ObservableObject
 {
-    private IRequestManager<PolygonEntity> _managerGet;
+    private BaseRequestsManager _reauestManager;
     private readonly UserModelEntity _user;
     private readonly PolygonsPage _polygonPage;
     public Int32 _countPolygon => Polygons.Count;
@@ -17,18 +19,17 @@ public partial class PolygonsViewModel : ObservableObject
     {
         _user = user;
         _polygonPage = polygonsPage;
-        _managerGet = new ManagerGetRequests<PolygonEntity>();
+        _reauestManager = new BaseRequestsManager(_polygonPage._clientFactory.CreateClient());
         RoleUser = _user._role.ToString();
         Polygons = new ObservableCollection<PolygonEntity>();
         SetPolygons();
     }
     private async Task SetPolygons()
     {
-        _managerGet.SetUrl("GetAllPolygons");
-        List<PolygonEntity> list = await _managerGet.GetDataAsync(GetRequests.GetAllPolygons);
+        _reauestManager.SetAddress("api/polygons");
+        List<PolygonEntity>? list = await _reauestManager.GetDateAsync<List<PolygonEntity>>();
         try
         {
-
             if(list is not null)
             {
                 foreach(PolygonEntity item in list)
@@ -41,7 +42,7 @@ public partial class PolygonsViewModel : ObservableObject
         }
         finally
         {
-            _managerGet.ResetUrlAndStatusCode();
+            _reauestManager.ResetAddress();
             _polygonPage.CheckItems();
         }
     }
@@ -58,13 +59,13 @@ public partial class PolygonsViewModel : ObservableObject
     {
         try
         {
-            _managerGet.SetUrl($"DeletePolygonsById?poligonId={polygon.Id}");
-            var result = await _managerGet.PutchRequestAsync(PutchRequest.DeletePolygon);
+            _reauestManager.SetAddress($"api/polygons/deletePoligon?poligonId={polygon.Id}");
+            var result = await _reauestManager.DeleteDateAsync();
             if(result)
             {
                 Polygons.Remove(polygon);
                 await _polygonPage?.CheckItems();
-                _managerGet.ResetUrlAndStatusCode();
+                _reauestManager?.ResetAddress();
             }
         }
         catch(Exception ex)

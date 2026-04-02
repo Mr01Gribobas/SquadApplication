@@ -8,14 +8,20 @@ public partial class MainPage : ContentPage
     private IUserSession _userSession1;
     private readonly NotificationLocalService _notificationLocal;
     private IDispatcherTimer _timer;
-    public MainPage(IUserSession userSession)
+    private UserModelEntity User { get; set; }
+
+    public int UserId
+    {
+        get => User.Id;
+        set=> GetAndSetUserAsync(value);
+    }
+    public MainPage(IUserSession userSession, IHttpClientFactory clientFactory)
     {
         BindingContext = new MainViewModel();
         _userSession1 = userSession;
-        _notificationLocal = new NotificationLocalService();
+        _notificationLocal = new NotificationLocalService(clientFactory);
         InitializeComponent();
         StartCheckNotification();
-        
     }
 
     private async Task StartCheckNotification()
@@ -29,16 +35,6 @@ public partial class MainPage : ContentPage
             await _notificationLocal.CheckForEventNotification((int)_userSession1.CurrentUser.TeamId, _userSession1.CurrentUser.Id);
         };
         _timer.Start();
-    }
-
-
-
-
-    private UserModelEntity User { get; set; }
-    public int UserId
-    {
-        get => User.Id;
-        set=> GetAndSetUserAsync(value);
     }
     private async Task GetAndSetUserAsync(int value)
     {

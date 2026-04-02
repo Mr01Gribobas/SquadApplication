@@ -1,7 +1,9 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+
+namespace SquadApplication.ViewModels;
 public partial class AppendPolygonViewModel : ObservableObject
 {
-    private readonly IRequestManager<PolygonEntity> _requestManager;
+    private readonly BaseRequestsManager _requestManager;
     private readonly UserModelEntity _user;
     private readonly AppendPolygonPage _plygonPage;
 
@@ -15,7 +17,7 @@ public partial class AppendPolygonViewModel : ObservableObject
     {
         _plygonPage = polygonPage;
         _user = user;
-        _requestManager = new ManagerPostRequests<PolygonEntity>();
+        _requestManager = new BaseRequestsManager(_plygonPage._clientFactory.CreateClient());
     }
 
     [RelayCommand]
@@ -31,9 +33,10 @@ public partial class AppendPolygonViewModel : ObservableObject
             PolygonEntity polygon = PolygonEntity.CreatePolygonModel(PolygonName, PolygonCoordinates);
             if(polygon is not null)
             {
-                var requestManager = (ManagerPostRequests<PolygonEntity>)_requestManager;
-                requestManager.SetUrl($"AddPolygon?userId={_user.Id}");
-                var result = await requestManager.PostRequests(polygon, PostsRequests.AddPolygon);
+                //var requestManager = (ManagerPostRequests<PolygonEntity>)_requestManager;
+                _requestManager.SetAddress($"api/polygons/createPolygon?userId={_user.Id}");
+                //var result = await requestManager.PostRequests(polygon, PostsRequests.AddPolygon);
+                var result = await _requestManager.PostDateAsync<PolygonEntity>(polygon);
                 if(!result)
                     await _plygonPage.DisplayAlertAsync("Error", "ошибка операции", "Ok");
             }

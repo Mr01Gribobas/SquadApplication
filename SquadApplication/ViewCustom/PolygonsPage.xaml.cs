@@ -4,8 +4,10 @@ public partial class PolygonsPage : ContentPage
 {
     public PolygonsViewModel _polygonsViewModel;
     private UserModelEntity? _user;
-    public PolygonsPage(IUserSession userSession)
+    public IHttpClientFactory _clientFactory { get; private set; }
+    public PolygonsPage(IUserSession userSession, IHttpClientFactory clientFactory)
     {
+        _clientFactory = clientFactory;
         _user = userSession.CurrentUser;
         _polygonsViewModel = new PolygonsViewModel(this, _user);
         BindingContext = _polygonsViewModel;

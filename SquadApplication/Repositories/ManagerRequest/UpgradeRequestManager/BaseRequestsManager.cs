@@ -68,7 +68,6 @@ public class BaseRequestsManager : IRequestManager
         bool result = await response.Content.ReadFromJsonAsync<bool>();
         return result;
     }
-
     public async Task<bool> DeleteDateAsync()
     {
         bool response = await _httpClient.DeleteFromJsonAsync<bool>(_baseUrl);

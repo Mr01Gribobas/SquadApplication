@@ -6,9 +6,13 @@ public class NotificationLocalService
     private const string staticUrl = "http://10.0.2.2:5213";
     private record class EvenCheck(bool availabilityEvent, bool isGoTogame);
 
-    public NotificationLocalService()
+    public NotificationLocalService(IHttpClientFactory clientFactory)
     {
-        _httpClient = new HttpClient();
+        if(clientFactory is not null)
+            _httpClient = clientFactory.CreateClient();
+        else
+            _httpClient = new HttpClient();
+
     }
     private async Task ShowLocalNotification(string title, string message)
     {
