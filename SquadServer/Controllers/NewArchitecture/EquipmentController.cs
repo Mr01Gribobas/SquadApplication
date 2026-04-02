@@ -16,12 +16,12 @@ public class EquipmentsController : ControllerBase
     public IActionResult? GetEquipByUserId(int userId)
     {
         Controller.LogInformation("Start action : GetEquipByUserId");
-
         var equip = _equipmentDbService.GetEquipByUserId(userId);
-        List<EquipmentDTO> equipments = new List<EquipmentDTO>();
+        EquipmentDTO modelForClient;
+        //List<EquipmentDTO> equipments = new List<EquipmentDTO>();
         if(equip is not null)
         {
-            equipments.Add(new EquipmentDTO()
+            modelForClient = new EquipmentDTO()
             {
                 MainWeapon = equip.MainWeapon,
                 NameMainWeapon = equip.NameMainWeapon,
@@ -32,9 +32,11 @@ public class EquipmentsController : ControllerBase
                 HeadEquipment = equip.HeadEquipment,
                 BodyEquipment = equip.BodyEquipment,
                 UnloudingEquipment = equip.UnloudingEquipment,
-            });
+            };
         }
-        return Ok(equipments);
+        else
+            modelForClient = default;
+        return Ok(modelForClient);
     }
 
     [HttpPost("createById")]

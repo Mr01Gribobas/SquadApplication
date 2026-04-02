@@ -1,15 +1,17 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+
+namespace SquadApplication.ViewModels;
 
 public partial class CreateEventsForAllCommandsViewModel : ObservableObject
 {
     private readonly IUserSession _user;
     private readonly CreateEventsForAllCommandsPage _createEventPage;
-    private readonly ManagerPostRequests<EventsForAllCommandsModelDTO> _postManager;
+    private readonly BaseRequestsManager _managerRequest;
 
     [ObservableProperty]
-    private  bool isUpdateThisGame;
+    private bool isUpdateThisGame;
 
-    private  EventsForAllCommandsModelDTO _modelEventsForCommand;
+    private EventsForAllCommandsModelDTO _modelEventsForCommand;
 
 
     [ObservableProperty]
@@ -40,11 +42,11 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
     {
         _user = user;
         _createEventPage = createEventsPage;
-        _postManager = new ManagerPostRequests<EventsForAllCommandsModelDTO>();
-        TeamNameOrganization = _user?.CurrentUser._teamName ??  throw new NullReferenceException();
+        _managerRequest = new BaseRequestsManager(_createEventPage._clientFactory.CreateClient());
+        TeamNameOrganization = _user?.CurrentUser._teamName ?? throw new NullReferenceException();
         if(_createEventPage._cache.GetItemByKey<EventsForAllCommandsModelDTO>("EventForCommands") is EventsForAllCommandsModelDTO model)
             InitialProperty(model);
-        _createEventPage.DisplayAlertAsync("Info","При заполнении полного описания к игре -  Крайне рекомендуется описать данные для возможности связаться с вами(к примеру телефон ,ссылку ВК или ТГ) ","OK");
+        _createEventPage.DisplayAlertAsync("Info", "При заполнении полного описания к игре -  Крайне рекомендуется описать данные для возможности связаться с вами(к примеру телефон ,ссылку ВК или ТГ) ", "OK");
     }
 
     private void InitialProperty(EventsForAllCommandsModelDTO model)
@@ -61,10 +63,10 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         TimeGame = model.Time.ToString();
         Dategame = model.Date.ToString();
         _modelEventsForCommand = model;
-        isUpdateThisGame = true; 
+        isUpdateThisGame = true;
     }
 
-    private async  Task<bool> BaseFullExamination()
+    private async Task<bool> BaseFullExamination()
     {
         try
         {
@@ -76,7 +78,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         }
         catch(Exception ex)
         {
-            await _createEventPage.DisplayAlertAsync("Error",$"{ex.Message}","OK");
+            await _createEventPage.DisplayAlertAsync("Error", $"{ex.Message}", "OK");
             return false;
         }
     }
@@ -86,19 +88,18 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         if(_modelEventsForCommand is null)
             return;
         var commanderId = _createEventPage.CommanderId <= 0 ? _user.CurrentUser.Id : _createEventPage.CommanderId;
-        _postManager.SetUrl($"DeleteEventById?commanderId={commanderId}&numberEvent={_modelEventsForCommand.numberEvent}");
+        _managerRequest.SetAddress($"api/events/deleteEvent?commanderId={commanderId}&numberEvent={_modelEventsForCommand.numberEvent}");
         try
         {
-        var result = await _postManager.PostRequests(objectValue: _modelEventsForCommand, PostsRequests.DeleteEventForCommand);
-        if(result)
-            await _createEventPage.DisplayAlertAsync("Ok", "Create is ok", "Ok");
-
+            var result = await _managerRequest.DeleteDateAsync();//  .PostRequests(objectValue: _modelEventsForCommand, PostsRequests.DeleteEventForCommand);
+            if(result)
+                await _createEventPage.DisplayAlertAsync("Ok", "Deete is ok", "Ok");
         }
         catch(Exception ex)
         {
-            Console.WriteLine( ex.Message);
+            Console.WriteLine(ex.Message);
         }
-        _postManager.ResetUrlAndStatusCode();
+        _managerRequest.ResetAddress();
         await Shell.Current.GoToAsync("..");
     }
 
@@ -113,8 +114,8 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
 
             var commanderId = _createEventPage.CommanderId <= 0 ? _user.CurrentUser.Id : _createEventPage.CommanderId;
             EventsForAllCommandsModelDTO modelEvnt = CreateModel(_modelEventsForCommand);
-            _postManager.SetUrl($"UpdateEventForAllCommands?commanderId={commanderId}");
-            var result = await _postManager.PostRequests(objectValue: modelEvnt, PostsRequests.CreateEventForCommands);
+            _managerRequest.SetAddress($"api/events/updateEvent?commanderId={commanderId}");
+            var result = await _managerRequest.PatchDateAsync<EventsForAllCommandsModelDTO>(modelEvnt);//.PostRequests(objectValue: modelEvnt, PostsRequests.CreateEventForCommands);
             if(result)
                 await _createEventPage.DisplayAlertAsync("Ok", "Create is ok", "Ok");
             await Shell.Current.GoToAsync("..");
@@ -125,7 +126,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         }
         finally
         {
-            _postManager.ResetUrlAndStatusCode();
+            _managerRequest?.ResetAddress();
         }
     }
 
@@ -136,21 +137,21 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         {
             if(!await BaseFullExamination())
                 return;
-            var commanderId =_createEventPage.CommanderId <= 0 ? _user.CurrentUser.Id : _createEventPage.CommanderId;//
+            var commanderId = _createEventPage.CommanderId <= 0 ? _user.CurrentUser.Id : _createEventPage.CommanderId;//
             EventsForAllCommandsModelDTO modelEvnt = CreateModel();
-            _postManager.SetUrl($"CreateEventForAllCommands?commanderId={commanderId}");
-            var result = await _postManager.PostRequests(objectValue: modelEvnt, PostsRequests.CreateEventForCommands);
+            _managerRequest.SetAddress($"api/events/createdEvent?commanderId={commanderId}");
+            var result = await _managerRequest.PostDateAsync<EventsForAllCommandsModelDTO>(modelEvnt);//.PostRequests(objectValue: modelEvnt, PostsRequests.CreateEventForCommands);
             if(result)
                 await _createEventPage.DisplayAlertAsync("Ok", "Create is ok", "Ok");
             await Shell.Current.GoToAsync("..");
         }
         catch(Exception ex)
         {
-            await _createEventPage.DisplayAlertAsync("Errir", $"{ex.Message}", "Ok");            
+            await _createEventPage.DisplayAlertAsync("Errir", $"{ex.Message}", "Ok");
         }
         finally
         {
-            _postManager.ResetUrlAndStatusCode();
+            _managerRequest.ResetAddress();
         }
     }
     private void Validation()
@@ -162,9 +163,9 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             throw new Exception("Не коректное описание ");
         if(string.IsNullOrEmpty(DescriptionFull))
             throw new Exception("Не коректное описание ");
-        if(string.IsNullOrEmpty(TimeGame) || !TimeOnly.TryParse(TimeGame , out var _))
+        if(string.IsNullOrEmpty(TimeGame) || !TimeOnly.TryParse(TimeGame, out var _))
             throw new Exception("Не верный формат времени. Используйте (23:59)");
-        if(string.IsNullOrEmpty(Dategame)|| !DateOnly.TryParse(Dategame, out var _))
+        if(string.IsNullOrEmpty(Dategame) || !DateOnly.TryParse(Dategame, out var _))
             throw new Exception("Не вeрный формат даты. Используйте (12.30.2000)");
     }
 

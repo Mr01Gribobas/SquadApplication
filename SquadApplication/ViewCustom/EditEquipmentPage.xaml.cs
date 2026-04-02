@@ -12,9 +12,11 @@ public partial class EditEquipmentPage : ContentPage
     }
     public EditEquipmentViewModel _viewModel;
 	private readonly UserModelEntity _user;
-	public EditEquipmentPage(IUserSession userSession)
+    public IHttpClientFactory _httpClientFactory;
+	public EditEquipmentPage(IUserSession userSession,IHttpClientFactory clientFactory)
 	{
 		_user = userSession.CurrentUser;
+        _httpClientFactory = clientFactory;
         _viewModel = new EditEquipmentViewModel(this,_user);
 		BindingContext = _viewModel;
 		InitializeComponent();

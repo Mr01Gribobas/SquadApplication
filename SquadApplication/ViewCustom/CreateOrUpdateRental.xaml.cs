@@ -6,12 +6,14 @@ public partial class CreateOrUpdateRentalPage : ContentPage
     private readonly ICacheServieseCust _cacheServiese;
     private readonly IUserSession _user;
     public readonly CreateOrUpdateRentalViewModel _createOrUpdateRentalViewModel;
+    public IHttpClientFactory _clientFactory { get; private set; }
     public bool _isUpdate { get; set; }
 
-    public CreateOrUpdateRentalPage(IUserSession user, ICacheServieseCust cacheServiese)
+    public CreateOrUpdateRentalPage(IUserSession user, ICacheServieseCust cacheServiese,IHttpClientFactory clientFactory)
     {
         _cacheServiese = cacheServiese;
         _user = user;
+        _clientFactory = clientFactory;
         _createOrUpdateRentalViewModel = new CreateOrUpdateRentalViewModel(this, user);
         BindingContext = _createOrUpdateRentalViewModel;
         InitializeComponent();

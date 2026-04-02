@@ -1,4 +1,5 @@
 ﻿using SquadApplication.ClassView;
+using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
 
 namespace SquadApplication.ViewModels;
 
@@ -6,7 +7,7 @@ public partial class EventsForAllCommandsView : ObservableObject
 {
     private readonly EventsForAllCommandsPage _page;
     private readonly IUserSession _user;
-    private readonly ManagerGetRequests<EventsForAllCommandsModelDTO> _getRequestMansger;
+    private readonly BaseRequestsManager _requestManager;
 
     [ObservableProperty]
     private FilterType filterType;
@@ -21,8 +22,8 @@ public partial class EventsForAllCommandsView : ObservableObject
     {
         _page = page;
         _user = user;
-        _getRequestMansger = new ManagerGetRequests<EventsForAllCommandsModelDTO>();
         events = new ObservableCollection<EventsForAllCommandsModelDTO>();
+        _requestManager = new BaseRequestsManager(_page._clientFactory.CreateClient());
         this.FilterByDate();
     }
     [RelayCommand]
@@ -156,9 +157,9 @@ public partial class EventsForAllCommandsView : ObservableObject
     private async Task SendRequest(EventsForAllCommandsModelDTO model, bool isGoing)
     {
 
-        _getRequestMansger.SetUrl($"AppendOrDeleteFromTheMeeting?nameteamOrganization={model.TeamNameOrganization}&userId={_user.CurrentUser.Id}&turnout={isGoing}");
-        await _getRequestMansger.GetDataAsync(GetRequests.TheMeeting);
-        _getRequestMansger.ResetUrlAndStatusCode();
+        _requestManager.SetAddress($"AppendOrDeleteFromTheMeeting?nameTeamOrganization={model.TeamNameOrganization}&userId={_user.CurrentUser.Id}&turnout={isGoing}");
+        await _requestManager.PatchDateAsync<EventsForAllCommandsModelDTO>(null);
+        _requestManager.ResetAddress();
     }
 
     [RelayCommand]
@@ -168,13 +169,13 @@ public partial class EventsForAllCommandsView : ObservableObject
     }
     public async Task GetEventsAsync()
     {
-        _getRequestMansger.SetUrl("GetAllEventsForAllCommands");
-        List<EventsForAllCommandsModelDTO>? responce = await _getRequestMansger.GetDataAsync(GetRequests.EventsForCommands);
+        _requestManager.SetAddress("api/events/AllEventsForCommands");
+        List<EventsForAllCommandsModelDTO>? responce = await _requestManager.GetDateAsync<List<EventsForAllCommandsModelDTO>>();
         if(responce is not null && responce.Count > 0)
         {
             foreach(EventsForAllCommandsModelDTO item in responce)
                 Events.Add(item);
         }
-        _getRequestMansger.ResetUrlAndStatusCode();
+        _requestManager.ResetAddress();
     }
 }

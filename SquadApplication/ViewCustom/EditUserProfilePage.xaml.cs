@@ -3,12 +3,13 @@ public partial class EditUserProfilePage : ContentPage
 {
     private readonly UserModelEntity _user;
     private readonly EditYourProfileViewModel _editProfileViewModel;
-
-    public EditUserProfilePage(IUserSession userSession)
+    public IHttpClientFactory _clientFactory { get; private set; }
+    public EditUserProfilePage(IUserSession userSession,IHttpClientFactory clientFactory)
 	{
 		_user = userSession.CurrentUser;
+        _clientFactory = clientFactory;
 		_editProfileViewModel = new EditYourProfileViewModel(this,userSession.CurrentUser);
-		InitializeComponent();
         BindingContext = _editProfileViewModel;
+		InitializeComponent();
     }
 }

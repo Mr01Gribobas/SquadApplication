@@ -11,6 +11,7 @@ public class BaseRequestsManager : IRequestManager
     {
         _httpClient = httpClient;
     }
+    public HttpClient GetHttpCurrentClient() => _httpClient;
     public void SetAddress(string address)
     {
         _baseUrl += address;
@@ -28,11 +29,8 @@ public class BaseRequestsManager : IRequestManager
             _statusCode = response.StatusCode;
             T? resultFromServer = default(T?);
             if(response.StatusCode is HttpStatusCode.OK)
-            {
                 resultFromServer = await response.Content.ReadFromJsonAsync<T>();
-            }
             return resultFromServer;
-
         }
         catch(Exception ex)
         {

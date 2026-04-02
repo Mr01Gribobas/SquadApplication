@@ -60,23 +60,22 @@ public class UsersController : ControllerBase
         }
     }
 
-    [HttpGet]
+    [HttpPatch("GameAttendance")]
     public async Task<IActionResult> GameAttendance(int userId, bool isWill)
     {
         Controller.LogInformation("Start action : GameAttendance");
         try
         {
             var result = await _usersDbService.GameAttendance(userId, isWill);
-            return Ok(result);
-
+            return Ok(true);
         }
         catch(Exception ex)
         {
-            return NotFound();
+            return Ok(false);
         }
     }
 
-    [HttpPatch]
+    [HttpPatch("UpdateShorPtofile")]
     public async Task<IActionResult?> UpdateProfile(int userId)
     {
         UserModelEntity? userFromApp = await HttpContext.Request.ReadFromJsonAsync<UserModelEntity>();

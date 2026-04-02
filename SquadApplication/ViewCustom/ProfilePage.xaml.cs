@@ -9,13 +9,14 @@ public partial class ProfilePage : ContentPage
 
     private readonly ProfileViewModel _homePageView;
     private UserModelEntity _user;
-
-    public ProfilePage(IUserSession userSession)
+    public IHttpClientFactory _clientFactory { get;private set; }
+    public ProfilePage(IUserSession userSession,IHttpClientFactory clientFactory)
     {
         _user = userSession.CurrentUser;
-        InitializeComponent();
+        _clientFactory = clientFactory;
         _homePageView = new ProfileViewModel(this, _user);
         BindingContext = _homePageView;
+        InitializeComponent();
         Loaded += ProfilePage_Loaded;
     }
 

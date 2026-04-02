@@ -1,8 +1,10 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+
+namespace SquadApplication.ViewModels;
 
 public partial class EditEquipmentViewModel : ObservableObject
 {
-    private IRequestManager<EquipmentDTO> _requestManager;
+    private BaseRequestsManager _requestManager;
     private readonly EditEquipmentPage _page;
     private EquipmentDTO _equipment;
     private UserModelEntity _user;
@@ -30,7 +32,7 @@ public partial class EditEquipmentViewModel : ObservableObject
     public EditEquipmentViewModel(EditEquipmentPage page, UserModelEntity user)
     {
         _user = user;
-        _requestManager = new ManagerPostRequests<EquipmentDTO>();
+        _requestManager = new BaseRequestsManager(_page._httpClientFactory.CreateClient());
         _page = page;
         GetEquipById(_user.Id);
     }
@@ -49,9 +51,9 @@ public partial class EditEquipmentViewModel : ObservableObject
             );
 
         if(!ValidateData(dataForm))
-            await _page.DisplayAlertAsync("Error","Invalid data","Ok");
+            await _page.DisplayAlertAsync("Error", "Invalid data", "Ok");
 
-        var requestManager = (ManagerPostRequests<EquipmentDTO>)_requestManager;
+        //var requestManager = (ManagerPostRequests<EquipmentDTO>)_requestManager;
         var createdEquip = new EquipmentDTO()
         {
             MainWeapon = InStokeMainWeapon,
@@ -66,23 +68,23 @@ public partial class EditEquipmentViewModel : ObservableObject
 
         };
 
-        if(requestManager is null)
-            throw new NullReferenceException();
-        bool result ;
-        if(_page.IsUpdate &&  _equipment is not null)
+        //if(requestManager is null)
+        //    throw new NullReferenceException();
+        bool result;
+        if(_page.IsUpdate && _equipment is not null)
         {
-            requestManager.SetUrl($"UpdateEquip?equipId={_user.EquipmentId}");
-            result =  await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.UpdateEquip);
+            _requestManager.SetAddress($"api/equipments/updateById?equipId={_user.EquipmentId}");
+            result = await _requestManager.PatchDateAsync<EquipmentDTO>(createdEquip);
         }
         else
         {
-            requestManager.SetUrl($"CreateEquip?userId={_user.Id}");
-            result =  await requestManager?.PostRequests(objectValue: createdEquip, PostsRequests.CreateEquip);
+            _requestManager.SetAddress($"api/equipments/createById?userId={_user.Id}");
+            result = await _requestManager.PostDateAsync<EquipmentDTO>(createdEquip);
         }
-        requestManager.ResetUrlAndStatusCode();
+        _requestManager.ResetAddress();
 
         if(!result)
-           await _page.DisplayAlertAsync("Error","Произошла ошибка при обновлении данных ","Ok");
+            await _page.DisplayAlertAsync("Error", "Произошла ошибка при обновлении данных ", "Ok");
         await Shell.Current.GoToAsync($"/{nameof(HomePage)}");
     }
 
@@ -105,31 +107,33 @@ public partial class EditEquipmentViewModel : ObservableObject
     {
         if(_user is null)
             return;
-
         try
         {
-            var getRequest = new ManagerGetRequests<EquipmentDTO>();
-            getRequest.SetUrl($"GetEquipByUserId?userId={userId}");
-            var responce = await getRequest.GetDataAsync(GetRequests.GetEquipById);
-            var equip = responce.FirstOrDefault();
+            //var getRequest = new ManagerGetRequests<EquipmentDTO>();
+            _requestManager.SetAddress($"api/equipments/equipByUser?userId={userId}");
+            var equip = await _requestManager.GetDateAsync<EquipmentDTO>();
             if(equip is not null)
             {
-
                 _equipment = equip;
                 InStokeMainWeapon = equip.MainWeapon;
-                InStokesecondaryWeapon = equip.SecondaryWeapon ;
+                InStokesecondaryWeapon = equip.SecondaryWeapon;
                 MainWeapon = equip.NameMainWeapon;
                 SecondaryWeapon = equip.NameSecondaryWeapon ?? "Не зарегано";
                 HeadEquipment = equip.HeadEquipment;
                 BodyEquipment = equip.BodyEquipment;
                 UnloudingWeapon = equip.UnloudingEquipment;
             }
-            getRequest.ResetUrlAndStatusCode();
+            else
+                throw new NullReferenceException();
         }
         catch(Exception ex)
         {
             Console.WriteLine(ex.Message);
-            throw new Exception();
+            await _page.DisplayAlertAsync("Error", $"{ex.Message}", "Ok");
+        }
+        finally
+        {
+            _requestManager.ResetAddress();
         }
 
     }

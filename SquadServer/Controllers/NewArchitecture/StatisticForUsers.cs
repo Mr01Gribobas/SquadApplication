@@ -11,15 +11,13 @@ public class StatisticForUsersController : ControllerBase
         _statisticForUserDbService = new StatisticForUserDbService(_context);
     }
 
-    [HttpGet("allInfo/{userId}")]
+    [HttpGet("allInfo")]
     public async Task<IActionResult?> GetAllInfoUser(int userId)
     {
         try
         {
             UserAllInfoStatisticDTO? info = await _statisticForUserDbService.GetAllInfoUser(userId);
-            List<UserAllInfoStatisticDTO> listInfo = new List<UserAllInfoStatisticDTO>();
-            listInfo.Add(info);
-            return Ok(listInfo);
+            return Ok(info);
         }
         catch(Exception ex)
         {

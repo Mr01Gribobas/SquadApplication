@@ -1,11 +1,13 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+
+namespace SquadApplication.ViewModels;
 
 public partial class ParticipantsViewModel : ObservableObject
 {
     private UserModelEntity _userModelEntity;
     public Int32 _countUsers => Users.Count;
     private ParticipantsPage _participantsPage;
-    private IRequestManager<UserModelEntity> _requestsInServer;
+    private BaseRequestsManager _requestsInServer;
 
     [ObservableProperty]
     private ObservableCollection<UserModelEntity> users;
@@ -17,10 +19,10 @@ public partial class ParticipantsViewModel : ObservableObject
     private Role role;
     public ParticipantsViewModel(ParticipantsPage participantsPage, UserModelEntity userModel)
     {
-        users = new ObservableCollection<UserModelEntity>();
         this._participantsPage = participantsPage;
-        _requestsInServer = new ManagerGetRequests<UserModelEntity>();
         _userModelEntity = userModel;
+        users = new ObservableCollection<UserModelEntity>();
+        _requestsInServer = new BaseRequestsManager(_participantsPage._clientFactory.CreateClient());
     }
 
     [RelayCommand]
@@ -51,12 +53,12 @@ public partial class ParticipantsViewModel : ObservableObject
 
     private async Task SendRequest(UserModelEntity user, bool rank)
     {
-        _requestsInServer.SetUrl($"PlayerUpdateRank?userId={user.Id}&rank={rank}");
-        bool respone = await _requestsInServer.PutchRequestAsync(PutchRequest.UpdateRank);
-        _requestsInServer.ResetUrlAndStatusCode();
-
+        _requestsInServer.SetAddress($"api/users/UpdateRank?userId={user.Id}&rank={rank}");
+        bool respone = await _requestsInServer.PutDateAsync<UserModelEntity>(null);
+        _requestsInServer.ResetAddress();
         var message = respone ? "Операция прошла успешно" : "Во время операции возникла ошибка";
         await _participantsPage.DisplayAlertAsync("Info", $"{message}", "Ok");
+
     }
 
     private async Task<bool> ExamingOperation(UserModelEntity user, bool rank)
@@ -97,14 +99,15 @@ public partial class ParticipantsViewModel : ObservableObject
         {
             return;
         }
-        var request = (ManagerGetRequests<UserModelEntity>)_requestsInServer;
-        request.SetUrl($"GetAllTeamMembers?userId={userId}");
-        var responce = await request.GetDataAsync(GetRequests.GetAllTeamMembers);
+        //var request = (ManagerGetRequests<UserModelEntity>)_requestsInServer;
+        _requestsInServer.SetAddress($"api/users/allUsers?userId={userId}");
+        var responce = await _requestsInServer.GetDateAsync<List<UserModelEntity>>();
+        
         if(responce != null)
         {
             foreach(var member in responce)
                 Users.Add(member);
         }
-        request.ResetUrlAndStatusCode();
+        _requestsInServer.ResetAddress();
     }
 }

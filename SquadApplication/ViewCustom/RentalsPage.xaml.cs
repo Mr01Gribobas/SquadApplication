@@ -7,6 +7,7 @@ public partial class RentalsPage : ContentPage
     private readonly ICacheServieseCust _cacheServiese;
     private readonly UserModelEntity _user;
     private readonly RentailsViewModel _rentalView;
+    public IHttpClientFactory _clientFactory { get; private set; }
     public bool _refreshPage
     {
         set
@@ -16,17 +17,18 @@ public partial class RentalsPage : ContentPage
         }
     }
 
-    private async Task RefreshData()=> await _rentalView.GetRentalsFromDb();
 
 
-    public RentalsPage(IUserSession userSession, ICacheServieseCust cacheServiese)
+    public RentalsPage(IUserSession userSession, ICacheServieseCust cacheServiese, IHttpClientFactory clientFactory)
     {
-        _cacheServiese = cacheServiese;
         _user = userSession.CurrentUser;
+        _clientFactory = clientFactory;
+        _cacheServiese = cacheServiese;
         _rentalView = new RentailsViewModel(this, _user);
         BindingContext = _rentalView;
         InitializeComponent();
     }
+    private async Task RefreshData() => await _rentalView.GetRentalsFromDb();
 
     public void SaveInCacheItem(RentailsDTO rentail) => _cacheServiese.Set<RentailsDTO>("updateRental", rentail);
 

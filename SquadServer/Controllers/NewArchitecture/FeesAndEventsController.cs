@@ -23,15 +23,12 @@ public class FeesAndEventsController : ControllerBase
     public async Task<IActionResult?> GetCurrentFees(int teamId)
     {
         Controller.LogInformation("Start action : GetEvent");
-        var result = await _EventsDbService.GetEvent(teamId);
-
+        EventModelEntity? result = await _EventsDbService.GetEvent(teamId);
         if(result == null)
             return BadRequest();
-        List<EventModelEntity> events = new List<EventModelEntity>();
-        events.Add(result);
-        HttpContext.Response.StatusCode = 200;
-        return Ok(events);
+        return Ok(result);
     }
+
 
     [HttpGet("AllEventsForCommands")]
     public async Task<IActionResult?> GetAllEventsForAllCommands()
@@ -41,7 +38,7 @@ public class FeesAndEventsController : ControllerBase
     }
 
 
-    [HttpGet("AppendOrDeleteFromTheMeeting")]
+    [HttpPatch("AppendOrDeleteFromTheMeeting")]
     public async Task<IActionResult> AppendOrDeleteFromTheMeeting(string nameTeamOrganization, int userId, bool turnout)
     {
         if(nameTeamOrganization is null || userId <= 0)
@@ -100,9 +97,9 @@ public class FeesAndEventsController : ControllerBase
     [HttpPatch("updateEvent")]
     public async Task<IActionResult?> UpdateEventForAllCommands(int commanderId)
     {
-        EventsForAllCommandsModelDTO? resultReading = await HttpContext.Request.ReadFromJsonAsync<EventsForAllCommandsModelDTO>();
         try
         {
+            EventsForAllCommandsModelDTO? resultReading = await HttpContext.Request.ReadFromJsonAsync<EventsForAllCommandsModelDTO>();
             bool resultOperation = await _EventsDbService.UpdateEventsForAllCommands(commanderId, resultReading);
             return Ok(resultOperation);
         }

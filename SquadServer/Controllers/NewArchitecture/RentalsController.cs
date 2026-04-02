@@ -21,7 +21,7 @@ public class RentalsController : ControllerBase
         return Ok(list);
     }
 
-    [HttpPost]
+    [HttpPost("appendRental")]
     public async Task<IActionResult?> AddReantils(int commanderId)
     {
         RentailsDTO? result = await HttpContext.Request.ReadFromJsonAsync<RentailsDTO>();
@@ -29,7 +29,7 @@ public class RentalsController : ControllerBase
         return Ok(resultAppends);
     }
 
-    [HttpPatch("{reantilId}")]
+    [HttpPatch("updateRental")]
     public async Task<IActionResult?> UpdateReantilsById(int reantilId)
     {
         RentailsDTO? result = await HttpContext.Request.ReadFromJsonAsync<RentailsDTO>();

@@ -1,9 +1,11 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+
+namespace SquadApplication.ViewModels;
 
 public partial class CreateEventViewModel : ObservableObject
 {
 
-    private IRequestManager<EventModelEntity> _requestManager;
+    private BaseRequestsManager _requestManager;
     private readonly UserModelEntity _user;
     private readonly CreateEventPage _eventPage;
     private bool _isUpdate;
@@ -28,7 +30,7 @@ public partial class CreateEventViewModel : ObservableObject
     {
         _user = user;
         _eventPage = eventPage;
-        _requestManager = new ManagerPostRequests<EventModelEntity>();
+        _requestManager = new BaseRequestsManager(_eventPage._httpClientF.CreateClient());
         if(_eventPage._cache.GetItemByKey<EventModelEntity>("EventForUpdate") is EventModelEntity fees)
             InitialProperty(fees);
     }
@@ -66,15 +68,18 @@ public partial class CreateEventViewModel : ObservableObject
             );
         if(_isUpdate && _modelFees is not null)
             newEvent.Id = _modelFees.Id;
-        var requestPost = (ManagerPostRequests<EventModelEntity>)_requestManager;
-
+        bool resultOperation;
         if(_isUpdate)
-            requestPost.SetUrl($"UpdateEvent?commanderId={_user.Id}");
+        {
+            _requestManager.SetAddress($"api/events/updateFees?commanderId={_user.Id}");
+            resultOperation = await _requestManager.PatchDateAsync<EventModelEntity>(newEvent);
+        }
         else
-            requestPost.SetUrl($"CreateEvent?commanderId={_user.Id}");
-        bool resultCreated = await requestPost.PostRequests(newEvent, PostsRequests.CreateEvent);
-
-        if(!resultCreated)
+        {
+            _requestManager.SetAddress($"api/events/CreatedFees?commanderId={_user.Id}");
+            resultOperation = await _requestManager.PostDateAsync<EventModelEntity>(newEvent);
+        }
+        if(!resultOperation)
         {
             await _eventPage.DisplayAlertAsync("Error", "Problems create event", "Ok");
             await Shell.Current.GoToAsync("..");
@@ -119,19 +124,10 @@ public partial class CreateEventViewModel : ObservableObject
         var slpitString = CoordinatesPolygon.Split(",");
 
         foreach(var stringCoordinates in slpitString)
-        {
             foreach(char _char in stringCoordinates)
-            {
                 if(!int.TryParse(Convert.ToString(_char), out int number))
-                {
                     if(_char != '.')
-                    {
                         return false;
-                    }
-                }
-            }
-        }
-
         return true;
     }
 }

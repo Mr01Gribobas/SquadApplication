@@ -30,7 +30,7 @@ public partial class PolygonsViewModel : ObservableObject
         List<PolygonEntity>? list = await _reauestManager.GetDateAsync<List<PolygonEntity>>();
         try
         {
-            if(list is not null)
+            if(list is not null && list.Count > 0)
             {
                 foreach(PolygonEntity item in list)
                     Polygons.Add(item);
@@ -38,7 +38,7 @@ public partial class PolygonsViewModel : ObservableObject
         }
         catch(Exception ex)
         {
-
+            await _polygonPage.DisplayAlertAsync("error",$"{ex.Message}","Ok");
         }
         finally
         {

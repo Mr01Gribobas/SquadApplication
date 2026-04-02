@@ -1,10 +1,12 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+
+namespace SquadApplication.ViewModels;
 
 public partial class HomeViewModel : ObservableObject
 {
     private IUserSession _user;
     private readonly HomePage _page;
-    private IRequestManager<EquipmentDTO> _requestManager;
+    private BaseRequestsManager _requestManager;
     private EquipmentDTO _equipment;
 
     //==============================
@@ -60,13 +62,13 @@ public partial class HomeViewModel : ObservableObject
     {
         _user = user;
         _page = page;
+        _requestManager = new BaseRequestsManager(_page._httpClientFactory.CreateClient());
         if(_user is not null)
             GetAllProfileById(_user.CurrentUser.Id);
     }
     private async void GetAllProfileById(int userId)
     {
-        var httpClient = _page.GetHttpClientFactory().CreateClient();
-        var tupleMahager = new RequestTuple(_user.CurrentUser,httpClient);
+        var tupleMahager = new RequestTuple(_user.CurrentUser, _requestManager.GetHttpCurrentClient());
         (UserModelEntity objectUser,
          TeamEntity objectTeam,
          EquipmentDTO? objectEquipment) tuple = await tupleMahager.GetAllInfoForUser(_user.CurrentUser);
@@ -81,7 +83,6 @@ public partial class HomeViewModel : ObservableObject
 
 
     }
-
     private void InitialPropertyTeamInfo(TeamEntity objectTeam)
     {
         NameTeam = objectTeam.Name;
@@ -104,7 +105,6 @@ public partial class HomeViewModel : ObservableObject
         }
     }
 
-
     private async Task InitialPropertyUser(UserModelEntity modelEntity, EquipmentDTO equipment)
     {
         if(modelEntity is null)
@@ -120,8 +120,6 @@ public partial class HomeViewModel : ObservableObject
         EquipmentId = equipment is null ? "Нету у тебя экипа " : modelEntity.EquipmentId.ToString();
         _user.CurrentUser = modelEntity;
     }
-
-
 
     [RelayCommand]
     private void UpdateEquipment()

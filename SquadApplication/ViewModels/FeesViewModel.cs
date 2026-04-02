@@ -1,4 +1,6 @@
 ﻿
+using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+
 namespace SquadApplication.ViewModels;
 
 public partial class FeesViewModel : ObservableObject
@@ -6,7 +8,7 @@ public partial class FeesViewModel : ObservableObject
 
     private readonly FeesPage _feesPage;
     private readonly IUserSession _user;
-    private readonly IRequestManager<EventModelEntity> _requestManager;
+    private readonly BaseRequestsManager _requestManager;
     private EventModelEntity _event;
 
 
@@ -38,7 +40,7 @@ public partial class FeesViewModel : ObservableObject
     {
         _feesPage = feesPage;
         _user = user;
-        _requestManager = new ManagerGetRequests<EventModelEntity>();
+        _requestManager = new BaseRequestsManager(_feesPage._clientFactory.CreateClient());
         GetCurrentEvent();
     }
 
@@ -47,32 +49,28 @@ public partial class FeesViewModel : ObservableObject
     public async void CurrentHumanWillBe()
     {
         var isWill = true;
-        ManagerGetRequests<UserModelEntity> request = CreateGetRequestUserModel(isWill);
-        var responce = await request.GetDataAsync(GetRequests.GameAttendance);
-        if(request._currentStatusCode == 200 | request._currentStatusCode == 204)
-            UpdateLists(responce.FirstOrDefault());
-        request.ResetUrlAndStatusCode();
+        await RequestAsync(isWill);
+        _requestManager.ResetAddress();
+    }
+
+
+    private async Task RequestAsync(bool isWill)
+    {
+        _requestManager.SetAddress($"api/users/GameAttendance?userId={_user.CurrentUser.Id}&isWill={isWill}");
+        bool result = await _requestManager.PatchDateAsync<UserModelEntity>(null);
+        if(result)
+        {
+            _user.CurrentUser._goingToTheGame = true;
+            UpdateLists(_user.CurrentUser);
+        }
     }
 
     [RelayCommand]
     public async void CurrentHumanWillNot()
     {
         var isWill = false;
-        ManagerGetRequests<UserModelEntity> request = CreateGetRequestUserModel(isWill);
-        List<UserModelEntity?> responce = await request.GetDataAsync(GetRequests.GameAttendance) as List<UserModelEntity>;//getUser
-        if(request._currentStatusCode == 200 | request._currentStatusCode == 204)
-            UpdateLists(responce.FirstOrDefault());
-        request.ResetUrlAndStatusCode();
-    }
-
-
-
-
-    private ManagerGetRequests<UserModelEntity> CreateGetRequestUserModel(bool isWill)
-    {
-        var request = new ManagerGetRequests<UserModelEntity>();
-        request.SetUrl($"GameAttendance?userId={_user.CurrentUser.Id}&isWill={isWill}");
-        return request;
+        await RequestAsync(isWill);
+        _requestManager.ResetAddress();
     }
 
     private void UpdateLists(UserModelEntity user)
@@ -172,27 +170,23 @@ public partial class FeesViewModel : ObservableObject
         if(_requestManager is null | _user is null)
             return;
 
-        var request = (ManagerGetRequests<EventModelEntity>)_requestManager;
-        request.SetUrl($"GetEvent?teamId={_user.CurrentUser.TeamId}");
-        List<EventModelEntity>? responce = await request.GetDataAsync(GetRequests.GetEvent);
+        //var request = (ManagerGetRequests<EventModelEntity>)_requestManager;
+        _requestManager.SetAddress($"api/events/CurrentFees/{_user.CurrentUser.TeamId}");
+        EventModelEntity? responce = await _requestManager.GetDateAsync<EventModelEntity>();
 
-        if(responce is null ||
-            responce.Count <= 0 ||
-            responce.FirstOrDefault() is null)
+        if(responce is null)
             return;
-        EventModelEntity? eventFromDb = responce.FirstOrDefault();
-        request.ResetUrlAndStatusCode();
-        InitialProperty(eventFromDb);
+        _requestManager.ResetAddress();
+        InitialProperty(responce);
     }
 
     private async Task GetMembersTeam(int userId)
     {
         if(_user is null)
             return;
-        var request = new ManagerGetRequests<UserModelEntity>();
-        request.SetUrl($"GetAllTeamMembers?userId={userId}");
-        var responce = await request.GetDataAsync(GetRequests.GetAllTeamMembers);
-        if(responce != null)
+        _requestManager.SetAddress($"api/users/allUsers?userId={userId}");
+        List<UserModelEntity>? responce = await _requestManager.GetDateAsync<List<UserModelEntity>>();
+        if(responce != null && responce.Count != 0 )
         {
             foreach(var member in responce)
                 SortUsers(member);

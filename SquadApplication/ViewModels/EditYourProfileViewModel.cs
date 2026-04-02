@@ -1,8 +1,10 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+
+namespace SquadApplication.ViewModels;
 
 public partial class EditYourProfileViewModel : ObservableObject
 {
-    private IRequestManager<UserModelEntity> _requestManager;
+    private BaseRequestsManager _requestManager;
     public EditUserProfilePage _editProfilePage;
     private UserModelEntity _user;
 
@@ -32,8 +34,8 @@ public partial class EditYourProfileViewModel : ObservableObject
     {
         _user = user;
         _editProfilePage = profilePage;
+        _requestManager = new BaseRequestsManager(_editProfilePage._clientFactory.CreateClient());
         InitalProperty(_user);
-        _requestManager = new ManagerPostRequests<UserModelEntity>();
     }
 
     private void InitalProperty(UserModelEntity user)
@@ -81,18 +83,18 @@ public partial class EditYourProfileViewModel : ObservableObject
             _teamId: _user.TeamId
             );
 
-        var requestManager = (ManagerPostRequests<UserModelEntity>)_requestManager;
-        bool result = false;
+        //var requestManager = (ManagerPostRequests<UserModelEntity>)_requestManager;
 
-        if(requestManager is null)
-            throw new NullReferenceException();
+        bool result = false;
+        //if(requestManager is null)
+        //    throw new NullReferenceException();
 
         if(_user is not null)
         {
-            requestManager.SetUrl($"UpdateProfile?userId={_user.Id}");
-            result = await requestManager?.PostRequests(objectValue: newUser, PostsRequests.UpdateProfile);
+            _requestManager.SetAddress($"api/users/UpdateShorPtofile?userId={_user.Id}");
+            result = await _requestManager.PatchDateAsync<UserModelEntity>(newUser);
         }
-        requestManager.ResetUrlAndStatusCode();
+        _requestManager.ResetAddress();
 
         if(!result)
             await _editProfilePage.DisplayAlertAsync("Error", "Ошибка обновления профиля ", "Ok");

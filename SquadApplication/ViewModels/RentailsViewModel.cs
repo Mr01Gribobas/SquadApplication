@@ -1,10 +1,12 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+
+namespace SquadApplication.ViewModels;
 
 public partial class RentailsViewModel : ObservableObject
 {
     private readonly UserModelEntity _user;
     private readonly RentalsPage _rentalPage;
-    private readonly IRequestManager<RentailsDTO> _requestManager;
+    private readonly BaseRequestsManager _requestManager;
     public Int32 _countRentals => Rentals.Count;
 
 
@@ -24,7 +26,7 @@ public partial class RentailsViewModel : ObservableObject
         _user = modelEntity;
         _rentalPage = rentalsPage;
         rentals = new ObservableCollection<RentalDTOToString>();
-        _requestManager = new ManagerGetRequests<RentailsDTO>();
+        _requestManager = new BaseRequestsManager(_rentalPage._clientFactory.CreateClient());
         GetRentalsFromDb();
     }
 
@@ -49,8 +51,8 @@ public partial class RentailsViewModel : ObservableObject
     {
         if(Rentals.Count > 0)
             Rentals.Clear();
-        _requestManager.SetUrl($"GetAllReantil?teamId={_user.TeamId}");
-        List<RentailsDTO>? resultList = await _requestManager.GetDataAsync(GetRequests.GetAllReantil);
+        _requestManager.SetAddress($"api/rentales?teamId={_user.TeamId}");
+        List<RentailsDTO>? resultList = await _requestManager.GetDateAsync<List<RentailsDTO>>();
         if(resultList is not null && resultList.Count > 0)
         {
             foreach(RentailsDTO item in resultList)
@@ -60,7 +62,7 @@ public partial class RentailsViewModel : ObservableObject
             }
 
         }
-        _requestManager.ResetUrlAndStatusCode();
+        _requestManager.ResetAddress();
         _rentalPage.CheckItems();
     }
 

@@ -1,16 +1,15 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+
+namespace SquadApplication.ViewModels;
 
 public partial class CreateOrUpdateRentalViewModel : ObservableObject
 {
     private readonly CreateOrUpdateRentalPage _page;
     private readonly IUserSession _user;
-    private readonly ManagerPostRequests<RentailsDTO> _managerPostRequests;
+    private readonly BaseRequestsManager _managerRequests;
 
     public int TeamId { get; set; }
     public bool _isStaffed { get; set; }
-
-
-
 
 
     [ObservableProperty]
@@ -40,7 +39,7 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
     {
         _page = page;
         _user = user;
-        _managerPostRequests = new ManagerPostRequests<RentailsDTO>();
+        _managerRequests = new BaseRequestsManager(_page._clientFactory.CreateClient());
     }
 
     [RelayCommand]
@@ -54,19 +53,19 @@ public partial class CreateOrUpdateRentalViewModel : ObservableObject
         }
         try
         {
-            var modelDto = CreateModel();
+            RentailsDTO modelDto = CreateModel();
             bool resultOperation;
             if(!_page._isUpdate)
             {
-                _managerPostRequests.SetUrl($"AddReantils?commanderId={_user.CurrentUser.Id}");
-                resultOperation = await _managerPostRequests.PostRequests(modelDto, PostsRequests.AddReantil);
+                _managerRequests.SetAddress($"api/rentales/appendRental?commanderId={_user.CurrentUser.Id}");
+                resultOperation = await _managerRequests.PostDateAsync<RentailsDTO>(modelDto);
             }
             else
             {
-                _managerPostRequests.SetUrl($"UpdateReantilsById?reantilId={modelDto.NumderRental}");
-                resultOperation = await _managerPostRequests.PostRequests(modelDto, PostsRequests.UpdateReantilsById);
+                _managerRequests.SetAddress($"api/rentales/updateRental?reantilId={modelDto.NumderRental}");
+                resultOperation = await _managerRequests.PatchDateAsync<RentailsDTO>(modelDto);//.PostRequests(modelDto, PostsRequests.UpdateReantilsById);
             }
-            //result
+            await _page.DisplayAlertAsync("iungo", $" Operation is {resultOperation}", "Ok");
         }
         catch(Exception ex)
         {

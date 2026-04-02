@@ -1,10 +1,11 @@
-﻿using System.Text.RegularExpressions;
+﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+using System.Text.RegularExpressions;
 
 namespace SquadApplication.ViewModels;
 
 public partial class ProfileViewModel : ObservableObject
 {
-    private readonly ManagerGetRequests<UserAllInfoStatisticDTO> _managerGet;
+    private readonly BaseRequestsManager _managerRequest;
     private readonly ProfilePage _homePage;
     private UserModelEntity _user;
     private UserAllInfoStatisticDTO _userCurrentInfo;
@@ -68,17 +69,17 @@ public partial class ProfileViewModel : ObservableObject
     {
         _user = userModel;
         _homePage = page;
-        _managerGet = new ManagerGetRequests<UserAllInfoStatisticDTO>();
+        _managerRequest = new BaseRequestsManager(_homePage._clientFactory.CreateClient());
         achievements = new ObservableCollection<Achievement>();
     }
 
     public async void GetFullInfoForProfile(int id)
     {
-        _managerGet.SetUrl($"GetAllInfoUser?userId={id}");
-        List<UserAllInfoStatisticDTO>? responce = await _managerGet.GetDataAsync(GetRequests.AllInfoForProfile);
-        if(responce is not null && responce.Count > 0 && responce.FirstOrDefault() is not null)
-            await InitialProperty(responce.FirstOrDefault());
-        _managerGet.ResetUrlAndStatusCode();
+        _managerRequest.SetAddress($"api/statistic/allInfo?userId={id}");
+        UserAllInfoStatisticDTO? responce = await _managerRequest.GetDateAsync<UserAllInfoStatisticDTO>();
+        if(responce is not null)
+            await InitialProperty(responce);
+        _managerRequest.ResetAddress();
     }
 
     private async Task InitialProperty(UserAllInfoStatisticDTO? model)
@@ -115,6 +116,7 @@ public partial class ProfileViewModel : ObservableObject
         //if(_homePage._stanger)
         //    await _homePage.DisplayAlertAsync("info","Была загружена все даныне кроме имени","Ok");
     }
+
     [RelayCommand]
     private async Task EditInfoUser()
     {
@@ -171,21 +173,19 @@ public partial class ProfileViewModel : ObservableObject
         {
             if(_user._role != Role.Commander)
                 throw new Exception("Вы не командир !!");
-            ManagerPostRequests<UserAllInfoStatisticDTO> manager = new ManagerPostRequests<UserAllInfoStatisticDTO>();
-            manager.SetUrl($"UpdateStatistickForUser?commanderId={_user.Id}&userId={_userCurrentInfo.userId}");
-            var result = await manager.PostRequests(_userCurrentInfo, PostsRequests.UpdateInfoForUser);
+            //ManagerPostRequests<UserAllInfoStatisticDTO> manager = new ManagerPostRequests<UserAllInfoStatisticDTO>();
+            _managerRequest.SetAddress($"api/statistic/updateStatistick?commanderId={_user.Id}&userId={_userCurrentInfo.userId}");
+            var result = await _managerRequest.PutDateAsync<UserAllInfoStatisticDTO>(_userCurrentInfo);
             if(result)
             {
-               await _homePage.DisplayAlertAsync("Ok", $"Operation it`s ok", "Ok");
+                await _homePage.DisplayAlertAsync("Ok", $"Operation it`s ok", "Ok");
             }
-            manager.ResetUrlAndStatusCode();
         }
         catch(Exception ex)
         {
             await _homePage.DisplayAlertAsync("Error", $"{ex.Message}", "Ok");
         }
-
-
+        _managerRequest.ResetAddress();
     }
 
     private async Task<bool> UpdateModel()
