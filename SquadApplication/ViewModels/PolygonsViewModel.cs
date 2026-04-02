@@ -17,10 +17,10 @@ public partial class PolygonsViewModel : ObservableObject
 
     public PolygonsViewModel(PolygonsPage polygonsPage, UserModelEntity user)
     {
-        _user = user;
         _polygonPage = polygonsPage;
-        _reauestManager = new BaseRequestsManager(_polygonPage._clientFactory.CreateClient());
+        _user = user;
         RoleUser = _user._role.ToString();
+        _reauestManager = new BaseRequestsManager(_polygonPage._clientFactory.CreateClient());
         Polygons = new ObservableCollection<PolygonEntity>();
         SetPolygons();
     }

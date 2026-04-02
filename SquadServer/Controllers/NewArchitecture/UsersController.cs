@@ -21,7 +21,7 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("UpdateRank")]
     public async Task<IActionResult?> PlayerUpdateRank(int userId, bool rank)
     {
         var result = await _usersDbService.UpdateRankUser(userId, rank);

@@ -25,7 +25,7 @@ public class StatisticForUsersController : ControllerBase
         }
     }
 
-    [HttpPut]
+    [HttpPut("updateStatistick")]
     public async Task<IActionResult> UpdateStatistickForUser(int commanderId, int userId)
     {
         try

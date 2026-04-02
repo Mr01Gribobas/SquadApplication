@@ -31,9 +31,9 @@ public partial class EditEquipmentViewModel : ObservableObject
 
     public EditEquipmentViewModel(EditEquipmentPage page, UserModelEntity user)
     {
+        _page = page;
         _user = user;
         _requestManager = new BaseRequestsManager(_page._httpClientFactory.CreateClient());
-        _page = page;
         GetEquipById(_user.Id);
     }
 

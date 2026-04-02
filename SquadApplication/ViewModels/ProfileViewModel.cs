@@ -69,8 +69,8 @@ public partial class ProfileViewModel : ObservableObject
     {
         _user = userModel;
         _homePage = page;
-        _managerRequest = new BaseRequestsManager(_homePage._clientFactory.CreateClient());
         achievements = new ObservableCollection<Achievement>();
+        _managerRequest = new BaseRequestsManager(_homePage._clientFactory.CreateClient());
     }
 
     public async void GetFullInfoForProfile(int id)

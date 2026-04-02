@@ -17,7 +17,7 @@ public class RentalsController : ControllerBase
         Controller.LogInformation("Start action : GetAllReantil");
         if(teamId <= 0)
             return BadRequest();
-        List<RentailsDTO> list = await _rentalDbService.GetAllReantilAsync(teamId);
+        List<RentailsDTO>? list = await _rentalDbService.GetAllReantilAsync(teamId);
         return Ok(list);
     }
 

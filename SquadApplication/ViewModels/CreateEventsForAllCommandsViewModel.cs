@@ -40,8 +40,8 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
 
     public CreateEventsForAllCommandsViewModel(CreateEventsForAllCommandsPage createEventsPage, IUserSession user)
     {
-        _user = user;
         _createEventPage = createEventsPage;
+        _user = user;
         _managerRequest = new BaseRequestsManager(_createEventPage._clientFactory.CreateClient());
         TeamNameOrganization = _user?.CurrentUser._teamName ?? throw new NullReferenceException();
         if(_createEventPage._cache.GetItemByKey<EventsForAllCommandsModelDTO>("EventForCommands") is EventsForAllCommandsModelDTO model)
