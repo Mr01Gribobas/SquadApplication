@@ -79,7 +79,7 @@ public class UsersController : ControllerBase
     public async Task<IActionResult?> UpdateProfile(int userId)
     {
         UserModelEntity? userFromApp = await HttpContext.Request.ReadFromJsonAsync<UserModelEntity>();
-        var result = _usersDbService.UpdateProfileById(userId, userFromApp);
+        var result = await _usersDbService.UpdateProfileById(userId, userFromApp);
         return Ok(result);
     }
 }

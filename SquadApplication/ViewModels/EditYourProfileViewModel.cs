@@ -50,7 +50,6 @@ public partial class EditYourProfileViewModel : ObservableObject
         Age = user?._age.ToString() ?? "Не указан";
     }
 
-
     [RelayCommand]
     private async Task UpdateProfile()
     {
@@ -72,7 +71,6 @@ public partial class EditYourProfileViewModel : ObservableObject
 
         if(!ValidateDataUser(dataForm))
             await _editProfilePage.DisplayAlertAsync("Error", "Некоректные данные ", "Ok");
-
         UserModelEntity newUser = UserModelEntity.CreateUserEntity(
             _name: dataForm._name,
             _callSing: dataForm._callSing,
@@ -82,20 +80,13 @@ public partial class EditYourProfileViewModel : ObservableObject
             _teamName: dataForm._teamName,
             _teamId: _user.TeamId
             );
-
-        //var requestManager = (ManagerPostRequests<UserModelEntity>)_requestManager;
-
         bool result = false;
-        //if(requestManager is null)
-        //    throw new NullReferenceException();
-
         if(_user is not null)
         {
             _requestManager.SetAddress($"api/users/UpdateShorPtofile?userId={_user.Id}");
             result = await _requestManager.PatchDateAsync<UserModelEntity>(newUser);
         }
         _requestManager.ResetAddress();
-
         if(!result)
             await _editProfilePage.DisplayAlertAsync("Error", "Ошибка обновления профиля ", "Ok");
         await Shell.Current.GoToAsync($"/{nameof(HomePage)}");
