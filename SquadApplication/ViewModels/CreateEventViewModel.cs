@@ -57,7 +57,10 @@ public partial class CreateEventViewModel : ObservableObject
             _user is null ||
             _user._role != Role.Commander
           )
-            return;//error
+        {
+            await _eventPage.DisplayAlertAsync("Error","Допущена ошибка при вводе данных , либо вы не имеете должного звания для создания сборов !","Ok");
+            return;
+        }
 
         var newEvent = EventModelEntity.CreateEventModel(
             nameTeamEnemy: NameTeamEnemy,

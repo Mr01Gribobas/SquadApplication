@@ -4,6 +4,9 @@ namespace SquadApplication.ViewModels;
 
 public partial class ParticipantsViewModel : ObservableObject
 {
+    /// <summary>
+    /// Необходимо реализовать смену роки в команде для самого клиента 
+    /// </summary>
     private UserModelEntity _userModelEntity;
     public Int32 _countUsers => Users.Count;
     private ParticipantsPage _participantsPage;
