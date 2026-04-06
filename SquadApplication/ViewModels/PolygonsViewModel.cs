@@ -24,7 +24,7 @@ public partial class PolygonsViewModel : ObservableObject
         Polygons = new ObservableCollection<PolygonEntity>();
         SetPolygons();
     }
-    private async Task SetPolygons()
+    public async Task SetPolygons()
     {
         _reauestManager.SetAddress("api/polygons");
         List<PolygonEntity>? list = await _reauestManager.GetDateAsync<List<PolygonEntity>>();

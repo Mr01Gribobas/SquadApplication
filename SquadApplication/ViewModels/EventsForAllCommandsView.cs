@@ -113,7 +113,7 @@ public partial class EventsForAllCommandsView : ObservableObject
             for(int i = step; i < events.Count; i++)
             {
                 int j = i;
-                while((j >= step) && events[j - step].Date < events[j].Date)
+                while((j >= step) && events[j - step].Date > events[j].Date)
                 {
                     SwopItemsByIndex(events, (j - step), j);
                     j -= step;

@@ -12,7 +12,7 @@ public partial class RentalsPage : ContentPage
     {
         set
         {
-            if(value is true)
+            if(value)
                 RefreshData();
         }
     }

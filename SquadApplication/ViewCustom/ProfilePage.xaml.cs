@@ -1,5 +1,6 @@
 namespace SquadApplication.ViewCustom;
 
+
 [QueryProperty(nameof(_stangerUserId), "userId")]
 [QueryProperty(nameof(_stanger), "IsStanger")]
 public partial class ProfilePage : ContentPage

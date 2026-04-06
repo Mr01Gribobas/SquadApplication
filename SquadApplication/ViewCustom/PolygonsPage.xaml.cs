@@ -1,10 +1,21 @@
 ﻿namespace SquadApplication.ViewCustom;
 
+[QueryProperty(nameof(_refreshPage), "refresh")]
 public partial class PolygonsPage : ContentPage
 {
     public PolygonsViewModel _polygonsViewModel;
     private UserModelEntity? _user;
     public IHttpClientFactory _clientFactory { get; private set; }
+    public bool _refreshPage
+    {
+        set
+        {
+            if(value)
+                RefreshData();
+        }
+    }
+
+
     public PolygonsPage(IUserSession userSession, IHttpClientFactory clientFactory)
     {
         _clientFactory = clientFactory;
@@ -13,6 +24,8 @@ public partial class PolygonsPage : ContentPage
         BindingContext = _polygonsViewModel;
         InitializeComponent();
     }
+    private void RefreshData()=> _polygonsViewModel?.SetPolygons();
+    
     public async Task CheckItems()
     {
         if(_polygonsViewModel._countPolygon <= 0)
