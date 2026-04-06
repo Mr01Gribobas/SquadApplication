@@ -76,4 +76,9 @@ public partial class OrderViewModel : ObservableObject
         UpdateTotalSum();
         Orders.Clear();
     }
+    [RelayCommand]
+    public void MoveMainPage()
+    {
+        Shell.Current.GoToAsync($"/{nameof(MainPage)}");
+    }
 }

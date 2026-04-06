@@ -192,4 +192,10 @@ public partial class FeesViewModel : ObservableObject
                 SortUsers(member);
         }
     }
+
+    [RelayCommand]
+    public void MoveMainPage()
+    {
+        Shell.Current.GoToAsync($"/{nameof(MainPage)}");
+    }
 }

@@ -3,25 +3,34 @@ using SquadApplication.Services.NotificationService;
 namespace SquadApplication.ViewCustom;
 
 [QueryProperty(nameof(UserId), "UserId")]
+[QueryProperty(nameof(_isFirstEntrance), "FirstEntrance")]
 public partial class MainPage : ContentPage
 {
     private IUserSession _userSession1;
     private readonly NotificationLocalService _notificationLocal;
     private IDispatcherTimer _timer;
     private UserModelEntity User { get; set; }
+    public bool _isFirstEntrance
+    {
+        set
+        {
+            if(value)
+                StartCheckNotification();
+        }
+    }
+
 
     public int UserId
     {
         get => User.Id;
-        set=> GetAndSetUserAsync(value);
+        set => GetAndSetUserAsync(value);
     }
     public MainPage(IUserSession userSession, IHttpClientFactory clientFactory)
     {
         BindingContext = new MainViewModel();
         _userSession1 = userSession;
         _notificationLocal = new NotificationLocalService(clientFactory);
-        InitializeComponent();
-        StartCheckNotification();
+        InitializeComponent();        
     }
 
     private async Task StartCheckNotification()

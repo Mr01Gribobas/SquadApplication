@@ -43,7 +43,7 @@ public partial class AuthorizeViewModel : ObservableObject
             await _authorizedPage.DisplayAlertAsync("Error", "Пользователя с таким кодом нету!", "Ok");
             return;
         }
-        await Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId={userFromResponce.Id}");
+        await Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId={userFromResponce.Id}&FirstEntrance={true}");
     }
 
 
@@ -96,7 +96,7 @@ public partial class AuthorizeViewModel : ObservableObject
             return;
         }
         await _authorizedPage.DisplayAlertAsync("Kode", $"Ваш код доступа {userFromResponce._enterCode}", "Ok");
-        await Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId = {userFromResponce.Id}");
+        await Shell.Current.GoToAsync($"/{nameof(MainPage)}/?UserId = {userFromResponce.Id}&FirstEntrance={true}");
     }
 
 

@@ -232,4 +232,10 @@ public partial class ProfileViewModel : ObservableObject
         _homePage.DisplayAlertAsync("error", "Данные должны содержать только цифры", "Ok");
         return false;
     }
+
+    [RelayCommand]
+    public void MoveMainPage()
+    {
+        Shell.Current.GoToAsync($"/{nameof(MainPage)}");
+    }
 }

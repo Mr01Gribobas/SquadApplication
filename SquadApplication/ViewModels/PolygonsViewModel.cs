@@ -38,7 +38,7 @@ public partial class PolygonsViewModel : ObservableObject
         }
         catch(Exception ex)
         {
-            await _polygonPage.DisplayAlertAsync("error",$"{ex.Message}","Ok");
+            await _polygonPage.DisplayAlertAsync("error", $"{ex.Message}", "Ok");
         }
         finally
         {
@@ -79,5 +79,10 @@ public partial class PolygonsViewModel : ObservableObject
         if(polygon is null || polygon.Coordinates is null)
             return;
         await Clipboard.Default.SetTextAsync(polygon.Coordinates);
+    }
+    [RelayCommand]
+    public void MoveMainPage()
+    {
+        Shell.Current.GoToAsync($"/{nameof(MainPage)}");
     }
 }

@@ -133,4 +133,10 @@ public partial class HomeViewModel : ObservableObject
     {
         Shell.Current.GoToAsync($"/{nameof(EditUserProfilePage)}");
     }
+    [RelayCommand]
+    private void MoveMainPage()
+    {
+        Shell.Current.GoToAsync($"/{nameof(MainPage)}");
+    }
+    
 }

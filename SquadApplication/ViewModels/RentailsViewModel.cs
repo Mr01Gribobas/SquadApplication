@@ -67,7 +67,9 @@ public partial class RentailsViewModel : ObservableObject
     }
 
 
-
-
-
+    [RelayCommand]
+    public void MoveMainPage()
+    {
+        Shell.Current.GoToAsync($"/{nameof(MainPage)}");
+    }
 }

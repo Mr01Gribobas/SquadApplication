@@ -188,4 +188,10 @@ public partial class EventsForAllCommandsView : ObservableObject
         }
         _requestManager.ResetAddress();
     }
+
+    [RelayCommand]
+    public void MoveMainPage()
+    {
+        Shell.Current.GoToAsync($"/{nameof(MainPage)}");
+    }
 }

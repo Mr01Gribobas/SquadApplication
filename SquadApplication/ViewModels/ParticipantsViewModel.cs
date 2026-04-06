@@ -104,4 +104,10 @@ public partial class ParticipantsViewModel : ObservableObject
                 Users.Add(member);
         _requestsInServer.ResetAddress();
     }
+
+    [RelayCommand]
+    public void MoveMainPage()
+    {
+        Shell.Current.GoToAsync($"/{nameof(MainPage)}");
+    }
 }
