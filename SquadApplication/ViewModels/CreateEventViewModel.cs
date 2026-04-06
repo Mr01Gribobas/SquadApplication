@@ -1,4 +1,5 @@
-﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+﻿using Java.Nio.FileNio;
+using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
 
 namespace SquadApplication.ViewModels;
 
@@ -96,15 +97,8 @@ public partial class CreateEventViewModel : ObservableObject
 
             var dateOnly = DateOnly.Parse(Date); //"20.12.2025"
             var timeOnly = TimeOnly.Parse(Time);//10:10:10
-
-            if(CoordinatesPolygon.Length <= 0)
-            {
+            if(!ExaminationCoordinates())
                 return false;
-            }
-            if(ExaminationCoordinates())
-            {
-
-            }
             var namePolygon = NamePolygon ?? throw new NullReferenceException();
             var enemy = NameTeamEnemy ?? throw new NullReferenceException();
             return true;
@@ -117,12 +111,9 @@ public partial class CreateEventViewModel : ObservableObject
 
     private bool ExaminationCoordinates()
     {
-        if(CoordinatesPolygon is null)
-        {
+        if(CoordinatesPolygon is null || CoordinatesPolygon.Length == 0 )
             return false;
-        }
         var slpitString = CoordinatesPolygon.Split(",");
-
         foreach(var stringCoordinates in slpitString)
             foreach(char _char in stringCoordinates)
                 if(!int.TryParse(Convert.ToString(_char), out int number))

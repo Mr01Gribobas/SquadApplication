@@ -142,10 +142,20 @@ public partial class EventsForAllCommandsView : ObservableObject
     [RelayCommand]
     public async void EditEvent(EventsForAllCommandsModelDTO model)
     {
-        if(_user.CurrentUser._role != Role.Commander && _user.CurrentUser is null)
+        try
+        {
+            string? curentTeamUser = _user.CurrentUser._teamName is null ? throw new NullReferenceException("У вас нет команды  !!! А вы еще и пытаетесь изменить событие чужой команды ") : _user.CurrentUser._teamName;
+            if(_user.CurrentUser._role != Role.Commander || _user.CurrentUser is null || model.TeamNameOrganization != curentTeamUser)
+                throw new Exception("У вас нет прав на изменение данного событияя ");
+            _page._cache.Set<EventsForAllCommandsModelDTO>("EventForCommands", model);
+            await Shell.Current.GoToAsync($"/{nameof(CreateEventsForAllCommandsPage)}/?CommanderId={_user.CurrentUser.Id}");
+        }
+        catch(Exception ex)
+        {
+            await _page.DisplayAlertAsync("Error", $"{ex.Message}", "Ok");
             return;
-        _page._cache.Set<EventsForAllCommandsModelDTO>("EventForCommands",model); 
-        await Shell.Current.GoToAsync($"/{nameof(CreateEventsForAllCommandsPage)}/?CommanderId={_user.CurrentUser.Id}");
+        }
+
     }
 
     [RelayCommand]
@@ -157,8 +167,8 @@ public partial class EventsForAllCommandsView : ObservableObject
     private async Task SendRequest(EventsForAllCommandsModelDTO model, bool isGoing)
     {
 
-        _requestManager.SetAddress($"AppendOrDeleteFromTheMeeting?nameTeamOrganization={model.TeamNameOrganization}&userId={_user.CurrentUser.Id}&turnout={isGoing}");
-        await _requestManager.PatchDateAsync<EventsForAllCommandsModelDTO>(null);
+        _requestManager.SetAddress($"api/events/AppendOrDeleteFromTheMeeting?nameTeamOrganization={model.TeamNameOrganization}&userId={_user.CurrentUser.Id}&turnout={isGoing}");
+        var result = await _requestManager.PatchDateAsync<EventsForAllCommandsModelDTO>(null);
         _requestManager.ResetAddress();
     }
 
