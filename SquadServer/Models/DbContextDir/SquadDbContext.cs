@@ -22,10 +22,8 @@ public class SquadDbContext: DbContext
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
-    public SquadDbContext(DbContextOptions<SquadDbContext> options) : base (options)
-    {        
-       
-    }
+    public SquadDbContext() { }
+    public SquadDbContext(DbContextOptions<SquadDbContext> options) : base (options){}
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new UserModelEntityConfiguration());
@@ -46,7 +44,7 @@ public class SquadDbContext: DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         string connectionString = "Host=localhost;Port=5432;Username=HSquadAdmin;Password=42924870;Database=SquadDBPostgres;";
-        optionsBuilder.UseSqlServer(connectionString);
+        optionsBuilder.UseNpgsql(connectionString);
     }
 
 

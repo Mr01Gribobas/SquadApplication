@@ -14,7 +14,6 @@ public class NotificationEntity
     public int? RelatedUserId { get; set; }
 
 
-    [Column(TypeName = "nvarchar(max)")]
     public string DataJson { get; set; } 
 
 

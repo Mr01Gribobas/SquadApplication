@@ -29,7 +29,7 @@ builder.Services.AddControllers().AddJsonOptions(option =>
 builder.Services.AddDbContext<SquadDbContext>(option =>
 {
     string? connectionString = builder.Configuration.GetConnectionString("SquadDbContext");
-    option.UseSqlServer(connectionString ?? throw new NullReferenceException());
+    option.UseNpgsql(connectionString ?? throw new NullReferenceException());
 });
 
 
