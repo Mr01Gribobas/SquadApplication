@@ -18,7 +18,10 @@ public class SquadDbContext: DbContext
 
 
 
-    public SquadDbContext(){ }
+    static SquadDbContext()
+    {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+    }
     public SquadDbContext(DbContextOptions<SquadDbContext> options) : base (options)
     {        
        
@@ -42,7 +45,7 @@ public class SquadDbContext: DbContext
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=SquadDb;Trusted_Connection=True";
+        string connectionString = "Host=localhost;Port=5432;Username=HSquadAdmin;Password=42924870;Database=SquadDBPostgres;";
         optionsBuilder.UseSqlServer(connectionString);
     }
 

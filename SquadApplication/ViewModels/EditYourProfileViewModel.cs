@@ -1,7 +1,5 @@
 ﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
-
 namespace SquadApplication.ViewModels;
-
 public partial class EditYourProfileViewModel : ObservableObject
 {
     private BaseRequestsManager _requestManager;
@@ -14,7 +12,6 @@ public partial class EditYourProfileViewModel : ObservableObject
     [ObservableProperty]
     private string callSing;
 
-
     [ObservableProperty]
     private string role;
 
@@ -26,9 +23,9 @@ public partial class EditYourProfileViewModel : ObservableObject
     [ObservableProperty]
     private string age;
 
-
     [ObservableProperty]
     private string teamName;
+
 
     public EditYourProfileViewModel(EditUserProfilePage profilePage, UserModelEntity user)
     {
@@ -61,8 +58,8 @@ public partial class EditYourProfileViewModel : ObservableObject
             _phoneNumber: PhoneNumber,
             _teamName: TeamName
             );
-        
-        if(dataForm._teamName != _user._teamName )
+
+        if(dataForm._teamName != _user._teamName)
         {
             bool resultFromUser = await _editProfilePage.DisplayAlertAsync("Предупреждение ", "Вы действительно желаете сменить команду  ??", "Да", "Нет");
             if(!resultFromUser)
