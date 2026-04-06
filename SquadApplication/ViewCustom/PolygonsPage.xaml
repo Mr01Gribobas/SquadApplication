@@ -116,6 +116,13 @@
                 </CollectionView>
             </StackLayout>
         </ScrollView>
+        <Border
+               BackgroundColor="#50208080"
+               StrokeThickness="1"
+               StrokeShape="10"
+               Opacity="0.8">
+            <Button Text="Главная" Background="Transparent" Command="{Binding MoveMainPageCommand}"/>
+        </Border>
     </VerticalStackLayout>
 
 </ContentPage>

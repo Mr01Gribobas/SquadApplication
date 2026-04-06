@@ -306,11 +306,18 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                 </Grid>
-
-                
-
           </Border>
     </StackLayout>
+
+
+        <Border
+       Margin="5"
+      BackgroundColor="#50804080"
+      StrokeThickness="1"
+      StrokeShape="10"
+      Opacity="0.8">
+            <Button Text="Главная" Background="Transparent" Command="{Binding MoveMainPageCommand}"/>
+        </Border>
     </VerticalStackLayout>
     
 </ContentPage>

@@ -332,11 +332,16 @@
 
             <!-- Подвал -->
             <CollectionView.Footer>
-                <Label Text="Конец списка"
-                       TextColor="#8da6c9"
-                       FontSize="12"
-                       HorizontalOptions="Center"
-                       Margin="0,20"/>
+                
+                    <Border
+                            Stroke="Transparent"
+                            BackgroundColor="#50208080"
+                            StrokeThickness="1"
+                            StrokeShape="10"
+                            Opacity="0.8">
+                        <Button Text="Главная" Background="Transparent" Command="{Binding MoveMainPageCommand}"/>
+                    </Border>
+
             </CollectionView.Footer>
         </CollectionView>
     </RefreshView>

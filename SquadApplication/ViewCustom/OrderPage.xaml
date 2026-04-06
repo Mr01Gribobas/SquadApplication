@@ -27,11 +27,18 @@
                 <Entry x:Name="nameProduct" WidthRequest="100"  Placeholder="Name" PlaceholderColor="DarkGray" Text="{Binding Name}" TextColor="White"/>
                     <Entry x:Name="priceProduct" WidthRequest="100" Placeholder="Price" PlaceholderColor="DarkGray" Text="{Binding Price}" TextColor="White" />
                     <Entry x:Name="countProduct" WidthRequest="100" Placeholder="Count" PlaceholderColor="DarkGray" Text="{Binding Count}" TextColor="White"/>
-                    <Button Command="{Binding AddProductCommand}"  Margin="4" Text="+1" />
-                    <Button Command="{Binding ReduceProductCommand}" Margin="4"  Text="-1"/>
+                    <Button Command="{Binding AddProductCommand}"  Margin="4" Text="+1" BackgroundColor="#50401010"/>
+                    <Button Command="{Binding ReduceProductCommand}" Margin="4"  Text="-1" BackgroundColor="#50401010"/>
             </HorizontalStackLayout>
             </Border>
-            <Button Text="AddProduct" Command="{Binding AddInOrderCommand}"/>
+            <Border
+                  Margin="5"
+                  BackgroundColor="#50401010"
+                  StrokeThickness="1"
+                  StrokeShape="10"
+                  Opacity="0.8">
+                <Button Text="AddProduct" Command="{Binding AddInOrderCommand}" Background="Transparent"/>
+            </Border>
         </StackLayout>
             
             
@@ -76,6 +83,21 @@
                 <Label Text="{Binding TotalSum}" TextColor="GreenYellow" WidthRequest="250" FontSize="20" Margin="5" HorizontalOptions="Start" HeightRequest="30" />
             </StackLayout>
         </Border>
-     <Button Text="Reset" Command="{Binding ResetListCommand}"/>
+        <Border
+             Margin="10"
+             BackgroundColor="#50401010"
+             StrokeThickness="1"
+             StrokeShape="10"
+             Opacity="0.8">
+            <Button Text="Reset" Command="{Binding ResetListCommand}" Background="Transparent"/>
+        </Border>
+        
+        <Border
+        BackgroundColor="#50108010"
+        StrokeThickness="1"
+        StrokeShape="10"
+        Opacity="0.8">
+            <Button Text="Главная" Background="Transparent" Command="{Binding MoveMainPageCommand}"/>
+        </Border>
     </VerticalStackLayout>
 </ContentPage>
