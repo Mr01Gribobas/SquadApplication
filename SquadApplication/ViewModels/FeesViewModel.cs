@@ -165,7 +165,7 @@ public partial class FeesViewModel : ObservableObject
 
 
 
-    private async Task GetCurrentEvent()
+    public async Task GetCurrentEvent()
     {
         if(_requestManager is null | _user is null)
             return;

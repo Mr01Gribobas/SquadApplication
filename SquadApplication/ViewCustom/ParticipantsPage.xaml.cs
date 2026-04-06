@@ -1,9 +1,21 @@
 namespace SquadApplication.ViewCustom;
+
+[QueryProperty(nameof(_refreshPage), "refresh")]
+
 public partial class ParticipantsPage : ContentPage
 {
     private ParticipantsViewModel _parricipantsModel;
     private UserModelEntity _userModel { get; set; }
     public  IHttpClientFactory _clientFactory { get;private set; }
+    public bool _refreshPage
+    {
+        set
+        {
+            if(value)
+                RefreshData();
+        }
+    }
+
 
     public ParticipantsPage(IUserSession userSession,IHttpClientFactory clientFactory)
     {
@@ -15,7 +27,8 @@ public partial class ParticipantsPage : ContentPage
         Loaded += ParticipantsPage_Loaded;
     }
 
-    private void ParticipantsPage_Loaded(object? sender, EventArgs e)=> _parricipantsModel.GetMembersTeam(_userModel.Id);
+    private async Task RefreshData() => await _parricipantsModel.GetMembersTeam(_userModel.Id);
+    private async void ParticipantsPage_Loaded(object? sender, EventArgs e)=> await _parricipantsModel.GetMembersTeam(_userModel.Id);
 
 }
 

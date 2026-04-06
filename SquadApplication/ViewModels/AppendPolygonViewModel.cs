@@ -26,7 +26,6 @@ public partial class AppendPolygonViewModel : ObservableObject
         if( !await ValidatePropyrty(PolygonName, PolygonCoordinates))
         {
             await _plygonPage.DisplayAlertAsync("Error", "Invalid param", "Ok");
-            await Shell.Current.GoToAsync("..");
             await Shell.Current.GoToAsync($"..?refresh={false}");
         }
         else
@@ -42,7 +41,8 @@ public partial class AppendPolygonViewModel : ObservableObject
                     await _plygonPage.DisplayAlertAsync("Error", "ошибка операции", "Ok");
             }
         }
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync($"..?refresh={true}");
+
     }
 
     private async Task<bool> ValidatePropyrty(string polygonName, string polygonCoordinates)

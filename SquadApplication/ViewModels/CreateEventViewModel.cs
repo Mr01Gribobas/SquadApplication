@@ -86,7 +86,7 @@ public partial class CreateEventViewModel : ObservableObject
             await Shell.Current.GoToAsync("..");
         }
         await _eventPage.DisplayAlertAsync("Ok", "Event create ok", "Ok");
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync($"..?refresh={true}");
     }
 
 

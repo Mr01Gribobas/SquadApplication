@@ -1,10 +1,23 @@
 namespace SquadApplication.ViewCustom;
+
+[QueryProperty(nameof(_refreshPage), "refresh")]
 public partial class FeesPage : ContentPage
 {
     public ICacheServieseCust _cacheService;
     private readonly UserModelEntity _user;
     private FeesViewModel _feesViewModel;
     public IHttpClientFactory _clientFactory {  get;private set; }
+    public bool _refreshPage
+    {
+        set
+        {
+            if(value)
+                RefreshData();
+        }
+    }
+
+    
+
     public FeesPage(IUserSession userSession,ICacheServieseCust cache,IHttpClientFactory clientFactory)
 	{
         _cacheService = cache;  
@@ -14,4 +27,5 @@ public partial class FeesPage : ContentPage
 		BindingContext = _feesViewModel;
         InitializeComponent();
     }
+    private void RefreshData() => _feesViewModel?.GetCurrentEvent();
 }

@@ -93,21 +93,15 @@ public partial class ParticipantsViewModel : ObservableObject
     }
 
 
-    public async void GetMembersTeam(int userId)
+    public async Task GetMembersTeam(int userId)
     {
         if(_userModelEntity is null)
-        {
             return;
-        }
-        //var request = (ManagerGetRequests<UserModelEntity>)_requestsInServer;
         _requestsInServer.SetAddress($"api/users/allUsers?userId={userId}");
         var responce = await _requestsInServer.GetDateAsync<List<UserModelEntity>>();
-        
         if(responce != null)
-        {
             foreach(var member in responce)
                 Users.Add(member);
-        }
         _requestsInServer.ResetAddress();
     }
 }

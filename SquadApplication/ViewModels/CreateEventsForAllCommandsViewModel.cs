@@ -93,14 +93,14 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
         {
             var result = await _managerRequest.DeleteDateAsync();//  .PostRequests(objectValue: _modelEventsForCommand, PostsRequests.DeleteEventForCommand);
             if(result)
-                await _createEventPage.DisplayAlertAsync("Ok", "Deete is ok", "Ok");
+                await _createEventPage.DisplayAlertAsync("Ok", "Delete is ok", "Ok");
         }
         catch(Exception ex)
         {
             Console.WriteLine(ex.Message);
         }
         _managerRequest.ResetAddress();
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync($"..?refresh={true}");
     }
 
     [RelayCommand]
@@ -118,11 +118,12 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             var result = await _managerRequest.PatchDateAsync<EventsForAllCommandsModelDTO>(modelEvnt);//.PostRequests(objectValue: modelEvnt, PostsRequests.CreateEventForCommands);
             if(result)
                 await _createEventPage.DisplayAlertAsync("Ok", "Create is ok", "Ok");
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync($"..?refresh={true}");
         }
         catch(Exception ex)
         {
             await _createEventPage.DisplayAlertAsync("Errir", $"{ex.Message}", "Ok");
+            await Shell.Current.GoToAsync($"..?refresh={false}");
         }
         finally
         {
@@ -143,7 +144,7 @@ public partial class CreateEventsForAllCommandsViewModel : ObservableObject
             var result = await _managerRequest.PostDateAsync<EventsForAllCommandsModelDTO>(modelEvnt);//.PostRequests(objectValue: modelEvnt, PostsRequests.CreateEventForCommands);
             if(result)
                 await _createEventPage.DisplayAlertAsync("Ok", "Create is ok", "Ok");
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync($"..?refresh={true}");
         }
         catch(Exception ex)
         {
