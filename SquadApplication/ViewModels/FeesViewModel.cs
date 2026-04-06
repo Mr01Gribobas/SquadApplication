@@ -60,7 +60,7 @@ public partial class FeesViewModel : ObservableObject
         bool result = await _requestManager.PatchDateAsync<UserModelEntity>(null);
         if(result)
         {
-            _user.CurrentUser._goingToTheGame = true;
+            _user.CurrentUser._goingToTheGame = isWill;
             UpdateLists(_user.CurrentUser);
         }
     }
