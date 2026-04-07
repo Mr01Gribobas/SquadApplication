@@ -12,8 +12,8 @@ using SquadServer.Models.DbContextDir;
 namespace SquadServer.Migrations
 {
     [DbContext(typeof(SquadDbContext))]
-    [Migration("20260406125327_newpostgresmigr")]
-    partial class newpostgresmigr
+    [Migration("20260407180808_msimigr")]
+    partial class msimigr
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

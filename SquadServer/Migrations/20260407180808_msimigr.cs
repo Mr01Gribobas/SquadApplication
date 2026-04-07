@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace SquadServer.Migrations
 {
     /// <inheritdoc />
-    public partial class newpostgresmigr : Migration
+    public partial class msimigr : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
