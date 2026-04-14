@@ -10,17 +10,18 @@ public static class Test
     }
     public static async Task TestMethodCreateCommanderAndTeam()
     {
-        var user = UserModelEntity.CreateUserEntity("Falanga", "Roma", "Bezumie", "897383", Role.Private, 24, null);
+        var user = UserModelEntity.CreateUserEntity("Dr", "Roma", "Bezumie", "897383", Role.Commander, 24, null);
 
         UserModelEntity? newUser = await _dataBaseRepository.CreateNewUser(user);
     }
-    public static void TestMethodUser()
+    public static async Task TestMethodUser()
     {
         using(SquadDbContext db = new SquadDbContext())
         {
-            db.Players.Add(UserModelEntity.CreateUserEntity("Falanga", "Maks", "Bezumie", "897383", Role.LordOfTheApplication, 24, 1));
-            var team = db.Teams.FirstOrDefault();
-            team.Members.Add(UserModelEntity.CreateUserEntity("Falanga", "Maks", "Bezumie", "897383", Role.LordOfTheApplication, 24, 1));
+            var newUser = UserModelEntity.CreateUserEntity("Falanga", "Maks", "Bezumie", "897383", Role.LordOfTheApplication, 24, 1);
+            await db.Players.AddAsync(newUser);
+            var team = await db.Teams.FirstOrDefaultAsync();
+            team.Members.Add(newUser);
             db.SaveChanges();
 
 
@@ -38,20 +39,6 @@ public static class Test
             events.Players.Add(commander);
 
             db.EventsForAllCommands.Update(events);
-
-            //var model = new EventsForAllCommandsModelEntity()
-            //{
-            //    TeamNameOrganization = commander._teamName,
-            //    DescriptionFull = "modelDTO.DescriptionFull",
-            //    DescriptionShort = "modelDTO",
-            //CoordinatesPolygon = "234234.444,22.3",
-            //    PolygonName = "modelDTO.PolygonName",
-            //    CountPlayers = 1,
-            //    TeamIdOrganization = commander.Team.Id,
-            //    DateAndTimeGame = new DateTime(DateOnly.Parse("12.01.2002"),TimeOnly.Parse( "05:33")),
-            //};
-            //model.Players.Add(commander);
-            //await db.EventsForAllCommands.AddAsync(model);
             await db.SaveChangesAsync();
         }
     }

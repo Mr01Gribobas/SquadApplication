@@ -46,7 +46,7 @@ if(!app.Environment.IsDevelopment())
 app.UseCors("CorsCustom");
 app.UseAuthorization();
 
-//await Test.TestGetStatistic();
+await Test.TestMethodCreateCommanderAndTeam();
 
 
 app.MapStaticAssets();
@@ -56,6 +56,6 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 
-app.Run("http://0.0.0.0:5213");
+await app.RunAsync(url: "http://0.0.0.0:5213");
 
 

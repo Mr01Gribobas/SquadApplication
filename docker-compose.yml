@@ -3,11 +3,11 @@ services:
     image: postgres:17
     container_name: squadpostgres
     environment:
-      - POSTGRES_DB=SquadDBPostgres
+      - POSTGRES_DB=SquadDbPostgres
       - POSTGRES_USER=HSquadAdmin
       - POSTGRES_PASSWORD=42924870
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

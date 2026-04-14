@@ -16,14 +16,12 @@ public class SquadDbContext: DbContext
     public DbSet<DeviceRegistartionModelEntity> DeviceRegistartionModelEntities { get; set; }
     public DbSet<NotificationEntity> Notifications { get; set; }
 
-
-
+    public SquadDbContext() { }
+    public SquadDbContext(DbContextOptions<SquadDbContext> options) : base (options){}
     static SquadDbContext()
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
-    public SquadDbContext() { }
-    public SquadDbContext(DbContextOptions<SquadDbContext> options) : base (options){}
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new UserModelEntityConfiguration());
@@ -43,9 +41,9 @@ public class SquadDbContext: DbContext
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        string connectionString = "Host=localhost;Port=5432;Username=HSquadAdmin;Password=42924870;Database=SquadDBPostgres;";
+        string connectionString = "Host=localhost;Port=5433;Username=HSquadAdmin;Password=42924870;Database=SquadDbPostgres;";
         optionsBuilder.UseNpgsql(connectionString);
     }
 
-
+    S
 }
