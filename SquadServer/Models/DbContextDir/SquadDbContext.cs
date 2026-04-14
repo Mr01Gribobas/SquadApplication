@@ -9,7 +9,6 @@ public class SquadDbContext: DbContext
     public DbSet<EventModelEntity> Events { get; set; }
     public DbSet<HisoryEventsModelEntity> HistoryEvents { get; set; }
     public DbSet<TeamEntity> Teams { get; set; }
-
     public DbSet<EventsForAllCommandsModelEntity> EventsForAllCommands { get; set; }    
     public DbSet<PlayerStatisticsModelEntity> PlayerStatistics { get; set; }
 
@@ -45,5 +44,5 @@ public class SquadDbContext: DbContext
         optionsBuilder.UseNpgsql(connectionString);
     }
 
-    S
+    
 }
