@@ -1,6 +1,10 @@
 ﻿global using Microsoft.Extensions.Logging;
 global using SquadApplication.Serices.ApiServices;
 global using System.Net.Http.Json;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Maui.Controls.Hosting;
+global using Microsoft.Maui.Hosting;
+global using Microsoft.Maui.Networking;
 global using SquadApplication.Repositories.Enums;
 global using SquadApplication.Repositories.ManagerRequest;
 global using SquadApplication.ViewCustom;
