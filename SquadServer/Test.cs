@@ -7,7 +7,7 @@ public static class Test
     {
         SquadDbContext db = new SquadDbContext();
         _dataBaseRepository = new DataBaseRepository(db);
-    }
+    }   
     public static async Task TestMethodCreateCommanderAndTeam()
     {
         var user = UserModelEntity.CreateUserEntity("Dr", "Roma", "Bezumie", "897383", Role.Commander, 24, null);
