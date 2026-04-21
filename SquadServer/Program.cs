@@ -1,6 +1,3 @@
-
-using SquadServer;
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddCors(build =>
@@ -35,9 +32,15 @@ builder.Services.AddDbContext<SquadDbContext>(option =>
 
 var app = builder.Build();
 app.UseRouting();
-app.UseHttpsRedirection();
 
-if(!app.Environment.IsDevelopment())
+if (app.Environment.IsProduction())
+{
+    app.UseHttpsRedirection();
+}
+
+Diagnostic(builder);
+
+if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error/Base");
     app.UseHsts();
@@ -45,8 +48,11 @@ if(!app.Environment.IsDevelopment())
 
 app.UseCors("CorsCustom");
 app.UseAuthorization();
-
-await Test.TestMethodCreateCommanderAndTeam();
+app.Use(async (context, next) =>
+{
+    Console.WriteLine("Start middlware");
+    await next.Invoke(context);
+});
 
 
 app.MapStaticAssets();
@@ -54,8 +60,19 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+Console.ForegroundColor = ConsoleColor.Green;
+Console.WriteLine("Start server ......");
+Console.ForegroundColor = ConsoleColor.Gray;
 
+await app.RunAsync();
 
-await app.RunAsync(url: "http://0.0.0.0:5213");
-
-
+static void Diagnostic(WebApplicationBuilder builder)
+{
+    Console.WriteLine("===Diagnostics===");
+    string? connString = builder.Configuration.GetConnectionString("SquadDbContext");
+    Console.WriteLine($"Connection string from config {connString}");
+    foreach (var env in Environment.GetEnvironmentVariables())
+    {
+        Console.WriteLine(env.ToString());
+    }
+}

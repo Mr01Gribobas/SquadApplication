@@ -16,15 +16,24 @@ public class PolygonsController : ControllerBase
     public async Task<IActionResult?> GetAllPolygons()
     {
         Controller.LogInformation("Start action : GetAllPolygons");
-        var list = await _polygonDbService.GetAllPolygons();
-        return Ok(list);
+        try
+        {
+            var list = await _polygonDbService.GetAllPolygons();
+            return Ok(list);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+
+        }
     }
 
     [HttpPost("createPolygon")]
     public async Task<IActionResult> AddPolygon(int userId)
     {
+        Console.WriteLine("Statr controller");
         PolygonEntity? resultReqding = await HttpContext.Request.ReadFromJsonAsync<PolygonEntity>();
-        var resultoperation = await  _polygonDbService.AppendPolygon(resultReqding);
+        var resultoperation = await _polygonDbService.AppendPolygon(resultReqding);
         return Ok(resultoperation);
     }
 
