@@ -38,11 +38,11 @@ public class SquadDbContext: DbContext
         modelBuilder.ApplyConfiguration(new EventsForAllCommandsModelEntityConfig());
         base.OnModelCreating(modelBuilder);
     }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        string connectionString = "Host=localhost;Port=5433;Username=HSquadAdmin;Password=42924870;Database=SquadDbPostgres;";
-        optionsBuilder.UseNpgsql(connectionString);
-    }
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    string connectionString = "Host=localhost;Port=5433;Username=HSquadAdmin;Password=42924870;Database=SquadDbPostgres;";
+    //    optionsBuilder.UseNpgsql(connectionString);
+    //}
 
     
 }

@@ -33,7 +33,10 @@ public class FeesAndEventsController : ControllerBase
     [HttpGet("AllEventsForCommands")]
     public async Task<IActionResult?> GetAllEventsForAllCommands()
     {
-        List<EventsForAllCommandsModelDTO> events = await _EventsDbService.GetAllEventsForAllCommands();
+        Console.WriteLine("Start action AllEventsForCommands");
+        List<EventsForAllCommandsModelDTO>? events = await _EventsDbService.GetAllEventsForAllCommands();
+        if(events is null || events.Count ==0)
+            Console.WriteLine("List is empty");
         return Ok(events);
     }
 

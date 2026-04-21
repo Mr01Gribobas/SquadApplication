@@ -18,9 +18,12 @@ public class FeesAndEventsDbService : BaseDbService
                                          FirstOrDefaultAsync(t => t.TeamId == teamId);
     public async Task<List<EventsForAllCommandsModelDTO>> GetAllEventsForAllCommands()
     {
+        Console.WriteLine("Satrt method=====================================");
         var listEvents = await _context.EventsForAllCommands.Include(e => e.Players).ToListAsync();
+        Console.WriteLine("EMPTY LSIT))))))))))))))))))))))))))))))))))))))))))))))))");
+
         if(listEvents is null || listEvents.Count <= 0)
-            return null;
+            return new();
         List<EventsForAllCommandsModelDTO> newList = new();
         foreach(EventsForAllCommandsModelEntity ev in listEvents)
         {
