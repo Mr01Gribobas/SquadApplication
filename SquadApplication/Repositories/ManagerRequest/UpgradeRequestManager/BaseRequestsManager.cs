@@ -5,7 +5,7 @@ namespace SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
 public class BaseRequestsManager : IRequestManager
 {
     private readonly HttpClient _httpClient;
-    private string _baseUrl = "http://10.0.2.2:5213/";
+    private string _baseUrl = "http://192.168.0.2:5213/";
     public HttpStatusCode _statusCode;
     public BaseRequestsManager(HttpClient httpClient)
     {
@@ -18,7 +18,7 @@ public class BaseRequestsManager : IRequestManager
     }
     public void ResetAddress()
     {
-        _baseUrl = "http://10.0.2.2:5213/";
+        _baseUrl = "http://192.168.0.2:5213/";
     }
 
     public async Task<T?> GetDateAsync<T>()

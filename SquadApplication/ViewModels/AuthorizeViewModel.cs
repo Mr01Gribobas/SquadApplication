@@ -94,7 +94,7 @@ public partial class AuthorizeViewModel : ObservableObject
                     return;
                 goto SendUserData;
             }
-            await _authorizedPage.DisplayAlertAsync("Error data", "Invalid data", "Ok");
+            await _authorizedPage.DisplayAlertAsync("Error data", "Ошибка при подключении к серверу либо проверте указанные вами данные ", "Ok");
             return;
         }
         await _authorizedPage.DisplayAlertAsync("Kode", $"Ваш код доступа {userFromResponce._enterCode}", "Ok");
