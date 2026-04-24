@@ -124,7 +124,7 @@ public partial class EditEquipmentViewModel : ObservableObject
                 UnloudingWeapon = equip.UnloudingEquipment;
             }
             else
-                throw new NullReferenceException();
+                await _page.DisplayAlertAsync("Error", $"У вас нет экиперовки ", "Ok");
         }
         catch(Exception ex)
         {
