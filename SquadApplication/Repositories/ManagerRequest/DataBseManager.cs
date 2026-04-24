@@ -1,17 +1,16 @@
-﻿namespace SquadApplication.Repositories;
+﻿using SquadApplication.Models.Configurations;
+
+namespace SquadApplication.Repositories;
 public class DataBaseManager : IRequestManagerForEnter
 {
     private readonly IUserSession _userSession;
     private readonly HttpClient _httpClient;
     private readonly IDeviceManager _deviceManager;
-
-    private string _urlNameForSend = "http://10.0.2.2:5213/Imput/";
     public int _currentStatusCode { get; private set; }
     public int GetStatusCode() => _currentStatusCode;
-
-    public DataBaseManager(IUserSession userSession, IDeviceManager deviceManager)
+    public DataBaseManager(IUserSession userSession, IDeviceManager deviceManager, HttpClient httpClient)
     {
-        _httpClient = new HttpClient();
+        _httpClient =  httpClient;
         _userSession = userSession;
         _deviceManager = deviceManager;
     }
@@ -21,8 +20,8 @@ public class DataBaseManager : IRequestManagerForEnter
             throw new ArgumentNullException();
 
         JsonContent content = JsonContent.Create(user);
-
-        HttpResponseMessage responce = await _httpClient.PostAsync(_urlNameForSend + "Registration", content);
+        ServerConfig.UseLocalNetwork();
+        HttpResponseMessage responce = await _httpClient.PostAsync(ServerConfig._currentChanchedUrl + "/Imput/Registration", content);
         _currentStatusCode = (int)responce.StatusCode;
         if(_currentStatusCode == 200)
         {
@@ -47,8 +46,8 @@ public class DataBaseManager : IRequestManagerForEnter
     {
         int codePars = int.Parse((string)codeEnter);
         JsonContent content = JsonContent.Create(codePars);
-
-        HttpResponseMessage responce = await _httpClient.GetAsync(_urlNameForSend + $"Login?loginCode={codePars}");
+        ServerConfig.UseLocalNetwork();
+        HttpResponseMessage responce = await _httpClient.GetAsync(ServerConfig._currentChanchedUrl + $"/Imput/Login?loginCode={codePars}");
         _currentStatusCode = (int)responce.StatusCode;
 
         if(_currentStatusCode == 200)
@@ -77,5 +76,4 @@ public class DataBaseManager : IRequestManagerForEnter
             Console.WriteLine("Error work");
         }
     }
-
 }

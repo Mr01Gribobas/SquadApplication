@@ -147,7 +147,7 @@
                               HorizontalOptions="Center"
                               ItemsLayout="VerticalGrid,2"
                               VerticalOptions="Fill"
-                        HeightRequest="500"
+                        HeightRequest="350"
                         VerticalScrollBarVisibility="Default"
                               >
                         <CollectionView.ItemsSource>

@@ -50,7 +50,7 @@ app.UseCors("CorsCustom");
 app.UseAuthorization();
 app.Use(async (context, next) =>
 {
-    Console.WriteLine("Start middlware");
+    Console.WriteLine("Start middlware___________________________________________");
     await next.Invoke(context);
 });
 
@@ -64,6 +64,7 @@ Console.ForegroundColor = ConsoleColor.Green;
 Console.WriteLine("Start server ......");
 Console.ForegroundColor = ConsoleColor.Gray;
 
+app.Urls.Add("http://0.0.0.0:5213");
 await app.RunAsync();
 
 static void Diagnostic(WebApplicationBuilder builder)

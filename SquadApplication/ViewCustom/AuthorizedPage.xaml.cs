@@ -13,7 +13,7 @@ public partial class AuthorizedPage : ContentPage
         _httpClientFactory = clientFactory;
         _customsAnimation = new CustomsAnimation();
         this._deviceManager = deviceManager;
-        _viewModel = new AuthorizeViewModel(this, userSession, _deviceManager);
+        _viewModel = new AuthorizeViewModel(this, userSession, _deviceManager,_httpClientFactory);
         BindingContext = _viewModel;
         InitializeComponent();
         this.Loaded += LoadedPage;

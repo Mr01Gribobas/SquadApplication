@@ -23,11 +23,13 @@ public partial class AuthorizeViewModel : ObservableObject
 
     public AuthorizeViewModel(AuthorizedPage authorizedPage,
         IUserSession userSession,
-        IDeviceManager deviceMagager)
+        IDeviceManager deviceMagager,
+        IHttpClientFactory httpClientFactory
+        )
     {
         _authorizedPage = authorizedPage;
         _deviceManager = deviceMagager;
-        _requestManager = new DataBaseManager(userSession, deviceMagager);
+        _requestManager = new DataBaseManager(userSession, deviceMagager,httpClientFactory.CreateClient());
     }
 
 
