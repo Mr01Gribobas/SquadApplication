@@ -1,4 +1,4 @@
-﻿namespace SquadApplication.Models;
+﻿namespace SquadApplication.Models.ClassLib;
 
 public class Order
 {

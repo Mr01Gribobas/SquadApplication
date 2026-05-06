@@ -1,4 +1,6 @@
-﻿namespace SquadApplication.Serices.ApiServices;
+﻿using SquadApplication.Models.ClassLib;
+
+namespace SquadApplication.Serices.ApiServices;
 
 public interface IUserSession
 {

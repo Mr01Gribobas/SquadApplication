@@ -1,4 +1,5 @@
-﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+﻿using SquadApplication.Models.ClassLib;
+using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
 namespace SquadApplication.ViewModels;
 public partial class EditYourProfileViewModel : ObservableObject
 {
@@ -111,16 +112,16 @@ public partial class EditYourProfileViewModel : ObservableObject
         switch(dataForm._role)
         {
             case "Командир":
-                _selectedRole = Models.Role.Commander;
+                _selectedRole = Models.ClassLib.Role.Commander;
                 break;
             case "Помощник командира":
-                _selectedRole = Models.Role.AssistantCommander;
+                _selectedRole = Models.ClassLib.Role.AssistantCommander;
                 break;
             case "Рядовой ":
-                _selectedRole = Models.Role.Private;
+                _selectedRole = Models.ClassLib.Role.Private;
                 break;
             case "Механик":
-                _selectedRole = Models.Role.Mechanic;
+                _selectedRole = Models.ClassLib.Role.Mechanic;
                 break;
             default:
                 _selectedRole = _user._role;

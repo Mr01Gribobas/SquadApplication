@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using SquadApplication.Models.ClassLib;
+using System.Text.Json.Serialization;
 
 namespace SquadApplication.Models.EntityModels;
 

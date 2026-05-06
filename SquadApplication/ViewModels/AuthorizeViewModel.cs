@@ -1,10 +1,16 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using Javax.Security.Auth;
+using SquadApplication.Models.ClassLib;
+using SquadApplication.Models.DeviceModels;
+
+namespace SquadApplication.ViewModels;
 
 public partial class AuthorizeViewModel : ObservableObject
 {
     private AuthorizedPage _authorizedPage;
     private readonly IDeviceManager _deviceManager;
     private IRequestManagerForEnter _requestManager;
+
+    public SettingsSize _form;
 
     [ObservableProperty]
     private string accesCode;
@@ -30,8 +36,33 @@ public partial class AuthorizeViewModel : ObservableObject
         _authorizedPage = authorizedPage;
         _deviceManager = deviceMagager;
         _requestManager = new DataBaseManager(userSession, deviceMagager,httpClientFactory.CreateClient());
+        AdaptiveSizeElements();
+
     }
 
+    private void AdaptiveSizeElements()
+    {
+        DeviceInfoService deviceInfo = new(DeviceDisplay.Current.MainDisplayInfo);
+        switch (deviceInfo._typeDisplay)
+        {
+            case DeviceInfoService.TypeDisplay.Small:
+                AdaptiveSizeForSmallDisplay();
+                break;
+            case DeviceInfoService.TypeDisplay.Nomral:
+                break;
+            case DeviceInfoService.TypeDisplay.Phablet:
+                break;
+            case DeviceInfoService.TypeDisplay.Tablet:
+                break;
+            case DeviceInfoService.TypeDisplay.Desktop:
+                break;
+        }
+    }
+
+    private void AdaptiveSizeForSmallDisplay()
+    {
+        throw new NotImplementedException();
+    }
 
     [RelayCommand]
     private async Task Login()

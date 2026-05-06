@@ -1,4 +1,6 @@
-﻿namespace SquadApplication.ViewModels;
+﻿using SquadApplication.Models.ClassLib;
+
+namespace SquadApplication.ViewModels;
 
 public partial class OrderViewModel : ObservableObject
 {

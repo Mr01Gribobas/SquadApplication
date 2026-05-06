@@ -1,4 +1,5 @@
 ﻿
+using SquadApplication.Models.ClassLib;
 using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
 
 namespace SquadApplication.ViewModels;

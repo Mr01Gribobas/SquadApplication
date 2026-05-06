@@ -1,4 +1,6 @@
-﻿namespace SquadServer.DTO_Classes.DTO_AuxiliaryModels;
+﻿using SquadApplication.Models.ClassLib;
+
+namespace SquadServer.DTO_Classes.DTO_AuxiliaryModels;
 
 public record class UserAllInfoStatisticDTO
     (

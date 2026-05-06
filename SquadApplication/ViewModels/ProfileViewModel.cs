@@ -1,4 +1,5 @@
-﻿using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
+﻿using SquadApplication.Models.ClassLib;
+using SquadApplication.Repositories.ManagerRequest.UpgradeRequestManager;
 using System.Text.RegularExpressions;
 
 namespace SquadApplication.ViewModels;
