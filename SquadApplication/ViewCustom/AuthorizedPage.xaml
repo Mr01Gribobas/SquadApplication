@@ -12,13 +12,12 @@
 
             <!-- Заголовок -->
             <Border Grid.Row="0"
-
-     Stroke="Transparent"
-     BackgroundColor="#10508080"
-     StrokeShape="10"
-     Padding="44"
-     Opacity="0.8"
-     HorizontalOptions="Fill"               
+                        Stroke="Transparent"
+                        BackgroundColor="#10508080"
+                        StrokeShape="10"
+                        Padding="{Binding HeaderPadding.Width}"
+                        Opacity="0.8"
+                        HorizontalOptions="Fill"               
                     >
                 <Border.Shadow>
                     <Shadow Brush="#b3c96b" 
@@ -27,7 +26,7 @@
             Radius="10"/>
                 </Border.Shadow>
 
-                <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                <VerticalStackLayout Spacing="{Binding Spacing.Height}" HorizontalOptions="Center">
                     <Label Text="⚔️" 
                            x:Name="mainLabelTest"
                            FontSize="40"
@@ -89,10 +88,6 @@
                                         Opacity="1.0"
                                         Radius="10"/>
                             </Border.Shadow>
-
-
-
-
                             <Button Text="ВОЙТИ В СИСТЕМУ"
                                 Command="{Binding LoginCommand}"
                                 Clicked="LoadedPage"
@@ -103,9 +98,7 @@
                                 HeightRequest="40"
                                 FontSize="16"/>
                         </Border>
-                            
                     </StackLayout>
-
                     <!-- Форма регистрации -->
                     <StackLayout 
                         x:Name="RegisterForm"

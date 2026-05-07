@@ -1,4 +1,4 @@
-﻿using Javax.Security.Auth;
+﻿
 using SquadApplication.Models.ClassLib;
 using SquadApplication.Models.DeviceModels;
 
@@ -9,8 +9,6 @@ public partial class AuthorizeViewModel : ObservableObject
     private AuthorizedPage _authorizedPage;
     private readonly IDeviceManager _deviceManager;
     private IRequestManagerForEnter _requestManager;
-
-    public SettingsSize _form;
 
     [ObservableProperty]
     private string accesCode;
@@ -26,6 +24,18 @@ public partial class AuthorizeViewModel : ObservableObject
 
     [ObservableProperty]
     private string phoneNumber;
+
+    [ObservableProperty]
+    public SettingsSize headerPadding;
+    [ObservableProperty]
+    public SettingsSize entrySize;
+    [ObservableProperty]
+    public SettingsSize buttonSize;
+    [ObservableProperty]
+    public SettingsSize iconSize;
+    [ObservableProperty] 
+    public SettingsSize titleFont;
+
 
     public AuthorizeViewModel(AuthorizedPage authorizedPage,
         IUserSession userSession,
@@ -61,7 +71,11 @@ public partial class AuthorizeViewModel : ObservableObject
 
     private void AdaptiveSizeForSmallDisplay()
     {
-        throw new NotImplementedException();
+        HeaderPadding = new SettingsSize(24, 24);
+        EntrySize = new SettingsSize(44, 0);
+        ButtonSize = new SettingsSize(44, 0);
+        IconSize = new SettingsSize(32, 32);
+        TitleFont = new SettingsSize(20, 0);
     }
 
     [RelayCommand]

@@ -63,7 +63,7 @@ public partial class HomeViewModel : ObservableObject
         _user = user;
         _page = page;
         _requestManager = new BaseRequestsManager(_page._httpClientFactory.CreateClient());
-        if(_user is not null)
+        if (_user is not null)
             GetAllProfileById(_user.CurrentUser.Id);
     }
     private async void GetAllProfileById(int userId)
@@ -73,15 +73,18 @@ public partial class HomeViewModel : ObservableObject
          TeamEntity objectTeam,
          EquipmentDTO? objectEquipment) tuple = await tupleMahager.GetAllInfoForUser(_user.CurrentUser);
 
-        if(tuple.objectUser is null && tuple.objectTeam is null)
-            throw new NullReferenceException();
-        if(tuple.objectEquipment is not null)
+        if (tuple.objectUser is null && tuple.objectTeam is null)
+        {
+            await _page.DisplayAlertAsync("Error", "Error user null exception", "Ok");
+            await Shell.Current.GoToAsync("..");
+            return;
+        }
+
+        if (tuple.objectEquipment is not null)
             InitialPropertyEquipmen(tuple.objectEquipment);
 
         InitialPropertyUser(tuple.objectUser, equipment: tuple.objectEquipment);
         InitialPropertyTeamInfo(tuple.objectTeam);
-
-
     }
     private void InitialPropertyTeamInfo(TeamEntity objectTeam)
     {
@@ -92,7 +95,7 @@ public partial class HomeViewModel : ObservableObject
 
     private void InitialPropertyEquipmen(EquipmentDTO equipment)
     {
-        if(equipment is null)
+        if (equipment is null)
             return;
         else
         {
@@ -107,8 +110,11 @@ public partial class HomeViewModel : ObservableObject
 
     private async Task InitialPropertyUser(UserModelEntity modelEntity, EquipmentDTO equipment)
     {
-        if(modelEntity is null)
+        if (modelEntity is null)
+        {
             await _page.DisplayAlertAsync("Error", "Error user null exception", "Ok");
+            return;
+        }
 
         Name = modelEntity._userName;
         CallSing = modelEntity._callSing;
@@ -138,5 +144,5 @@ public partial class HomeViewModel : ObservableObject
     {
         Shell.Current.GoToAsync($"/{nameof(MainPage)}");
     }
-    
+
 }

@@ -6,20 +6,20 @@
              Title="HomePage!"
              BackgroundImageSource="mainprofile.jpg"
              >
-    <VerticalStackLayout 
-        BackgroundColor="#50808080"
-        Margin="3">
-       
-        <Border     
+    <ScrollView 
+                       BackgroundColor="#50808080"
+                       Margin="3">
+        <StackLayout>
             
+        
+        <Border     
             BackgroundColor="#50808080"
             Stroke="CadetBlue"   
             StrokeShape="10"
             StrokeThickness="2"
             Padding="10"
             Margin="0,20,0,30"
-            HorizontalOptions="Fill"
-            >
+            HorizontalOptions="Fill" >
             <StackLayout
                 Padding="5"
                 
@@ -166,12 +166,13 @@
             </StackLayout>
         </Border>
         <Border
-        BackgroundColor="#50208080"
-        StrokeThickness="1"
-        StrokeShape="10"
-        Opacity="0.8">
+                   BackgroundColor="#50208080"
+                   StrokeThickness="1"
+                   StrokeShape="10"
+                   Opacity="0.8">
         <Button Text="Главная" Background="Transparent" Command="{Binding MoveMainPageCommand}"/>
         </Border>
-    </VerticalStackLayout>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
 
