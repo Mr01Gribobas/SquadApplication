@@ -10,3 +10,4 @@ public class CacheServieseCust : ICacheServieseCust
     public void Set<T>(string key, T value) where T : class => _cache[key] = value;
 
 }
+
