@@ -43,7 +43,6 @@ public class UserModelEntity
 
     public static UserModelEntity CreateUserEntity(string _teamName, string _name, string _callSing, string _phone, Role _role, int? _age, int? _teamId)
     {
-
         UserModelEntity newUser = new UserModelEntity()
         {
             _teamName = _teamName,
@@ -55,9 +54,34 @@ public class UserModelEntity
             _enterCode = 0,
             TeamId = _teamId
         };
-
-
         return newUser;
+    }
+    public static UserModelEntity UpdateUserEntity(string _teamName, string _name, string _callSing, string _phone, string _age)
+    {
+        int? newAge = 0;
+        if(_age == string.Empty || !int.TryParse(_age, out _))
+        {
+            newAge = null;
+        }
+        else
+        {
+            try
+            {
+                newAge = int.Parse(_age);
+            }
+            catch(Exception ex)
+            {
+                newAge = null;
+            }
+        }
+        return new UserModelEntity()
+        {
+            _teamName = _teamName,
+            _userName = _name,
+            _callSing = _callSing,
+            _phoneNumber = _phone,
+            _age = newAge
+        };
     }
     public static List<UserModelEntity> GetRandomData()
     {

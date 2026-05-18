@@ -69,14 +69,12 @@ public partial class EditYourProfileViewModel : ObservableObject
 
         if(!ValidateDataUser(dataForm))
             await _editProfilePage.DisplayAlertAsync("Error", "Некоректные данные ", "Ok");
-        UserModelEntity newUser = UserModelEntity.CreateUserEntity(
+        UserModelEntity newUser = UserModelEntity.UpdateUserEntity(
             _name: dataForm._name,
             _callSing: dataForm._callSing,
-            _role: _selectedRole,
             _phone: dataForm._phoneNumber,
-            _age: int.Parse(dataForm._age),
-            _teamName: dataForm._teamName,
-            _teamId: _user.TeamId
+            _age: dataForm._age,
+            _teamName: dataForm._teamName
             );
         bool result = false;
         if(_user is not null)
@@ -100,7 +98,7 @@ public partial class EditYourProfileViewModel : ObservableObject
         }
         else if(dataForm._phoneNumber is null || !Int64.TryParse(dataForm._phoneNumber, out Int64 _))
             return false;
-        if(!int.TryParse(dataForm._age, out int _))
+        if( dataForm._age != string.Empty &&  !int.TryParse(dataForm._age, out int _))
             return false;
         else if(int.TryParse(dataForm._age, out int age))
         {

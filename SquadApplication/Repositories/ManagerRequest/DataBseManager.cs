@@ -20,7 +20,9 @@ public class DataBaseManager : IRequestManagerForEnter
             throw new ArgumentNullException();
 
         JsonContent content = JsonContent.Create(user);
-        ServerConfig.UseLocalNetwork();
+        //ServerConfig.UseLocalNetwork();
+        ServerConfig.UseEmulator();
+
         HttpResponseMessage responce = await _httpClient.PostAsync(ServerConfig._currentChanchedUrl + "/Imput/Registration", content);
         _currentStatusCode = (int)responce.StatusCode;
         if(_currentStatusCode == 200)
