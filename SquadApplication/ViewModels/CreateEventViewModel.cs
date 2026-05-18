@@ -99,16 +99,17 @@ public partial class CreateEventViewModel : ObservableObject
         try
         {
 
-            var dateOnly = DateOnly.Parse(Date); //"20.12.2025"
+            var dateOnly = DateOnly.Parse(Date); //"12.30.2025"
             var timeOnly = TimeOnly.Parse(Time);//10:10:10
             if(!ExaminationCoordinates())
                 return false;
             var namePolygon = NamePolygon ?? throw new NullReferenceException();
-            var enemy = NameTeamEnemy ?? throw new NullReferenceException();
+            var enemy = NameTeamEnemy ?? "Без противника ";
             return true;
         }
         catch(Exception ex)
         {
+            _eventPage.DisplayAlertAsync("Info", "Укажите название полигона !!!", "Ok");
             return false;
         }
     }

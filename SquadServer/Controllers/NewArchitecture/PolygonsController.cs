@@ -33,7 +33,7 @@ public class PolygonsController : ControllerBase
     {
         Console.WriteLine("Statr controller");
         PolygonEntity? resultReqding = await HttpContext.Request.ReadFromJsonAsync<PolygonEntity>();
-        var resultoperation = await _polygonDbService.AppendPolygon(resultReqding);
+        bool resultoperation = await _polygonDbService.AppendPolygon(resultReqding);
         return Ok(resultoperation);
     }
 

@@ -12,10 +12,10 @@ public class FeesAndEventsController : ControllerBase
     }
 
     [HttpGet("EventHistory")]
-    public IActionResult? GetAllEventsHistory()
+    public async Task<IActionResult?> GetAllEventsHistory()
     {
         Controller.LogInformation("Start action : GetAllEventsHistory");
-        var list = _EventsDbService.GetEventHistory();
+        var list =await _EventsDbService.GetEventHistory();
         return Ok(list);
     }
 
@@ -56,7 +56,7 @@ public class FeesAndEventsController : ControllerBase
         EventModelEntity? newEvent = await HttpContext.Request.ReadFromJsonAsync<EventModelEntity>();
         try
         {
-            var resultOperation = _EventsDbService.CreateFees(commanderId, newEvent);
+            var resultOperation = await _EventsDbService.CreateFees(commanderId, newEvent);
             return Ok(resultOperation);
         }
         catch(Exception ex)

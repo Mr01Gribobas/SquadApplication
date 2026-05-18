@@ -30,11 +30,11 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("userId")]
-    public IActionResult? GetUserById(int userId)
+    public async Task<IActionResult?> GetUserById(int userId)
     {
         Controller.LogInformation("Start action : GetUserById");
 
-        var user = _usersDbService.GetUserById(userId);
+        var user = await _usersDbService.GetUserById(userId);
         if(user is null)
             return NotFound();
         return Ok(user);

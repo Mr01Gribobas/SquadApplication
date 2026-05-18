@@ -16,11 +16,11 @@ public class UsersDbService : BaseDbService
                   Include(t => t.Team).
                   FirstOrDefault(u => u._enterCode == loginCode);
     }
-    public UserModelEntity? GetUserById(int id)
+    public async Task<UserModelEntity?> GetUserById(int id)
     {
-        return _context.Players.
+        return await _context.Players.
                   AsNoTracking().Include(e => e.Equipment).
-                  FirstOrDefault(u => u.Id == id);
+                  FirstOrDefaultAsync(u => u.Id == id);
     }
 
     public async Task<UserModelEntity?> CreateNewUser(UserModelEntity userFromApp)

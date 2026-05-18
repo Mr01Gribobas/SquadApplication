@@ -53,7 +53,7 @@
                    Padding="25"
                   >
                 
-                <VerticalStackLayout Spacing="20">  
+                <VerticalStackLayout Spacing="45">  
 
                     <!-- Форма входа -->
                     <StackLayout
