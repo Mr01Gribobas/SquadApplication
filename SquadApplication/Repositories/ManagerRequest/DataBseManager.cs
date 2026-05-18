@@ -46,7 +46,9 @@ public class DataBaseManager : IRequestManagerForEnter
     {
         int codePars = int.Parse((string)codeEnter);
         JsonContent content = JsonContent.Create(codePars);
-        ServerConfig.UseLocalNetwork();
+        //ServerConfig.UseLocalNetwork();
+        ServerConfig.UseEmulator();
+
         HttpResponseMessage responce = await _httpClient.GetAsync(ServerConfig._currentChanchedUrl + $"/Imput/Login?loginCode={codePars}");
         _currentStatusCode = (int)responce.StatusCode;
 

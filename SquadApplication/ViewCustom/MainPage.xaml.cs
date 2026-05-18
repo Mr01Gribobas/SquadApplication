@@ -2,7 +2,7 @@ using SquadApplication.Services.NotificationService;
 
 namespace SquadApplication.ViewCustom;
 
-[QueryProperty(nameof(UserId), "UserId")]
+//[QueryProperty(nameof(UserId), "UserId")]
 [QueryProperty(nameof(_isFirstEntrance), "FirstEntrance")]
 public partial class MainPage : ContentPage
 {
@@ -20,11 +20,11 @@ public partial class MainPage : ContentPage
     }
 
 
-    public int UserId
-    {
-        get => User.Id;
-        set => GetAndSetUserAsync(value);
-    }
+    //public int UserId
+    //{
+    //    get => User.Id;
+    //    set => GetAndSetUserAsync(value);
+    //}
     public MainPage(IUserSession userSession, IHttpClientFactory clientFactory)
     {
         BindingContext = new MainViewModel();
@@ -45,14 +45,14 @@ public partial class MainPage : ContentPage
         };
         _timer.Start();
     }
-    private async Task GetAndSetUserAsync(int value)
-    {
-        UserModelEntity? user = await ManagerGetRequests<UserModelEntity>.GetUserById(value);
-        if(user == null)
-            await Shell.Current.GoToAsync($"..");
-        _userSession1.CurrentUser = user;
-        User = user;
-    }
+    //private async Task GetAndSetUserAsync(int value)
+    //{
+    //    UserModelEntity? user = await ManagerGetRequests<UserModelEntity>.GetUserById(value);
+    //    if(user == null)
+    //        await Shell.Current.GoToAsync($"..");
+    //    _userSession1.CurrentUser = user;
+    //    User = user;
+    //}
     private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var result = e?.CurrentSelection.FirstOrDefault();

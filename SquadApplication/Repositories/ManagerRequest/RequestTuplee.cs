@@ -1,4 +1,5 @@
 ﻿using SquadApplication.DTO_Classes;
+using SquadApplication.Models.Configurations;
 namespace SquadApplication.Repositories.ManagerRequest;
 
 internal class RequestTuple
@@ -25,13 +26,13 @@ internal class RequestTuple
         {
             if(userModel is null)
                 throw new ArgumentNullException();
-            UpdateUrl($"api/users/GetAllInfoForHome?userId={userModel.Id}");
-            var responce = await _httpClient.GetAsync(_urlNameForSend);
+            //UpdateUrl($"api/users/GetAllInfoForHome?userId={userModel.Id}");
+            var responce = await _httpClient.GetAsync(ServerConfig._currentChanchedUrl + $"/api/users/GetAllInfoForHome?userId={userModel.Id}"); //_urlNameForSend);
             if(responce != null && (int)responce.StatusCode == 200)
             {
                 TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentDTO>? resultJson = await responce.Content.ReadFromJsonAsync<TripleContainerDTO<UserModelEntity, TeamEntity, EquipmentDTO>>();
                 (UserModelEntity, TeamEntity, EquipmentDTO) typle = (resultJson._itemOne, resultJson._itemTwo, resultJson._itemThree);
-                ResetUrlAndStatusCode();
+                //ResetUrlAndStatusCode();
                 return typle;
             }
             else
@@ -39,7 +40,7 @@ internal class RequestTuple
         }
         catch(Exception ex)
         {
-            ResetUrlAndStatusCode();
+            //ResetUrlAndStatusCode();
             return (default, default, default);
         }
     }

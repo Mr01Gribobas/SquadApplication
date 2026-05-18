@@ -31,6 +31,6 @@ public partial class CreateOrUpdateRentalPage : ContentPage
         var resultItem = _cacheServiese.GetItemByKey<RentailsDTO>("updateRental");
         if(resultItem is not null)
             _createOrUpdateRentalViewModel.InitialProperty(resultItem);
-        _cacheServiese.Remove("updateRental");
+        _cacheServiese .Remove("updateRental");
     }
 }
