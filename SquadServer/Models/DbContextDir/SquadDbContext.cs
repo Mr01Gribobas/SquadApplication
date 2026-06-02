@@ -39,6 +39,10 @@ public class SquadDbContext: DbContext
 
         modelBuilder.ApplyConfiguration(new PlayerStatisticsModelEntityConfig());
         modelBuilder.ApplyConfiguration(new EventsForAllCommandsModelEntityConfig());
+
+        modelBuilder.ApplyConfiguration(new ChatModelConfigure());
+        modelBuilder.ApplyConfiguration(new MessageModelConfigure());
+
         base.OnModelCreating(modelBuilder);
     }
     //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
