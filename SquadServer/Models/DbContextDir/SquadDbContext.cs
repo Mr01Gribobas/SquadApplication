@@ -15,6 +15,9 @@ public class SquadDbContext: DbContext
     public DbSet<DeviceRegistartionModelEntity> DeviceRegistartionModelEntities { get; set; }
     public DbSet<NotificationEntity> Notifications { get; set; }
 
+    public DbSet<ChatModelEntity> Chats { get; set; }
+    public DbSet<MessageModelEntity> Messages { get; set; }
+
     public SquadDbContext() { }
     public SquadDbContext(DbContextOptions<SquadDbContext> options) : base (options){}
     static SquadDbContext()

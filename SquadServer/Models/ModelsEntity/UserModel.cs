@@ -50,6 +50,7 @@ public class UserModelEntity
     public virtual PlayerStatisticsModelEntity? Statistic { get; set; } = null!;
 
 
+    public ICollection<ChatModelEntity> Chats { get; set; } = new List<ChatModelEntity>();
     public static UserModelEntity CreateUserEntity(string _teamName, string _name, string _callSing, string _phone, Role _role, int? _age, int? _teamId)
     {
 

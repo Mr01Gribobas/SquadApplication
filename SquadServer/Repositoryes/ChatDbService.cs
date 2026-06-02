@@ -11,6 +11,14 @@ public class ChatDbService : BaseDbService
     {
         return default;
     }
+    public async Task<ChatModelDTO> GetChatForCommand(int teamId)
+    {
+        return default; 
+    }
+    public async Task<ChatModelDTO> GetAllPrivateChat(int userId)
+    {
+        return default;
+    }
     public async Task<bool> DeleteUserFromChatById(int userId)
     {
         return default;
