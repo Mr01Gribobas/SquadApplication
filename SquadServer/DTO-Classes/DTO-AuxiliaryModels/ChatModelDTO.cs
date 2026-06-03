@@ -3,13 +3,13 @@
 public class ChatModelDTO
 {
 
-    public int _chatNumber { get; set; } = 0!;
-    public string _nameChat { get; set; }
-    public bool _isTeamChat { get; set; }
-    public string? _teamName { get; set; }
+    public int ChatNumber { get; set; } = 0!;
+    public string NameChat { get; set; }
+    public bool IsTeamChat { get; set; }
+    public string? TeamName { get; set; }
 
 
-    public int _teamId { get; set; } = 0;
-    public List<MessageModelEntity> Messages { get; set; }
-    public List<UserModelEntity> _users { get; set; }
+    public int TeamId { get; set; } = 0;
+    public List<MessageDTO> Messages { get; set; }
+    public List<UserModelEntity> Users { get; set; }
 }

@@ -5,10 +5,10 @@ public class ChatModelEntity
 
     public int Id { get; set; }
     public string ChatName { get; set; }
-    public bool IsPrivateChat { get; set; }
+    public bool IsTeamChat { get; set; }
     public DateTime DateCreatedChat { get; set; }
 
-
+    public int? HostId { get; set; }
     public virtual TeamEntity? Team { get; set; }
     public virtual int? TeamId { get; set; }
 
