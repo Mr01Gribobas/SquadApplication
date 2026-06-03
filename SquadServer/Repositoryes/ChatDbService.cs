@@ -23,6 +23,27 @@ public class ChatDbService : BaseDbService
         await _context.SaveChangesAsync();
         return true;
     }
+    public async Task<bool> NewMessage(MessageDTO message,int chatId)
+    {
+
+        ChatModelEntity? chat = await _context.Chats.
+                                               Include(u=>u.Users).
+                                               FirstOrDefaultAsync(t => t.Id == chatId);
+        if(chat is null || chat.Users.Any(u=>u.Id==message.SenderId))
+            return false;
+        await _context.Messages.AddAsync(new MessageModelEntity()
+        {
+            SenderId = message.SenderId,
+            SenderName = message.SenderNameOrCallSing,
+            SendAt = message.SentAt,
+            Content = message.Content,
+            Chat=chat,
+            ChatId = chatId,
+        });
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
     public async Task<bool> CreateNewChat(List<UserModelEntity> users, int hostId, ChatModelDTO chatClient)
     {
         if(hostId <=0 || chatClient is null)

@@ -60,6 +60,23 @@ public class ChatController : ControllerBase
                                                          chatClient: conteiner._itemOne);
         return Ok(result);
     }
+
+    [HttpPost("messageSend")]
+    public async Task<IActionResult> SendMessage(int chatId)
+    {
+        MessageDTO? messageClient = await HttpContext.Request.ReadFromJsonAsync<MessageDTO>();
+        if(messageClient is null || chatId <= 0)
+            return BadRequest();
+        try
+        {
+            return Ok(await _chatDbService.NewMessage(messageClient, chatId));
+        }
+        catch(Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpDelete("deleteChat")]
     public async Task<bool> DeleteChat(int chatId)
     {
