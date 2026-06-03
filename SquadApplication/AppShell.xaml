@@ -9,7 +9,7 @@
     <ShellContent
         x:Name="HomeShellContent"
         Title="Home"
-        ContentTemplate="{DataTemplate local:AuthorizedPage}"
+        ContentTemplate="{DataTemplate local:ChatPage}"
         Route="AuthorizedPage" />
 
 </Shell>

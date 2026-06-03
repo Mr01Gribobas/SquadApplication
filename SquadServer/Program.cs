@@ -65,7 +65,7 @@ app.MapControllerRoute(
 Console.ForegroundColor = ConsoleColor.Green;
 Console.WriteLine("Start server ......");
 Console.ForegroundColor = ConsoleColor.Gray;
-await  Test.SendMessageTest();
+//await  Test.SendMessageTest();
 //app.Urls.Add("http://0.0.0.0:5213");
 await app.RunAsync();
 
