@@ -5,16 +5,72 @@ public static class Test
     private static DataBaseRepository _dataBaseRepository;
     static Test()
     {
-        SquadDbContext db = new SquadDbContext();
+        SquadDbContext db = new SquadDbContext(new DbContextOptionsBuilder<SquadDbContext>().UseNpgsql("Host=localhost;Port=5433;Username=HSquadAdmin;Password=42924870;Database=SquadDbPostgres;").Options);
         _dataBaseRepository = new DataBaseRepository(db);
-    }   
+    }
+    public static async Task SendMessageTest()
+    {
+        var context = _dataBaseRepository.GetCurrentContextDb();
+        var chat = await context.Chats.FirstOrDefaultAsync(c=>c.Id==2);
+        var testMessage = new MessageDTO(){
+            Content="Hwawcdawcdawdcweqweqwed",
+            SentAt=DateTime.UtcNow,
+            SenderId=2,
+            SenderNameOrCallSing = "Demo," ,
+        };
+        await context.Messages.AddAsync(new MessageModelEntity()
+        {
+            Chat = chat,
+            ChatId=chat.Id,
+            SendAt=DateTime.UtcNow,
+            SenderId = testMessage.SenderId,
+            SenderName = testMessage.SenderNameOrCallSing,
+            Content=testMessage.Content,
+
+        });
+        await context.SaveChangesAsync();
+
+        var result = await context.Messages.Select(m => new MessageDTO()
+        {
+            Id = m.Id,            
+            Content = m.Content,
+            SenderId = m.SenderId,
+            SenderNameOrCallSing = m.SenderName,
+            SentAt = m.SendAt
+        }).OrderByDescending(m=>m.SentAt).ToListAsync();
+    }
+    
+    public static async Task CreateChatTest()
+    {
+       var context = _dataBaseRepository.GetCurrentContextDb();
+        TeamEntity? team = await context.Teams.
+                                          Include(t => t.Members).
+                                          FirstOrDefaultAsync(t => t.Id == 2);
+        var testChat = new ChatModelDTO() 
+        {
+            NameChat = "TestName2",
+            IsTeamChat = false,
+            Users = team.Members.ToList(),           
+        };
+        await context.Chats.AddAsync(new ChatModelEntity()
+        {
+            ChatName = testChat.NameChat,
+            DateCreatedChat = DateTime.UtcNow,
+            IsTeamChat = testChat.IsTeamChat,
+            HostId = 2,
+            Users = team.Members.ToList()
+        });
+        await context.SaveChangesAsync();
+        var result = await context.Chats.ToListAsync();
+        //context.Chats
+    }
     public static async Task TestMethodCreateCommanderAndTeam()
     {
         var user = UserModelEntity.CreateUserEntity("Dr", "Roma", "Bezumie", "897383", Role.Commander, 24, null);
 
         UserModelEntity? newUser = await _dataBaseRepository.CreateNewUser(user);
     }
-    public static async Task TestMethodUser()
+    public static async Task TestMethodUser() 
     {
         using(SquadDbContext db = new SquadDbContext())
         {
