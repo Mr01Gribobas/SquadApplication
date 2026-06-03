@@ -99,16 +99,49 @@ public class ChatDbService : BaseDbService
         return chats;
     }
 
-    public async Task<bool> DeleteUserFromChatById(int userId)
+    public async Task<bool> DeleteUserFromChatById(int userId,int chatId)
     {
-        return default;
+        if(chatId <=0)
+            throw new NullReferenceException(nameof(chatId));
+        ChatModelEntity? chat = await _context.Chats.
+                                    Include(u => u.Users).
+                                    FirstOrDefaultAsync(c=>c.Id==chatId);
+        if(chat is null)
+            return false;
+        UserModelEntity? user = chat.Users.FirstOrDefault(u=>u.Id == userId);
+        if(user is not null)
+        {
+            chat.Users.Remove(user);
+            await _context.SaveChangesAsync();
+        }
+        return true;
     }
-    public async Task<bool> DeleteUserFromChatByName(string userNameOrCallSing)
+    public async Task<bool> DeleteUserFromChatByName(string userNameOrCallSing, int chatId)
     {
-        return default;
+        if(chatId <= 0)
+            throw new NullReferenceException(nameof(chatId));
+        ChatModelEntity? chat = await _context.Chats.
+                                    Include(u => u.Users).
+                                    FirstOrDefaultAsync(c => c.Id == chatId);
+        if(chat is null)
+            return false;
+        UserModelEntity? user = chat.Users.FirstOrDefault(u => u._userName == userNameOrCallSing);
+        if(user is not null)
+        {
+            chat.Users.Remove(user);
+            await _context.SaveChangesAsync();
+        }
+        return true;
     }
-    public async Task<bool> DeleteChat()
+    public async Task<bool> DeleteChatById(int chatId)
     {
-        return default;
+
+        ChatModelEntity? chat = await _context.Chats.FirstOrDefaultAsync(c=>c.Id == chatId);
+        if(chat is null)
+           return false;
+        _context.Chats.Remove(chat);
+        await _context.SaveChangesAsync();
+        return true;
+
     }
 }
