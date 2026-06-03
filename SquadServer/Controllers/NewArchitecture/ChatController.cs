@@ -38,10 +38,39 @@ public class ChatController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+    [HttpPost("teamChat")]
+    public async Task<IActionResult> CreateNewTeamChat(int teamId)
+    {
+        ChatModelDTO? chatFromClient = await HttpContext.Request.ReadFromJsonAsync<ChatModelDTO>();
+        if(chatFromClient is null || teamId <= 0)
+            return BadRequest("Not found");
+        bool result = await _chatDbService.CreateNewChat(teamId, chatFromClient);
+        return Ok(result);
+    }
+
+    [HttpPost("privateChat")]
+    public async Task<IActionResult> CreateNewPrivateChat(int hostId)
+    {
+        ChatModelDTO? chatFromClient = await HttpContext.Request.ReadFromJsonAsync<DoubleContainerDTO<ChatModelDTO,List<UserModelEntity>>>();
+        
+        bool result = await _chatDbService.CreateNewChat(,);
+        return Ok(result);
+    }
     [HttpDelete("deleteChat")]
     public async Task<bool> DeleteChat(int chatId)
     {
-        return await  _chatDbService.DeleteChatById(chatId);
+        return await _chatDbService.DeleteChatById(chatId);
+    }
+
+    [HttpDelete("deleteUserById")]
+    public async Task<bool> DeleteUserById(int userId, int chatId)
+    {
+        return await _chatDbService.DeleteUserFromChatById(userId, chatId);
+    }
+    [HttpDelete("deleteUserByName")]
+    public async Task<bool> DeleteUserById(string userName, int chatId)
+    {
+        return await _chatDbService.DeleteUserFromChatByName(userName, chatId);
     }
 
 }
