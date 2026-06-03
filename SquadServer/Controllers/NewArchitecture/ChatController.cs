@@ -51,9 +51,13 @@ public class ChatController : ControllerBase
     [HttpPost("privateChat")]
     public async Task<IActionResult> CreateNewPrivateChat(int hostId)
     {
-        ChatModelDTO? chatFromClient = await HttpContext.Request.ReadFromJsonAsync<DoubleContainerDTO<ChatModelDTO,List<UserModelEntity>>>();
-        
-        bool result = await _chatDbService.CreateNewChat(,);
+        DoubleContainerDTO<ChatModelDTO, List<UserModelEntity>>? conteiner = await HttpContext.Request.ReadFromJsonAsync<DoubleContainerDTO<ChatModelDTO, List<UserModelEntity>>>();
+        if(conteiner is null || conteiner._itemOne is null)
+            return BadRequest("Not found");
+        bool result = await _chatDbService.CreateNewChat(
+                                                         hostId: hostId,
+                                                         users: conteiner._itemTwo,
+                                                         chatClient: conteiner._itemOne);
         return Ok(result);
     }
     [HttpDelete("deleteChat")]

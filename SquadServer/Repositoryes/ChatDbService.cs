@@ -23,9 +23,12 @@ public class ChatDbService : BaseDbService
         await _context.SaveChangesAsync();
         return true;
     }
-    public async Task<bool> CreateNewChat(List<UserModelEntity> users, UserModelEntity host, ChatModelDTO chatClient)
+    public async Task<bool> CreateNewChat(List<UserModelEntity> users, int hostId, ChatModelDTO chatClient)
     {
-        if(host is null || chatClient is null)
+        if(hostId <=0 || chatClient is null)
+            return false;
+        UserModelEntity? user = await _context.Players.FirstOrDefaultAsync(u=>u.Id==hostId);
+        if(user is null)
             return false;
         await _context.Chats.AddAsync(new ChatModelEntity()
         {
@@ -33,7 +36,7 @@ public class ChatDbService : BaseDbService
             DateCreatedChat = DateTime.UtcNow,
             IsTeamChat = false,
             Users = users,
-            HostId = host.Id,
+            HostId = user.Id,
         });
         await _context.SaveChangesAsync();
         return true;
