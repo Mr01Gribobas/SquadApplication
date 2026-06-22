@@ -33,7 +33,9 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute(nameof(PolygonsPage), typeof(PolygonsPage));
         Routing.RegisterRoute(nameof(AppendPolygonPage), typeof(AppendPolygonPage));
+        
         Routing.RegisterRoute(nameof(ChatPage), typeof(ChatPage));
+        Routing.RegisterRoute(nameof(ChatsListPage), typeof(ChatsListPage));
         
 
 
