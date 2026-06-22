@@ -2,7 +2,8 @@ namespace SquadApplication.ViewCustom;
 
 public partial class ChatPage : ContentPage
 {
-	public ChatPage()
+    private ChatViewModel _viewModel {  get; set; }
+    public ChatPage()
 	{
 		InitializeComponent();
 	}
